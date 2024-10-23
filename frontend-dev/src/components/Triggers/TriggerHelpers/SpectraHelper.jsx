@@ -152,7 +152,8 @@ const SpectraHelper = () => {
           </div>
           <div
             className="bg-white rounded border my-1 table-webhook-div p-2"
-            style={{ minHeight: '40px', maxHeight: '14rem' }}>
+            style={{ minHeight: '40px', maxHeight: '14rem' }}
+          >
             {selectedFields.map((field, index) => (
               <div key={index} style={{ position: 'relative' }}>
                 <input
@@ -172,7 +173,8 @@ const SpectraHelper = () => {
                     right: -5,
                     color: '#ff4646',
                     padding: '2px'
-                  }}>
+                  }}
+                >
                   <CloseIcn size={12} />
                 </button>
               </div>
@@ -184,7 +186,8 @@ const SpectraHelper = () => {
         <button
           onClick={handleFetch}
           className={`btn btcd-btn-lg sh-sm flx ${isLoading ? 'red' : 'purple'}`}
-          type="button">
+          type="button"
+        >
           {isLoading
             ? __('Stop', 'bit-integrations')
             : newFlow.triggerDetail?.data
@@ -197,10 +200,9 @@ const SpectraHelper = () => {
             onClick={() => setPrimaryKeyModal(true)}
             className={`btn btcd-btn-lg sh-sm flx ${selectedFields.length && 'purple'}`}
             type="button"
-            disabled={!selectedFields.length}>
-            {primaryKey
-              ? __('Unique Key ✔', 'bit-integrations')
-              : __('Unique Key', 'bit-integrations')}
+            disabled={!selectedFields.length}
+          >
+            {primaryKey ? __('Unique Key ✔', 'bit-integrations') : __('Unique Key', 'bit-integrations')}
           </button>
         )}
       </div>
@@ -213,7 +215,8 @@ const SpectraHelper = () => {
         close={() => setPrimaryKeyModal(false)}
         action={() => setPrimaryKeyModal(false)}
         title={__('Primary Key', 'bit-integrations')}
-        cssTransStyle={{ zIndex: 99999 }}>
+        cssTransStyle={{ zIndex: 99999 }}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Primary Key', 'bit-integrations')}</div>
         <div className="flx flx-between mt-2">
@@ -254,7 +257,8 @@ const SpectraHelper = () => {
             onClick={setTriggerData}
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!selectedFields.length || !primaryKey}>
+            disabled={!selectedFields.length || !primaryKey}
+          >
             {__('Set Action', 'bit-integrations')}
           </button>
         </div>

@@ -51,14 +51,16 @@ export default function GoogleContactsActions({
           show={actionMdl.show === 'attachments'}
           close={() => setActionMdl({ show: false })}
           action={() => setActionMdl({ show: false })}
-          title={__('Select Attachment', 'bit-integrations')}>
+          title={__('Select Attachment', 'bit-integrations')}
+        >
           <div className="btcd-hr mt-2" />
           <div className="mt-2">{__('Please select file upload fields', 'bit-integrations')}</div>
           <select
             onChange={(e) => actionHandler(e, 'Attachments')}
             name="attachments"
             value={googleContactsConf.actions?.attachments}
-            className="btcd-paper-inp w-10 mt-2">
+            className="btcd-paper-inp w-10 mt-2"
+          >
             <option value="">{__('Select file upload field', 'bit-integrations')}</option>
             {formFields
               ?.filter((itm) => itm.type === 'file')

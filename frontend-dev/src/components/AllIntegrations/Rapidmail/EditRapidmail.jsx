@@ -61,9 +61,7 @@ function EditRapidmail({ allIntegURL }) {
       <RapidmailIntegLayout
         formID={flow.triggered_entity_id}
         formFields={formField}
-        handleInput={(e) =>
-          handleInput(e, rapidmailConf, setRapidmailConf, setIsLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, rapidmailConf, setRapidmailConf, setIsLoading, setSnackbar)}
         rapidmailConf={rapidmailConf}
         setRapidmailConf={setRapidmailConf}
         isLoading={isLoading}

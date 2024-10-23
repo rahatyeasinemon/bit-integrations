@@ -48,12 +48,14 @@ export default function MenuBtn(props) {
       <div
         ref={menuList}
         className={`btcd-menu-list ${isMenuOpen ? 'btcd-m-a' : ''}`}
-        style={{ height }}>
+        style={{ height }}
+      >
         <Link
           to={`/flow/action/info/${props.id}/${props.name}`}
           type="button"
           className="flx"
-          aria-label="actions">
+          aria-label="actions"
+        >
           <InfoIcn size={16} />
           &nbsp;
           {__('Info', 'bit-integrations')}
@@ -62,16 +64,13 @@ export default function MenuBtn(props) {
           to={`/flow/action/log/${props.id}/${props.name}`}
           type="button"
           className="flx"
-          aria-label="actions">
+          aria-label="actions"
+        >
           <TimeIcn size={16} />
           &nbsp;
           {__('Timeline', 'bit-integrations')}
         </Link>
-        <Link
-          to={`/flow/action/edit/${props.id}`}
-          type="button"
-          className="flx"
-          aria-label="actions">
+        <Link to={`/flow/action/edit/${props.id}`} type="button" className="flx" aria-label="actions">
           <EditIcn size={16} />
           &nbsp;
           {__('Edit', 'bit-integrations')}

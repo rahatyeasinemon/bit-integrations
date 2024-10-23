@@ -49,7 +49,8 @@ export default function SalesforceFieldMap({
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, salesforceConf, setSalesforceConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, salesforceConf, setSalesforceConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -63,7 +64,8 @@ export default function SalesforceFieldMap({
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -89,10 +91,9 @@ export default function SalesforceFieldMap({
             className="btcd-paper-inp"
             disabled={i < requiredFlds.length}
             name="selesforceField"
-            value={
-              i < requiredFlds?.length ? requiredFlds[i].key || '' : field.selesforceField || ''
-            }
-            onChange={(ev) => handleFieldMapping(ev, i, salesforceConf, setSalesforceConf)}>
+            value={i < requiredFlds?.length ? requiredFlds[i].key || '' : field.selesforceField || ''}
+            onChange={(ev) => handleFieldMapping(ev, i, salesforceConf, setSalesforceConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFlds.length ? (
               <option key={requiredFlds[i].key} value={requiredFlds[i].key}>
@@ -112,14 +113,16 @@ export default function SalesforceFieldMap({
             <button
               onClick={() => addFieldMap(i, salesforceConf, setSalesforceConf)}
               className="icn-btn sh-sm ml-2 mr-1"
-              type="button">
+              type="button"
+            >
               +
             </button>
             <button
               onClick={() => delFieldMap(i, salesforceConf, setSalesforceConf)}
               className="icn-btn sh-sm ml-1"
               type="button"
-              aria-label="btn">
+              aria-label="btn"
+            >
               <span className="btcd-icn icn-trash-2" />
             </button>
           </>

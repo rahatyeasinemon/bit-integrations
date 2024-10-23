@@ -60,24 +60,18 @@ function GamiPress({ formFields, setFlow, flow, allIntegURL, isInfo, edit }) {
         return gamiPressConf.selectedRank === undefined || gamiPressConf.selectedRank === ''
       case '2':
         return (
-          gamiPressConf.selectedAchievement === undefined ||
-          gamiPressConf.selectedAchievement === ''
+          gamiPressConf.selectedAchievement === undefined || gamiPressConf.selectedAchievement === ''
         )
       case '3':
-        return (
-          gamiPressConf.selectedPointType === undefined || gamiPressConf.selectedPointType === ''
-        )
+        return gamiPressConf.selectedPointType === undefined || gamiPressConf.selectedPointType === ''
       case '4':
         return gamiPressConf.selectedRank === undefined || gamiPressConf.selectedRank === ''
       case '5':
         return (
-          gamiPressConf.selectedAchievement === undefined ||
-          gamiPressConf.selectedAchievement === ''
+          gamiPressConf.selectedAchievement === undefined || gamiPressConf.selectedAchievement === ''
         )
       case '6':
-        return (
-          gamiPressConf.selectedPointType === undefined || gamiPressConf.selectedPointType === ''
-        )
+        return gamiPressConf.selectedPointType === undefined || gamiPressConf.selectedPointType === ''
       default:
         return false
     }
@@ -105,7 +99,8 @@ function GamiPress({ formFields, setFlow, flow, allIntegURL, isInfo, edit }) {
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}
+      >
         <GamiPressIntegLayout
           formFields={formFields}
           handleInput={(e) =>
@@ -125,7 +120,8 @@ function GamiPress({ formFields, setFlow, flow, allIntegURL, isInfo, edit }) {
           onClick={() => nextPage(3)}
           disabled={!gamiPressConf.mainAction || isLoading || isDisabled()}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')}
           &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />

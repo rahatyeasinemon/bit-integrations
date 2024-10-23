@@ -47,7 +47,8 @@ export default function MasterStudyLmsIntegLayout({
         onChange={handleInput}
         name="mainAction"
         value={msLmsConf.mainAction}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select Actions', 'bit-integrations')}</option>
         {msLmsConf.allActions &&
           msLmsConf.allActions.map(({ key, label }) => (
@@ -79,7 +80,8 @@ export default function MasterStudyLmsIntegLayout({
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Fetch course list', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
         </div>
@@ -105,7 +107,8 @@ export default function MasterStudyLmsIntegLayout({
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Fetch lesson list', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
         </div>
@@ -131,7 +134,8 @@ export default function MasterStudyLmsIntegLayout({
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Fetch quiz list', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
         </div>

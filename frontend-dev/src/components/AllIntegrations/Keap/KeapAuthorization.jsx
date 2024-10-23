@@ -45,7 +45,8 @@ export default function KeapAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
       {keap?.youTubeLink && <TutorialLink title="Keap" youTubeLink={keap?.youTubeLink} />}
       {keap?.docLink && <TutorialLink title="Keap" docLink={keap?.docLink} />}
 
@@ -88,7 +89,8 @@ export default function KeapAuthorization({
           className="btcd-link"
           href="https://keys.developer.keap.com/my-apps"
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {__('Get Keap client id and secret', 'bit-integrations')}
         </a>
       </small>
@@ -135,7 +137,8 @@ export default function KeapAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -146,7 +149,8 @@ export default function KeapAuthorization({
             onClick={() => nextPage(2)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <BackIcn className="ml-1 rev-icn" />
           </button>

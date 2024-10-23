@@ -6,13 +6,7 @@ import LoaderSm from '../../Loaders/LoaderSm'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
 
-export default function GetgistAuthorization({
-  getgistConf,
-  setGetgistConf,
-  step,
-  setstep,
-  isInfo
-}) {
+export default function GetgistAuthorization({ getgistConf, setGetgistConf, step, setstep, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', api_key: '' })
   const [showAuthMsg, setShowAuthMsg] = useState(false)
@@ -59,7 +53,8 @@ export default function GetgistAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
       {getgist?.youTubeLink && <TutorialLink title="GetGist" youTubeLink={getgist?.youTubeLink} />}
       {getgist?.docLink && <TutorialLink title="GetGist" docLink={getgist?.docLink} />}
 
@@ -95,7 +90,8 @@ export default function GetgistAuthorization({
           className="btcd-link"
           href="https://app.getgist.com/projects/jgmmrszy/settings/api-key"
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {__('Getgist API Console', 'bit-integrations')}
         </a>
       </small>
@@ -120,7 +116,8 @@ export default function GetgistAuthorization({
             onClick={handleAuthorize}
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -131,7 +128,8 @@ export default function GetgistAuthorization({
             onClick={() => nextPage(2)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <BackIcn className="ml-1 rev-icn" />
           </button>

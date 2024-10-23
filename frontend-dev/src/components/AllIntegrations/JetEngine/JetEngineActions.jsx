@@ -106,7 +106,8 @@ export default function JetEngineActions({ jetEngineConf, setJetEngineConf, load
                 show={actionMdl.show === 'taxPostTypes'}
                 close={clsActionMdl}
                 action={clsActionMdl}
-                title={__('Post Types', 'bit-integrations')}>
+                title={__('Post Types', 'bit-integrations')}
+              >
                 <div className="btcd-hr mt-2 mb-2" />
                 <div className="mt-2 flx">{__('Select Menu Position', 'bit-integrations')}</div>
                 {loading.cptOptions ? (
@@ -189,7 +190,8 @@ export default function JetEngineActions({ jetEngineConf, setJetEngineConf, load
                 show={actionMdl.show === 'taxPostTypes'}
                 close={clsActionMdl}
                 action={clsActionMdl}
-                title={__('Post Types', 'bit-integrations')}>
+                title={__('Post Types', 'bit-integrations')}
+              >
                 <div className="btcd-hr mt-2 mb-2" />
                 <div className="mt-2 flx">{__('Select Menu Position', 'bit-integrations')}</div>
                 {loading.cptOptions ? (
@@ -238,7 +240,8 @@ export default function JetEngineActions({ jetEngineConf, setJetEngineConf, load
               show={actionMdl.show === 'menuPosition'}
               close={clsActionMdl}
               action={clsActionMdl}
-              title={__('Menu Position', 'bit-integrations')}>
+              title={__('Menu Position', 'bit-integrations')}
+            >
               <div className="btcd-hr mt-2 mb-2" />
               <div className="mt-2 flx">{__('Select Menu Position', 'bit-integrations')}</div>
               {loading.cptOptions ? (
@@ -281,7 +284,8 @@ export default function JetEngineActions({ jetEngineConf, setJetEngineConf, load
               show={actionMdl.show === 'menuIcon'}
               close={clsActionMdl}
               action={clsActionMdl}
-              title={__('Menu Position', 'bit-integrations')}>
+              title={__('Menu Position', 'bit-integrations')}
+            >
               <div className="btcd-hr mt-2 mb-2" />
               <div className="mt-2 flx">{__('Select Menu Icon', 'bit-integrations')}</div>
               {loading.cptOptions ? (
@@ -333,7 +337,8 @@ export default function JetEngineActions({ jetEngineConf, setJetEngineConf, load
               show={actionMdl.show === 'supports'}
               close={clsActionMdl}
               action={clsActionMdl}
-              title={__('Menu Position', 'bit-integrations')}>
+              title={__('Menu Position', 'bit-integrations')}
+            >
               <div className="btcd-hr mt-2 mb-2" />
               <div className="mt-2 flx">{__('Select Supports', 'bit-integrations')}</div>
               {loading.cptOptions ? (
@@ -396,10 +401,7 @@ export default function JetEngineActions({ jetEngineConf, setJetEngineConf, load
               className="wdt-200 mt-4 mr-2"
               value="show_edit_link"
               title={__('`Edit post type/meta box` link', 'bit-integrations')}
-              subTitle={__(
-                'Add `Edit post type/meta box` link to post edit page.',
-                'bit-integrations'
-              )}
+              subTitle={__('Add `Edit post type/meta box` link to post edit page.', 'bit-integrations')}
               isInfo={!isPro}
             />
             <TableCheckBox

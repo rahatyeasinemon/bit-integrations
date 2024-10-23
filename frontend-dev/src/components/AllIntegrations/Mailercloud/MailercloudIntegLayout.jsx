@@ -14,14 +14,7 @@ function MailercloudIntegLayout({
   loading,
   setLoading
 }) {
-  const contactTypeList = [
-    'active',
-    'bounce',
-    'abuse',
-    'unsubscribe',
-    'suppressed',
-    'spam complaints'
-  ]
+  const contactTypeList = ['active', 'bounce', 'abuse', 'unsubscribe', 'suppressed', 'spam complaints']
   const handleList = (e) => {
     const newConf = { ...mailercloudConf }
     const { name, value } = e.target
@@ -50,7 +43,8 @@ function MailercloudIntegLayout({
             onChange={handleList}
             name="listId"
             value={mailercloudConf?.listId}
-            className="btcd-paper-inp w-5 mx-0">
+            className="btcd-paper-inp w-5 mx-0"
+          >
             <option value="">{__('Select List')}</option>
             {mailercloudConf?.default?.lists &&
               mailercloudConf.default.lists.map((list) => (
@@ -64,7 +58,8 @@ function MailercloudIntegLayout({
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': '"Refresh list"' }}
             type="button"
-            disabled={loading.list}>
+            disabled={loading.list}
+          >
             &#x21BB;
           </button>
           {loading.list && <LoaderSm size="20" clr="#022217" className="ml-2" />}
@@ -78,7 +73,8 @@ function MailercloudIntegLayout({
             onChange={handleList}
             name="contactType"
             value={mailercloudConf?.contactType}
-            className="btcd-paper-inp w-5 mx-0">
+            className="btcd-paper-inp w-5 mx-0"
+          >
             <option value="">{__('Select type')}</option>
             {contactTypeList.map((type) => (
               <option key={type} value={type}>
@@ -95,7 +91,8 @@ function MailercloudIntegLayout({
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Refresh Mailer Cloud Field', 'bit-integrations')}'` }}
           type="button"
-          disabled={loading.field}>
+          disabled={loading.field}
+        >
           &#x21BB;
         </button>
       </div>
@@ -139,15 +136,11 @@ function MailercloudIntegLayout({
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
               onClick={() =>
-                addFieldMap(
-                  mailercloudConf.field_map.length,
-                  mailercloudConf,
-                  setMailercloudConf,
-                  false
-                )
+                addFieldMap(mailercloudConf.field_map.length, mailercloudConf, setMailercloudConf, false)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

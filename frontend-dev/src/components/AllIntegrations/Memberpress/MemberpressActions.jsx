@@ -83,7 +83,8 @@ export default function MemberpressActions({ memberpressConf, setMemberpressConf
         show={actionMdl.show === 'status'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Status', 'bit-integrations')}>
+        title={__('Status', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Status', 'bit-integrations')}</div>
         {isLoading ? (
@@ -126,7 +127,8 @@ export default function MemberpressActions({ memberpressConf, setMemberpressConf
         show={actionMdl.show === 'gateway'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Type', 'bit-integrations')}>
+        title={__('Type', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Gateway', 'bit-integrations')}</div>
         {isLoading ? (
@@ -159,7 +161,8 @@ export default function MemberpressActions({ memberpressConf, setMemberpressConf
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': '"Refresh Payment Gateway"' }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>

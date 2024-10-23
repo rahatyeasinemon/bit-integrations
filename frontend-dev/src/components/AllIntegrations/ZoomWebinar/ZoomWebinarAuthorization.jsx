@@ -57,13 +57,12 @@ export default function ZoomWebinarAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}
+    >
       {zoomWebinar?.youTubeLink && (
         <TutorialLink title="Zoom Webinars" youTubeLink={zoomWebinar?.youTubeLink} />
       )}
-      {zoomWebinar?.docLink && (
-        <TutorialLink title="Zoom Webinars" docLink={zoomWebinar?.docLink} />
-      )}
+      {zoomWebinar?.docLink && <TutorialLink title="Zoom Webinars" docLink={zoomWebinar?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
@@ -104,7 +103,8 @@ export default function ZoomWebinarAuthorization({
           className="btcd-link"
           href="https://marketplace.zoom.us/develop/create"
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {__('Get Zoom client id and secret', 'bit-integrations')}
         </a>
       </small>
@@ -151,7 +151,8 @@ export default function ZoomWebinarAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized}>
+            disabled={isAuthorized}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -162,7 +163,8 @@ export default function ZoomWebinarAuthorization({
             onClick={() => nextPage(2)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <BackIcn className="ml-1 rev-icn" />
           </button>

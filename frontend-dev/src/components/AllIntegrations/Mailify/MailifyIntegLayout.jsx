@@ -33,13 +33,12 @@ export default function MailifyIntegLayout({
         name="listId"
         id=""
         className="btcd-paper-inp w-5"
-        onChange={handleInput}>
+        onChange={handleInput}
+      >
         <option value="">{__('Select List', 'bit-integrations')}</option>
         {mailifyConf?.default?.mailifyLists &&
           Object.keys(mailifyConf.default.mailifyLists).map((listName) => (
-            <option
-              key={`${listName + 1}`}
-              value={mailifyConf.default.mailifyLists[listName].listId}>
+            <option key={`${listName + 1}`} value={mailifyConf.default.mailifyLists[listName].listId}>
               {mailifyConf.default.mailifyLists[listName].listName}
             </option>
           ))}
@@ -49,7 +48,8 @@ export default function MailifyIntegLayout({
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': '"Refresh Mailify list"' }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -70,13 +70,12 @@ export default function MailifyIntegLayout({
       <div className="mt-4">
         <b className="wdt-100">{__('Map Fields', 'bit-integrations')}</b>
         <button
-          onClick={() =>
-            refreshMailifyHeader(mailifyConf, setMailifyConf, setIsLoading, setSnackbar)
-          }
+          onClick={() => refreshMailifyHeader(mailifyConf, setMailifyConf, setIsLoading, setSnackbar)}
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Refresh Mailify Field', 'bit-integrations')}'` }}
           type="button"
-          disabled={isLoading}>
+          disabled={isLoading}
+        >
           &#x21BB;
         </button>
       </div>
@@ -106,7 +105,8 @@ export default function MailifyIntegLayout({
             <button
               onClick={() => addFieldMap(mailifyConf.field_map.length, mailifyConf, setMailifyConf)}
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

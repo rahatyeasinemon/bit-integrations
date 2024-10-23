@@ -90,7 +90,8 @@ export default function DripActions({ dripConf, setDripConf, loading, setLoading
         show={actionMdl.show === 'status'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Status', 'bit-integrations')}>
+        title={__('Status', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2 flx">
           {__('Select subscriber status', 'bit-integrations')}
@@ -120,7 +121,8 @@ export default function DripActions({ dripConf, setDripConf, loading, setLoading
         show={actionMdl.show === 'tagsAdd'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Tags', 'bit-integrations')}>
+        title={__('Add Tags', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2 flx">
           {__('Select tags', 'bit-integrations')}
@@ -156,7 +158,8 @@ export default function DripActions({ dripConf, setDripConf, loading, setLoading
               onClick={() => getAllTags(dripConf, setDripConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Tags', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -170,7 +173,8 @@ export default function DripActions({ dripConf, setDripConf, loading, setLoading
         show={actionMdl.show === 'tagsRemove'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Remove Tags', 'bit-integrations')}>
+        title={__('Remove Tags', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2 flx">{__('Select tags for remove', 'bit-integrations')}</div>
         {loading.tags ? (
@@ -195,7 +199,8 @@ export default function DripActions({ dripConf, setDripConf, loading, setLoading
               onClick={() => getAllTags(dripConf, setDripConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Tags', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>

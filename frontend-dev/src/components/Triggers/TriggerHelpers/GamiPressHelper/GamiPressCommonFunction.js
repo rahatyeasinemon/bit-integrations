@@ -26,24 +26,21 @@ export const getAllRank = (val, tmpNewFlow, setNewFlow, edit = false) => {
 
 export const getAllAwardByAchievementType = (val, tmpNewFlow, setNewFlow, edit = false) => {
   const queryParams = { achievement_name: val }
-  const loadPostTypes = bitsFetch(
-    null,
-    'get_all_award_by_achievement_type',
-    queryParams,
-    'GET'
-  ).then((result) => {
-    if (result && result.success) {
-      const newConf = { ...tmpNewFlow }
-      if (!edit) {
-        newConf.triggerData.awards = result.data
-      } else {
-        newConf.flow_details.awards = result.data
+  const loadPostTypes = bitsFetch(null, 'get_all_award_by_achievement_type', queryParams, 'GET').then(
+    (result) => {
+      if (result && result.success) {
+        const newConf = { ...tmpNewFlow }
+        if (!edit) {
+          newConf.triggerData.awards = result.data
+        } else {
+          newConf.flow_details.awards = result.data
+        }
+        setNewFlow({ ...newConf })
+        return __('Fetched awards successfully', 'bit-integrations')
       }
-      setNewFlow({ ...newConf })
-      return __('Fetched awards successfully', 'bit-integrations')
+      return __('Award fetching failed. please try again', 'bit-integrations')
     }
-    return __('Award fetching failed. please try again', 'bit-integrations')
-  })
+  )
   toast.promise(loadPostTypes, {
     success: (data) => data,
     error: __('Error Occurred', 'bit-integrations'),

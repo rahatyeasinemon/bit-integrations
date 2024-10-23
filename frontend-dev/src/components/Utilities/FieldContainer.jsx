@@ -33,7 +33,8 @@ function FieldContainer({ data = [], onRemoveField, onUpdateField }) {
   return (
     <div
       className="bg-white rounded border my-1 table-webhook-div p-2 field-container"
-      style={{ minHeight: '6rem', maxHeight: '14rem' }}>
+      style={{ minHeight: '6rem', maxHeight: '14rem' }}
+    >
       {data.map((field, index) => (
         <div key={index} class="field-wrapper">
           <button
@@ -42,7 +43,8 @@ function FieldContainer({ data = [], onRemoveField, onUpdateField }) {
             style={{
               '--tooltip-txt': `'${__('Click to edit this field', 'bit-integrations')}'`
             }}
-            type="button">
+            type="button"
+          >
             {field?.label?.replace(/[,]/gi, '.').replace(/["{\}[\](\)]/gi, '')}
           </button>
           <button
@@ -50,7 +52,8 @@ function FieldContainer({ data = [], onRemoveField, onUpdateField }) {
             onClick={() => onRemoveField(index)}
             style={{
               '--tooltip-txt': `'${__('Click to remove this field', 'bit-integrations')}'`
-            }}>
+            }}
+          >
             <CloseIcn size={8} stroke={7} />
           </button>
         </div>
@@ -64,7 +67,8 @@ function FieldContainer({ data = [], onRemoveField, onUpdateField }) {
         show={actionMdl}
         close={() => setActionMdl(false)}
         action={() => setActionMdl(false)}
-        title={__('Edit Field', 'bit-integrations')}>
+        title={__('Edit Field', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
 
         <div className="mt-2">

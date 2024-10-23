@@ -22,8 +22,7 @@ export default function ZoomWebinarFieldMap({
     setZoomWebinarConf(newConf)
   }
 
-  const requiredFlds =
-    zoomWebinarConf?.zoomWebinarFields.filter((fld) => fld.required === true) || []
+  const requiredFlds = zoomWebinarConf?.zoomWebinarFields.filter((fld) => fld.required === true) || []
   const nonRequiredFlds =
     zoomWebinarConf?.zoomWebinarFields.filter((fld) => fld.required === false) || []
 
@@ -38,7 +37,8 @@ export default function ZoomWebinarFieldMap({
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, zoomWebinarConf, setZoomWebinarConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, zoomWebinarConf, setZoomWebinarConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -52,7 +52,8 @@ export default function ZoomWebinarFieldMap({
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -79,7 +80,8 @@ export default function ZoomWebinarFieldMap({
             disabled={i < requiredFlds.length}
             name="zoomField"
             value={i < requiredFlds.length ? requiredFlds[i].key || '' : field.zoomField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, zoomWebinarConf, setZoomWebinarConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, zoomWebinarConf, setZoomWebinarConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFlds.length ? (
               <option key={requiredFlds[i].key} value={requiredFlds[i].key}>
@@ -99,14 +101,16 @@ export default function ZoomWebinarFieldMap({
             <button
               onClick={() => addFieldMap(i, zoomWebinarConf, setZoomWebinarConf)}
               className="icn-btn sh-sm ml-2 mr-1"
-              type="button">
+              type="button"
+            >
               +
             </button>
             <button
               onClick={() => delFieldMap(i, zoomWebinarConf, setZoomWebinarConf)}
               className="icn-btn sh-sm ml-1"
               type="button"
-              aria-label="btn">
+              aria-label="btn"
+            >
               <span className="btcd-icn icn-trash-2" />
             </button>
           </>

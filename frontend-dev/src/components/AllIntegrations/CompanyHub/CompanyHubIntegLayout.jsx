@@ -58,7 +58,8 @@ export default function CompanyHubIntegLayout({
         onChange={handleActionInput}
         name="actionName"
         value={companyHubConf.actionName}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select an action', 'bit-integrations')}</option>
         <option value="contact" data-action_name="contact">
           {__('Create Contact', 'bit-integrations')}
@@ -115,7 +116,8 @@ export default function CompanyHubIntegLayout({
             <button
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh fields', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -145,15 +147,11 @@ export default function CompanyHubIntegLayout({
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
               onClick={() =>
-                addFieldMap(
-                  companyHubConf.field_map.length,
-                  companyHubConf,
-                  setCompanyHubConf,
-                  false
-                )
+                addFieldMap(companyHubConf.field_map.length, companyHubConf, setCompanyHubConf, false)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

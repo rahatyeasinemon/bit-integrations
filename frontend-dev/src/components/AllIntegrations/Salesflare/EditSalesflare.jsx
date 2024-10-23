@@ -79,9 +79,7 @@ function EditSalesflare({ allIntegURL }) {
       <SalesflareIntegLayout
         formID={flow.triggered_entity_id}
         formFields={formField}
-        handleInput={(e) =>
-          handleInput(e, salesflareConf, setSalesflareConf, setLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, salesflareConf, setSalesflareConf, setLoading, setSnackbar)}
         salesflareConf={salesflareConf}
         setSalesflareConf={setSalesflareConf}
         loading={loading}

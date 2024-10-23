@@ -49,10 +49,9 @@ export default function LearnDashAuthorization({
       style={{
         width: step === 1 && 900,
         height: step === 1 && 'auto'
-      }}>
-      {learnDash?.youTubeLink && (
-        <TutorialLink title="LearnDash" youTubeLink={learnDash?.youTubeLink} />
-      )}
+      }}
+    >
+      {learnDash?.youTubeLink && <TutorialLink title="LearnDash" youTubeLink={learnDash?.youTubeLink} />}
       {learnDash?.docLink && <TutorialLink title="LearnDash" docLink={learnDash?.docLink} />}
 
       <div className="mt-3">
@@ -80,10 +79,7 @@ export default function LearnDashAuthorization({
             &times;
           </span>
           {sprintf(
-            __(
-              '%s plugin must be activated to integrate with Bit Integrations',
-              'bit-integrations'
-            ),
+            __('%s plugin must be activated to integrate with Bit Integrations', 'bit-integrations'),
             'LearnDash'
           )}
         </div>
@@ -93,7 +89,8 @@ export default function LearnDashAuthorization({
         <button
           onClick={authorizeHandler}
           className="btn btcd-btn-lg purple sh-sm flx mt-5"
-          type="button">
+          type="button"
+        >
           {__('Connect', 'bit-integrations')}
         </button>
       )}
@@ -103,7 +100,8 @@ export default function LearnDashAuthorization({
           onClick={() => setStep(2)}
           className="btn btcd-btn-lg purple sh-sm flx mt-5"
           type="button"
-          disabled={!isAuthorized}>
+          disabled={!isAuthorized}
+        >
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>

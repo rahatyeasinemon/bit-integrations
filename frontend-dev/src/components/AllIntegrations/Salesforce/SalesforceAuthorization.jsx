@@ -48,7 +48,8 @@ export default function SalesforceAuthorization({
       style={{
         ...{ width: step === 1 && 900 },
         ...{ height: step === 1 && 'auto' }
-      }}>
+      }}
+    >
       {salesforce?.youTubeLink && (
         <TutorialLink title="Salesforce" youTubeLink={salesforce?.youTubeLink} />
       )}
@@ -131,7 +132,8 @@ export default function SalesforceAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -142,7 +144,8 @@ export default function SalesforceAuthorization({
             onClick={nextPage}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <BackIcn className="ml-1 rev-icn" />
           </button>

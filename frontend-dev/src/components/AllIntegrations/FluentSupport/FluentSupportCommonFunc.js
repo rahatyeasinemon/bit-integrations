@@ -63,12 +63,7 @@ export const supportStaff = (
     .catch(() => setIsLoading(false))
 }
 
-export const getCustomFields = (
-  fluentSupportConf,
-  setFluentSupportConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const getCustomFields = (fluentSupportConf, setFluentSupportConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
 
   bitsFetch(null, 'fluent_support_get_custom_fields')
@@ -95,8 +90,7 @@ export const getCustomFields = (
             setSnackbar({
               show: true,
               msg:
-                result?.data ||
-                __('Custom Ticket Fields failed. please try again', 'bit-integrations')
+                result?.data || __('Custom Ticket Fields failed. please try again', 'bit-integrations')
             })
           }
         })

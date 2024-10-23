@@ -7,19 +7,9 @@ import ConfirmModal from '../../Utilities/ConfirmModal'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import Loader from '../../Loaders/Loader'
-import {
-  getAllOpportunities,
-  getAllOwners,
-  getAllTeams,
-  getAllCurrencies
-} from './CapsuleCRMCommonFunc'
+import { getAllOpportunities, getAllOwners, getAllTeams, getAllCurrencies } from './CapsuleCRMCommonFunc'
 
-export default function CapsuleCRMActions({
-  capsulecrmConf,
-  setCapsuleCRMConf,
-  loading,
-  setLoading
-}) {
+export default function CapsuleCRMActions({ capsulecrmConf, setCapsuleCRMConf, loading, setLoading }) {
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => {} })
 
   const followUps = [
@@ -155,7 +145,8 @@ export default function CapsuleCRMActions({
         show={actionMdl.show === 'opportunity'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Opportunities', 'bit-integrations')}>
+        title={__('Opportunities', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Opportunity', 'bit-integrations')}</div>
         {loading.opportunities ? (
@@ -184,7 +175,8 @@ export default function CapsuleCRMActions({
               onClick={() => getAllOpportunities(capsulecrmConf, setCapsuleCRMConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Opportunities', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -199,7 +191,8 @@ export default function CapsuleCRMActions({
         show={actionMdl.show === 'owner'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Owners', 'bit-integrations')}>
+        title={__('Owners', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Owner', 'bit-integrations')}</div>
         {loading.owners ? (
@@ -228,7 +221,8 @@ export default function CapsuleCRMActions({
               onClick={() => getAllOwners(capsulecrmConf, setCapsuleCRMConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Owners', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -243,7 +237,8 @@ export default function CapsuleCRMActions({
         show={actionMdl.show === 'team'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Teams', 'bit-integrations')}>
+        title={__('Teams', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Team', 'bit-integrations')}</div>
         {loading.teams ? (
@@ -269,7 +264,8 @@ export default function CapsuleCRMActions({
               onClick={() => getAllTeams(capsulecrmConf, setCapsuleCRMConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Teams', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -284,7 +280,8 @@ export default function CapsuleCRMActions({
         show={actionMdl.show === 'currency'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Currencies', 'bit-integrations')}>
+        title={__('Currencies', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Currency', 'bit-integrations')}</div>
         {loading.currencies ? (
@@ -313,7 +310,8 @@ export default function CapsuleCRMActions({
               onClick={() => getAllCurrencies(capsulecrmConf, setCapsuleCRMConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Currencies', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -368,7 +366,8 @@ export default function CapsuleCRMActions({
         show={actionMdl.show === 'followUp'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Follow Up', 'bit-integrations')}>
+        title={__('Follow Up', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="flx flx-center mt-2">
           <MultiSelect
@@ -392,7 +391,8 @@ export default function CapsuleCRMActions({
         show={actionMdl.show === 'opportunityType'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Opportunity types', 'bit-integrations')}>
+        title={__('Opportunity types', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="flx flx-center mt-2">
           <MultiSelect

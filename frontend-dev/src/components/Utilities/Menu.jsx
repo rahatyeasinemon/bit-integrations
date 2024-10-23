@@ -35,7 +35,8 @@ export default function Menu(props) {
           '--tt-left': '148%'
         }}
         aria-label="icon-btn"
-        type="button">
+        type="button"
+      >
         <span className={`btcd-icn ${props.icn}`} />
         {props.title}
       </button>

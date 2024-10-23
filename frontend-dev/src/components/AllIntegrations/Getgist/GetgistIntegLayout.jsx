@@ -41,7 +41,8 @@ export default function GetgistIntegLayout({
         onChange={handleInput}
         name="user_type"
         value={getgistConf?.user_type}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select User Type', 'bit-integrations')}</option>
         {contactTypes.map(({ key, label }) => (
           <option key={key} value={key}>
@@ -75,7 +76,8 @@ export default function GetgistIntegLayout({
         <button
           onClick={() => addFieldMap(getgistConf.field_map.length, getgistConf, setGetgistConf)}
           className="icn-btn sh-sm"
-          type="button">
+          type="button"
+        >
           +
         </button>
       </div>

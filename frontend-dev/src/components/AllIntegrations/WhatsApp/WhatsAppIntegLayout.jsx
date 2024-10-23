@@ -97,13 +97,12 @@ export default function WhatsAppIntegLayout({
               closeOnSelect
             />
             <button
-              onClick={() =>
-                getallTemplates(whatsAppConf, setWhatsAppConf, setIsLoading, setSnackbar)
-              }
+              onClick={() => getallTemplates(whatsAppConf, setWhatsAppConf, setIsLoading, setSnackbar)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh Template', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -253,7 +252,8 @@ export default function WhatsAppIntegLayout({
                 )
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

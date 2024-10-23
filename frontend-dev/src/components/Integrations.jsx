@@ -21,9 +21,7 @@ function Integrations() {
         <Route path="info/:id/:type" element={<IntegInfo allIntegURL="/" />} />
 
         <Route path="log/:id/:type" element={<Log allIntegURL="/" />} />
-
       </Routes>
-
     </div>
   )
 }

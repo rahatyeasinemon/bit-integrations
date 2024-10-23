@@ -2,12 +2,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import toast from 'react-hot-toast'
 import { __ } from '../../../Utils/i18nwrap'
 
-export const checkFunctionValidity = (
-  customActionConf,
-  setCustomActionConf,
-  loading,
-  setLoading
-) => {
+export const checkFunctionValidity = (customActionConf, setCustomActionConf, loading, setLoading) => {
   const data = customActionConf.value
   const newConf = { ...customActionConf }
   setLoading({ ...loading, validate: true })

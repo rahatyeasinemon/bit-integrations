@@ -42,7 +42,8 @@ export default function WebhookDataTable({ data, flow, setFlow }) {
                   name="type"
                   value={type}
                   onChange={(e) => handleChange(e, indx)}
-                  className="btcd-paper-inp">
+                  className="btcd-paper-inp"
+                >
                   {types.map((item) => (
                     <option key={item.value} value={item.value}>
                       {item.value}

@@ -7,13 +7,7 @@ import DripFieldMap from './DripFieldMap'
 import { useState } from 'react'
 import DripActions from './DripActions'
 
-export default function DripIntegLayout({
-  formFields,
-  dripConf,
-  setDripConf,
-  loading,
-  setLoading
-}) {
+export default function DripIntegLayout({ formFields, dripConf, setDripConf, loading, setLoading }) {
   const [error, setError] = useState({ name: '', api_token: '' })
   const [isAuthorized, setisAuthorized] = useState(false)
 
@@ -41,7 +35,8 @@ export default function DripIntegLayout({
         name="accountId"
         id=""
         className="btcd-paper-inp w-5"
-        onChange={handleInput}>
+        onChange={handleInput}
+      >
         <option value="">{__('Select an account', 'bit-integrations')}</option>
         {dripConf?.accounts.map((account) => (
           <option key={account.accountId} value={account.accountId}>
@@ -64,7 +59,8 @@ export default function DripIntegLayout({
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': '"Refresh Accounts"' }}
         type="button"
-        disabled={loading?.accounts}>
+        disabled={loading?.accounts}
+      >
         &#x21BB;
       </button>
       <br />
@@ -90,7 +86,8 @@ export default function DripIntegLayout({
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Refresh custom fields', 'bit-integrations')}'` }}
             type="button"
-            disabled={loading?.customFields}>
+            disabled={loading?.customFields}
+          >
             &#x21BB;
           </button>
         )}
@@ -121,7 +118,8 @@ export default function DripIntegLayout({
             <button
               onClick={() => addFieldMap(dripConf.field_map.length, dripConf, setDripConf)}
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

@@ -47,7 +47,8 @@ export default function MailPoetFieldMap({ i, formFields, field, mailPoetConf, s
           className="btcd-paper-inp mr-2"
           name="formField"
           value={field.formField || ''}
-          onChange={(ev) => handleFieldMapping(ev, i)}>
+          onChange={(ev) => handleFieldMapping(ev, i)}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           <optgroup label={__('Form Fields', 'bit-integrations')}>
             {formFields?.map((f) => (
@@ -58,7 +59,8 @@ export default function MailPoetFieldMap({ i, formFields, field, mailPoetConf, s
           </optgroup>
           <option value="custom">{__('Custom...', 'bit-integrations')}</option>
           <optgroup
-            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}>
+            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}
+          >
             {isPro &&
               SmartTagField?.map((f) => (
                 <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -85,7 +87,8 @@ export default function MailPoetFieldMap({ i, formFields, field, mailPoetConf, s
           name="mailPoetField"
           value={field.mailPoetField}
           onChange={(ev) => handleFieldMapping(ev, i)}
-          disabled={isRequired}>
+          disabled={isRequired}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           {isRequired
             ? mailPoetConf?.default?.fields &&
@@ -111,7 +114,8 @@ export default function MailPoetFieldMap({ i, formFields, field, mailPoetConf, s
             onClick={() => delFieldMap(i)}
             className="icn-btn sh-sm ml-2"
             type="button"
-            aria-label="btn">
+            aria-label="btn"
+          >
             <TrashIcn />
           </button>
         </>

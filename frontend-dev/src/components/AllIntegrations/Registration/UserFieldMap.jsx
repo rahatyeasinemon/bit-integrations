@@ -51,11 +51,10 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, roles,
 
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
-              onClick={() =>
-                addFieldMap('user_map', userConf?.user_map?.length, userConf, setUserConf)
-              }
+              onClick={() => addFieldMap('user_map', userConf?.user_map?.length, userConf, setUserConf)}
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

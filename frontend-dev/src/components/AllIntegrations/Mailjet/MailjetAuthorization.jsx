@@ -41,7 +41,8 @@ export default function MailjetAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
       {mailjet?.youTubeLink && <TutorialLink title="Mailjet" youTubeLink={mailjet?.youTubeLink} />}
       {mailjet?.docLink && <TutorialLink title="Mailjet" docLink={mailjet?.docLink} />}
 
@@ -91,7 +92,8 @@ export default function MailjetAuthorization({
           className="btcd-link"
           href="https://app.mailjet.com/account/apikeys"
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {__('Mailjet API Token', 'bit-integrations')}
         </a>
       </small>
@@ -114,7 +116,8 @@ export default function MailjetAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || loading.auth}>
+            disabled={isAuthorized || loading.auth}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -125,7 +128,8 @@ export default function MailjetAuthorization({
             onClick={nextPage}
             className="btn ml-auto btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

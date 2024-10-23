@@ -4,11 +4,7 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import ZagoMailActions from './ZagoMailActions'
-import {
-  refreshZagoMailFields,
-  refreshZagoMailList,
-  refreshZagoMailTags
-} from './ZagoMailCommonFunc'
+import { refreshZagoMailFields, refreshZagoMailList, refreshZagoMailTags } from './ZagoMailCommonFunc'
 import ZagoMailFieldMap from './ZagoMailFieldMap'
 
 export default function ZagoMailIntegLayout({
@@ -58,25 +54,23 @@ export default function ZagoMailIntegLayout({
         name="listId"
         id=""
         className="btcd-paper-inp w-5"
-        onChange={handleInput}>
+        onChange={handleInput}
+      >
         <option value="">{__('Select List', 'bit-integrations')}</option>
         {zagoMailConf?.default?.zagoMailLists &&
           Object.keys(zagoMailConf.default.zagoMailLists).map((listname) => (
-            <option
-              key={`${listname + 1}`}
-              value={zagoMailConf.default.zagoMailLists[listname].listId}>
+            <option key={`${listname + 1}`} value={zagoMailConf.default.zagoMailLists[listname].listId}>
               {zagoMailConf.default.zagoMailLists[listname].listName}
             </option>
           ))}
       </select>
       <button
-        onClick={() =>
-          refreshZagoMailList(zagoMailConf, setZagoMailConf, setIsLoading, setSnackbar)
-        }
+        onClick={() => refreshZagoMailList(zagoMailConf, setZagoMailConf, setIsLoading, setSnackbar)}
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': '"Refresh ZagoMail list"' }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -96,13 +90,12 @@ export default function ZagoMailIntegLayout({
       <div className="mt-4">
         <b className="wdt-100">{__('Map Fields', 'bit-integrations')}</b>
         <button
-          onClick={() =>
-            refreshZagoMailFields(zagoMailConf, setZagoMailConf, setIsLoading, setSnackbar)
-          }
+          onClick={() => refreshZagoMailFields(zagoMailConf, setZagoMailConf, setIsLoading, setSnackbar)}
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Refresh ZagoMail Field', 'bit-integrations')}'` }}
           type="button"
-          disabled={isLoading}>
+          disabled={isLoading}
+        >
           &#x21BB;
         </button>
       </div>
@@ -130,11 +123,10 @@ export default function ZagoMailIntegLayout({
           ))}
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
-              onClick={() =>
-                addFieldMap(zagoMailConf.field_map.length, zagoMailConf, setZagoMailConf)
-              }
+              onClick={() => addFieldMap(zagoMailConf.field_map.length, zagoMailConf, setZagoMailConf)}
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

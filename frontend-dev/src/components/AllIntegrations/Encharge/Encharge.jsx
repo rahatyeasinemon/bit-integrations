@@ -72,7 +72,8 @@ function Encharge({ formFields, setFlow, flow, allIntegURL }) {
           width: step === 2 && 900,
           minHeight: step === 2 && '200',
           height: step === 2 && 'auto'
-        }}>
+        }}
+      >
         <EnchargeIntegLayout
           formID={formID}
           formFields={formFields}
@@ -83,7 +84,8 @@ function Encharge({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => nextPage(3)}
           disabled={enchargeConf.field_map.length < 1}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')}
           &nbsp;
           <BackIcn className="ml-1 rev-icn" />

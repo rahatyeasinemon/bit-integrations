@@ -56,7 +56,8 @@ export default function RestrictContentAuthorization({
       style={{
         width: step === 1 && 900,
         height: step === 1 && 'auto'
-      }}>
+      }}
+    >
       {restrictContent?.youTubeLink && (
         <TutorialLink title="Restrict Content" youTubeLink={restrictContent?.youTubeLink} />
       )}
@@ -89,10 +90,7 @@ export default function RestrictContentAuthorization({
             &times;
           </span>
           {sprintf(
-            __(
-              '%s plugin must be activated to integrate with Bit Integrations',
-              'bit-integrations'
-            ),
+            __('%s plugin must be activated to integrate with Bit Integrations', 'bit-integrations'),
             'RestrictContent'
           )}
         </div>
@@ -102,7 +100,8 @@ export default function RestrictContentAuthorization({
         <button
           onClick={authorizeHandler}
           className="btn btcd-btn-lg purple sh-sm flx mt-5"
-          type="button">
+          type="button"
+        >
           {__('Connect', 'bit-integrations')}
         </button>
       )}
@@ -112,7 +111,8 @@ export default function RestrictContentAuthorization({
           onClick={() => nextPage(2)}
           className="btn btcd-btn-lg purple sh-sm flx mt-5"
           type="button"
-          disabled={!isAuthorized}>
+          disabled={!isAuthorized}
+        >
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>

@@ -42,7 +42,8 @@ export default function SendFoxIntegLayout({
         onChange={handleInput}
         name="mainAction"
         value={sendFoxConf.mainAction}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select Actions', 'bit-integrations')}</option>
         {sendFoxConf.allActions &&
           sendFoxConf.allActions.map(({ key, label }) => (
@@ -112,7 +113,8 @@ export default function SendFoxIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh SendFox List', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -149,7 +151,8 @@ export default function SendFoxIntegLayout({
                 addFieldMap(sendFoxConf.field_map.length, sendFoxConf, setSendFoxConf, false)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

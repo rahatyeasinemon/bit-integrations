@@ -94,12 +94,7 @@ export const refreshCrmTag = (
     .catch(() => setLoading({ ...loading, fluentCrmTags: false }))
 }
 
-export const refreshfluentCrmHeader = (
-  fluentCrmConf,
-  setFluentCrmConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const refreshfluentCrmHeader = (fluentCrmConf, setFluentCrmConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
   bitsFetch({}, 'fluent_crm_headers')
     .then((result) => {
@@ -163,8 +158,7 @@ export const handleInput = (e, fluentCrmConf, setFluentCrmConf) => {
 export const checkMappedFields = (fluentCrmConf) => {
   const mappedFields = fluentCrmConf?.field_map
     ? fluentCrmConf.field_map.filter(
-        (mappedField) =>
-          !mappedField.formField && mappedField.fluentCRMField && mappedField.required
+        (mappedField) => !mappedField.formField && mappedField.fluentCRMField && mappedField.required
       )
     : []
   if (mappedFields.length > 0) {

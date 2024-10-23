@@ -44,7 +44,8 @@ export default function FreshSalesNewRecord({
               onChange={handleInput}
               name="account_view_id"
               value={freshSalesConf.moduleData?.account_view_id || ''}
-              className="btcd-paper-inp w-5">
+              className="btcd-paper-inp w-5"
+            >
               <option value="">{__('Select Account View', 'bit-integrations')}</option>
               {freshSalesConf?.default?.accountViews &&
                 freshSalesConf.default.accountViews.map((data, indx) => (
@@ -60,7 +61,8 @@ export default function FreshSalesNewRecord({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh views', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
 
@@ -78,7 +80,8 @@ export default function FreshSalesNewRecord({
               onChange={handleInput}
               name="account_id"
               value={freshSalesConf.moduleData?.account_id || ''}
-              className="btcd-paper-inp w-5">
+              className="btcd-paper-inp w-5"
+            >
               <option value="">{__('Select Account', 'bit-integrations')}</option>
               {freshSalesConf?.default?.accounts &&
                 freshSalesConf.default.accounts.map((data, indx) => (
@@ -94,7 +97,8 @@ export default function FreshSalesNewRecord({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh Accounts', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
 
@@ -114,7 +118,8 @@ export default function FreshSalesNewRecord({
               onChange={handleInput}
               name="contact_view_id"
               value={freshSalesConf.moduleData?.contact_view_id || ''}
-              className="btcd-paper-inp w-5">
+              className="btcd-paper-inp w-5"
+            >
               <option value="">{__('Select Contact View', 'bit-integrations')}</option>
               {freshSalesConf?.default?.contactViews &&
                 freshSalesConf.default.contactViews.map((data, indx) => (
@@ -130,7 +135,8 @@ export default function FreshSalesNewRecord({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh views', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </>
@@ -147,7 +153,8 @@ export default function FreshSalesNewRecord({
               onChange={handleInput}
               name="contact_id"
               value={freshSalesConf.moduleData?.contact_id || ''}
-              className="btcd-paper-inp w-5">
+              className="btcd-paper-inp w-5"
+            >
               <option value="">{__('Select Contact', 'bit-integrations')}</option>
               {freshSalesConf?.default?.contacts &&
                 freshSalesConf.default.contacts.map((data, indx) => (
@@ -163,7 +170,8 @@ export default function FreshSalesNewRecord({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh Contacts', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
             <br />
@@ -201,15 +209,11 @@ export default function FreshSalesNewRecord({
             <div className="txt-center btcbi-field-map-button mt-2">
               <button
                 onClick={() =>
-                  addFieldMap(
-                    freshSalesConf.field_map.length,
-                    freshSalesConf,
-                    setFreshSalesConf,
-                    false
-                  )
+                  addFieldMap(freshSalesConf.field_map.length, freshSalesConf, setFreshSalesConf, false)
                 }
                 className="icn-btn sh-sm"
-                type="button">
+                type="button"
+              >
                 +
               </button>
             </div>

@@ -55,13 +55,12 @@ export default function AutonamiAuthorization({
     <>
       <div
         className="btcd-stp-page"
-        style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+        style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+      >
         {autonami?.youTubeLink && (
           <TutorialLink title="FunnelKit (Autonami)" youTubeLink={autonami?.youTubeLink} />
         )}
-        {autonami?.docLink && (
-          <TutorialLink title="FunnelKit (Autonami)" docLink={autonami?.docLink} />
-        )}
+        {autonami?.docLink && <TutorialLink title="FunnelKit (Autonami)" docLink={autonami?.docLink} />}
 
         <div className="mt-3">
           <b>{__('Integration Name:', 'bit-integrations')}</b>
@@ -93,7 +92,8 @@ export default function AutonamiAuthorization({
               onClick={handleAuthorize}
               className="btn btcd-btn-lg purple sh-sm flx"
               type="button"
-              disabled={isAuthorized || isLoading}>
+              disabled={isAuthorized || isLoading}
+            >
               {isAuthorized
                 ? __('Connected ✔', 'bit-integrations')
                 : __('Connect to Autonami', 'bit-integrations')}
@@ -104,7 +104,8 @@ export default function AutonamiAuthorization({
               onClick={() => nextPage(2)}
               className="btn f-right btcd-btn-lg purple sh-sm flx"
               type="button"
-              disabled={!isAuthorized}>
+              disabled={!isAuthorized}
+            >
               {__('Next', 'bit-integrations')}
               <BackIcn className="ml-1 rev-icn" />
             </button>

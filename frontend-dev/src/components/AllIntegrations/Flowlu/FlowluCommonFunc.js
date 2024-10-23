@@ -90,9 +90,7 @@ export const flowluAuthentication = (
   if (!confTmp.api_key || !confTmp.company_name) {
     setError({
       api_key: !confTmp.api_key ? __("API Key can't be empty", 'bit-integrations') : '',
-      company_name: !confTmp.company_name
-        ? __("Company Name can't be empty", 'bit-integrations')
-        : ''
+      company_name: !confTmp.company_name ? __("Company Name can't be empty", 'bit-integrations') : ''
     })
     return
   }
@@ -113,9 +111,7 @@ export const flowluAuthentication = (
       return
     }
     setLoading({ ...loading, auth: false })
-    toast.error(
-      __('Authorized failed, Please enter valid API Key or Company Name', 'bit-integrations')
-    )
+    toast.error(__('Authorized failed, Please enter valid API Key or Company Name', 'bit-integrations'))
   })
 }
 

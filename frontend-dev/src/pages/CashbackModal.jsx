@@ -20,7 +20,8 @@ export default function CashbackModal() {
         title={__('Get $10 Cashback', 'bit-integrations')}
         type="button"
         className="cashback-btn"
-        onClick={() => setShow(true)}>
+        onClick={() => setShow(true)}
+      >
         <img src={surprise} style={{ marginRight: '8px', width: '25px' }} />
 
         <span>{__('$10 Cashback', 'bit-integrations')}</span>
@@ -44,17 +45,15 @@ export default function CashbackModal() {
                   'support@bitapps.pro',
                   __('$10 Cashback', 'bit-integrations')
                 )
-              }}></p>
+              }}
+            ></p>
             <p>
               <b>{__('Suggestions on how you may write the review:', 'bit-integrations')}</b>
             </p>
             <p>
               {__('1. What features do you like most in Bit Integrations?', 'bit-integrations')}
               <br />
-              {__(
-                '2. Which software did you previously used for these features?',
-                'bit-integrations'
-              )}
+              {__('2. Which software did you previously used for these features?', 'bit-integrations')}
             </p>
           </div>
         </div>

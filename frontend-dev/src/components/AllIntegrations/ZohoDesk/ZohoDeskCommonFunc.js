@@ -304,9 +304,7 @@ export const checkMappedFields = (deskConf) => {
         (mappedField) =>
           !mappedField.formField &&
           mappedField.zohoFormField &&
-          deskConf?.default?.fields?.[deskConf.orgId]?.required.indexOf(
-            mappedField.zohoFormField
-          ) !== -1
+          deskConf?.default?.fields?.[deskConf.orgId]?.required.indexOf(mappedField.zohoFormField) !== -1
       )
     : []
   if (mappedFields.length > 0) {

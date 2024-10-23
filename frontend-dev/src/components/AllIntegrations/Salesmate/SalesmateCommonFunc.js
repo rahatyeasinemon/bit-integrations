@@ -16,12 +16,7 @@ export const handleInput = (e, salesmateConf, setSalesmateConf) => {
 }
 
 // refreshMappedFields
-export const refreshSalesmateFields = (
-  salesmateConf,
-  setSalesmateConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const refreshSalesmateFields = (salesmateConf, setSalesmateConf, setIsLoading, setSnackbar) => {
   const requestParams = {
     session_token: salesmateConf.session_token,
     link_name: salesmateConf.link_name,

@@ -225,12 +225,7 @@ export default function EditInteg({ allIntegURL }) {
       </div>
       <Suspense fallback={<Loader className="g-c" style={{ height: '82vh' }} />}>
         {actionConfig && Object.keys(actionConfig).length && (
-          <IntegType
-            allIntegURL={allIntegURL}
-            formFields={flow.fields}
-            flow={flow}
-            setFlow={setFlow}
-          />
+          <IntegType allIntegURL={allIntegURL} formFields={flow.fields} flow={flow} setFlow={setFlow} />
         )}
       </Suspense>
     </div>

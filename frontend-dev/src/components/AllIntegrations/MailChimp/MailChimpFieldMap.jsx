@@ -12,13 +12,7 @@ import {
   handleFieldMapping
 } from '../IntegrationHelpers/MailChimpIntegrationHelpers'
 
-export default function MailChimpFieldMap({
-  i,
-  formFields,
-  field,
-  mailChimpConf,
-  setMailChimpConf
-}) {
+export default function MailChimpFieldMap({ i, formFields, field, mailChimpConf, setMailChimpConf }) {
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi
   const requiredFields =
@@ -41,7 +35,8 @@ export default function MailChimpFieldMap({
           className="btcd-paper-inp mr-2"
           name="formField"
           value={field.formField || ''}
-          onChange={(ev) => handleFieldMapping(ev, i, mailChimpConf, setMailChimpConf)}>
+          onChange={(ev) => handleFieldMapping(ev, i, mailChimpConf, setMailChimpConf)}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           <optgroup label={__('Form Fields', 'bit-integrations')}>
             {formFields.map(
@@ -55,7 +50,8 @@ export default function MailChimpFieldMap({
           </optgroup>
           <option value="custom">{__('Custom...', 'bit-integrations')}</option>
           <optgroup
-            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}>
+            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}
+          >
             {isPro &&
               SmartTagField?.map((f) => (
                 <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -82,7 +78,8 @@ export default function MailChimpFieldMap({
           name="mailChimpField"
           value={field.mailChimpField || ''}
           onChange={(ev) => handleFieldMapping(ev, i, mailChimpConf, setMailChimpConf)}
-          disabled={i < requiredFields.length}>
+          disabled={i < requiredFields.length}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           {i < requiredFields.length ? (
             <option key={`mchimp-${requiredFields[i].tag}`} value={requiredFields[i].tag}>
@@ -100,14 +97,16 @@ export default function MailChimpFieldMap({
       <button
         onClick={() => addFieldMap(i, mailChimpConf, setMailChimpConf)}
         className="icn-btn sh-sm ml-2 mr-1"
-        type="button">
+        type="button"
+      >
         +
       </button>
       <button
         onClick={() => delFieldMap(i, mailChimpConf, setMailChimpConf)}
         className="icn-btn sh-sm ml-1"
         type="button"
-        aria-label="btn">
+        aria-label="btn"
+      >
         <TrashIcn />
       </button>
     </div>

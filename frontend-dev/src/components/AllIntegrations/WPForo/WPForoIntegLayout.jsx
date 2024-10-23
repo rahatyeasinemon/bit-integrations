@@ -98,7 +98,8 @@ export default function WPForoIntegLayout({
                 onClick={() => getWPForoTopics(wpforoConf, setWPForoConf, loading, setLoading)}
                 className="icn-btn sh-sm ml-2 mr-2 tooltip"
                 style={{ '--tooltip-txt': `${__('Refresh topics', 'bit-integrations')}'` }}
-                type="button">
+                type="button"
+              >
                 &#x21BB;
               </button>
             </div>
@@ -142,8 +143,7 @@ export default function WPForoIntegLayout({
           </>
         )}
 
-        {((wpforoConf?.selectedTask &&
-          wpforoConf?.selectedTask !== TASK_LIST_VALUES.DELETE_TOPIC) ||
+        {((wpforoConf?.selectedTask && wpforoConf?.selectedTask !== TASK_LIST_VALUES.DELETE_TOPIC) ||
           (wpforoConf.selectedTask === TASK_LIST_VALUES.DELETE_TOPIC &&
             wpforoConf.deleteTopicFieldMap)) &&
           wpforoConf?.field_map.map((itm, i) => (
@@ -158,8 +158,7 @@ export default function WPForoIntegLayout({
             />
           ))}
 
-        {((wpforoConf?.selectedTask &&
-          wpforoConf?.selectedTask !== TASK_LIST_VALUES.DELETE_TOPIC) ||
+        {((wpforoConf?.selectedTask && wpforoConf?.selectedTask !== TASK_LIST_VALUES.DELETE_TOPIC) ||
           (wpforoConf.selectedTask === TASK_LIST_VALUES.DELETE_TOPIC &&
             wpforoConf.deleteTopicFieldMap)) && (
           <div>
@@ -169,7 +168,8 @@ export default function WPForoIntegLayout({
                   addFieldMap(wpforoConf.field_map.length, wpforoConf, setWPForoConf, false)
                 }
                 className="icn-btn sh-sm"
-                type="button">
+                type="button"
+              >
                 +
               </button>
             </div>

@@ -48,7 +48,8 @@ export default function ZohoCRMFieldMap({
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, crmConf, setCrmConf, uploadFields, tab)}>
+            onChange={(ev) => handleFieldMapping(ev, i, crmConf, setCrmConf, uploadFields, tab)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {uploadFields
@@ -74,7 +75,8 @@ export default function ZohoCRMFieldMap({
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-zhcrm-${f.name}`} value={f.name}>
@@ -101,7 +103,8 @@ export default function ZohoCRMFieldMap({
             disabled={!isNotRequired}
             name="zohoFormField"
             value={field.zohoFormField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, crmConf, setCrmConf, uploadFields, tab)}>
+            onChange={(ev) => handleFieldMapping(ev, i, crmConf, setCrmConf, uploadFields, tab)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {uploadFields
               ? crmConf.default.layouts?.[module]?.[layout]?.fileUploadFields &&
@@ -134,10 +137,7 @@ export default function ZohoCRMFieldMap({
                     isNotRequired ? (
                       !crmConf.default.layouts[module][layout].fields[fieldApiName].required && (
                         <option key={fieldApiName} value={fieldApiName}>
-                          {
-                            crmConf.default.layouts[module][layout].fields[fieldApiName]
-                              .display_label
-                          }
+                          {crmConf.default.layouts[module][layout].fields[fieldApiName].display_label}
                         </option>
                       )
                     ) : (
@@ -154,14 +154,16 @@ export default function ZohoCRMFieldMap({
               <button
                 onClick={() => addFieldMap(i, crmConf, setCrmConf, uploadFields, tab)}
                 className="icn-btn sh-sm ml-2 mr-1"
-                type="button">
+                type="button"
+              >
                 +
               </button>
               <button
                 onClick={() => delFieldMap(i, crmConf, setCrmConf, uploadFields, tab)}
                 className="icn-btn sh-sm ml-1"
                 type="button"
-                aria-label="btn">
+                aria-label="btn"
+              >
                 <span className="btcd-icn icn-trash-2" />
               </button>
             </>

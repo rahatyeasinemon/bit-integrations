@@ -70,7 +70,8 @@ export default function DemioIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh Events', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.event}>
+              disabled={loading.event}
+            >
               &#x21BB;
             </button>
           </div>
@@ -102,7 +103,8 @@ export default function DemioIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh Sessions', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.event}>
+              disabled={loading.event}
+            >
               &#x21BB;
             </button>
           </div>
@@ -116,7 +118,8 @@ export default function DemioIntegLayout({
             <button
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh fields', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -145,11 +148,10 @@ export default function DemioIntegLayout({
           ))}
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
-              onClick={() =>
-                addFieldMap(demioConf.field_map.length, demioConf, setDemioConf, false)
-              }
+              onClick={() => addFieldMap(demioConf.field_map.length, demioConf, setDemioConf, false)}
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

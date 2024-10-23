@@ -25,7 +25,8 @@ function MoosendFieldMap({ i, field, formFields, moosendConf, setMoosendConf }) 
             onChange={(event) => {
               handleFieldMapping(event, i, moosendConf, setMoosendConf)
             }}
-            value={field.formFields || ''}>
+            value={field.formFields || ''}
+          >
             <option value="">{__('Select Field')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -39,7 +40,8 @@ function MoosendFieldMap({ i, field, formFields, moosendConf, setMoosendConf }) 
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -71,10 +73,9 @@ function MoosendFieldMap({ i, field, formFields, moosendConf, setMoosendConf }) 
               handleFieldMapping(event, i, moosendConf, setMoosendConf)
             }}
             value={
-              i < requiredFields.length
-                ? requiredFields[i].key || ''
-                : field.moosendFormFields || ''
-            }>
+              i < requiredFields.length ? requiredFields[i].key || '' : field.moosendFormFields || ''
+            }
+          >
             <option value="">{__('Select Field')}</option>
             {i < requiredFields.length ? (
               <option key={requiredFields[i].key} value={requiredFields[i].key}>
@@ -95,14 +96,16 @@ function MoosendFieldMap({ i, field, formFields, moosendConf, setMoosendConf }) 
             <button
               onClick={() => addFieldMap(i, moosendConf, setMoosendConf)}
               className="icn-btn sh-sm ml-2 mr-1"
-              type="button">
+              type="button"
+            >
               +
             </button>
             <button
               onClick={() => delFieldMap(i, moosendConf, setMoosendConf)}
               className="icn-btn sh-sm ml-1"
               type="button"
-              aria-label="btn">
+              aria-label="btn"
+            >
               <span className="btcd-icn icn-trash-2" />
             </button>
           </>

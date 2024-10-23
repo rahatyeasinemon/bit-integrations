@@ -117,12 +117,11 @@ function ClinchPad({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}
+      >
         <ClinchPadIntegLayout
           formFields={formFields}
-          handleInput={(e) =>
-            handleInput(e, clinchPadConf, setClinchPadConf, setLoading, setSnackbar)
-          }
+          handleInput={(e) => handleInput(e, clinchPadConf, setClinchPadConf, setLoading, setSnackbar)}
           clinchPadConf={clinchPadConf}
           setClinchPadConf={setClinchPadConf}
           loading={loading}
@@ -135,7 +134,8 @@ function ClinchPad({ formFields, setFlow, flow, allIntegURL }) {
             onClick={() => nextPage(3)}
             disabled={!checkMappedFields(clinchPadConf)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
-            type="button">
+            type="button"
+          >
             {__('Next', 'bit-integrations')} &nbsp;
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

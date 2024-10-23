@@ -177,14 +177,7 @@ export const refreshModules = (formID, crmConf, setCrmConf, setIsLoading, setSna
     .catch(() => setIsLoading(false))
 }
 
-export const refreshLayouts = (
-  recordTab,
-  formID,
-  crmConf,
-  setCrmConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const refreshLayouts = (recordTab, formID, crmConf, setCrmConf, setIsLoading, setSnackbar) => {
   const newConf = { ...crmConf }
   const module = recordTab === 0 ? newConf.module : newConf.relatedlists[recordTab - 1].module
   if (!module) {
@@ -215,10 +208,7 @@ export const refreshLayouts = (
               }
             } else {
               ;[newConf.relatedlists[recordTab - 1].layout] = layouts
-              newConf.relatedlists[recordTab - 1].field_map = generateMappedField(
-                recordTab,
-                newConf
-              )
+              newConf.relatedlists[recordTab - 1].field_map = generateMappedField(recordTab, newConf)
 
               if (Object.keys(result.data.layouts[layouts].fileUploadFields).length > 0) {
                 newConf.relatedlists[recordTab - 1].upload_field_map = generateMappedField(
@@ -374,13 +364,7 @@ export const refreshOwners = (formID, crmConf, setCrmConf, setIsLoading, setSnac
     .catch(() => setIsLoading(false))
 }
 
-export const refreshAssigmentRules = (
-  recordTab,
-  crmConf,
-  setCrmConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const refreshAssigmentRules = (recordTab, crmConf, setCrmConf, setIsLoading, setSnackbar) => {
   const module = recordTab === 0 ? crmConf.module : crmConf.relatedlists[recordTab - 1].module
   if (!module) return
   setIsLoading(true)
@@ -457,9 +441,7 @@ export const checkMappedFields = (crmConf) => {
       )
     : []
   const mappedRelatedFields = crmConf.relatedlists.map((relatedlist) =>
-    relatedlist.field_map.filter(
-      (mappedField) => !mappedField.formField && mappedField.zohoFormField
-    )
+    relatedlist.field_map.filter((mappedField) => !mappedField.formField && mappedField.zohoFormField)
   )
   const mappedRelatedUploadFields = crmConf.relatedlists.map((relatedlist) =>
     relatedlist.upload_field_map.filter(

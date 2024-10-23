@@ -50,7 +50,8 @@ export default function AsanaIntegLayout({
         onChange={handleActionInput}
         name="actionName"
         value={asanaConf.actionName}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select an action', 'bit-integrations')}</option>
         <option value="task">{__('Create Task', 'bit-integrations')}</option>
       </select>
@@ -88,7 +89,8 @@ export default function AsanaIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh projects', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.Projects}>
+              disabled={loading.Projects}
+            >
               &#x21BB;
             </button>
           </div>
@@ -116,7 +118,8 @@ export default function AsanaIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh Sections', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.Sections}>
+              disabled={loading.Sections}
+            >
               &#x21BB;
             </button>
           </div>
@@ -143,7 +146,8 @@ export default function AsanaIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh fields', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.Sections}>
+              disabled={loading.Sections}
+            >
               &#x21BB;
             </button>
           </div>
@@ -172,11 +176,10 @@ export default function AsanaIntegLayout({
           ))}
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
-              onClick={() =>
-                addFieldMap(asanaConf.field_map.length, asanaConf, setAsanaConf, false)
-              }
+              onClick={() => addFieldMap(asanaConf.field_map.length, asanaConf, setAsanaConf, false)}
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

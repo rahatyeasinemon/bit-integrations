@@ -59,13 +59,15 @@ export default function ConvertKitIntegLayout({
         name="formId"
         id=""
         className="btcd-paper-inp w-5"
-        onChange={handleInput}>
+        onChange={handleInput}
+      >
         <option value="">{__('Select Form', 'bit-integrations')}</option>
         {convertKitConf?.default?.convertKitForms &&
           Object.keys(convertKitConf.default.convertKitForms).map((formname) => (
             <option
               key={`${formname + 1}`}
-              value={convertKitConf.default.convertKitForms[formname].formId}>
+              value={convertKitConf.default.convertKitForms[formname].formId}
+            >
               {convertKitConf.default.convertKitForms[formname].formName}
             </option>
           ))}
@@ -77,7 +79,8 @@ export default function ConvertKitIntegLayout({
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': '"Refresh ConvertKit form"' }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -107,7 +110,8 @@ export default function ConvertKitIntegLayout({
             '--tooltip-txt': `'${sprintf(__('Refresh %s Tags', 'bit-integrations'), 'Kit(ConvertKit)')}'`
           }}
           type="button"
-          disabled={isLoading}>
+          disabled={isLoading}
+        >
           &#x21BB;
         </button>
       </div>
@@ -135,7 +139,8 @@ export default function ConvertKitIntegLayout({
             '--tooltip-txt': `'${sprintf(__('Refresh %s Field', 'bit-integrations'), 'Kit(ConvertKit)')}'`
           }}
           type="button"
-          disabled={isLoading}>
+          disabled={isLoading}
+        >
           &#x21BB;
         </button>
       </div>
@@ -167,7 +172,8 @@ export default function ConvertKitIntegLayout({
                 addFieldMap(convertKitConf.field_map.length, convertKitConf, setConvertKitConf)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>
@@ -177,10 +183,7 @@ export default function ConvertKitIntegLayout({
             <b className="wdt-100">{__('Utilities', 'bit-integrations')}</b>
           </div>
           <div className="btcd-hr mt-1" />
-          <ConvertKitActions
-            convertKitConf={convertKitConf}
-            setConvertKitConf={setConvertKitConf}
-          />
+          <ConvertKitActions convertKitConf={convertKitConf} setConvertKitConf={setConvertKitConf} />
         </>
       )}
     </>

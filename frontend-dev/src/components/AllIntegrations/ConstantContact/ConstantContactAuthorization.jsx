@@ -62,7 +62,8 @@ export default function ConstantContactAuthorization({
       style={{
         ...{ width: step === 1 && 900 },
         ...{ height: step === 1 && 'auto' }
-      }}>
+      }}
+    >
       {constantContact?.youTubeLink && (
         <TutorialLink title="Constant Contact" youTubeLink={constantContact?.youTubeLink} />
       )}
@@ -109,7 +110,8 @@ export default function ConstantContactAuthorization({
           className="btcd-link"
           href="https://app.constantcontact.com/pages/dma/portal/?_ga=2.91540634.1868552181.1667660766-5cc88792-fd06-40a8-9b8c-e27659667215"
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {__('Constant Contact Application', 'bit-integrations')}
         </a>
       </small>
@@ -159,7 +161,8 @@ export default function ConstantContactAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading.auth}>
+            disabled={isAuthorized || isLoading.auth}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -170,7 +173,8 @@ export default function ConstantContactAuthorization({
             onClick={nextPage}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <BackIcn className="ml-1 rev-icn" />
           </button>

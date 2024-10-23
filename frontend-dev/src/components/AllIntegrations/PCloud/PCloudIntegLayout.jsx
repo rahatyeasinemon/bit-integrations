@@ -14,7 +14,8 @@ export default function PCloudIntegLayout({ flowID, formFields, pCloudConf, setP
           onClick={() => getAllPCloudFolders(pCloudConf, setPCloudConf, 'refresh')}
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Fetch All PCloud Folders', 'bit-integrations')}'` }}
-          type="button">
+          type="button"
+        >
           &#x21BB;
         </button>
       </div>
@@ -42,7 +43,8 @@ export default function PCloudIntegLayout({ flowID, formFields, pCloudConf, setP
         <button
           onClick={() => addFieldMap(pCloudConf.field_map.length, pCloudConf, setPCloudConf, false)}
           className="icn-btn sh-sm"
-          type="button">
+          type="button"
+        >
           +
         </button>
       </div>

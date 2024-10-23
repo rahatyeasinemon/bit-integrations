@@ -49,9 +49,7 @@ export const wpforoAuthentication = (confTmp, setError, setIsAuthorized, loading
       return
     }
     setLoading({ ...loading, auth: false })
-    toast.error(
-      __('Connection failed: install and active WPForo plugin first!', 'bit-integrations')
-    )
+    toast.error(__('Connection failed: install and active WPForo plugin first!', 'bit-integrations'))
   })
 }
 
@@ -154,9 +152,7 @@ export const wpforoStaticFields = (selectedTask) => {
     }
   } else if (selectedTask === TASK_LIST_VALUES.DELETE_TOPIC) {
     return {
-      staticFields: [
-        { key: 'topic_id', label: __('Topic ID', 'bit-integrations'), required: true }
-      ],
+      staticFields: [{ key: 'topic_id', label: __('Topic ID', 'bit-integrations'), required: true }],
       fieldMap: [{ formField: '', wpforoField: 'topic_id' }]
     }
   }

@@ -430,8 +430,7 @@ const tutorialLinks = {
   },
   zohoMarketingHub: {
     youTubeLink: 'https://www.youtube.com/playlist?list=PL7c6CDwwm-AKgaz3bG1iFFBYg2JuFpgVJ',
-    docLink:
-      'https://bitapps.pro/docs/bit-integrations/actions/zoho-marketing-automation-integrations/'
+    docLink: 'https://bitapps.pro/docs/bit-integrations/actions/zoho-marketing-automation-integrations/'
   },
   zohoRecruit: {
     youTubeLink: 'https://www.youtube.com/playlist?list=PL7c6CDwwm-AIpAJSh09abQZaSe30pwk9E',

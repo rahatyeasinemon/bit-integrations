@@ -68,8 +68,7 @@ function EditFreshdesk({ allIntegURL }) {
           !freshdeskConf.priority ||
           !freshdeskConf.status ||
           !checkMappedFields(freshdeskConf?.field_map) ||
-          (freshdeskConf.contactShow &&
-            !checkMappedFieldsContact(freshdeskConf?.field_map_contact)) ||
+          (freshdeskConf.contactShow && !checkMappedFieldsContact(freshdeskConf?.field_map_contact)) ||
           isLoading
         }
         isLoading={isLoading}

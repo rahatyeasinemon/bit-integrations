@@ -31,7 +31,8 @@ export default function MailupIntegLayout({
         onChange={handleInput}
         name="listId"
         value={mailupConf.listId}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select List', 'bit-integrations')}</option>
         {mailupConf?.allList &&
           mailupConf.allList.map(({ idList, name }) => (
@@ -45,7 +46,8 @@ export default function MailupIntegLayout({
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': `'${__('Fetch All List', 'bit-integrations')}'` }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -79,7 +81,8 @@ export default function MailupIntegLayout({
             onChange={handleInput}
             name="groupId"
             value={mailupConf.groupId}
-            className="btcd-paper-inp w-5">
+            className="btcd-paper-inp w-5"
+          >
             <option value="">{__('Select group', 'bit-integrations')}</option>
             {mailupConf?.allGroup &&
               mailupConf.allGroup.map(({ idGroup, name }) => (
@@ -93,7 +96,8 @@ export default function MailupIntegLayout({
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Fetch All Groups', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
           <br />
@@ -105,7 +109,8 @@ export default function MailupIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Fetch All Fields', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -132,11 +137,10 @@ export default function MailupIntegLayout({
           ))}
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
-              onClick={() =>
-                addFieldMap(mailupConf.field_map.length, mailupConf, setMailupConf, false)
-              }
+              onClick={() => addFieldMap(mailupConf.field_map.length, mailupConf, setMailupConf, false)}
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>
@@ -147,11 +151,7 @@ export default function MailupIntegLayout({
             <b className="wdt-100">{__('Utilities', 'bit-integrations')}</b>
           </div>
           <div className="btcd-hr mt-1" />
-          <MailupActions
-            mailupConf={mailupConf}
-            setMailupConf={setMailupConf}
-            formFields={formFields}
-          />
+          <MailupActions mailupConf={mailupConf} setMailupConf={setMailupConf} formFields={formFields} />
         </>
       )}
     </>

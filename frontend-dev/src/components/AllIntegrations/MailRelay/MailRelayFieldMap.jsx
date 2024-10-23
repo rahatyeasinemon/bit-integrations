@@ -9,18 +9,10 @@ import { generateMappedField } from './MailRelayCommonFunc'
 import { handleCustomValue } from '../IntegrationHelpers/IntegrationHelpers'
 import TagifyInput from '../../Utilities/TagifyInput'
 
-export default function MailRelayFieldMap({
-  i,
-  formFields,
-  field,
-  mailRelayConf,
-  setMailRelayConf
-}) {
+export default function MailRelayFieldMap({ i, formFields, field, mailRelayConf, setMailRelayConf }) {
   const requiredFields = mailRelayConf?.staticFields.filter((fld) => fld.required === true) || []
-  const nonRequiredCustomFlds =
-    mailRelayConf?.customFields.filter((fld) => fld.required === false) || []
-  const nonRequiredStaticFlds =
-    mailRelayConf?.staticFields.filter((fld) => fld.required === false) || []
+  const nonRequiredCustomFlds = mailRelayConf?.customFields.filter((fld) => fld.required === false) || []
+  const nonRequiredStaticFlds = mailRelayConf?.staticFields.filter((fld) => fld.required === false) || []
   const allnonRequiredFields = [...nonRequiredStaticFlds, ...nonRequiredCustomFlds]
 
   if (mailRelayConf?.field_map?.length === 1 && field.mailRelayFormField === '') {
@@ -41,7 +33,8 @@ export default function MailRelayFieldMap({
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, mailRelayConf, setMailRelayConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, mailRelayConf, setMailRelayConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -55,7 +48,8 @@ export default function MailRelayFieldMap({
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -81,10 +75,9 @@ export default function MailRelayFieldMap({
             className="btcd-paper-inp"
             disabled={i < requiredFields.length}
             name="mailRelayFormField"
-            value={
-              i < requiredFields ? requiredFields[i].label || '' : field.mailRelayFormField || ''
-            }
-            onChange={(ev) => handleFieldMapping(ev, i, mailRelayConf, setMailRelayConf)}>
+            value={i < requiredFields ? requiredFields[i].label || '' : field.mailRelayFormField || ''}
+            onChange={(ev) => handleFieldMapping(ev, i, mailRelayConf, setMailRelayConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFields.length ? (
               <option key={requiredFields[i].key} value={requiredFields[i].key}>
@@ -104,14 +97,16 @@ export default function MailRelayFieldMap({
             <button
               onClick={() => addFieldMap(i, mailRelayConf, setMailRelayConf)}
               className="icn-btn sh-sm ml-2 mr-1"
-              type="button">
+              type="button"
+            >
               +
             </button>
             <button
               onClick={() => delFieldMap(i, mailRelayConf, setMailRelayConf)}
               className="icn-btn sh-sm ml-1"
               type="button"
-              aria-label="btn">
+              aria-label="btn"
+            >
               <span className="btcd-icn icn-trash-2" />
             </button>
           </>

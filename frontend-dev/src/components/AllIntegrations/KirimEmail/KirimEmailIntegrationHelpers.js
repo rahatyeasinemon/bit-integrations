@@ -1,15 +1,7 @@
 import { __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 
-export const saveIntegConfig = async (
-  flow,
-  setFlow,
-  allIntegURL,
-  confTmp,
-  navigate,
-  index,
-  edit
-) => {
+export const saveIntegConfig = async (flow, setFlow, allIntegURL, confTmp, navigate, index, edit) => {
   let action = 'flow/save'
   const data = {
     name: confTmp.name,

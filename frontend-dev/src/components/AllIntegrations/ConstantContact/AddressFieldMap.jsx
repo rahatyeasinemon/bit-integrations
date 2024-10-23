@@ -25,7 +25,8 @@ export default function AddressFieldMap({
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleAddress(ev, i, constantContactConf, setConstantContactConf)}>
+            onChange={(ev) => handleAddress(ev, i, constantContactConf, setConstantContactConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {formFields.map(
               (f) =>
@@ -56,7 +57,8 @@ export default function AddressFieldMap({
             onChange={(ev) =>
               handleAddress(ev, i, constantContactConf, setConstantContactConf, addressField)
             }
-            disabled={isRequired}>
+            disabled={isRequired}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {isRequired
               ? Object.values(addressField).map((listField, indx) => (
@@ -78,7 +80,8 @@ export default function AddressFieldMap({
             <button
               onClick={() => addAddressFieldMap(i, constantContactConf, setConstantContactConf)}
               className="icn-btn sh-sm ml-2 mr-1"
-              type="button">
+              type="button"
+            >
               +
             </button>
           )}
@@ -86,7 +89,8 @@ export default function AddressFieldMap({
             onClick={() => delAddressFieldMap(i, constantContactConf, setConstantContactConf)}
             className="icn-btn sh-sm ml-1"
             type="button"
-            aria-label="btn">
+            aria-label="btn"
+          >
             <span className="btcd-icn icn-trash-2" />
           </button>
         </>

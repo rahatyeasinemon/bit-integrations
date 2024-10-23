@@ -210,7 +210,8 @@ const CustomTrigger = () => {
           onClick={handleFetch}
           className={`btn btcd-btn-lg sh-sm flx ${isLoading ? 'red' : 'purple'}`}
           type="button"
-          disabled={!hookID}>
+          disabled={!hookID}
+        >
           {isLoading
             ? __('Stop', 'bit-integrations')
             : newFlow.triggerDetail?.data
@@ -247,7 +248,8 @@ const CustomTrigger = () => {
             onClick={setTriggerData}
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!selectedFields.length}>
+            disabled={!selectedFields.length}
+          >
             {__('Set Action', 'bit-integrations')}
           </button>
         </div>

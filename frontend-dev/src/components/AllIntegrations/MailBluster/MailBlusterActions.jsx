@@ -85,7 +85,8 @@ export default function MailBlusterActions({ mailBlusterConf, setMailBlusterConf
         show={actionMdl.show === 'tag'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Tags', 'bit-integrations')}>
+        title={__('Tags', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2 ml-7 flx">
           {__('Create contact Tags', 'bit-integrations')}

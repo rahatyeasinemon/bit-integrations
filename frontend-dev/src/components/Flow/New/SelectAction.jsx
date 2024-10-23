@@ -165,9 +165,7 @@ export default function SelectAction() {
     { type: 'GoHighLevel' }
   ]
 
-  const [availableIntegs, setAvailableIntegs] = useState(
-    sortByField(integs, 'type', 'ASC') || integs
-  )
+  const [availableIntegs, setAvailableIntegs] = useState(sortByField(integs, 'type', 'ASC') || integs)
   const organizeIntegs = () => {
     const bitformIndex = availableIntegs.findIndex((i) => i.type === 'Bit Form')
     if (bitformIndex === -1) return availableIntegs
@@ -180,9 +178,7 @@ export default function SelectAction() {
 
   const searchInteg = (e) => {
     const { value } = e.target
-    const filtered = integs.filter((integ) =>
-      integ.type.toLowerCase().includes(value.toLowerCase())
-    )
+    const filtered = integs.filter((integ) => integ.type.toLowerCase().includes(value.toLowerCase()))
     setAvailableIntegs(filtered)
   }
 
@@ -232,7 +228,8 @@ export default function SelectAction() {
               onKeyPress={() => !inte.disable && !inte.pro && setAction(inte.type)}
               role="button"
               tabIndex="0"
-              className={`btcd-inte-card inte-sm mr-4 mt-3 ${inte.disable && !inte.pro && 'btcd-inte-dis'} ${inte.pro && 'btcd-inte-pro'}`}>
+              className={`btcd-inte-card inte-sm mr-4 mt-3 ${inte.disable && !inte.pro && 'btcd-inte-dis'} ${inte.pro && 'btcd-inte-pro'}`}
+            >
               {inte.pro && (
                 <div className="pro-filter">
                   <span className="txt-pro">

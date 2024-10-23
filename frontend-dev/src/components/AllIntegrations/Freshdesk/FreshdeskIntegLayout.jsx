@@ -56,7 +56,8 @@ export default function FreshdeskIntegLayout({
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Refresh Ticket Field', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
         </div>
@@ -85,11 +86,10 @@ export default function FreshdeskIntegLayout({
 
         <div className="txt-center btcbi-field-map-button mt-2">
           <button
-            onClick={() =>
-              addFieldMap(freshdeskConf.field_map.length, freshdeskConf, setFreshdeskConf)
-            }
+            onClick={() => addFieldMap(freshdeskConf.field_map.length, freshdeskConf, setFreshdeskConf)}
             className="icn-btn sh-sm"
-            type="button">
+            type="button"
+          >
             +
           </button>
         </div>
@@ -124,7 +124,8 @@ export default function FreshdeskIntegLayout({
                 className="icn-btn sh-sm ml-2 mr-2 tooltip"
                 style={{ '--tooltip-txt': `'${__('Refresh Contact Field', 'bit-integrations')}'` }}
                 type="button"
-                disabled={isLoading}>
+                disabled={isLoading}
+              >
                 &#x21BB;
               </button>
             </div>
@@ -164,7 +165,8 @@ export default function FreshdeskIntegLayout({
                 )
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

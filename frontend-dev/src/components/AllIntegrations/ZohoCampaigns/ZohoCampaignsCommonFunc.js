@@ -20,14 +20,7 @@ export const setGrantTokenResponse = () => {
   window.close()
 }
 
-export const handleInput = (
-  e,
-  formID,
-  campaignsConf,
-  setCampaignsConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const handleInput = (e, formID, campaignsConf, setCampaignsConf, setIsLoading, setSnackbar) => {
   let newConf = { ...campaignsConf }
   newConf[e.target.name] = e.target.value
 
@@ -51,13 +44,7 @@ export const listChange = (campaignsConf, formID, setCampaignsConf, setIsLoading
   return newConf
 }
 
-export const refreshLists = (
-  formID,
-  campaignsConf,
-  setCampaignsConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const refreshLists = (formID, campaignsConf, setCampaignsConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
   const refreshListsRequestParams = {
     formID,

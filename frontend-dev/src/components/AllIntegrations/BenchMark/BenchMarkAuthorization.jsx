@@ -76,7 +76,8 @@ export default function BenchMarkAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
       {benchMark?.youTubeLink && (
         <TutorialLink title="Benchmark Email" youTubeLink={benchMark?.youTubeLink} />
       )}
@@ -117,7 +118,8 @@ export default function BenchMarkAuthorization({
           className="btcd-link"
           href="https://ui.benchmarkemail.com/Integrate#API"
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {__('BenchMark API Token', 'bit-integrations')}
         </a>
       </small>
@@ -145,7 +147,8 @@ export default function BenchMarkAuthorization({
             onClick={handleAuthorize}
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -156,7 +159,8 @@ export default function BenchMarkAuthorization({
             onClick={() => nextPage(2)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <BackIcn className="ml-1 rev-icn" />
           </button>

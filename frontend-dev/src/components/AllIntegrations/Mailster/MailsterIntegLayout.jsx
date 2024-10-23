@@ -39,7 +39,8 @@ export default function MailsterIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh fields', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.customFields}>
+              disabled={loading.customFields}
+            >
               &#x21BB;
             </button>
           </b>
@@ -85,7 +86,8 @@ export default function MailsterIntegLayout({
                     addFieldMap(mailsterConf.field_map.length, mailsterConf, setMailsterConf, false)
                   }
                   className="icn-btn sh-sm"
-                  type="button">
+                  type="button"
+                >
                   +
                 </button>
               </div>

@@ -37,7 +37,8 @@ export default function GravitecIntegLayout({
         onChange={handleActionInput}
         name="actionName"
         value={gravitecConf.actionName}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select an action', 'bit-integrations')}</option>
         <option value="notification" data-action_name="notification">
           {__('Push Notification', 'bit-integrations')}
@@ -90,7 +91,8 @@ export default function GravitecIntegLayout({
                 addFieldMap(gravitecConf.field_map.length, gravitecConf, setGravitecConf, false)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

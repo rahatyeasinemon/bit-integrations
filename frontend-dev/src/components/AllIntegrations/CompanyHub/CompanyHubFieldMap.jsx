@@ -6,13 +6,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import CustomField from './CustomField'
 import { addFieldMap, delFieldMap, handleFieldMapping } from './IntegrationHelpers'
 
-export default function CompanyHubFieldMap({
-  i,
-  formFields,
-  field,
-  companyHubConf,
-  setCompanyHubConf
-}) {
+export default function CompanyHubFieldMap({ i, formFields, field, companyHubConf, setCompanyHubConf }) {
   let allFields = []
   if (companyHubConf.actionName === 'contact') {
     allFields = companyHubConf?.contactFields
@@ -36,7 +30,8 @@ export default function CompanyHubFieldMap({
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, companyHubConf, setCompanyHubConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, companyHubConf, setCompanyHubConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -50,7 +45,8 @@ export default function CompanyHubFieldMap({
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -77,11 +73,10 @@ export default function CompanyHubFieldMap({
             disabled={i < requiredFields.length}
             name="companyHubFormField"
             value={
-              i < requiredFields.length
-                ? requiredFields[i].key || ''
-                : field.companyHubFormField || ''
+              i < requiredFields.length ? requiredFields[i].key || '' : field.companyHubFormField || ''
             }
-            onChange={(ev) => handleFieldMapping(ev, i, companyHubConf, setCompanyHubConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, companyHubConf, setCompanyHubConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFields.length ? (
               <option key={requiredFields[i].key} value={requiredFields[i].key}>
@@ -101,14 +96,16 @@ export default function CompanyHubFieldMap({
             <button
               onClick={() => addFieldMap(i, companyHubConf, setCompanyHubConf)}
               className="icn-btn sh-sm ml-2 mr-1"
-              type="button">
+              type="button"
+            >
               +
             </button>
             <button
               onClick={() => delFieldMap(i, companyHubConf, setCompanyHubConf)}
               className="icn-btn sh-sm ml-1"
               type="button"
-              aria-label="btn">
+              aria-label="btn"
+            >
               <span className="btcd-icn icn-trash-2" />
             </button>
           </>

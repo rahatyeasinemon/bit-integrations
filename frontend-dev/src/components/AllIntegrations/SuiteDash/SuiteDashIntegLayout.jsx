@@ -48,7 +48,8 @@ export default function SuiteDashIntegLayout({
         onChange={handleActionInput}
         name="actionName"
         value={suiteDashConf.actionName}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select an action', 'bit-integrations')}</option>
         <option value="contact" data-action_name="contact">
           {__('Create Contact', 'bit-integrations')}
@@ -93,7 +94,8 @@ export default function SuiteDashIntegLayout({
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh fields', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -126,7 +128,8 @@ export default function SuiteDashIntegLayout({
                 addFieldMap(suiteDashConf.field_map.length, suiteDashConf, setSuiteDashConf, false)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

@@ -47,10 +47,9 @@ export default function OneDriveAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {oneDrive?.youTubeLink && (
-        <TutorialLink title="OneDrive" youTubeLink={oneDrive?.youTubeLink} />
-      )}
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
+      {oneDrive?.youTubeLink && <TutorialLink title="OneDrive" youTubeLink={oneDrive?.youTubeLink} />}
       {oneDrive?.docLink && <TutorialLink title="OneDrive" docLink={oneDrive?.docLink} />}
 
       <div className="mt-3">
@@ -93,7 +92,8 @@ export default function OneDriveAuthorization({
           className="btcd-link"
           href="https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade"
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {__('Azure Portal', 'bit-integrations')}
         </a>
       </small>
@@ -130,17 +130,12 @@ export default function OneDriveAuthorization({
         <>
           <button
             onClick={() =>
-              handleAuthorize(
-                oneDriveConf,
-                setOneDriveConf,
-                setIsAuthorized,
-                setIsLoading,
-                setError
-              )
+              handleAuthorize(oneDriveConf, setOneDriveConf, setIsAuthorized, setIsLoading, setError)
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -151,7 +146,8 @@ export default function OneDriveAuthorization({
             onClick={nextPage}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

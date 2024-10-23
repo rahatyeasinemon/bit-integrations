@@ -75,8 +75,6 @@ export const gravitecAuthentication = (
       return
     }
     setLoading({ ...loading, auth: false })
-    toast.error(
-      __('Authorized failed, Please enter valid Public Id & Secret Key', 'bit-integrations')
-    )
+    toast.error(__('Authorized failed, Please enter valid Public Id & Secret Key', 'bit-integrations'))
   })
 }

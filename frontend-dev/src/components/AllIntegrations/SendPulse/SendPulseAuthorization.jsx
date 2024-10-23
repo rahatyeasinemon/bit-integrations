@@ -30,9 +30,7 @@ export default function SendPulseAuthorization({
     if (!newConf.name || !newConf.client_secret) {
       setError({
         name: !newConf.name ? __("Integration name can't be empty", 'bit-integrations') : '',
-        client_id: !newConf.client_id
-          ? __("Access Client Id can't be empty", 'bit-integrations')
-          : '',
+        client_id: !newConf.client_id ? __("Access Client Id can't be empty", 'bit-integrations') : '',
         client_secret: !newConf.client_secret
           ? __("Access Client Secret Key can't be empty", 'bit-integrations')
           : ''
@@ -93,10 +91,9 @@ export default function SendPulseAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {sendPulse?.youTubeLink && (
-        <TutorialLink title="SendPulse" youTubeLink={sendPulse?.youTubeLink} />
-      )}
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
+      {sendPulse?.youTubeLink && <TutorialLink title="SendPulse" youTubeLink={sendPulse?.youTubeLink} />}
       {sendPulse?.docLink && <TutorialLink title="SendPulse" docLink={sendPulse?.docLink} />}
 
       <div className="mt-3 wdt-200">
@@ -148,7 +145,8 @@ export default function SendPulseAuthorization({
           className="btcd-link"
           href="https://login.sendpulse.com/settings/#api"
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {__('Send Pulse API Token', 'bit-integrations')}
         </a>
       </small>
@@ -175,7 +173,8 @@ export default function SendPulseAuthorization({
             onClick={handleAuthorize}
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -186,7 +185,8 @@ export default function SendPulseAuthorization({
             onClick={() => nextPage(2)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <BackIcn className="ml-1 rev-icn" />
           </button>

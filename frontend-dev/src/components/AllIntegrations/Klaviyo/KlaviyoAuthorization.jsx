@@ -49,7 +49,8 @@ function KlaviyoAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
       {klaviyo?.youTubeLink && <TutorialLink title="Klaviyo" youTubeLink={klaviyo?.youTubeLink} />}
       {klaviyo?.docLink && <TutorialLink title="Klaviyo" docLink={klaviyo?.docLink} />}
 
@@ -89,7 +90,8 @@ function KlaviyoAuthorization({
             className="btcd-link"
             href="https://www.klaviyo.com/account#api-keys-tab"
             target="_blank"
-            rel="noreferrer">
+            rel="noreferrer"
+          >
             {__('here.', 'bit-integrations')}
           </a>
         </small>
@@ -108,7 +110,8 @@ function KlaviyoAuthorization({
               }
               className="btn btcd-btn-lg purple sh-sm"
               type="button"
-              disabled={isAuthorized || loading.auth}>
+              disabled={isAuthorized || loading.auth}
+            >
               {isAuthorized
                 ? __('Authorized ✔', 'bit-integrations')
                 : __('Authorize', 'bit-integrations')}
@@ -119,7 +122,8 @@ function KlaviyoAuthorization({
               onClick={nextPage}
               className="btn btcd-btn-lg purple sh-sm"
               type="button"
-              disabled={!isAuthorized}>
+              disabled={!isAuthorized}
+            >
               {__('Next', 'bit-integrations')}
               <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
             </button>

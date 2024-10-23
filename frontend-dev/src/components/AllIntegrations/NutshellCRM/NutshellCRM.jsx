@@ -54,8 +54,7 @@ function NutshellCRM({ formFields, setFlow, flow, allIntegURL }) {
     name: 'NutshellCRM',
     type: 'NutshellCRM',
     user_name: process.env.NODE_ENV === 'development' ? 'niloy@bitcode.pro' : '',
-    api_token:
-      process.env.NODE_ENV === 'development' ? '040b25bff9834b573b51c500e6489ca714d8bcf6' : '',
+    api_token: process.env.NODE_ENV === 'development' ? '040b25bff9834b573b51c500e6489ca714d8bcf6' : '',
     field_map: [{ formField: '', nutshellCRMFormField: '' }],
     actionName: '',
     actionId: '',
@@ -121,7 +120,8 @@ function NutshellCRM({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}
+      >
         <NutshellCRMIntegLayout
           formFields={formFields}
           handleInput={(e) =>
@@ -141,7 +141,8 @@ function NutshellCRM({ formFields, setFlow, flow, allIntegURL }) {
             onClick={() => nextPage(3)}
             disabled={!checkMappedFields(nutshellCRMConf)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
-            type="button">
+            type="button"
+          >
             {__('Next', 'bit-integrations')} &nbsp;
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

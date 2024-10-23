@@ -24,8 +24,8 @@ export default async function bitsFetch(data, action, queryParam = null, method 
     options.body = data instanceof FormData ? data : JSON.stringify(data)
   }
   const response = await fetch(uri, options)
-    .then(res => res.text())
-    .then(res => {
+    .then((res) => res.text())
+    .then((res) => {
       try {
         return JSON.parse(res)
       } catch (error) {

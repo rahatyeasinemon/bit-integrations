@@ -6,13 +6,7 @@ import TrashIcn from '../../../Icons/TrashIcn'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import MtInput from '../../Utilities/MtInput'
 
-export default function SendPulseFieldMap({
-  i,
-  formFields,
-  field,
-  sendPulseConf,
-  setSendPulseConf
-}) {
+export default function SendPulseFieldMap({ i, formFields, field, sendPulseConf, setSendPulseConf }) {
   const isRequired = field.required
   const notResquiredField =
     sendPulseConf?.default?.fields &&
@@ -56,7 +50,8 @@ export default function SendPulseFieldMap({
           className="btcd-paper-inp mr-2"
           name="formField"
           value={field.formField || ''}
-          onChange={(ev) => handleFieldMapping(ev, i)}>
+          onChange={(ev) => handleFieldMapping(ev, i)}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           <optgroup label={__('List Fields', 'bit-integrations')}>
             {formFields?.map((f) => (
@@ -67,7 +62,8 @@ export default function SendPulseFieldMap({
           </optgroup>
           <option value="custom">{__('Custom...', 'bit-integrations')}</option>
           <optgroup
-            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}>
+            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}
+          >
             {isPro &&
               SmartTagField?.map((f) => (
                 <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -93,7 +89,8 @@ export default function SendPulseFieldMap({
           name="sendPulseField"
           value={field.sendPulseField || ''}
           onChange={(ev) => handleFieldMapping(ev, i)}
-          disabled={isRequired}>
+          disabled={isRequired}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           {isRequired
             ? sendPulseConf?.default?.fields &&
@@ -119,7 +116,8 @@ export default function SendPulseFieldMap({
             onClick={() => delFieldMap(i)}
             className="icn-btn sh-sm ml-2"
             type="button"
-            aria-label="btn">
+            aria-label="btn"
+          >
             <TrashIcn />
           </button>
         </>

@@ -46,7 +46,8 @@ export default function PipeDriveIntegLayout({
         name="module"
         value={pipeDriveConf.moduleData.module}
         className="btcd-paper-inp w-5"
-        disabled={tab}>
+        disabled={tab}
+      >
         <option value="">{__('Select Module', 'bit-integrations')}</option>
         {Object.keys(pipeDriveConf.default.modules).map((moduleApiName) => (
           <option key={moduleApiName} value={moduleApiName}>
@@ -70,7 +71,8 @@ export default function PipeDriveIntegLayout({
                   <Tab key={`t-${indx * 3}`}>
                     <button
                       className={`btcd-s-tab-link ${tab === indx + 1 && 's-t-l-active'}`}
-                      type="button">
+                      type="button"
+                    >
                       {__('Related List', 'bit-integrations')} #{indx + 1}
                     </button>
                   </Tab>
@@ -78,7 +80,8 @@ export default function PipeDriveIntegLayout({
                     onClick={() => removeRelatedTab(indx)}
                     className="icn-btn"
                     aria-label="delete-relatedlist"
-                    type="button">
+                    type="button"
+                  >
                     <CloseIcn size="14" />
                   </button>
                 </>
@@ -91,7 +94,8 @@ export default function PipeDriveIntegLayout({
                   style={{
                     '--tooltip-txt': `'${__('Add More Related List', 'bit-integrations')}'`
                   }}
-                  type="button">
+                  type="button"
+                >
                   +
                 </button>
               )}

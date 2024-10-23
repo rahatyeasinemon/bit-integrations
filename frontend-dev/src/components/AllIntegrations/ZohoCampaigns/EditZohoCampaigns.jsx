@@ -76,9 +76,7 @@ function EditZohoCampaigns({ allIntegURL }) {
         edit
         saveConfig={saveConfig}
         disabled={
-          campaignsConf.list === '' ||
-          campaignsConf.table === '' ||
-          campaignsConf.field_map.length < 1
+          campaignsConf.list === '' || campaignsConf.table === '' || campaignsConf.field_map.length < 1
         }
         isLoading={isLoading}
         dataConf={campaignsConf}

@@ -36,7 +36,8 @@ function KlaviyoIntegLayout({ klaviyoConf, setKlaviyoConf, formFields, loading, 
         name="listId"
         value={klaviyoConf.listId}
         onChange={handleList}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select List', 'bit-integrations')}</option>
         {klaviyoConf?.default?.lists &&
           klaviyoConf.default.lists.map((list, key) => (
@@ -50,7 +51,8 @@ function KlaviyoIntegLayout({ klaviyoConf, setKlaviyoConf, formFields, loading, 
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': '"Refresh list"' }}
         type="button"
-        disabled={loading.list}>
+        disabled={loading.list}
+      >
         &#x21BB;
       </button>
 
@@ -98,7 +100,8 @@ function KlaviyoIntegLayout({ klaviyoConf, setKlaviyoConf, formFields, loading, 
                 addFieldMap(klaviyoConf.field_map.length, klaviyoConf, setKlaviyoConf, 'field_map')
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>
@@ -143,7 +146,8 @@ function KlaviyoIntegLayout({ klaviyoConf, setKlaviyoConf, formFields, loading, 
                     )
                   }
                   className="icn-btn sh-sm"
-                  type="button">
+                  type="button"
+                >
                   +
                 </button>
               </div>

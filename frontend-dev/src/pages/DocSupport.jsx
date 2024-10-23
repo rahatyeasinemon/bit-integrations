@@ -67,7 +67,8 @@ function DocSupport() {
                   role="button"
                   tabIndex="0"
                   className="btcd-inte-card product-sm mr-4 mt-3"
-                  style={{ width: '200px', height: 'max-content', textAlign: 'center' }}>
+                  style={{ width: '200px', height: 'max-content', textAlign: 'center' }}
+                >
                   <img
                     loading="lazy"
                     src={product.image}
@@ -84,7 +85,8 @@ function DocSupport() {
                       href={product.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="btn btcd-btn-o-purple btcd-btn-sm">
+                      className="btn btcd-btn-o-purple btcd-btn-sm"
+                    >
                       <i className="fas fa-external-link-alt" />
                       &nbsp;
                       <span className="pl-1">{__('Go to plugin', 'bit-integrations')}</span>
@@ -136,7 +138,8 @@ function DocSupport() {
             <a
               href="https://tawk.to/chat/60eac4b6d6e7610a49aab375/1faah0r3e"
               target="_blank"
-              rel="noreferrer">
+              rel="noreferrer"
+            >
               {__('Chat here', 'bit-integrations')} <ExternalLinkIcn size="15" />
             </a>
           </span>
@@ -149,7 +152,8 @@ function DocSupport() {
             <a
               href="https://www.youtube.com/channel/UCjUl8UGn-G6zXZ-Wpd7Sc3g"
               target="_blank"
-              rel="noreferrer">
+              rel="noreferrer"
+            >
               {__('Youtube channel', 'bit-integrations')} <ExternalLinkIcn size="15" />
             </a>
           </span>
@@ -159,10 +163,7 @@ function DocSupport() {
             <FacebookIcn size="20" />
           </span>
           <span className="ml-2">
-            <a
-              href="https://www.facebook.com/groups/3308027439209387"
-              target="_blank"
-              rel="noreferrer">
+            <a href="https://www.facebook.com/groups/3308027439209387" target="_blank" rel="noreferrer">
               {__('Facebook support group', 'bit-integrations')} <ExternalLinkIcn size="15" />
             </a>
           </span>
@@ -175,7 +176,8 @@ function DocSupport() {
             <a
               href="https://wordpress.org/support/plugin/bit-integrations/reviews/#new-post"
               target="_blank"
-              rel="noreferrer">
+              rel="noreferrer"
+            >
               {__('Rate us on WordPress', 'bit-integrations')} <ExternalLinkIcn size="15" />
             </a>
           </span>

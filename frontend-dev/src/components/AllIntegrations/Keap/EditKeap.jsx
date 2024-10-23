@@ -45,9 +45,7 @@ function EditGoogleSheet({ allIntegURL }) {
       <KeapIntegLayout
         formID={formID}
         formFields={formFields}
-        handleInput={(e) =>
-          handleInput(e, keapConf, setKeapConf, formID, setIsLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, keapConf, setKeapConf, formID, setIsLoading, setSnackbar)}
         keapConf={keapConf}
         setKeapConf={setKeapConf}
         isLoading={isLoading}

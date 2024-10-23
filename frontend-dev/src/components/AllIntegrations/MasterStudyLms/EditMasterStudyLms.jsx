@@ -29,7 +29,14 @@ function EditMasterStudyLms({ allIntegURL }) {
 
       <div className="flx mt-3">
         <b className="wdt-200 d-in-b">{__('Integration Name:', 'bit-integrations')}</b>
-        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, msLmsConf, setMsLmsConf)} name="name" value={msLmsConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
+        <input
+          className="btcd-paper-inp w-5"
+          onChange={(e) => handleInput(e, msLmsConf, setMsLmsConf)}
+          name="name"
+          value={msLmsConf.name}
+          type="text"
+          placeholder={__('Integration Name...', 'bit-integrations')}
+        />
       </div>
       <br />
       <br />
@@ -48,7 +55,17 @@ function EditMasterStudyLms({ allIntegURL }) {
 
       <IntegrationStepThree
         edit
-        saveConfig={() => saveActionConf({ flow, allIntegURL, conf: msLmsConf, navigate, edit: 1, setIsLoading, setSnackbar })}
+        saveConfig={() =>
+          saveActionConf({
+            flow,
+            allIntegURL,
+            conf: msLmsConf,
+            navigate,
+            edit: 1,
+            setIsLoading,
+            setSnackbar
+          })
+        }
         disabled={msLmsConf.mainAction === '' || isLoading}
         isLoading={isLoading}
         dataConf={msLmsConf}

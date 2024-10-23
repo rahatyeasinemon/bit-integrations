@@ -59,7 +59,8 @@ function SelzyIntegLayout({ selzyConf, setSelzyConf, formFields, loading, setLoa
             onChange={handleActionList}
             name="method"
             value={selzyConf?.method}
-            className="btcd-paper-inp w-5 mx-0">
+            className="btcd-paper-inp w-5 mx-0"
+          >
             <option value="">{__('Select Actions')}</option>
             {methodList &&
               methodList.map(({ key, label }) => (
@@ -90,7 +91,8 @@ function SelzyIntegLayout({ selzyConf, setSelzyConf, formFields, loading, setLoa
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': '"Refresh list"' }}
               type="button"
-              disabled={loading.list}>
+              disabled={loading.list}
+            >
               &#x21BB;
             </button>
             {loading.list && <LoaderSm size="20" clr="#022217" className="ml-2" />}
@@ -115,7 +117,8 @@ function SelzyIntegLayout({ selzyConf, setSelzyConf, formFields, loading, setLoa
                 className="icn-btn sh-sm ml-2 mr-2 tooltip"
                 style={{ '--tooltip-txt': '"Refresh Tag"' }}
                 type="button"
-                disabled={loading.tag}>
+                disabled={loading.tag}
+              >
                 &#x21BB;
               </button>
               {loading.tag && <LoaderSm size="20" clr="#022217" className="ml-2" />}
@@ -144,7 +147,8 @@ function SelzyIntegLayout({ selzyConf, setSelzyConf, formFields, loading, setLoa
                 className="icn-btn sh-sm ml-2 mr-2 tooltip"
                 style={{ '--tooltip-txt': `'${__('Refresh custom fields', 'bit-integrations')}'` }}
                 type="button"
-                disabled={loading.customFields}>
+                disabled={loading.customFields}
+              >
                 &#x21BB;
               </button>
             )}
@@ -173,11 +177,10 @@ function SelzyIntegLayout({ selzyConf, setSelzyConf, formFields, loading, setLoa
             <>
               <div className="txt-center btcbi-field-map-button mt-2">
                 <button
-                  onClick={() =>
-                    addFieldMap(selzyConf.field_map.length, selzyConf, setSelzyConf, false)
-                  }
+                  onClick={() => addFieldMap(selzyConf.field_map.length, selzyConf, setSelzyConf, false)}
                   className="icn-btn sh-sm"
-                  type="button">
+                  type="button"
+                >
                   +
                 </button>
               </div>

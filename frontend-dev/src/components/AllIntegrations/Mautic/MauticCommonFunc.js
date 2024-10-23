@@ -141,9 +141,7 @@ export const handleMauticAuthorize = (
   if (!confTmp.clientId || !confTmp.clientSecret || !confTmp.baseUrl) {
     setError({
       clientId: !confTmp.clientId ? __("Client Id can't be empty", 'bit-integrations') : '',
-      clientSecret: !confTmp.clientSecret
-        ? __("Secret key can't be empty", 'bit-integrations')
-        : '',
+      clientSecret: !confTmp.clientSecret ? __("Secret key can't be empty", 'bit-integrations') : '',
       baseUrl: !confTmp.baseUrl ? __("Base Url can't be empty", 'bit-integrations') : ''
     })
     return
@@ -187,14 +185,7 @@ export const handleMauticAuthorize = (
       } else {
         const newConf = { ...confTmp }
         newConf.accountServer = grantTokenResponse['accounts-server']
-        tokenHelper(
-          grantTokenResponse,
-          newConf,
-          setConf,
-          setisAuthorized,
-          setIsLoading,
-          setSnackbar
-        )
+        tokenHelper(grantTokenResponse, newConf, setConf, setisAuthorized, setIsLoading, setSnackbar)
       }
     }
   }, 500)

@@ -64,9 +64,7 @@ function EditDiscord({ allIntegURL }) {
             setSnackbar
           })
         }
-        disabled={
-          discordConf.selectedChannel === '' || discordConf.selectedServer === '' || isLoading
-        }
+        disabled={discordConf.selectedChannel === '' || discordConf.selectedServer === '' || isLoading}
         isLoading={isLoading}
         dataConf={discordConf}
         setDataConf={setDiscordConf}

@@ -84,10 +84,7 @@ export const refreshCampaignMonitorFields = (
       } else {
         setSnackbar({
           show: true,
-          msg: __(
-            'CampaignMonitor Custom fields refresh failed. please try again',
-            'bit-integrations'
-          )
+          msg: __('CampaignMonitor Custom fields refresh failed. please try again', 'bit-integrations')
         })
       }
       setIsLoading(false)

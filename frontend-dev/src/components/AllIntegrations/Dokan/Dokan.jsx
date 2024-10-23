@@ -41,16 +41,7 @@ function Dokan({ formFields, setFlow, flow, allIntegURL }) {
 
   const saveConfig = () => {
     setIsLoading(true)
-    const resp = saveIntegConfig(
-      flow,
-      setFlow,
-      allIntegURL,
-      dokanConf,
-      navigate,
-      '',
-      '',
-      setIsLoading
-    )
+    const resp = saveIntegConfig(flow, setFlow, allIntegURL, dokanConf, navigate, '', '', setIsLoading)
     resp.then((res) => {
       if (res.success) {
         toast.success(res.data?.msg)
@@ -80,10 +71,7 @@ function Dokan({ formFields, setFlow, flow, allIntegURL }) {
       return
     }
 
-    if (
-      dokanConf.selectedTask !== TASK_LIST_VALUES.DELETE_VENDOR &&
-      !checkMappedFields(dokanConf)
-    ) {
+    if (dokanConf.selectedTask !== TASK_LIST_VALUES.DELETE_VENDOR && !checkMappedFields(dokanConf)) {
       toast.error(__('Please map mandatory fields!', 'bit-integrations'))
       return
     }
@@ -129,7 +117,8 @@ function Dokan({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}
+      >
         <DokanIntegLayout
           formFields={formFields}
           dokanConf={dokanConf}
@@ -141,11 +130,11 @@ function Dokan({ formFields, setFlow, flow, allIntegURL }) {
         <button
           onClick={() => nextPage(3)}
           disabled={
-            dokanConf?.selectedTask !== TASK_LIST_VALUES.DELETE_VENDOR &&
-            !checkMappedFields(dokanConf)
+            dokanConf?.selectedTask !== TASK_LIST_VALUES.DELETE_VENDOR && !checkMappedFields(dokanConf)
           }
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')} &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>

@@ -90,9 +90,7 @@ export const insightlyAuthentication = (
       return
     }
     setLoading({ ...loading, auth: false })
-    toast.error(
-      __('Authorized failed, Please enter valid api_url name & API key', 'bit-integrations')
-    )
+    toast.error(__('Authorized failed, Please enter valid api_url name & API key', 'bit-integrations'))
   })
 }
 

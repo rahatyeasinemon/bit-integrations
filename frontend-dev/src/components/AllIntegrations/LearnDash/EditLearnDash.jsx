@@ -45,9 +45,7 @@ function EditLearnDash({ allIntegURL }) {
       <LearnDashIntegLayout
         formID={formID}
         formFields={formFields}
-        handleInput={(e) =>
-          handleInput(e, learnDashConf, setLearnDashConf, setIsLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, learnDashConf, setLearnDashConf, setIsLoading, setSnackbar)}
         learnDashConf={learnDashConf}
         setLearnDashConf={setLearnDashConf}
         isLoading={isLoading}

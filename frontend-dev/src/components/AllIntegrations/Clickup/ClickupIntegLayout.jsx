@@ -30,10 +30,7 @@ export default function ClickupIntegLayout({
     if (e.target.value !== '') {
       newConf[name] = e.target.value
 
-      if (
-        e.target.value === 'task' &&
-        (newConf.selectedTeam != '' || newConf.selectedTeam != null)
-      ) {
+      if (e.target.value === 'task' && (newConf.selectedTeam != '' || newConf.selectedTeam != null)) {
         getAllTeams(newConf, setClickupConf, setLoading)
       }
     } else {
@@ -72,7 +69,8 @@ export default function ClickupIntegLayout({
         onChange={handleActionInput}
         name="actionName"
         value={clickupConf.actionName}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select an action', 'bit-integrations')}</option>
         <option value="task">{__('Create Task', 'bit-integrations')}</option>
       </select>
@@ -97,7 +95,8 @@ export default function ClickupIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh teams', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.Teams}>
+              disabled={loading.Teams}
+            >
               &#x21BB;
             </button>
           </div>
@@ -125,7 +124,8 @@ export default function ClickupIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh spaces', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.Spaces}>
+              disabled={loading.Spaces}
+            >
               &#x21BB;
             </button>
           </div>
@@ -153,7 +153,8 @@ export default function ClickupIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh folders', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.Folders}>
+              disabled={loading.Folders}
+            >
               &#x21BB;
             </button>
           </div>
@@ -179,18 +180,15 @@ export default function ClickupIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh Lists', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.Lists}>
+              disabled={loading.Lists}
+            >
               &#x21BB;
             </button>
           </div>
         </>
       )}
 
-      {(loading.Teams ||
-        loading.Spaces ||
-        loading.Folders ||
-        loading.Lists ||
-        loading.customFields) && (
+      {(loading.Teams || loading.Spaces || loading.Folders || loading.Lists || loading.customFields) && (
         <Loader
           style={{
             display: 'flex',
@@ -212,7 +210,8 @@ export default function ClickupIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh fields', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.Lists}>
+              disabled={loading.Lists}
+            >
               &#x21BB;
             </button>
           </div>
@@ -245,7 +244,8 @@ export default function ClickupIntegLayout({
                 addFieldMap(clickupConf.field_map.length, clickupConf, setClickupConf, false)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

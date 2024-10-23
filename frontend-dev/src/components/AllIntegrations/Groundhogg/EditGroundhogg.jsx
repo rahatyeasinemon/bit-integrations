@@ -47,9 +47,7 @@ function EditGroundhogg({ allIntegURL }) {
       <GroundhoggIntegLayout
         formID={formID}
         formFields={formFields}
-        handleInput={(e) =>
-          handleInput(e, groundhoggConf, setGroundhoggConf, setIsLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, groundhoggConf, setGroundhoggConf, setIsLoading, setSnackbar)}
         groundhoggConf={groundhoggConf}
         setGroundhoggConf={setGroundhoggConf}
         isLoading={isLoading}
@@ -70,9 +68,8 @@ function EditGroundhogg({ allIntegURL }) {
           })
         }
         disabled={
-          (groundhoggConf.mainAction === '2'
-            ? isDisabled
-            : !(groundhoggConf.field_map?.length >= 1)) || isLoading
+          (groundhoggConf.mainAction === '2' ? isDisabled : !(groundhoggConf.field_map?.length >= 1)) ||
+          isLoading
         }
         isLoading={isLoading}
         dataConf={groundhoggConf}

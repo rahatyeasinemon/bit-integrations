@@ -40,7 +40,8 @@ export default function MailerLiteIntegLayout({
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': '"Refresh Fields"' }}
             type="button"
-            disabled={loading.field}>
+            disabled={loading.field}
+          >
             &#x21BB;
           </button>
         </b>
@@ -84,7 +85,8 @@ export default function MailerLiteIntegLayout({
             addFieldMap(mailerLiteConf.field_map.length, mailerLiteConf, setMailerLiteConf, false)
           }
           className="icn-btn sh-sm"
-          type="button">
+          type="button"
+        >
           +
         </button>
       </div>

@@ -78,10 +78,7 @@ export const smailyAuthentication = (
     }
     setLoading({ ...loading, auth: false })
     toast.error(
-      __(
-        'Authorized failed, Please enter valid subdomain name & API credentials',
-        'bit-integrations'
-      )
+      __('Authorized failed, Please enter valid subdomain name & API credentials', 'bit-integrations')
     )
   })
 }

@@ -63,7 +63,8 @@ export default function CustomFieldMap({
           className="btcd-paper-inp mr-2"
           name="formField"
           value={field.formField || ''}
-          onChange={(ev) => handleFieldMapping(propName, ev, i, postConf, setPostConf)}>
+          onChange={(ev) => handleFieldMapping(propName, ev, i, postConf, setPostConf)}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           {fieldType === 'fields' ? (
             <>
@@ -86,7 +87,8 @@ export default function CustomFieldMap({
                 label={sprintf(
                   __('General Smart Codes %s', 'bit-integrations'),
                   isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-                )}>
+                )}
+              >
                 {isPro &&
                   SmartTagField?.map((f) => (
                     <option key={`ff-zhcrm-${f.name}`} value={f.name}>
@@ -122,7 +124,8 @@ export default function CustomFieldMap({
           name={fldName}
           value={field[fldName] || ''}
           onChange={(ev) => handleFieldMapping(propName, ev, i, postConf, setPostConf)}
-          disabled={isRequired}>
+          disabled={isRequired}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           {customFields.length > 0 &&
             customFields?.map((header) => (
@@ -138,14 +141,16 @@ export default function CustomFieldMap({
           <button
             onClick={() => addFieldMap(propName, i, postConf, setPostConf)}
             className="icn-btn sh-sm ml-2 mr-1"
-            type="button">
+            type="button"
+          >
             +
           </button>
           <button
             onClick={() => delFieldMap(propName, i, postConf, setPostConf)}
             className="icn-btn sh-sm ml-1"
             type="button"
-            aria-label="btn">
+            aria-label="btn"
+          >
             <TrashIcn />
           </button>
         </>

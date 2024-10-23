@@ -39,7 +39,8 @@ export default function TwilioAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
       {twilio?.youTubeLink && <TutorialLink title="Twilio" youTubeLink={twilio?.youTubeLink} />}
       {twilio?.docLink && <TutorialLink title="Twilio" docLink={twilio?.docLink} />}
 
@@ -72,11 +73,7 @@ export default function TwilioAuthorization({
 
       <small className="d-blk mt-5">
         {__('To get Account SID and Auth Token , Please Visit', 'bit-integrations')}{' '}
-        <a
-          className="btcd-link"
-          href="https://console.twilio.com/"
-          target="_blank"
-          rel="noreferrer">
+        <a className="btcd-link" href="https://console.twilio.com/" target="_blank" rel="noreferrer">
           {__('Twilio Console', 'bit-integrations')}
         </a>
       </small>
@@ -124,7 +121,8 @@ export default function TwilioAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -135,7 +133,8 @@ export default function TwilioAuthorization({
             onClick={nextPage}
             className="btn ml-auto btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

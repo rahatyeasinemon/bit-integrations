@@ -52,7 +52,8 @@ export default function LifterLmsIntegLayout({
         onChange={handleInput}
         name="mainAction"
         value={lifterLmsConf.mainAction}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select Actions', 'bit-integrations')}</option>
         {lifterLmsConf.allActions &&
           lifterLmsConf.allActions.map(({ key, label }) => (
@@ -80,13 +81,12 @@ export default function LifterLmsIntegLayout({
             onChange={(val) => changeHandler(val, 'lessonId')}
           />
           <button
-            onClick={() =>
-              fetchAllLesson(lifterLmsConf, setLifterLmsConf, setIsLoading, setSnackbar)
-            }
+            onClick={() => fetchAllLesson(lifterLmsConf, setLifterLmsConf, setIsLoading, setSnackbar)}
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Fetch lesson list', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
         </div>
@@ -108,13 +108,12 @@ export default function LifterLmsIntegLayout({
             onChange={(val) => changeHandler(val, 'sectionId')}
           />
           <button
-            onClick={() =>
-              fetchAllSection(lifterLmsConf, setLifterLmsConf, setIsLoading, setSnackbar)
-            }
+            onClick={() => fetchAllSection(lifterLmsConf, setLifterLmsConf, setIsLoading, setSnackbar)}
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Fetch section list', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
         </div>
@@ -136,13 +135,12 @@ export default function LifterLmsIntegLayout({
             onChange={(val) => changeHandler(val, 'courseId')}
           />
           <button
-            onClick={() =>
-              fetchAllCourse(lifterLmsConf, setLifterLmsConf, setIsLoading, setSnackbar)
-            }
+            onClick={() => fetchAllCourse(lifterLmsConf, setLifterLmsConf, setIsLoading, setSnackbar)}
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Fetch course list', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
         </div>
@@ -171,7 +169,8 @@ export default function LifterLmsIntegLayout({
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Fetch membership list', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
         </div>

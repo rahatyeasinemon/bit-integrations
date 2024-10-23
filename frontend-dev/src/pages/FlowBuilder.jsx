@@ -20,7 +20,10 @@ export default function FlowBuilder() {
     <div className="btcd-s-wrp" style={{ height: '82vh' }}>
       <div className="flx flx-center flx-col">
         {(!newFlow?.triggered_entity || !newFlow?.triggerData || flowStep === 1) && <SelectTrigger />}
-        {(newFlow?.triggered_entity !== false && newFlow?.triggerData && !newFlow?.action && flowStep === 2) && <SelectAction />}
+        {newFlow?.triggered_entity !== false &&
+          newFlow?.triggerData &&
+          !newFlow?.action &&
+          flowStep === 2 && <SelectAction />}
       </div>
     </div>
   )

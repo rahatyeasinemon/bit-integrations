@@ -81,7 +81,8 @@ function Mailercloud({ formFields, setFlow, flow, allIntegURL }) {
             onClick={() => nextPage(mailercloudConf, setStep, 3)}
             disabled={!mailercloudConf.listId || mailercloudConf.field_map.length < 1}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
-            type="button">
+            type="button"
+          >
             {__('Next')}
             &nbsp;
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />

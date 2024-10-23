@@ -266,10 +266,7 @@ function Mail({ allIntegURL, isInfo, edit }) {
           placeholder="Email Subject Here"
           value={conf.subject}
         />
-        <select
-          onChange={addFieldToSubject}
-          className="btcd-paper-inp ml-2"
-          style={{ width: '20%' }}>
+        <select onChange={addFieldToSubject} className="btcd-paper-inp ml-2" style={{ width: '20%' }}>
           {/* <option value="">{__('Add form field', 'bit-integrations')}</option>
           {formFields !== null && formFields.map(f => !f.type.match(/^(file|recaptcha)$/) && <option key={f.name} value={`\${${f.name}}`}>{f.label}</option>)} */}
           <option value="">{__('Add field', 'bit-integrations')}</option>
@@ -285,7 +282,8 @@ function Mail({ allIntegURL, isInfo, edit }) {
               )}
           </optgroup>
           <optgroup
-            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}>
+            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}
+          >
             {isPro &&
               SmartTagField?.map((f) => (
                 <option key={`ff-rm-${f.name}`} value={`\${${f.name}}`}>
@@ -335,7 +333,8 @@ const SaveButton = ({ saveConfig, edit, isLoading }) =>
         onClick={saveConfig}
         className="btn btcd-btn-lg purple sh-sm flx"
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         {__('Update', 'bit-integrations')}
         {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
       </button>
@@ -346,7 +345,8 @@ const SaveButton = ({ saveConfig, edit, isLoading }) =>
         onClick={saveConfig}
         className="btn btcd-btn-lg purple sh-sm"
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         {__('Save', 'bit-integrations')}✔
         {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
       </button>

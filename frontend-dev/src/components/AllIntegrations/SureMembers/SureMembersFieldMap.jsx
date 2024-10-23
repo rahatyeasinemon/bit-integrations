@@ -23,7 +23,8 @@ export default function SureMembersFieldMap({
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, sureMembersConf, setSureMembersConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, sureMembersConf, setSureMembersConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -58,10 +59,9 @@ export default function SureMembersFieldMap({
             className="btcd-paper-inp"
             disabled={i < requiredFields.length}
             name="sureMembersField"
-            value={
-              i < requiredFields ? requiredFields[i].label || '' : field.sureMembersField || ''
-            }
-            onChange={(ev) => handleFieldMapping(ev, i, sureMembersConf, setSureMembersConf)}>
+            value={i < requiredFields ? requiredFields[i].label || '' : field.sureMembersField || ''}
+            onChange={(ev) => handleFieldMapping(ev, i, sureMembersConf, setSureMembersConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFields.length ? (
               <option key={requiredFields[i].key} value={requiredFields[i].key}>
@@ -82,14 +82,16 @@ export default function SureMembersFieldMap({
               <button
                 onClick={() => addFieldMap(i, sureMembersConf, setSureMembersConf)}
                 className="icn-btn sh-sm ml-2 mr-1"
-                type="button">
+                type="button"
+              >
                 +
               </button>
               <button
                 onClick={() => delFieldMap(i, sureMembersConf, setSureMembersConf)}
                 className="icn-btn sh-sm ml-1"
                 type="button"
-                aria-label="btn">
+                aria-label="btn"
+              >
                 <span className="btcd-icn icn-trash-2" />
               </button>
             </>

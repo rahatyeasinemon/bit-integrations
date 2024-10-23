@@ -143,9 +143,7 @@ export const handleMailupAuthorize = (
   }
   if (!confTmp.clientSecret) {
     setError({
-      clientSecret: !confTmp.clientSecret
-        ? __("Client Secret can't be empty", 'bit-integrations')
-        : ''
+      clientSecret: !confTmp.clientSecret ? __("Client Secret can't be empty", 'bit-integrations') : ''
     })
     return
   }

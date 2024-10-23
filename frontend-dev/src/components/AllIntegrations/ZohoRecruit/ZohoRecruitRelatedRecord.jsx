@@ -21,15 +21,7 @@ export default function ZohoRecruitRelatedRecord({
   setSnackbar
 }) {
   useEffect(() => {
-    handleTabChange(
-      indx + 1,
-      settab,
-      recruitConf,
-      setRecruitConf,
-      formID,
-      setIsLoading,
-      setSnackbar
-    )
+    handleTabChange(indx + 1, settab, recruitConf, setRecruitConf, formID, setIsLoading, setSnackbar)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -42,7 +34,8 @@ export default function ZohoRecruitRelatedRecord({
         name="module"
         value={recruitConf?.relatedlists?.[tab - 1]?.module}
         className="btcd-paper-inp w-7"
-        disabled={!recruitConf.module}>
+        disabled={!recruitConf.module}
+      >
         <option value="">{__('Select Related Module', 'bit-integrations')}</option>
         {recruitConf?.default.relatedlists?.[recruitConf.module] &&
           Object.values(recruitConf.default.relatedlists[recruitConf.module]).map(
@@ -60,7 +53,8 @@ export default function ZohoRecruitRelatedRecord({
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': '"Refresh Recruit Related Lists"' }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -114,15 +108,15 @@ export default function ZohoRecruitRelatedRecord({
                 )
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>
           <br />
           <br />
           {Object.keys(
-            recruitConf.default?.moduleData?.[recruitConf.relatedlists[tab - 1].module]
-              ?.fileUploadFields
+            recruitConf.default?.moduleData?.[recruitConf.relatedlists[tab - 1].module]?.fileUploadFields
           ).length !== 0 && (
             <>
               <div className="mt-4">
@@ -162,7 +156,8 @@ export default function ZohoRecruitRelatedRecord({
                     )
                   }
                   className="icn-btn sh-sm"
-                  type="button">
+                  type="button"
+                >
                   +
                 </button>
               </div>

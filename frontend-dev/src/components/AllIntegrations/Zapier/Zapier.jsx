@@ -37,7 +37,8 @@ function Zapier({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 1 */}
       <div
         className="btcd-stp-page"
-        style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+        style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+      >
         {zapierLinks?.youTubeLink && (
           <TutorialLink title="Zapier" youTubeLink={zapierLinks?.youTubeLink} />
         )}
@@ -58,7 +59,8 @@ function Zapier({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ width: step === 2 && `${100}%`, height: step === 2 && 'auto' }}>
+        style={{ width: step === 2 && `${100}%`, height: step === 2 && 'auto' }}
+      >
         <WebHooksStepTwo
           step={step}
           saveConfig={() =>

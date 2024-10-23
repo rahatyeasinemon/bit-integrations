@@ -70,10 +70,7 @@ function EditJetEngine({ allIntegURL }) {
       }
     }
 
-    if (
-      jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST_TYPE &&
-      !jetEngineConf.selectedCPT
-    ) {
+    if (jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST_TYPE && !jetEngineConf.selectedCPT) {
       toast.error('Please select a custom post type!')
       return
     }
@@ -162,9 +159,7 @@ function EditJetEngine({ allIntegURL }) {
       <JetEngineIntegLayout
         formID={flow.triggered_entity_id}
         formFields={formField}
-        handleInput={(e) =>
-          handleInput(e, jetEngineConf, setJetEngineConf, setLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, jetEngineConf, setJetEngineConf, setLoading, setSnackbar)}
         jetEngineConf={jetEngineConf}
         setJetEngineConf={setJetEngineConf}
         loading={loading}

@@ -28,7 +28,8 @@ export default function SliceWpIntegLayout({
         onChange={handleInput}
         name="mainAction"
         value={sliceWpConf?.mainAction}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select Actions', 'bit-integrations')}</option>
         {sliceWpConf?.allActions &&
           sliceWpConf.allActions.map(({ key, label }) => (
@@ -78,11 +79,10 @@ export default function SliceWpIntegLayout({
             ))}
             <div className="txt-center btcbi-field-map-button mt-2">
               <button
-                onClick={() =>
-                  addFieldMap(sliceWpConf.field_map.length, sliceWpConf, setSliceWpConf)
-                }
+                onClick={() => addFieldMap(sliceWpConf.field_map.length, sliceWpConf, setSliceWpConf)}
                 className="icn-btn sh-sm"
-                type="button">
+                type="button"
+              >
                 +
               </button>
             </div>
@@ -105,9 +105,7 @@ export default function SliceWpIntegLayout({
         )}
       </>
       <br />
-      <Note
-        note={__('Some integrations will only work for logged-in users.', 'bit-integrations')}
-      />
+      <Note note={__('Some integrations will only work for logged-in users.', 'bit-integrations')} />
     </>
   )
 }

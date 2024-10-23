@@ -167,11 +167,7 @@ export default function WooCommerceIntegLayout({
     <>
       <br />
       <b className="wdt-200 d-in-b">{__('Module:', 'bit-integrations')}</b>
-      <select
-        onChange={handleInput}
-        name="module"
-        value={wcConf.module}
-        className="btcd-paper-inp w-5">
+      <select onChange={handleInput} name="module" value={wcConf.module} className="btcd-paper-inp w-5">
         <option value="">{__('Select Module', 'bit-integrations')}</option>
         {moduleType?.map((f) => (
           <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -188,7 +184,8 @@ export default function WooCommerceIntegLayout({
             onChange={handleFilter}
             name="filterstatus"
             value={wcConf.filterstatus}
-            className="btcd-paper-inp w-5">
+            className="btcd-paper-inp w-5"
+          >
             <option value="">{__('Select Filter Type', 'bit-integrations')}</option>
 
             {filterStatus?.map((f) => (
@@ -208,7 +205,8 @@ export default function WooCommerceIntegLayout({
             onChange={handleOrderChange}
             name="orderchange"
             value={wcConf?.orderchange}
-            className="btcd-paper-inp w-5">
+            className="btcd-paper-inp w-5"
+          >
             <option value="">{__('Select Order Change Type', 'bit-integrations')}</option>
             {orderChange?.map((f) => (
               <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -238,12 +236,14 @@ export default function WooCommerceIntegLayout({
         <div className="tab-box">
           <span
             className={`tab-item ${active.order && 'active'}`}
-            onClick={() => handleTabChange('order')}>
+            onClick={() => handleTabChange('order')}
+          >
             Order
           </span>
           <span
             className={`tab-item ${active.customer && 'active'}`}
-            onClick={() => handleTabChange('customer')}>
+            onClick={() => handleTabChange('customer')}
+          >
             Customer
           </span>
         </div>
@@ -268,15 +268,14 @@ export default function WooCommerceIntegLayout({
               singleSelect
             />
             <button
-              onClick={() =>
-                getAllSubscriptionsProducts(wcConf, setWcConf, setIsLoading, setSnackbar)
-              }
+              onClick={() => getAllSubscriptionsProducts(wcConf, setWcConf, setIsLoading, setSnackbar)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{
                 '--tooltip-txt': `'${__('Fetch All Subscription product', 'bit-integrations')}'`
               }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -300,7 +299,8 @@ export default function WooCommerceIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh fields', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -328,7 +328,8 @@ export default function WooCommerceIntegLayout({
             <button
               onClick={() => addFieldMap(wcConf[module].field_map.length)}
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>
@@ -344,7 +345,8 @@ export default function WooCommerceIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh fields', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -374,7 +376,8 @@ export default function WooCommerceIntegLayout({
             <button
               onClick={() => addFieldMap(wcConf[module].field_map.length, true)}
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>
@@ -410,7 +413,8 @@ export default function WooCommerceIntegLayout({
             <button
               onClick={() => addFieldMap(wcConf.line_item.field_map.length, false, 'line_item')}
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

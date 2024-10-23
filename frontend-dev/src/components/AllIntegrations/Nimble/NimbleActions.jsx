@@ -8,7 +8,7 @@ import ConfirmModal from '../../Utilities/ConfirmModal'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 
 export default function NimbleActions({ nimbleConf, setNimbleConf, loading, setLoading }) {
-  const [actionMdl, setActionMdl] = useState({ show: false, action: () => { } })
+  const [actionMdl, setActionMdl] = useState({ show: false, action: () => {} })
 
   const actionHandler = (e, type) => {
     const newConf = { ...nimbleConf }
@@ -65,11 +65,56 @@ export default function NimbleActions({ nimbleConf, setNimbleConf, loading, setL
 
   return (
     <div className="pos-rel d-flx flx-wrp">
-      {nimbleConf.actionName === 'company' && <TableCheckBox checked={nimbleConf?.selectedxofEmployees?.length || false} onChange={(e) => actionHandler(e, 'xofEmployees')} className="wdt-200 mt-4 mr-2" value="xofEmployees" title={__('Add Employee Size', 'bit - integrations')} subTitle={__('Add Employee Size')} />}
-      {(nimbleConf.actionName === 'company' || nimbleConf.actionName === 'person') && <TableCheckBox checked={nimbleConf?.selectedRating?.length || false} onChange={(e) => actionHandler(e, 'rating')} className="wdt-200 mt-4 mr-2" value="rating" title={__('Add Ratings', 'bit - integrations')} subTitle={__('Add Ratings')} />}
-      {(nimbleConf.actionName === 'company' || nimbleConf.actionName === 'person') && <TableCheckBox checked={nimbleConf?.selectedLeadStatus?.length || false} onChange={(e) => actionHandler(e, 'leadStatus')} className="wdt-200 mt-4 mr-2" value="leadStatus" title={__('Add Lead Status', 'bit - integrations')} subTitle={__('Add Lead Status')} />}
-      {(nimbleConf.actionName === 'company' || nimbleConf.actionName === 'person') && <TableCheckBox checked={nimbleConf?.selectedLeadSource?.length || false} onChange={(e) => actionHandler(e, 'leadSource')} className="wdt-200 mt-4 mr-2" value="leadSource" title={__('Add Lead Source', 'bit - integrations')} subTitle={__('Add Lead Source')} />}
-      {(nimbleConf.actionName === 'company' || nimbleConf.actionName === 'person') && <TableCheckBox checked={nimbleConf?.selectedLeadType?.length || false} onChange={(e) => actionHandler(e, 'leadType')} className="wdt-200 mt-4 mr-2" value="leadType" title={__('Add Lead Type', 'bit - integrations')} subTitle={__('Add Lead Type')} />}
+      {nimbleConf.actionName === 'company' && (
+        <TableCheckBox
+          checked={nimbleConf?.selectedxofEmployees?.length || false}
+          onChange={(e) => actionHandler(e, 'xofEmployees')}
+          className="wdt-200 mt-4 mr-2"
+          value="xofEmployees"
+          title={__('Add Employee Size', 'bit - integrations')}
+          subTitle={__('Add Employee Size')}
+        />
+      )}
+      {(nimbleConf.actionName === 'company' || nimbleConf.actionName === 'person') && (
+        <TableCheckBox
+          checked={nimbleConf?.selectedRating?.length || false}
+          onChange={(e) => actionHandler(e, 'rating')}
+          className="wdt-200 mt-4 mr-2"
+          value="rating"
+          title={__('Add Ratings', 'bit - integrations')}
+          subTitle={__('Add Ratings')}
+        />
+      )}
+      {(nimbleConf.actionName === 'company' || nimbleConf.actionName === 'person') && (
+        <TableCheckBox
+          checked={nimbleConf?.selectedLeadStatus?.length || false}
+          onChange={(e) => actionHandler(e, 'leadStatus')}
+          className="wdt-200 mt-4 mr-2"
+          value="leadStatus"
+          title={__('Add Lead Status', 'bit - integrations')}
+          subTitle={__('Add Lead Status')}
+        />
+      )}
+      {(nimbleConf.actionName === 'company' || nimbleConf.actionName === 'person') && (
+        <TableCheckBox
+          checked={nimbleConf?.selectedLeadSource?.length || false}
+          onChange={(e) => actionHandler(e, 'leadSource')}
+          className="wdt-200 mt-4 mr-2"
+          value="leadSource"
+          title={__('Add Lead Source', 'bit - integrations')}
+          subTitle={__('Add Lead Source')}
+        />
+      )}
+      {(nimbleConf.actionName === 'company' || nimbleConf.actionName === 'person') && (
+        <TableCheckBox
+          checked={nimbleConf?.selectedLeadType?.length || false}
+          onChange={(e) => actionHandler(e, 'leadType')}
+          className="wdt-200 mt-4 mr-2"
+          value="leadType"
+          title={__('Add Lead Type', 'bit - integrations')}
+          subTitle={__('Add Lead Type')}
+        />
+      )}
 
       <ConfirmModal
         className="custom-conf-mdl"
@@ -82,15 +127,13 @@ export default function NimbleActions({ nimbleConf, setNimbleConf, loading, setL
         title={__('Add Employee Size', 'bit-integrations')}
       >
         <div className="btcd-hr mt-2 mb-2" />
-        <div className="mt-2">
-          {__('Select Employee Size', 'bit-integrations')}
-        </div>
+        <div className="mt-2">{__('Select Employee Size', 'bit-integrations')}</div>
         <div className="flx flx-between mt-2">
           <MultiSelect
-            options={nimbleConf?.xofEmployees?.map(size => ({ label: size, value: `${size}` }))}
+            options={nimbleConf?.xofEmployees?.map((size) => ({ label: size, value: `${size}` }))}
             className="msl-wrp-options"
             defaultValue={nimbleConf?.selectedxofEmployees}
-            onChange={val => setChanges(val, 'selectedxofEmployees')}
+            onChange={(val) => setChanges(val, 'selectedxofEmployees')}
             singleSelect
             closeOnSelect
           />
@@ -108,15 +151,13 @@ export default function NimbleActions({ nimbleConf, setNimbleConf, loading, setL
         title={__('Add Rating', 'bit-integrations')}
       >
         <div className="btcd-hr mt-2 mb-2" />
-        <div className="mt-2">
-          {__('Select Rating', 'bit-integrations')}
-        </div>
+        <div className="mt-2">{__('Select Rating', 'bit-integrations')}</div>
         <div className="flx flx-between mt-2">
           <MultiSelect
-            options={nimbleConf?.ratings?.map(rating => ({ label: rating, value: `${rating}` }))}
+            options={nimbleConf?.ratings?.map((rating) => ({ label: rating, value: `${rating}` }))}
             className="msl-wrp-options"
             defaultValue={nimbleConf?.selectedRating}
-            onChange={val => setChanges(val, 'selectedRating')}
+            onChange={(val) => setChanges(val, 'selectedRating')}
             singleSelect
             closeOnSelect
           />
@@ -134,15 +175,13 @@ export default function NimbleActions({ nimbleConf, setNimbleConf, loading, setL
         title={__('Add Lead Status', 'bit-integrations')}
       >
         <div className="btcd-hr mt-2 mb-2" />
-        <div className="mt-2">
-          {__('Select Lead Status', 'bit-integrations')}
-        </div>
+        <div className="mt-2">{__('Select Lead Status', 'bit-integrations')}</div>
         <div className="flx flx-between mt-2">
           <MultiSelect
-            options={nimbleConf?.leadStatus?.map(status => ({ label: status, value: status }))}
+            options={nimbleConf?.leadStatus?.map((status) => ({ label: status, value: status }))}
             className="msl-wrp-options"
             defaultValue={nimbleConf?.selectedLeadStatus}
-            onChange={val => setChanges(val, 'selectedLeadStatus')}
+            onChange={(val) => setChanges(val, 'selectedLeadStatus')}
             singleSelect
             closeOnSelect
           />
@@ -160,15 +199,13 @@ export default function NimbleActions({ nimbleConf, setNimbleConf, loading, setL
         title={__('Add Lead Source', 'bit-integrations')}
       >
         <div className="btcd-hr mt-2 mb-2" />
-        <div className="mt-2">
-          {__('Select Lead Source', 'bit-integrations')}
-        </div>
+        <div className="mt-2">{__('Select Lead Source', 'bit-integrations')}</div>
         <div className="flx flx-between mt-2">
           <MultiSelect
-            options={nimbleConf?.leadSource?.map(source => ({ label: source, value: source }))}
+            options={nimbleConf?.leadSource?.map((source) => ({ label: source, value: source }))}
             className="msl-wrp-options"
             defaultValue={nimbleConf?.selectedLeadSource}
-            onChange={val => setChanges(val, 'selectedLeadSource')}
+            onChange={(val) => setChanges(val, 'selectedLeadSource')}
             singleSelect
             closeOnSelect
           />
@@ -186,15 +223,13 @@ export default function NimbleActions({ nimbleConf, setNimbleConf, loading, setL
         title={__('Add Lead Type', 'bit-integrations')}
       >
         <div className="btcd-hr mt-2 mb-2" />
-        <div className="mt-2">
-          {__('Select Lead Type', 'bit-integrations')}
-        </div>
+        <div className="mt-2">{__('Select Lead Type', 'bit-integrations')}</div>
         <div className="flx flx-between mt-2">
           <MultiSelect
-            options={nimbleConf?.leadTypes?.map(type => ({ label: type, value: type }))}
+            options={nimbleConf?.leadTypes?.map((type) => ({ label: type, value: type }))}
             className="msl-wrp-options"
             defaultValue={nimbleConf?.selectedLeadType}
-            onChange={val => setChanges(val, 'selectedLeadType')}
+            onChange={(val) => setChanges(val, 'selectedLeadType')}
             singleSelect
             closeOnSelect
           />
@@ -203,4 +238,3 @@ export default function NimbleActions({ nimbleConf, setNimbleConf, loading, setL
     </div>
   )
 }
-

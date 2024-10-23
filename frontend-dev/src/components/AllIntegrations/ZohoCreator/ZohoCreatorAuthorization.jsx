@@ -53,7 +53,8 @@ export default function ZohoCreatorAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
       {zohoCreator?.youTubeLink && (
         <TutorialLink title="Zoho Creator" youTubeLink={zohoCreator?.youTubeLink} />
       )}
@@ -80,7 +81,8 @@ export default function ZohoCreatorAuthorization({
         name="dataCenter"
         value={creatorConf.dataCenter}
         className="btcd-paper-inp w-6 mt-1"
-        disabled={isInfo}>
+        disabled={isInfo}
+      >
         <option value="">{__('--Select a data center--', 'bit-integrations')}</option>
         <option value="com">zoho.com</option>
         <option value="eu">zoho.eu</option>
@@ -114,7 +116,8 @@ export default function ZohoCreatorAuthorization({
           className="btcd-link"
           href={`https://api-console.zoho.${creatorConf?.dataCenter || 'com'}/`}
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {__('Zoho API Console', 'bit-integrations')}
         </a>
       </small>
@@ -175,7 +178,8 @@ export default function ZohoCreatorAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -186,7 +190,8 @@ export default function ZohoCreatorAuthorization({
             onClick={nextPage}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <BackIcn className="ml-1 rev-icn" />
           </button>

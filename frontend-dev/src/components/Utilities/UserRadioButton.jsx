@@ -1,54 +1,61 @@
-import React, { useState, useEffect, useRef } from 'react';
-import bitsFetch from '../../Utils/bitsFetch';
+import React, { useState, useEffect, useRef } from 'react'
+import bitsFetch from '../../Utils/bitsFetch'
 
-const UserRadioButton = ({ authData, setAuthData, selectedUser, setSelectedUser, handleAuthUser, isInfo }) => {
-  const [showConfirm, setShowConfirm] = useState(null);
-  const popoverRef = useRef(null); // Ref to the popover container
+const UserRadioButton = ({
+  authData,
+  setAuthData,
+  selectedUser,
+  setSelectedUser,
+  handleAuthUser,
+  isInfo
+}) => {
+  const [showConfirm, setShowConfirm] = useState(null)
+  const popoverRef = useRef(null) // Ref to the popover container
 
   const handleDelete = (id) => {
-    const newAuthData = authData.filter(item => item.id !== id);
-    
+    const newAuthData = authData.filter((item) => item.id !== id)
+
     bitsFetch(id, 'auth/account/delete').then((res) => {
       if (res.success) {
-        setAuthData(newAuthData);
-        setSelectedUser(null);
+        setAuthData(newAuthData)
+        setSelectedUser(null)
       }
-    });
-    
-    setShowConfirm(null);
-  };
+    })
+
+    setShowConfirm(null)
+  }
 
   const handleShowConfirm = (index) => {
-    setShowConfirm(index);
-  };
+    setShowConfirm(index)
+  }
 
   const handleCancel = () => {
-    setShowConfirm(null);
-  };
+    setShowConfirm(null)
+  }
 
   // Listen for clicks outside the popover
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (popoverRef.current && !popoverRef.current.contains(event.target)) {
-        setShowConfirm(null);
+        setShowConfirm(null)
       }
-    };
+    }
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside)
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
 
   useEffect(() => {
     if (authData.length > 0 && selectedUser === null) {
-      setSelectedUser(authData.length - 1);
+      setSelectedUser(authData.length - 1)
     }
-  }, [authData, selectedUser, setSelectedUser]);
+  }, [authData, selectedUser, setSelectedUser])
 
   return (
-    <div className='user-radio-input'>
+    <div className="user-radio-input">
       <div className="auth-list">
         {authData.map((user, index) => (
           <div key={index} className={`auth-item ${selectedUser === index ? 'active' : ''}`}>
@@ -74,8 +81,12 @@ const UserRadioButton = ({ authData, setAuthData, selectedUser, setSelectedUser,
                 {showConfirm === index ? (
                   <div className="confirmation-popover" ref={popoverRef}>
                     <p>Are you sure?</p>
-                    <button className="confirm-button" onClick={() => handleDelete(user.id)}>Yes</button>
-                    <button className="cancel-button" onClick={handleCancel}>No</button>
+                    <button className="confirm-button" onClick={() => handleDelete(user.id)}>
+                      Yes
+                    </button>
+                    <button className="cancel-button" onClick={handleCancel}>
+                      No
+                    </button>
                   </div>
                 ) : (
                   <button className="delete-button" onClick={() => handleShowConfirm(index)}>
@@ -88,7 +99,7 @@ const UserRadioButton = ({ authData, setAuthData, selectedUser, setSelectedUser,
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default UserRadioButton;
+export default UserRadioButton

@@ -20,7 +20,8 @@ export default function GoogleDriveIntegLayout({
           style={{
             '--tooltip-txt': `'${__('Fetch All GoogleDrive Folders', 'bit-integrations')}'`
           }}
-          type="button">
+          type="button"
+        >
           &#x21BB;
         </button>
       </div>
@@ -47,15 +48,11 @@ export default function GoogleDriveIntegLayout({
       <div className="txt-center btcbi-field-map-button mt-2">
         <button
           onClick={() =>
-            addFieldMap(
-              googleDriveConf.field_map.length,
-              googleDriveConf,
-              setGoogleDriveConf,
-              false
-            )
+            addFieldMap(googleDriveConf.field_map.length, googleDriveConf, setGoogleDriveConf, false)
           }
           className="icn-btn sh-sm"
-          type="button">
+          type="button"
+        >
           +
         </button>
       </div>
@@ -65,10 +62,7 @@ export default function GoogleDriveIntegLayout({
         <b className="wdt-100">{__('Utilities', 'bit-integrations')}</b>
       </div>
       <div className="btcd-hr mt-1" />
-      <GoogleDriveActions
-        googleDriveConf={googleDriveConf}
-        setGoogleDriveConf={setGoogleDriveConf}
-      />
+      <GoogleDriveActions googleDriveConf={googleDriveConf} setGoogleDriveConf={setGoogleDriveConf} />
     </>
   )
 }

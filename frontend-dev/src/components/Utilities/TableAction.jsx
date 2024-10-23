@@ -8,7 +8,8 @@ function TableAction(props) {
             className="icn-btn btcd-hid-icn tooltip"
             style={{ '--tooltip-txt': `'${__('Duplicate', 'bit-integrations')}'` }}
             aria-label="action btn"
-            type="button">
+            type="button"
+          >
             <span className="btcd-icn btcd-icn-sm icn-file_copy" />
           </button>
         )}
@@ -18,7 +19,8 @@ function TableAction(props) {
             className="icn-btn btcd-hid-icn tooltip"
             style={{ '--tooltip-txt': `'${__('Delete', 'bit-integrations')}'` }}
             aria-label="action btn"
-            type="button">
+            type="button"
+          >
             <span className="btcd-icn btcd-icn-sm icn-trash-fill" />
           </button>
         )}
@@ -28,7 +30,8 @@ function TableAction(props) {
             className="icn-btn btcd-hid-icn tooltip"
             style={{ '--tooltip-txt': `'${__('Edit', 'bit-integrations')}'` }}
             aria-label="action btn"
-            type="button">
+            type="button"
+          >
             <span className="btcd-icn btcd-icn-sm icn-document-edit" />
           </button>
         )}

@@ -50,7 +50,8 @@ export default function FreshSalesAuthorization({
       style={{
         ...{ width: step === 1 && 900 },
         ...{ height: step === 1 && 'auto' }
-      }}>
+      }}
+    >
       {freshSales?.youTubeLink && (
         <TutorialLink title="Freshsales" youTubeLink={freshSales?.youTubeLink} />
       )}
@@ -95,7 +96,8 @@ export default function FreshSalesAuthorization({
             className="btcd-link"
             href={`https://${freshSalesConf.bundle_alias}/personal-settings/api-settings`}
             target="_blank"
-            rel="noreferrer">
+            rel="noreferrer"
+          >
             {__('FreshSales API Token', 'bit-integrations')}
           </a>
         </small>
@@ -109,7 +111,8 @@ export default function FreshSalesAuthorization({
             onClick={() => handleAuthorize(freshSalesConf, setError, setisAuthorized, setIsLoading)}
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -120,7 +123,8 @@ export default function FreshSalesAuthorization({
             onClick={nextPage}
             className="btn ml-auto btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

@@ -20,10 +20,7 @@ export default function SendFoxUnsubscribeFieldMap({
   setSendFoxConf
 }) {
   useEffect(() => {
-    if (
-      sendFoxConf?.field_map_unsubscribe?.length === 1 &&
-      field.sendFoxUnsubscribeFormField === ''
-    ) {
+    if (sendFoxConf?.field_map_unsubscribe?.length === 1 && field.sendFoxUnsubscribeFormField === '') {
       const newConf = { ...sendFoxConf }
       const tmp = generateunsubscribeMappedField(newConf)
       newConf.field_map_unsubscribe = tmp
@@ -32,8 +29,7 @@ export default function SendFoxUnsubscribeFieldMap({
   })
 
   const requiredFlds = sendFoxConf?.unsubscribeFields.filter((fld) => fld.required === true) || []
-  const nonRequiredFlds =
-    sendFoxConf?.unsubscribeFields.filter((fld) => fld.required === false) || []
+  const nonRequiredFlds = sendFoxConf?.unsubscribeFields.filter((fld) => fld.required === false) || []
 
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi
@@ -46,7 +42,8 @@ export default function SendFoxUnsubscribeFieldMap({
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleUnsubscribeFieldMapping(ev, i, sendFoxConf, setSendFoxConf)}>
+            onChange={(ev) => handleUnsubscribeFieldMapping(ev, i, sendFoxConf, setSendFoxConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -60,7 +57,8 @@ export default function SendFoxUnsubscribeFieldMap({
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -90,7 +88,8 @@ export default function SendFoxUnsubscribeFieldMap({
                 ? requiredFlds[i].key || ''
                 : field.sendFoxUnsubscribeFormField || ''
             }
-            onChange={(ev) => handleUnsubscribeFieldMapping(ev, i, sendFoxConf, setSendFoxConf)}>
+            onChange={(ev) => handleUnsubscribeFieldMapping(ev, i, sendFoxConf, setSendFoxConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFlds.length ? (
               <option key={requiredFlds[i].key} value={requiredFlds[i].key}>
@@ -110,14 +109,16 @@ export default function SendFoxUnsubscribeFieldMap({
             <button
               onClick={() => addListFieldMap(i, sendFoxConf, setSendFoxConf)}
               className="icn-btn sh-sm ml-2 mr-1"
-              type="button">
+              type="button"
+            >
               +
             </button>
             <button
               onClick={() => delListFieldMap(i, sendFoxConf, setSendFoxConf)}
               className="icn-btn sh-sm ml-1"
               type="button"
-              aria-label="btn">
+              aria-label="btn"
+            >
               <span className="btcd-icn icn-trash-2" />
             </button>
           </>

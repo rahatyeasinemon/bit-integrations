@@ -205,7 +205,8 @@ const CustomFormSubmission = () => {
             <button
               onClick={handleFetch}
               className={`btn btcd-btn-lg sh-sm flx ${isLoading ? 'red' : 'purple'}`}
-              type="button">
+              type="button"
+            >
               {isLoading
                 ? __('Waiting for form submission...', 'bit-integrations')
                 : newFlow.triggerDetail?.data
@@ -218,7 +219,8 @@ const CustomFormSubmission = () => {
                 onClick={() => setPrimaryKeyModal(true)}
                 className={`btn btcd-btn-lg sh-sm flx ${newFlow.triggerDetail?.data?.length > 0 && 'purple'}`}
                 type="button"
-                disabled={!newFlow.triggerDetail?.data?.length > 0}>
+                disabled={!newFlow.triggerDetail?.data?.length > 0}
+              >
                 {primaryKey
                   ? __('Unique Key ✔', 'bit-integrations')
                   : __('Unique Key', 'bit-integrations')}
@@ -234,7 +236,8 @@ const CustomFormSubmission = () => {
             close={() => setPrimaryKeyModal(false)}
             action={() => setPrimaryKeyModal(false)}
             title={__('Unique Key', 'bit-integrations')}
-            cssTransStyle={{ zIndex: 99999 }}>
+            cssTransStyle={{ zIndex: 99999 }}
+          >
             <div className="btcd-hr mt-2 mb-2" />
             <div className="mt-2">{__('Select Unique Key', 'bit-integrations')}</div>
             <div className="flx flx-between mt-2">
@@ -254,11 +257,7 @@ const CustomFormSubmission = () => {
           </ConfirmModal>
 
           {newFlow.triggerDetail?.data && showResponse && (
-            <WebhookDataTable
-              data={newFlow?.triggerDetail?.data}
-              flow={newFlow}
-              setFlow={setNewFlow}
-            />
+            <WebhookDataTable data={newFlow?.triggerDetail?.data} flow={newFlow} setFlow={setNewFlow} />
           )}
           {newFlow.triggerDetail?.data && (
             <div className="flx flx-between">
@@ -279,7 +278,8 @@ const CustomFormSubmission = () => {
                 onClick={setTriggerData}
                 className="btn btcd-btn-lg purple sh-sm flx"
                 type="button"
-                disabled={!newFlow.triggerDetail.data.length || !primaryKey}>
+                disabled={!newFlow.triggerDetail.data.length || !primaryKey}
+              >
                 {__('Set Action', 'bit-integrations')}
               </button>
             </div>

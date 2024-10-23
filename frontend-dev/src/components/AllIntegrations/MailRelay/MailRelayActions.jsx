@@ -76,7 +76,8 @@ export default function MailRelayActions({ mailRelayConf, setMailRelayConf, load
         show={actionMdl.show === 'group'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Groups', 'bit-integrations')}>
+        title={__('Groups', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select groups', 'bit-integrations')}</div>
         {loading.groups ? (
@@ -104,7 +105,8 @@ export default function MailRelayActions({ mailRelayConf, setMailRelayConf, load
               onClick={() => getAllGroups(mailRelayConf, setMailRelayConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Groups', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>

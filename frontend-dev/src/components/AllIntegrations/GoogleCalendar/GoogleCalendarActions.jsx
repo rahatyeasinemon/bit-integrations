@@ -80,7 +80,8 @@ export default function GoogleCalendarActions({ googleCalendarConf, setGoogleCal
         md
         show={actionMdl.show === 'reminders'}
         setModal={clsActionMdl}
-        title={__('Set Reminders', 'bit-integrations')}>
+        title={__('Set Reminders', 'bit-integrations')}
+      >
         <div className="flx flx-around mt-4 mb-2" style={{ marginRight: 40 }}>
           <div className="txt-dp">
             <b>{__('Notification Type', 'bit-integrations')}</b>
@@ -110,7 +111,8 @@ export default function GoogleCalendarActions({ googleCalendarConf, setGoogleCal
               )
             }
             className="icn-btn sh-sm"
-            type="button">
+            type="button"
+          >
             +
           </button>
         </div>

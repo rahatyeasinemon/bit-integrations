@@ -8,13 +8,7 @@ import { generateMappedField } from './FreshdeskCommonFunc'
 import TagifyInput from '../../Utilities/TagifyInput'
 import { handleCustomValue } from '../IntegrationHelpers/IntegrationHelpers'
 
-export default function FreshdeskFieldMap({
-  i,
-  formFields,
-  field,
-  freshdeskConf,
-  setFreshdeskConf
-}) {
+export default function FreshdeskFieldMap({ i, formFields, field, freshdeskConf, setFreshdeskConf }) {
   const requiredFlds =
     (freshdeskConf?.ticketFields &&
       freshdeskConf?.ticketFields?.filter((fld) => fld.required === true)) ||
@@ -35,7 +29,8 @@ export default function FreshdeskFieldMap({
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, freshdeskConf, setFreshdeskConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, freshdeskConf, setFreshdeskConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -49,7 +44,8 @@ export default function FreshdeskFieldMap({
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -75,10 +71,9 @@ export default function FreshdeskFieldMap({
             className="btcd-paper-inp"
             disabled={i < requiredFlds.length}
             name="freshdeskFormField"
-            value={
-              i < requiredFlds.length ? requiredFlds[i].key || '' : field.freshdeskFormField || ''
-            }
-            onChange={(ev) => handleFieldMapping(ev, i, freshdeskConf, setFreshdeskConf)}>
+            value={i < requiredFlds.length ? requiredFlds[i].key || '' : field.freshdeskFormField || ''}
+            onChange={(ev) => handleFieldMapping(ev, i, freshdeskConf, setFreshdeskConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFlds.length ? (
               <option key={requiredFlds[i].key} value={requiredFlds[i].key}>
@@ -98,14 +93,16 @@ export default function FreshdeskFieldMap({
             <button
               onClick={() => addFieldMap(i, freshdeskConf, setFreshdeskConf)}
               className="icn-btn sh-sm ml-2 mr-1"
-              type="button">
+              type="button"
+            >
               +
             </button>
             <button
               onClick={() => delFieldMap(i, freshdeskConf, setFreshdeskConf)}
               className="icn-btn sh-sm ml-1"
               type="button"
-              aria-label="btn">
+              aria-label="btn"
+            >
               <span className="btcd-icn icn-trash-2" />
             </button>
           </>

@@ -37,11 +37,7 @@ function Log({ allIntegURL }) {
       Header: __('Response', 'bit-integrations'),
       accessor: 'response_obj',
       Cell: (val) => (
-        <CopyText
-          value={val.row.values.response_obj}
-          setSnackbar={setSnackbar}
-          className="cpyTxt"
-        />
+        <CopyText value={val.row.values.response_obj} setSnackbar={setSnackbar} className="cpyTxt" />
       )
     },
     { width: 220, minWidth: 200, Header: __('Date', 'bit-integrations'), accessor: 'created_at' }
@@ -155,7 +151,8 @@ function Log({ allIntegURL }) {
             className="icn-btn ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Refresh Log', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
         </div>

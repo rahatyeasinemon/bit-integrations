@@ -9,8 +9,7 @@ import { handleCustomValue } from '../IntegrationHelpers/IntegrationHelpers'
 
 export default function AirtableFieldMap({ i, formFields, field, airtableConf, setAirtableConf }) {
   const requiredFields = airtableConf?.airtableFields?.filter((fld) => fld.required === true) || []
-  const nonRequiredFields =
-    airtableConf?.airtableFields?.filter((fld) => fld.required === false) || []
+  const nonRequiredFields = airtableConf?.airtableFields?.filter((fld) => fld.required === false) || []
 
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi
@@ -23,7 +22,8 @@ export default function AirtableFieldMap({ i, formFields, field, airtableConf, s
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, airtableConf, setAirtableConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, airtableConf, setAirtableConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -37,7 +37,8 @@ export default function AirtableFieldMap({ i, formFields, field, airtableConf, s
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -63,10 +64,9 @@ export default function AirtableFieldMap({ i, formFields, field, airtableConf, s
             className="btcd-paper-inp"
             disabled={i < requiredFields.length}
             name="airtableFormField"
-            value={
-              i < requiredFields ? requiredFields[i].label || '' : field.airtableFormField || ''
-            }
-            onChange={(ev) => handleFieldMapping(ev, i, airtableConf, setAirtableConf)}>
+            value={i < requiredFields ? requiredFields[i].label || '' : field.airtableFormField || ''}
+            onChange={(ev) => handleFieldMapping(ev, i, airtableConf, setAirtableConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFields.length ? (
               <option key={requiredFields[i].key} value={requiredFields[i].key}>
@@ -86,14 +86,16 @@ export default function AirtableFieldMap({ i, formFields, field, airtableConf, s
             <button
               onClick={() => addFieldMap(i, airtableConf, setAirtableConf)}
               className="icn-btn sh-sm ml-2 mr-1"
-              type="button">
+              type="button"
+            >
               +
             </button>
             <button
               onClick={() => delFieldMap(i, airtableConf, setAirtableConf)}
               className="icn-btn sh-sm ml-1"
               type="button"
-              aria-label="btn">
+              aria-label="btn"
+            >
               <span className="btcd-icn icn-trash-2" />
             </button>
           </>

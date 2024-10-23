@@ -73,9 +73,7 @@ function EditSureMembers({ allIntegURL }) {
       <SureMembersIntegLayout
         formID={flow.triggered_entity_id}
         formFields={formField}
-        handleInput={(e) =>
-          handleInput(e, sureMembersConf, setSureMembersConf, setLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, sureMembersConf, setSureMembersConf, setLoading, setSnackbar)}
         sureMembersConf={sureMembersConf}
         setSureMembersConf={setSureMembersConf}
         loading={loading}

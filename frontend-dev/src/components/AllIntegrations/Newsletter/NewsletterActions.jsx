@@ -52,7 +52,8 @@ export default function NewsletterActions({ newsletterConf, setNewsletterConf })
         show={actionMdl.show === 'lists'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Lists', 'bit-integrations')}>
+        title={__('Lists', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2 flx">
           {__('Select Lists', 'bit-integrations')}

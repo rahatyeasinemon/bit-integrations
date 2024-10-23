@@ -41,7 +41,8 @@ export default function DokanAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
       {dokan?.youTubeLink && <TutorialLink title="Dokan" youTubeLink={dokan?.youTubeLink} />}
       {dokan?.docLink && <TutorialLink title="Dokan" docLink={dokan?.docLink} />}
 
@@ -68,7 +69,8 @@ export default function DokanAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || loading.auth}>
+            disabled={isAuthorized || loading.auth}
+          >
             {isAuthorized
               ? __('Connected ✔', 'bit-integrations')
               : __('Connect to Dokan', 'bit-integrations')}
@@ -79,7 +81,8 @@ export default function DokanAuthorization({
             onClick={nextPage}
             className="btn ml-auto btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

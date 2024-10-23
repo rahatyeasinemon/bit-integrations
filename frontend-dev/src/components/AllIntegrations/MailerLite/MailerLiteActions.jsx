@@ -10,12 +10,7 @@ import TableCheckBox from '../../Utilities/TableCheckBox'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { getAllGroups } from './MailerLiteCommonFunc'
 
-export default function MailerLiteActions({
-  mailerLiteConf,
-  setMailerLiteConf,
-  loading,
-  setLoading
-}) {
+export default function MailerLiteActions({ mailerLiteConf, setMailerLiteConf, loading, setLoading }) {
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => {} })
   const actionHandler = (e, type) => {
     const newConf = { ...mailerLiteConf }
@@ -143,7 +138,8 @@ export default function MailerLiteActions({
         show={actionMdl.show === 'group'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Groups', 'bit-integrations')}>
+        title={__('Groups', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
 
         {loading.group ? (
@@ -173,7 +169,8 @@ export default function MailerLiteActions({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Groups', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.group}>
+              disabled={loading.group}
+            >
               &#x21BB;
             </button>
           </div>
@@ -187,7 +184,8 @@ export default function MailerLiteActions({
         show={actionMdl.show === 'mailer_lite_type'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Type', 'bit-integrations')}>
+        title={__('Type', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
 
         <div className="flx flx-between mt-2">

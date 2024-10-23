@@ -49,10 +49,9 @@ export default function ZohoDeskAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {zohoDesk?.youTubeLink && (
-        <TutorialLink title="Zoho Desk" youTubeLink={zohoDesk?.youTubeLink} />
-      )}
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
+      {zohoDesk?.youTubeLink && <TutorialLink title="Zoho Desk" youTubeLink={zohoDesk?.youTubeLink} />}
       {zohoDesk?.docLink && <TutorialLink title="Zoho Desk" docLink={zohoDesk?.docLink} />}
 
       <div className="wdt-200 d-in-b mt-3">
@@ -76,7 +75,8 @@ export default function ZohoDeskAuthorization({
         name="dataCenter"
         value={deskConf.dataCenter}
         className="btcd-paper-inp w-6 mt-1"
-        disabled={isInfo}>
+        disabled={isInfo}
+      >
         <option value="">{__('--Select a data center--', 'bit-integrations')}</option>
         <option value="com">zoho.com</option>
         <option value="eu">zoho.eu</option>
@@ -112,7 +112,8 @@ export default function ZohoDeskAuthorization({
           className="btcd-link"
           href={`https://api-console.zoho.${deskConf?.dataCenter || 'com'}/`}
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {__('Zoho API Console', 'bit-integrations')}
         </a>
       </small>
@@ -164,7 +165,8 @@ export default function ZohoDeskAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -175,7 +177,8 @@ export default function ZohoDeskAuthorization({
             onClick={nextPage}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <BackIcn className="ml-1 rev-icn" />
           </button>

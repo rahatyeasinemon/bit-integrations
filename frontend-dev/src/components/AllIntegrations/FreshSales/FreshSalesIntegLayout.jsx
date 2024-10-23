@@ -20,7 +20,8 @@ export default function FreshSalesIntegLayout({
         name="module"
         value={freshSalesConf.moduleData.module}
         className="btcd-paper-inp w-5"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         <option value="">{__('Select Module', 'bit-integrations')}</option>
         {Object.keys(freshSalesConf.default.modules).map((moduleApiName) => (
           <option key={moduleApiName} value={moduleApiName}>

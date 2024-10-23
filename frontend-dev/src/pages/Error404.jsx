@@ -21,12 +21,12 @@ export default function Error404() {
         <div className="four">{__('404', 'bit-integrations')}</div>
         <div className="t">{__('Lost In Space', 'bit-integrations')}</div>
         <br />
-        {__('Redirecting Home in', 'bit-integrations')}
-        {' '}
-        {sec}
+        {__('Redirecting Home in', 'bit-integrations')} {sec}
         <br />
         <br />
-        <Link to="/" className="btn dp-purple btcd-btn-lg">{__('Go Home', 'bit-integrations')}</Link>
+        <Link to="/" className="btn dp-purple btcd-btn-lg">
+          {__('Go Home', 'bit-integrations')}
+        </Link>
       </div>
       <img src={space} alt="404 not found" />
     </div>

@@ -39,7 +39,8 @@ export default function MauticIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh Mautic Fields', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -66,11 +67,10 @@ export default function MauticIntegLayout({
           ))}
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
-              onClick={() =>
-                addFieldMap(mauticConf.field_map.length, mauticConf, setMauticConf, false)
-              }
+              onClick={() => addFieldMap(mauticConf.field_map.length, mauticConf, setMauticConf, false)}
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>
@@ -80,11 +80,7 @@ export default function MauticIntegLayout({
             <b className="wdt-100">{__('Utilities', 'bit-integrations')}</b>
           </div>
           <div className="btcd-hr mt-1" />
-          <MauticActions
-            mauticConf={mauticConf}
-            setMauticConf={setMauticConf}
-            formFields={formFields}
-          />
+          <MauticActions mauticConf={mauticConf} setMauticConf={setMauticConf} formFields={formFields} />
         </div>
       )}
     </>

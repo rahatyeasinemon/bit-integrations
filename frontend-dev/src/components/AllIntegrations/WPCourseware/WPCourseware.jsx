@@ -65,7 +65,8 @@ export default function WPCourseware({ formFields, setFlow, flow, allIntegURL })
           width: step === 2 && 900,
           height: step === 2 && 'auto',
           minHeight: step === 2 && `${200}px`
-        }}>
+        }}
+      >
         <WPCoursewareIntegLayout
           formID={formID}
           formFields={formFields}
@@ -102,12 +103,14 @@ export default function WPCourseware({ formFields, setFlow, flow, allIntegURL })
           width: step === 2 && 900,
           height: step === 2 && 'auto',
           minHeight: step === 2 && `${200}px`
-        }}>
+        }}
+      >
         <button
           onClick={() => nextPage(3)}
           disabled={wpCoursewareConf.action === '' || wpCoursewareConf.course.length === 0}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>

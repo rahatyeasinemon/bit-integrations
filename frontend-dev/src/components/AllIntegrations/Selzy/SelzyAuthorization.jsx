@@ -9,15 +9,7 @@ import { getAllTags, handleAuthorize, handleInput } from './SelzyCommonFunc'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
 
-function SelzyAuthorization({
-  selzyConf,
-  setSelzyConf,
-  step,
-  setStep,
-  loading,
-  setLoading,
-  isInfo
-}) {
+function SelzyAuthorization({ selzyConf, setSelzyConf, step, setStep, loading, setLoading, isInfo }) {
   const [authorized, setAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', authKey: '' })
   const { selzy } = tutorialLinks

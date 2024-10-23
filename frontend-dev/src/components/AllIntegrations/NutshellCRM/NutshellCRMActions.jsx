@@ -172,7 +172,8 @@ export default function NutshellCRMActions({
         show={actionMdl.show === 'Company'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Company', 'bit-integrations')}>
+        title={__('Add Company', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Company', 'bit-integrations')}</div>
 
@@ -211,7 +212,8 @@ export default function NutshellCRMActions({
         show={actionMdl.show === 'Contact'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Contact', 'bit-integrations')}>
+        title={__('Add Contact', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Contact', 'bit-integrations')}</div>
 
@@ -250,7 +252,8 @@ export default function NutshellCRMActions({
         show={actionMdl.show === 'Product'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Product', 'bit-integrations')}>
+        title={__('Add Product', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Product', 'bit-integrations')}</div>
 
@@ -289,7 +292,8 @@ export default function NutshellCRMActions({
         show={actionMdl.show === 'Source'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Source', 'bit-integrations')}>
+        title={__('Add Source', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Source', 'bit-integrations')}</div>
 
@@ -328,7 +332,8 @@ export default function NutshellCRMActions({
         show={actionMdl.show === 'Tag'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Tag', 'bit-integrations')}>
+        title={__('Add Tag', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select tag', 'bit-integrations')}</div>
 
@@ -364,7 +369,8 @@ export default function NutshellCRMActions({
         show={actionMdl.show === 'CompanyType'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add CompanyType', 'bit-integrations')}>
+        title={__('Add CompanyType', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select CompanyType', 'bit-integrations')}</div>
 

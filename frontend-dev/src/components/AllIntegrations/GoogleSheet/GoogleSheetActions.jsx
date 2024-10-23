@@ -109,11 +109,7 @@ export default function GoogleSheetActions({ sheetConf, setSheetConf, formFields
         />
       </div>
 
-      <Modal
-        md
-        show={updateMdl}
-        setModal={setUpdateMdl}
-        title={__('Update Row', 'bit-integrations')}>
+      <Modal md show={updateMdl} setModal={setUpdateMdl} title={__('Update Row', 'bit-integrations')}>
         <div className="o-a">
           {sheetConf?.actions?.update && (
             <>
@@ -139,10 +135,10 @@ export default function GoogleSheetActions({ sheetConf, setSheetConf, formFields
                 <span
                   className="icn-btn ml-2 tooltip"
                   style={{
-                    '--tooltip-txt':
-                      '"Supported Relational Operators: =, !=, <, >, <=, >=, contains"',
+                    '--tooltip-txt': '"Supported Relational Operators: =, !=, <, >, <=, >=, contains"',
                     fontSize: 15
-                  }}>
+                  }}
+                >
                   <span className="btcd-icn icn-information-outline" />
                 </span>
                 <textarea
@@ -200,7 +196,8 @@ export default function GoogleSheetActions({ sheetConf, setSheetConf, formFields
         md
         show={actionMdl.show === 'share'}
         setModal={() => setActionMdl({ show: false })}
-        title={__('Share Settings', 'bit-integrations')}>
+        title={__('Share Settings', 'bit-integrations')}
+      >
         <div className="o-a" style={{ height: '95%' }}>
           {sheetConf?.actions?.share?.length > 0 &&
             sheetConf.actions.share.map((user, i) => (
@@ -213,12 +210,7 @@ export default function GoogleSheetActions({ sheetConf, setSheetConf, formFields
                   options={getUsers()}
                   customValue
                 />
-                <input
-                  className="btcd-paper-inp w-3"
-                  type="text"
-                  value={user.accessLabel}
-                  readOnly
-                />
+                <input className="btcd-paper-inp w-3" type="text" value={user.accessLabel} readOnly />
               </div>
             ))}
         </div>

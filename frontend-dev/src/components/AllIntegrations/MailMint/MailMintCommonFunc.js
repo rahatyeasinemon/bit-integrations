@@ -3,14 +3,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
 import { sprintf, __ } from '../../../Utils/i18nwrap'
 
-export const handleInput = (
-  e,
-  mailMintConf,
-  setMailMintConf,
-  setIsLoading,
-  setSnackbar,
-  formID
-) => {
+export const handleInput = (e, mailMintConf, setMailMintConf, setIsLoading, setSnackbar, formID) => {
   const newConf = { ...mailMintConf }
   const { name } = e.target
   if (e.target.value !== '') {

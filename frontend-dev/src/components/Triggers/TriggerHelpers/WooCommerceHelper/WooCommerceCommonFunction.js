@@ -21,17 +21,15 @@ export const getAllOrderStatus = (data, setFlow) => {
 }
 
 export const getAllWCProducts = (data, setFlow) => {
-  const loadQuizType = bitsFetch(null, 'get_all_woocommerce_product', null, 'GET').then(
-    (result) => {
-      if (result && result.success) {
-        const tmpFlow = { ...data }
-        tmpFlow.flow_details.products = result.data
-        setFlow({ ...tmpFlow })
-        return __('Fetched all product successfully', 'bit-integrations')
-      }
-      return __('All product fetching failed. please try again', 'bit-integrations')
+  const loadQuizType = bitsFetch(null, 'get_all_woocommerce_product', null, 'GET').then((result) => {
+    if (result && result.success) {
+      const tmpFlow = { ...data }
+      tmpFlow.flow_details.products = result.data
+      setFlow({ ...tmpFlow })
+      return __('Fetched all product successfully', 'bit-integrations')
     }
-  )
+    return __('All product fetching failed. please try again', 'bit-integrations')
+  })
   toast.promise(loadQuizType, {
     success: (data) => data,
     error: __('Error Occurred', 'bit-integrations'),

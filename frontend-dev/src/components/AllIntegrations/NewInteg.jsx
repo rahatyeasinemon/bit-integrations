@@ -138,9 +138,7 @@ const AutomatorWP = lazy(() => import('./AutomatorWP/AutomatorWP'))
 const UncannyAutomator = lazy(() => import('./UncannyAutomator/UncannyAutomator'))
 const ThriveAutomator = lazy(() => import('./ThriveAutomator/ThriveAutomator'))
 const WPWebhooks = lazy(() => import('./WPWebhooks/WPWebhooks'))
-const AdvancedFormIntegration = lazy(
-  () => import('./AdvancedFormIntegration/AdvancedFormIntegration')
-)
+const AdvancedFormIntegration = lazy(() => import('./AdvancedFormIntegration/AdvancedFormIntegration'))
 const PerfexCRM = lazy(() => import('./PerfexCRM/PerfexCRM'))
 const SureTriggers = lazy(() => import('./SureTriggers/SureTriggers'))
 const OneHashCRM = lazy(() => import('./OneHashCRM/OneHashCRM'))
@@ -164,7 +162,7 @@ const HighLevel = lazy(() => import('./HighLevel/HighLevel'))
 export default function NewInteg({ allIntegURL }) {
   const { integUrlName } = useParams()
   const [flow, setFlow] = useRecoilState($newFlow)
-  const grantToken = getRecoil(grantTokenAtom);
+  const grantToken = getRecoil(grantTokenAtom)
   const navigate = useNavigate()
   if (grantToken === null && !Object.keys(flow).length) {
     navigate('/flow/new')

@@ -56,7 +56,8 @@ export default function EmailOctopusIntegLayout({
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Refresh  Lists', 'bit-integrations')}'` }}
           type="button"
-          disabled={loading.lists}>
+          disabled={loading.lists}
+        >
           &#x21BB;
         </button>
       </div>
@@ -82,7 +83,8 @@ export default function EmailOctopusIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh custom fields', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.customFields || !emailOctopusConf.selectedList}>
+              disabled={loading.customFields || !emailOctopusConf.selectedList}
+            >
               &#x21BB;
             </button>
           </b>
@@ -123,7 +125,8 @@ export default function EmailOctopusIntegLayout({
                   )
                 }
                 className="icn-btn sh-sm"
-                type="button">
+                type="button"
+              >
                 +
               </button>
             </div>

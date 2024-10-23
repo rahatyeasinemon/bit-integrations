@@ -7,13 +7,7 @@ import { generateMappedField } from './ClinchPadCommonFunc'
 import CustomField from './CustomField'
 import { addFieldMap, delFieldMap, handleFieldMapping } from './IntegrationHelpers'
 
-export default function ClinchPadFieldMap({
-  i,
-  formFields,
-  field,
-  clinchPadConf,
-  setClinchPadConf
-}) {
+export default function ClinchPadFieldMap({ i, formFields, field, clinchPadConf, setClinchPadConf }) {
   let allFields = []
   let newFields = []
   if (clinchPadConf.actionName === 'organization') {
@@ -46,7 +40,8 @@ export default function ClinchPadFieldMap({
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, clinchPadConf, setClinchPadConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, clinchPadConf, setClinchPadConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -60,7 +55,8 @@ export default function ClinchPadFieldMap({
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -86,10 +82,9 @@ export default function ClinchPadFieldMap({
             className="btcd-paper-inp"
             disabled={i < requiredFields.length}
             name="clinchPadFormField"
-            value={
-              i < requiredFields ? requiredFields[i].label || '' : field.clinchPadFormField || ''
-            }
-            onChange={(ev) => handleFieldMapping(ev, i, clinchPadConf, setClinchPadConf)}>
+            value={i < requiredFields ? requiredFields[i].label || '' : field.clinchPadFormField || ''}
+            onChange={(ev) => handleFieldMapping(ev, i, clinchPadConf, setClinchPadConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFields.length ? (
               <option key={requiredFields[i].key} value={requiredFields[i].key}>
@@ -109,14 +104,16 @@ export default function ClinchPadFieldMap({
             <button
               onClick={() => addFieldMap(i, clinchPadConf, setClinchPadConf)}
               className="icn-btn sh-sm ml-2 mr-1"
-              type="button">
+              type="button"
+            >
               +
             </button>
             <button
               onClick={() => delFieldMap(i, clinchPadConf, setClinchPadConf)}
               className="icn-btn sh-sm ml-1"
               type="button"
-              aria-label="btn">
+              aria-label="btn"
+            >
               <span className="btcd-icn icn-trash-2" />
             </button>
           </>

@@ -9,12 +9,7 @@ import ConfirmModal from '../../Utilities/ConfirmModal'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import { getAllCompanies, getAllContacts } from './CompanyHubCommonFunc'
 
-export default function CompanyHubActions({
-  companyHubConf,
-  setCompanyHubConf,
-  loading,
-  setLoading
-}) {
+export default function CompanyHubActions({ companyHubConf, setCompanyHubConf, loading, setLoading }) {
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => {} })
 
   const actionHandler = (e, type) => {
@@ -107,7 +102,8 @@ export default function CompanyHubActions({
         show={actionMdl.show === 'company'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Company', 'bit-integrations')}>
+        title={__('Company', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Company', 'bit-integrations')}</div>
         {loading.companies ? (
@@ -137,7 +133,8 @@ export default function CompanyHubActions({
               onClick={() => getAllCompanies(companyHubConf, setCompanyHubConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Companies', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -152,7 +149,8 @@ export default function CompanyHubActions({
         show={actionMdl.show === 'source'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Source', 'bit-integrations')}>
+        title={__('Source', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Source', 'bit-integrations')}</div>
 
@@ -176,7 +174,8 @@ export default function CompanyHubActions({
         show={actionMdl.show === 'contact'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Contact', 'bit-integrations')}>
+        title={__('Contact', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Contact', 'bit-integrations')}</div>
         {loading.contact ? (
@@ -206,7 +205,8 @@ export default function CompanyHubActions({
               onClick={() => getAllContacts(companyHubConf, setCompanyHubConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Contacts', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>

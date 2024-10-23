@@ -146,7 +146,8 @@ export default function AgiledActions({ agiledConf, setAgiledConf, loading, setL
         show={actionMdl.show === 'owner'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Owners', 'bit-integrations')}>
+        title={__('Owners', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Owner', 'bit-integrations')}</div>
         {loading.owners ? (
@@ -172,7 +173,8 @@ export default function AgiledActions({ agiledConf, setAgiledConf, loading, setL
               onClick={() => getAllOwners(agiledConf, setAgiledConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Owners', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -187,7 +189,8 @@ export default function AgiledActions({ agiledConf, setAgiledConf, loading, setL
         show={actionMdl.show === 'account'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Accounts', 'bit-integrations')}>
+        title={__('Accounts', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Account', 'bit-integrations')}</div>
         {loading.accounts ? (
@@ -216,7 +219,8 @@ export default function AgiledActions({ agiledConf, setAgiledConf, loading, setL
               onClick={() => getAllAccounts(agiledConf, setAgiledConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Accounts', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -231,7 +235,8 @@ export default function AgiledActions({ agiledConf, setAgiledConf, loading, setL
         show={actionMdl.show === 'source'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Sources', 'bit-integrations')}>
+        title={__('Sources', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Source', 'bit-integrations')}</div>
         {loading.sources ? (
@@ -260,7 +265,8 @@ export default function AgiledActions({ agiledConf, setAgiledConf, loading, setL
               onClick={() => getAllSources(agiledConf, setAgiledConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Sources', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -275,7 +281,8 @@ export default function AgiledActions({ agiledConf, setAgiledConf, loading, setL
         show={actionMdl.show === 'status'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Status', 'bit-integrations')}>
+        title={__('Status', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Status', 'bit-integrations')}</div>
         {loading.statuses ? (
@@ -304,7 +311,8 @@ export default function AgiledActions({ agiledConf, setAgiledConf, loading, setL
               onClick={() => getAllStatuses(agiledConf, setAgiledConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh statuses', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -319,7 +327,8 @@ export default function AgiledActions({ agiledConf, setAgiledConf, loading, setL
         show={actionMdl.show === 'followUp'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Follow Up', 'bit-integrations')}>
+        title={__('Follow Up', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="flx flx-center mt-2">
           <MultiSelect
@@ -343,7 +352,8 @@ export default function AgiledActions({ agiledConf, setAgiledConf, loading, setL
         show={actionMdl.show === 'lifeCycleStage'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Life cycle stages', 'bit-integrations')}>
+        title={__('Life cycle stages', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select life cycle stage', 'bit-integrations')}</div>
         {loading.lifeCycleStages ? (
@@ -372,7 +382,8 @@ export default function AgiledActions({ agiledConf, setAgiledConf, loading, setL
               onClick={() => getAllLifeCycleStage(agiledConf, setAgiledConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh life cycle stages', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -387,7 +398,8 @@ export default function AgiledActions({ agiledConf, setAgiledConf, loading, setL
         show={actionMdl.show === 'dealType'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Deal types', 'bit-integrations')}>
+        title={__('Deal types', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="flx flx-center mt-2">
           <MultiSelect

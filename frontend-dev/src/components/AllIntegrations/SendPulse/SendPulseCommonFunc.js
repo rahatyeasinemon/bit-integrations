@@ -9,12 +9,7 @@ export const handleInput = (e, sendPulseConf, setSendPulseConf) => {
 }
 
 // refreshMappedLists
-export const refreshSendPulseList = (
-  sendPulseConf,
-  setSendPulseConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const refreshSendPulseList = (sendPulseConf, setSendPulseConf, setIsLoading, setSnackbar) => {
   const refreshListsRequestParams = {
     client_id: sendPulseConf.client_id,
     client_secret: sendPulseConf.client_secret,
@@ -56,12 +51,7 @@ export const refreshSendPulseList = (
 }
 
 // refreshMappedFields
-export const refreshSendPulseHeader = (
-  sendPulseConf,
-  setSendPulseConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const refreshSendPulseHeader = (sendPulseConf, setSendPulseConf, setIsLoading, setSnackbar) => {
   const refreshListsRequestParams = {
     client_id: sendPulseConf.client_id,
     client_secret: sendPulseConf.client_secret,
@@ -114,8 +104,7 @@ export const refreshSendPulseHeader = (
 export const checkMappedFields = (sendPulseConf) => {
   const mappedFields = sendPulseConf?.field_map
     ? sendPulseConf.field_map.filter(
-        (mappedField) =>
-          !mappedField.formField && mappedField.sendPulseField && mappedField.required
+        (mappedField) => !mappedField.formField && mappedField.sendPulseField && mappedField.required
       )
     : []
   if (mappedFields.length > 0) {

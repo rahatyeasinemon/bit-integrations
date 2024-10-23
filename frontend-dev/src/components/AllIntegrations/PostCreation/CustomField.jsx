@@ -40,7 +40,8 @@ function CustomField({ formFields, postConf, setPostConf, acfFields, mbFields, j
             <button
               onClick={() => addFieldMap('acf_map', postConf.acf_map.length, postConf, setPostConf)}
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>
@@ -81,7 +82,8 @@ function CustomField({ formFields, postConf, setPostConf, acfFields, mbFields, j
                 addFieldMap('acf_file_map', postConf?.acf_file_map?.length, postConf, setPostConf)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>
@@ -124,7 +126,8 @@ function CustomField({ formFields, postConf, setPostConf, acfFields, mbFields, j
                 addFieldMap('metabox_map', postConf.metabox_map.length, postConf, setPostConf)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>
@@ -163,15 +166,11 @@ function CustomField({ formFields, postConf, setPostConf, acfFields, mbFields, j
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
               onClick={() =>
-                addFieldMap(
-                  'metabox_file_map',
-                  postConf.metabox_file_map.length,
-                  postConf,
-                  setPostConf
-                )
+                addFieldMap('metabox_file_map', postConf.metabox_file_map.length, postConf, setPostConf)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>
@@ -210,15 +209,11 @@ function CustomField({ formFields, postConf, setPostConf, acfFields, mbFields, j
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
               onClick={() =>
-                addFieldMap(
-                  'je_cpt_meta_map',
-                  postConf.je_cpt_meta_map.length,
-                  postConf,
-                  setPostConf
-                )
+                addFieldMap('je_cpt_meta_map', postConf.je_cpt_meta_map.length, postConf, setPostConf)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>
@@ -255,15 +250,11 @@ function CustomField({ formFields, postConf, setPostConf, acfFields, mbFields, j
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
               onClick={() =>
-                addFieldMap(
-                  'je_cpt_file_map',
-                  postConf.je_cpt_file_map.length,
-                  postConf,
-                  setPostConf
-                )
+                addFieldMap('je_cpt_file_map', postConf.je_cpt_file_map.length, postConf, setPostConf)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

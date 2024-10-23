@@ -10,15 +10,7 @@ export default function InfoIcn({ size = 30, stroke = 2 }) {
         rx="11"
         ry="11.09"
       />
-      <ellipse
-        className="svg-icn"
-        strokeWidth={2}
-        strokeMiterlimit="10"
-        cx="15"
-        cy="11"
-        rx="1"
-        ry="1"
-      />
+      <ellipse className="svg-icn" strokeWidth={2} strokeMiterlimit="10" cx="15" cy="11" rx="1" ry="1" />
       <line
         className="svg-icn"
         strokeWidth={stroke - 0.5}

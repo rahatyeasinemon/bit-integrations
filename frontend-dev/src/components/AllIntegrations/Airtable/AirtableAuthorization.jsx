@@ -41,10 +41,9 @@ export default function AirtableAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {airtable?.youTubeLink && (
-        <TutorialLink title="Airtable" youTubeLink={airtable?.youTubeLink} />
-      )}
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
+      {airtable?.youTubeLink && <TutorialLink title="Airtable" youTubeLink={airtable?.youTubeLink} />}
       {airtable?.docLink && <TutorialLink title="Airtable" docLink={airtable?.docLink} />}
 
       <div className="mt-3">
@@ -79,7 +78,8 @@ export default function AirtableAuthorization({
           className="btcd-link"
           href="https://airtable.com/create/tokens"
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {__('Airtable Personal access tokens', 'bit-integrations')}
         </a>
       </small>
@@ -102,7 +102,8 @@ export default function AirtableAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || loading.auth}>
+            disabled={isAuthorized || loading.auth}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -113,7 +114,8 @@ export default function AirtableAuthorization({
             onClick={nextPage}
             className="btn ml-auto btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

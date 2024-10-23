@@ -48,13 +48,7 @@ export default function FluentSupportActions({
   }
   const openBusinessInboxModal = () => {
     if (!fluentSupportConf.default?.businessInboxes) {
-      getAllBusinessInboxes(
-        formID,
-        fluentSupportConf,
-        setFluentSupportConf,
-        setIsLoading,
-        setSnackbar
-      )
+      getAllBusinessInboxes(formID, fluentSupportConf, setFluentSupportConf, setIsLoading, setSnackbar)
     }
     setActionMdl({ show: 'business_inboxes' })
   }
@@ -73,10 +67,7 @@ export default function FluentSupportActions({
             className="wdt-200 mt-4 mr-2"
             value="support_staff"
             title={__('Support Staff', 'bit-integrations')}
-            subTitle={__(
-              'Add a Support Staff to ticket pushed to fluentSupport.',
-              'bit-integrations'
-            )}
+            subTitle={__('Add a Support Staff to ticket pushed to fluentSupport.', 'bit-integrations')}
           />
           {!fluentSupportConf.actions.support_staff && (
             <small style={{ marginLeft: 30, marginTop: 10, color: 'red' }}>
@@ -133,7 +124,8 @@ export default function FluentSupportActions({
         show={actionMdl.show === 'support_staff'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Ticket Owner', 'bit-integrations')}>
+        title={__('Ticket Owner', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2" />
         {isLoading ? (
           <Loader
@@ -150,29 +142,26 @@ export default function FluentSupportActions({
             <select
               value={fluentSupportConf.actions.support_staff}
               className="btcd-paper-inp"
-              onChange={(e) => actionHandler(e.target.value, 'support_staff')}>
+              onChange={(e) => actionHandler(e.target.value, 'support_staff')}
+            >
               <option value="">{__('Select Support Staff', 'bit-integrations')}</option>
               {fluentSupportConf?.default?.agents &&
                 fluentSupportConf.default.agents.map((staff) => (
                   <option
                     key={staff.id}
-                    value={`${staff.id}`}>{`${staff.first_name || staff.last_name ? staff.first_name + ' ' + staff.last_name : staff.email}`}</option>
+                    value={`${staff.id}`}
+                  >{`${staff.first_name || staff.last_name ? staff.first_name + ' ' + staff.last_name : staff.email}`}</option>
                 ))}
             </select>
             <button
               onClick={() =>
-                supportStaff(
-                  formID,
-                  fluentSupportConf,
-                  setFluentSupportConf,
-                  setIsLoading,
-                  setSnackbar
-                )
+                supportStaff(formID, fluentSupportConf, setFluentSupportConf, setIsLoading, setSnackbar)
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': '"Refresh Support Staff"' }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -187,7 +176,8 @@ export default function FluentSupportActions({
         show={actionMdl.show === 'client_priority'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Select Priority', 'bit-integrations')}>
+        title={__('Select Priority', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2" />
         <div className="mt-2">{__('Select client priority to ticket.', 'bit-integrations')}</div>
         <MultiSelect
@@ -207,7 +197,8 @@ export default function FluentSupportActions({
         show={actionMdl.show === 'business_inboxes'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Business Inbox', 'bit-integrations')}>
+        title={__('Business Inbox', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2" />
         {isLoading ? (
           <Loader
@@ -224,7 +215,8 @@ export default function FluentSupportActions({
             <select
               value={fluentSupportConf.actions.business_inbox}
               className="btcd-paper-inp"
-              onChange={(e) => actionHandler(e.target.value, 'business_inbox')}>
+              onChange={(e) => actionHandler(e.target.value, 'business_inbox')}
+            >
               <option value="">{__('Select Business Inbox', 'bit-integrations')}</option>
               {fluentSupportConf?.default?.businessInboxes &&
                 fluentSupportConf.default.businessInboxes.map((inbox) => (
@@ -246,7 +238,8 @@ export default function FluentSupportActions({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': '"Refresh Support Staff"' }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -262,7 +255,8 @@ export default function FluentSupportActions({
           show={actionMdl.show === 'attachment'}
           close={clsActionMdl}
           action={clsActionMdl}
-          title={__('Select Attachment', 'bit-integrations')}>
+          title={__('Select Attachment', 'bit-integrations')}
+        >
           <div className="btcd-hr mt-2" />
           <div className="mt-2">{__('Select File Upload Fields', 'bit-integrations')}</div>
           <MultiSelect

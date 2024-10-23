@@ -3,14 +3,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
 import { sprintf, __ } from '../../../Utils/i18nwrap'
 
-export const handleInput = (
-  e,
-  acumbamailConf,
-  setAcumbamailConf,
-  setIsLoading,
-  setSnackbar,
-  formID
-) => {
+export const handleInput = (e, acumbamailConf, setAcumbamailConf, setIsLoading, setSnackbar, formID) => {
   let newConf = { ...acumbamailConf }
   const { name } = e.target
   if (e.target.value !== '') {
@@ -32,13 +25,7 @@ export const handleInput = (
   setAcumbamailConf({ ...newConf })
 }
 
-export const refreshFields = (
-  formID,
-  acumbamailConf,
-  setAcumbamailConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const refreshFields = (formID, acumbamailConf, setAcumbamailConf, setIsLoading, setSnackbar) => {
   const { listId } = acumbamailConf
   if (!listId) {
     return
@@ -84,13 +71,7 @@ export const checkAddressFieldMapRequired = (acumbamailConf) => {
   return true
 }
 
-export const fetchAllBoard = (
-  formID,
-  acumbamailConf,
-  setAcumbamailConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const fetchAllBoard = (formID, acumbamailConf, setAcumbamailConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
   const fetchBoardModulesRequestParams = {
     formID,

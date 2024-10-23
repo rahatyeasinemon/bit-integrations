@@ -41,8 +41,7 @@ function MailRelay({ formFields, setFlow, flow, allIntegURL }) {
   const [mailRelayConf, setMailRelayConf] = useState({
     name: 'MailRelay',
     type: 'MailRelay',
-    auth_token:
-      process.env.NODE_ENV === 'development' ? 'GyZVAYGYgcBg2pszujYt43iCuxBMk_xBMcCu5KBw' : '',
+    auth_token: process.env.NODE_ENV === 'development' ? 'GyZVAYGYgcBg2pszujYt43iCuxBMk_xBMcCu5KBw' : '',
     domain: process.env.NODE_ENV === 'development' ? 'bitapps' : '',
     field_map: [{ formField: '', mailRelayFormField: '' }],
     staticFields,
@@ -114,12 +113,11 @@ function MailRelay({ formFields, setFlow, flow, allIntegURL }) {
             height: 'auto',
             overflow: 'visible'
           })
-        }}>
+        }}
+      >
         <MailRelayIntegLayout
           formFields={formFields}
-          handleInput={(e) =>
-            handleInput(e, mailRelayConf, setMailRelayConf, setLoading, setSnackbar)
-          }
+          handleInput={(e) => handleInput(e, mailRelayConf, setMailRelayConf, setLoading, setSnackbar)}
           mailRelayConf={mailRelayConf}
           setMailRelayConf={setMailRelayConf}
           loading={loading}
@@ -132,7 +130,8 @@ function MailRelay({ formFields, setFlow, flow, allIntegURL }) {
             onClick={() => nextPage(3)}
             disabled={!mailRelayConf?.status}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
-            type="button">
+            type="button"
+          >
             {__('Next', 'bit-integrations')} &nbsp;
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

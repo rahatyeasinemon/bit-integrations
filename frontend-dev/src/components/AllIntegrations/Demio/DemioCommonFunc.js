@@ -73,9 +73,7 @@ export const demioAuthentication = (
       return
     }
     setLoading({ ...loading, auth: false })
-    toast.error(
-      __('Authorized failed, Please enter valid Sub Domain & API Key', 'bit-integrations')
-    )
+    toast.error(__('Authorized failed, Please enter valid Sub Domain & API Key', 'bit-integrations'))
   })
 }
 

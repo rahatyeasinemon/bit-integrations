@@ -15,12 +15,7 @@ export const handleInput = (e, salesmateConf, setSalesmateConf) => {
   setSalesmateConf({ ...newConf })
 }
 
-export const refreshSuiteDashFields = (
-  suiteDashConf,
-  setSuiteDashConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const refreshSuiteDashFields = (suiteDashConf, setSuiteDashConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
   const requestParams = {
     public_id: suiteDashConf.public_id,
@@ -118,9 +113,7 @@ export const suiteDashAuthentication = (
       return
     }
     setLoading({ ...loading, auth: false })
-    toast.error(
-      __('Authorized failed, Please enter valid Public Id & Secret Key', 'bit-integrations')
-    )
+    toast.error(__('Authorized failed, Please enter valid Public Id & Secret Key', 'bit-integrations'))
   })
 }
 

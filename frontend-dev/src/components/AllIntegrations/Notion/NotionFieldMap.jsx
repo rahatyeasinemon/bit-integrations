@@ -33,7 +33,8 @@ function NotionFieldMap({ i, field, formFields, notionConf, setNotionConf }) {
             onChange={(event) => {
               handleFieldMapping(event, i, notionConf, setNotionConf)
             }}
-            value={field.formFields || ''}>
+            value={field.formFields || ''}
+          >
             <option value="">{__('Select Field')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -47,7 +48,8 @@ function NotionFieldMap({ i, field, formFields, notionConf, setNotionConf }) {
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -79,10 +81,9 @@ function NotionFieldMap({ i, field, formFields, notionConf, setNotionConf }) {
               handleFieldMapping(event, i, notionConf, setNotionConf)
             }}
             value={
-              i < requiredFields.length
-                ? requiredFields[i].label || ''
-                : field.notionFormFields || ''
-            }>
+              i < requiredFields.length ? requiredFields[i].label || '' : field.notionFormFields || ''
+            }
+          >
             <option value="">{__('Select Field')}</option>
             {i < requiredFields.length ? (
               <option key={requiredFields[i].key} value={requiredFields[i].label}>
@@ -101,14 +102,16 @@ function NotionFieldMap({ i, field, formFields, notionConf, setNotionConf }) {
         <button
           onClick={() => addFieldMap(i, notionConf, setNotionConf)}
           className="icn-btn sh-sm ml-2 mr-1"
-          type="button">
+          type="button"
+        >
           +
         </button>
         <button
           onClick={() => delFieldMap(i, notionConf, setNotionConf)}
           className="icn-btn sh-sm ml-1"
           type="button"
-          aria-label="btn">
+          aria-label="btn"
+        >
           <span className="btcd-icn icn-trash-2" />
         </button>
       </div>

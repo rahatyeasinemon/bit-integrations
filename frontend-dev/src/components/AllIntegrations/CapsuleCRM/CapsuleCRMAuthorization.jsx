@@ -41,7 +41,8 @@ export default function CapsuleCRMAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
       {capsulecrm?.youTubeLink && (
         <TutorialLink title="Capsule CRM" youTubeLink={capsulecrm?.youTubeLink} />
       )}
@@ -73,9 +74,7 @@ export default function CapsuleCRMAuthorization({
         disabled={isInfo}
       />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.api_url}</div>
-      <small className="d-blk mt-3">
-        {__('Example: {name}.capsulecrm.com', 'bit-integrations')}
-      </small>
+      <small className="d-blk mt-3">{__('Example: {name}.capsulecrm.com', 'bit-integrations')}</small>
       <div className="mt-3">
         <b>{__('API Key:', 'bit-integrations')}</b>
       </div>
@@ -97,7 +96,8 @@ export default function CapsuleCRMAuthorization({
             className="btcd-link"
             href={`https://${capsulecrmConf.api_url}/preferences/tokens`}
             target="_blank"
-            rel="noreferrer">
+            rel="noreferrer"
+          >
             {__('CapsuleCRM API Token', 'bit-integrations')}
           </a>
         </small>
@@ -120,7 +120,8 @@ export default function CapsuleCRMAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || loading.auth}>
+            disabled={isAuthorized || loading.auth}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -131,7 +132,8 @@ export default function CapsuleCRMAuthorization({
             onClick={nextPage}
             className="btn ml-auto btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

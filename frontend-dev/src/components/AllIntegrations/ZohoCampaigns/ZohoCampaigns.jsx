@@ -40,11 +40,7 @@ function ZohoCampaigns({ formFields, setFlow, flow, allIntegURL }) {
       return
     }
 
-    if (
-      campaignsConf.list !== '' &&
-      campaignsConf.table !== '' &&
-      campaignsConf.field_map.length > 0
-    ) {
+    if (campaignsConf.list !== '' && campaignsConf.table !== '' && campaignsConf.field_map.length > 0) {
       setstep(3)
     }
   }
@@ -68,9 +64,7 @@ function ZohoCampaigns({ formFields, setFlow, flow, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div
-        className="btcd-stp-page"
-        style={{ width: step === 2 && 900, height: step === 2 && 'auto' }}>
+      <div className="btcd-stp-page" style={{ width: step === 2 && 900, height: step === 2 && 'auto' }}>
         <ZohoCampaignsIntegLayout
           formID={formID}
           formFields={formFields}
@@ -87,12 +81,11 @@ function ZohoCampaigns({ formFields, setFlow, flow, allIntegURL }) {
         <button
           onClick={() => nextPage(3)}
           disabled={
-            campaignsConf.list === '' ||
-            campaignsConf.table === '' ||
-            campaignsConf.field_map.length < 1
+            campaignsConf.list === '' || campaignsConf.table === '' || campaignsConf.field_map.length < 1
           }
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>

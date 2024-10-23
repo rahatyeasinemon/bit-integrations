@@ -40,7 +40,8 @@ export default function CustomFieldMap({ formFields, userConf, setUserConf }) {
         <button
           onClick={() => addFieldMap('meta_map', userConf?.meta_map?.length, userConf, setUserConf)}
           className="icn-btn sh-sm"
-          type="button">
+          type="button"
+        >
           +
         </button>
       </div>

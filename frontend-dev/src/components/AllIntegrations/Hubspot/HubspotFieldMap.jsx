@@ -24,7 +24,8 @@ export default function HubspotFieldMap({ i, formFields, field, hubspotConf, set
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, hubspotConf, setHubspotConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, hubspotConf, setHubspotConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -38,7 +39,8 @@ export default function HubspotFieldMap({ i, formFields, field, hubspotConf, set
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -65,7 +67,8 @@ export default function HubspotFieldMap({ i, formFields, field, hubspotConf, set
             disabled={i < requiredFlds.length}
             name="hubspotField"
             value={i < requiredFlds?.length ? requiredFlds[i].key || '' : field.hubspotField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, hubspotConf, setHubspotConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, hubspotConf, setHubspotConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFlds.length ? (
               <option key={requiredFlds[i].key} value={requiredFlds[i].key}>
@@ -85,14 +88,16 @@ export default function HubspotFieldMap({ i, formFields, field, hubspotConf, set
             <button
               onClick={() => addFieldMap(i, hubspotConf, setHubspotConf)}
               className="icn-btn sh-sm ml-2 mr-1"
-              type="button">
+              type="button"
+            >
               +
             </button>
             <button
               onClick={() => delFieldMap(i, hubspotConf, setHubspotConf)}
               className="icn-btn sh-sm ml-1"
               type="button"
-              aria-label="btn">
+              aria-label="btn"
+            >
               <span className="btcd-icn icn-trash-2" />
             </button>
           </>

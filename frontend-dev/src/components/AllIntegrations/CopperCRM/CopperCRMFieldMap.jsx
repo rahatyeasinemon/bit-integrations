@@ -7,13 +7,7 @@ import { $btcbi } from '../../../GlobalStates'
 import { generateMappedField } from './CopperCRMCommonFunc'
 import CustomField from './CustomField'
 
-export default function CopperCRMFieldMap({
-  i,
-  formFields,
-  field,
-  coppercrmConf,
-  setCopperCRMConf
-}) {
+export default function CopperCRMFieldMap({ i, formFields, field, coppercrmConf, setCopperCRMConf }) {
   let allFields = []
   let newFields = []
   if (coppercrmConf.actionName === 'company') {
@@ -50,7 +44,8 @@ export default function CopperCRMFieldMap({
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, coppercrmConf, setCopperCRMConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, coppercrmConf, setCopperCRMConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -64,7 +59,8 @@ export default function CopperCRMFieldMap({
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -90,10 +86,9 @@ export default function CopperCRMFieldMap({
             className="btcd-paper-inp"
             disabled={i < requiredFields.length}
             name="coppercrmFormField"
-            value={
-              i < requiredFields ? requiredFields[i].label || '' : field.coppercrmFormField || ''
-            }
-            onChange={(ev) => handleFieldMapping(ev, i, coppercrmConf, setCopperCRMConf)}>
+            value={i < requiredFields ? requiredFields[i].label || '' : field.coppercrmFormField || ''}
+            onChange={(ev) => handleFieldMapping(ev, i, coppercrmConf, setCopperCRMConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFields.length ? (
               <option key={requiredFields[i].key} value={requiredFields[i].key}>
@@ -130,14 +125,16 @@ export default function CopperCRMFieldMap({
             <button
               onClick={() => addFieldMap(i, coppercrmConf, setCopperCRMConf)}
               className="icn-btn sh-sm ml-2 mr-1"
-              type="button">
+              type="button"
+            >
               +
             </button>
             <button
               onClick={() => delFieldMap(i, coppercrmConf, setCopperCRMConf)}
               className="icn-btn sh-sm ml-1"
               type="button"
-              aria-label="btn">
+              aria-label="btn"
+            >
               <span className="btcd-icn icn-trash-2" />
             </button>
           </>

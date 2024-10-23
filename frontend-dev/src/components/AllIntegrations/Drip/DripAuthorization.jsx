@@ -50,7 +50,8 @@ export default function DripAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
       {drip?.youTubeLink && <TutorialLink title="Drip" youTubeLink={drip?.youTubeLink} />}
       {drip?.docLink && <TutorialLink title="Drip" docLink={drip?.docLink} />}
 
@@ -89,7 +90,8 @@ export default function DripAuthorization({
           className="btcd-link"
           href="https://www.getdrip.com/user/edit"
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {__('Drip User Settings', 'bit-integrations')}
         </a>
       </small>
@@ -106,18 +108,12 @@ export default function DripAuthorization({
         <>
           <button
             onClick={() =>
-              dripAuthentication(
-                dripConf,
-                setDripConf,
-                setError,
-                setisAuthorized,
-                loading,
-                setLoading
-              )
+              dripAuthentication(dripConf, setDripConf, setError, setisAuthorized, loading, setLoading)
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || loading.auth}>
+            disabled={isAuthorized || loading.auth}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -128,7 +124,8 @@ export default function DripAuthorization({
             onClick={() => nextPage(2)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <BackIcn className="ml-1 rev-icn" />
           </button>

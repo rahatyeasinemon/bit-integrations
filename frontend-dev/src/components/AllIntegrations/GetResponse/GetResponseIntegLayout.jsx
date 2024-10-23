@@ -27,7 +27,8 @@ export default function GetResponseIntegLayout({
         onChange={handleInput}
         name="campaignId"
         value={getResponseConf.campaignId}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select Campaign', 'bit-integrations')}</option>
         {getResponseConf?.campaigns &&
           getResponseConf.campaigns.map(({ campaignId, name }) => (
@@ -51,7 +52,8 @@ export default function GetResponseIntegLayout({
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': `'${__('Fetch All Campaigns', 'bit-integrations')}'` }}
         type="button"
-        disabled={loading.customFields}>
+        disabled={loading.customFields}
+      >
         &#x21BB;
       </button>
       {(loading.customFields || loading.field) && (
@@ -78,7 +80,8 @@ export default function GetResponseIntegLayout({
                 className="icn-btn sh-sm ml-2 mr-2 tooltip"
                 style={{ '--tooltip-txt': `'${__('Refresh custom fields', 'bit-integrations')}'` }}
                 type="button"
-                disabled={loading.field}>
+                disabled={loading.field}
+              >
                 &#x21BB;
               </button>
             </b>
@@ -109,15 +112,11 @@ export default function GetResponseIntegLayout({
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
               onClick={() =>
-                addFieldMap(
-                  getResponseConf.field_map.length,
-                  getResponseConf,
-                  setGetResponseConf,
-                  false
-                )
+                addFieldMap(getResponseConf.field_map.length, getResponseConf, setGetResponseConf, false)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

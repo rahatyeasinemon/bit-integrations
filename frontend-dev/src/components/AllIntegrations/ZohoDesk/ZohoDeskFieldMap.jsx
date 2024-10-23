@@ -28,7 +28,8 @@ export default function ZohoDeskFieldMap({ i, formFields, field, deskConf, setDe
           className="btcd-paper-inp mr-2"
           name="formField"
           value={field.formField || ''}
-          onChange={(ev) => handleFieldMapping(ev, i, deskConf, setDeskConf)}>
+          onChange={(ev) => handleFieldMapping(ev, i, deskConf, setDeskConf)}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           <optgroup label={__('Form Fields', 'bit-integrations')}>
             {formFields.map(
@@ -42,7 +43,8 @@ export default function ZohoDeskFieldMap({ i, formFields, field, deskConf, setDe
           </optgroup>
           <option value="custom">{__('Custom...', 'bit-integrations')}</option>
           <optgroup
-            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}>
+            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}
+          >
             {isPro &&
               SmartTagField?.map((f) => (
                 <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -69,7 +71,8 @@ export default function ZohoDeskFieldMap({ i, formFields, field, deskConf, setDe
           name="zohoFormField"
           value={field.zohoFormField || ''}
           disabled={!isNotRequired}
-          onChange={(ev) => handleFieldMapping(ev, i, deskConf, setDeskConf)}>
+          onChange={(ev) => handleFieldMapping(ev, i, deskConf, setDeskConf)}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           {deskConf.default?.fields?.[orgId]?.fields &&
             Object.values(deskConf.default.fields[orgId].fields).map((ticketField) =>
@@ -93,14 +96,16 @@ export default function ZohoDeskFieldMap({ i, formFields, field, deskConf, setDe
           <button
             onClick={() => addFieldMap(i, deskConf, setDeskConf)}
             className="icn-btn sh-sm ml-2 mr-1"
-            type="button">
+            type="button"
+          >
             +
           </button>
           <button
             onClick={() => delFieldMap(i, deskConf, setDeskConf)}
             className="icn-btn sh-sm"
             type="button"
-            aria-label="btn">
+            aria-label="btn"
+          >
             <TrashIcn />
           </button>
         </>

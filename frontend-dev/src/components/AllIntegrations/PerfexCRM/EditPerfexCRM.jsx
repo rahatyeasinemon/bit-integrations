@@ -104,9 +104,7 @@ function EditPerfexCRM({ allIntegURL }) {
       <PerfexCRMIntegLayout
         formID={flow.triggered_entity_id}
         formFields={formField}
-        handleInput={(e) =>
-          handleInput(e, perfexCRMConf, setPerfexCRMConf, setLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, perfexCRMConf, setPerfexCRMConf, setLoading, setSnackbar)}
         perfexCRMConf={perfexCRMConf}
         setPerfexCRMConf={setPerfexCRMConf}
         loading={loading}

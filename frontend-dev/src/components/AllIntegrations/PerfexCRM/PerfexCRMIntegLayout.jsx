@@ -6,12 +6,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from './IntegrationHelpers'
 import PerfexCRMActions from './PerfexCRMActions'
-import {
-  getAllCustomer,
-  getAllStaffs,
-  getAllLeads,
-  refreshCustomFields
-} from './PerfexCRMCommonFunc'
+import { getAllCustomer, getAllStaffs, getAllLeads, refreshCustomFields } from './PerfexCRMCommonFunc'
 import PerfexCRMFieldMap from './PerfexCRMFieldMap'
 
 export default function PerfexCRMIntegLayout({
@@ -85,7 +80,8 @@ export default function PerfexCRMIntegLayout({
         onChange={handleActionInput}
         name="actionName"
         value={perfexCRMConf.actionName}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select an action', 'bit-integrations')}</option>
         <option value="customer" data-action_name="customer">
           {__('Create Customer', 'bit-integrations')}
@@ -171,7 +167,8 @@ export default function PerfexCRMIntegLayout({
                 className="icn-btn sh-sm ml-2 mr-2 tooltip"
                 style={{ '--tooltip-txt': `'${__('Refresh Customers', 'bit-integrations')}'` }}
                 type="button"
-                disabled={loading.customers}>
+                disabled={loading.customers}
+              >
                 &#x21BB;
               </button>
             </div>
@@ -200,7 +197,8 @@ export default function PerfexCRMIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh Staffs', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.staffs}>
+              disabled={loading.staffs}
+            >
               &#x21BB;
             </button>
           </div>
@@ -286,7 +284,8 @@ export default function PerfexCRMIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh custom fields', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -319,7 +318,8 @@ export default function PerfexCRMIntegLayout({
                 addFieldMap(perfexCRMConf.field_map.length, perfexCRMConf, setPerfexCRMConf, false)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

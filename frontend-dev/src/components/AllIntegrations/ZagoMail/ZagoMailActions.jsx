@@ -8,12 +8,7 @@ import ConfirmModal from '../../Utilities/ConfirmModal'
 import { refreshZagoMailTags } from './ZagoMailCommonFunc'
 import Loader from '../../Loaders/Loader'
 
-export default function ZagoMailActions({
-  zagoMailConf,
-  setZagoMailConf,
-  isLoading,
-  setIsLoading
-}) {
+export default function ZagoMailActions({ zagoMailConf, setZagoMailConf, isLoading, setIsLoading }) {
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => {} })
   const actionHandler = (e, type) => {
     const newConf = { ...zagoMailConf }
@@ -64,7 +59,8 @@ export default function ZagoMailActions({
         show={actionMdl.show === 'tag'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Tags', 'bit-integrations')}>
+        title={__('Tags', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select tags', 'bit-integrations')}</div>
         {isLoading.tags ? (
@@ -89,7 +85,8 @@ export default function ZagoMailActions({
               onClick={() => refreshZagoMailTags(zagoMailConf, setZagoMailConf, setIsLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Groups', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>

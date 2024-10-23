@@ -220,14 +220,7 @@ export const dateTimeFormatter = (dateStr, format) => {
 //   script.id = type
 //   document.body.appendChild(script)
 // })
-export const loadScript = ({
-  src,
-  integrity,
-  id,
-  scriptInGrid = false,
-  attr = {},
-  callback = null
-}) =>
+export const loadScript = ({ src, integrity, id, scriptInGrid = false, attr = {}, callback = null }) =>
   new Promise((resolve) => {
     const script = document.createElement('script')
     script.src = src

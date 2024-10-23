@@ -41,10 +41,9 @@ export default function WhatsAppAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {whatsApp?.youTubeLink && (
-        <TutorialLink title="WhatsApp" youTubeLink={whatsApp?.youTubeLink} />
-      )}
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
+      {whatsApp?.youTubeLink && <TutorialLink title="WhatsApp" youTubeLink={whatsApp?.youTubeLink} />}
       {whatsApp?.docLink && <TutorialLink title="WhatsApp" docLink={whatsApp?.docLink} />}
 
       <div className="mt-3">
@@ -116,7 +115,8 @@ export default function WhatsAppAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -127,7 +127,8 @@ export default function WhatsAppAuthorization({
             onClick={nextPage}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <BackIcn className="ml-1 rev-icn" />
           </button>

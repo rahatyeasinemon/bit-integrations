@@ -38,16 +38,7 @@ function Flowlu({ formFields, setFlow, flow, allIntegURL }) {
 
   const saveConfig = () => {
     setIsLoading(true)
-    const resp = saveIntegConfig(
-      flow,
-      setFlow,
-      allIntegURL,
-      flowluConf,
-      navigate,
-      '',
-      '',
-      setIsLoading
-    )
+    const resp = saveIntegConfig(flow, setFlow, allIntegURL, flowluConf, navigate, '', '', setIsLoading)
     resp.then((res) => {
       if (res.success) {
         toast.success(res.data?.msg)
@@ -109,7 +100,8 @@ function Flowlu({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}
+      >
         <FlowluIntegLayout
           formFields={formFields}
           handleInput={(e) => handleInput(e, flowluConf, setFlowluConf, setLoading, setSnackbar)}
@@ -127,7 +119,8 @@ function Flowlu({ formFields, setFlow, flow, allIntegURL }) {
             onClick={() => nextPage(3)}
             disabled={!checkMappedFields(flowluConf)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
-            type="button">
+            type="button"
+          >
             {__('Next', 'bit-integrations')} &nbsp;
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

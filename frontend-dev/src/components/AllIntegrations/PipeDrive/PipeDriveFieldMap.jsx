@@ -54,7 +54,8 @@ export default function PipeDriveFieldMap({
             value={field.formField || ''}
             onChange={(ev) =>
               handleFieldMapping(ev, i, pipeDriveConf, setPipeDriveConf, uploadFields, tab)
-            }>
+            }
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields.map((f) => (
@@ -68,7 +69,8 @@ export default function PipeDriveFieldMap({
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-zhcrm-${f.name}`} value={f.name}>
@@ -97,7 +99,8 @@ export default function PipeDriveFieldMap({
             value={i < requiredFlds ? requiredFlds[i].label || '' : field.pipeDriveFormField || ''}
             onChange={(ev) =>
               handleFieldMapping(ev, i, pipeDriveConf, setPipeDriveConf, uploadFields, tab)
-            }>
+            }
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFlds.length ? (
               <option key={requiredFlds[i].key} value={requiredFlds[i].key}>
@@ -132,14 +135,16 @@ export default function PipeDriveFieldMap({
               <button
                 onClick={() => addFieldMap(i, pipeDriveConf, setPipeDriveConf, uploadFields, tab)}
                 className="icn-btn sh-sm ml-2 mr-1"
-                type="button">
+                type="button"
+              >
                 +
               </button>
               <button
                 onClick={() => delFieldMap(i, pipeDriveConf, setPipeDriveConf, uploadFields, tab)}
                 className="icn-btn sh-sm ml-1"
                 type="button"
-                aria-label="btn">
+                aria-label="btn"
+              >
                 <span className="btcd-icn icn-trash-2" />
               </button>
             </>

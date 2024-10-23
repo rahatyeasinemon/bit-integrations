@@ -32,7 +32,8 @@ export default function GoogleContactsIntegLayout({
         onChange={inputHandler}
         name="mainAction"
         value={googleContactsConf?.mainAction}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select Actions', 'bit-integrations')}</option>
         {googleContactsConf?.allActions &&
           googleContactsConf.allActions.map(({ key, label }) => (
@@ -77,7 +78,8 @@ export default function GoogleContactsIntegLayout({
             )
           }
           className="icn-btn sh-sm"
-          type="button">
+          type="button"
+        >
           +
         </button>
       </div>

@@ -65,7 +65,8 @@ export default function OmniSendActions({
         show={actionMdl.show === 'tag'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Custom Tags', 'bit-integrations')}>
+        title={__('Add Custom Tags', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
 
         <div className="flx flx-between mt-2">

@@ -33,13 +33,7 @@ export const checkMappedFields = (sureMembersConf) => {
   return true
 }
 
-export const sureMembersAuthentication = (
-  confTmp,
-  setError,
-  setIsAuthorized,
-  loading,
-  setLoading
-) => {
+export const sureMembersAuthentication = (confTmp, setError, setIsAuthorized, loading, setLoading) => {
   if (!confTmp.name) {
     setError({ name: !confTmp.name ? __("Name can't be empty", 'bit-integrations') : '' })
     return

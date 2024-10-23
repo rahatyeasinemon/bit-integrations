@@ -45,13 +45,7 @@ export const checkMappedFields = (woodpeckerConf) => {
   return true
 }
 
-export const woodpeckerAuthentication = (
-  confTmp,
-  setError,
-  setIsAuthorized,
-  loading,
-  setLoading
-) => {
+export const woodpeckerAuthentication = (confTmp, setError, setIsAuthorized, loading, setLoading) => {
   if (!confTmp.api_key) {
     setError({
       api_key: !confTmp.api_key ? __("API Key can't be empty", 'bit-integrations') : ''

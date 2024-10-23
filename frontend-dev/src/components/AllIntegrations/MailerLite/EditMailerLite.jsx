@@ -66,9 +66,7 @@ function EditMailerLite({ allIntegURL }) {
       <MailerLiteIntegLayout
         formID={flow.triggered_entity_id}
         formFields={formField}
-        handleInput={(e) =>
-          handleInput(e, mailerLiteConf, setMailerLiteConf, setLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, mailerLiteConf, setMailerLiteConf, setLoading, setSnackbar)}
         mailerLiteConf={mailerLiteConf}
         setMailerLiteConf={setMailerLiteConf}
         loading={loading}

@@ -53,7 +53,8 @@ export default function VboutAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
       {vbout?.youTubeLink && <TutorialLink title="VBOUT" youTubeLink={vbout?.youTubeLink} />}
       {vbout?.docLink && <TutorialLink title="VBOUT" docLink={vbout?.docLink} />}
 
@@ -73,11 +74,7 @@ export default function VboutAuthorization({
       <small className="d-blk mt-3">
         {__('To get API key, please visit', 'bit-integrations')}
         &nbsp;
-        <a
-          className="btcd-link"
-          href="https://app.vbout.com/Settings"
-          target="_blank"
-          rel="noreferrer">
+        <a className="btcd-link" href="https://app.vbout.com/Settings" target="_blank" rel="noreferrer">
           {__('Vbout API Key', 'bit-integrations')}
         </a>
       </small>
@@ -112,7 +109,8 @@ export default function VboutAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || loading.auth}>
+            disabled={isAuthorized || loading.auth}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -123,7 +121,8 @@ export default function VboutAuthorization({
             onClick={nextPage}
             className="btn ml-auto btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

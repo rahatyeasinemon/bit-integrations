@@ -5,12 +5,7 @@ import Loader from '../../Loaders/Loader'
 import { getAllCourses, getAllLesson } from './TutorLmsCommonFunc'
 import Note from '../../Utilities/Note'
 
-export default function TutorLmsIntegLayout({
-  tutorlmsConf,
-  setTutorlmsConf,
-  isLoading,
-  setIsLoading
-}) {
+export default function TutorLmsIntegLayout({ tutorlmsConf, setTutorlmsConf, isLoading, setIsLoading }) {
   const action = [
     { value: 'enroll-course', label: __('Enroll the user in a course', 'bit-integrations') },
     { value: 'unenroll-course', label: __('Unenroll user from a course', 'bit-integrations') },
@@ -76,7 +71,8 @@ export default function TutorLmsIntegLayout({
           onChange={handleAction}
           name="actionName"
           value={tutorlmsConf?.actionName}
-          className="btcd-paper-inp w-5">
+          className="btcd-paper-inp w-5"
+        >
           <option value="">{__('Select Action', 'bit-integrations')}</option>
           {action.map(({ label, value }) => (
             <option key={label} value={value}>
@@ -116,7 +112,8 @@ export default function TutorLmsIntegLayout({
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `${__('Refresh Courses', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
         </div>
@@ -142,7 +139,8 @@ export default function TutorLmsIntegLayout({
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `${__('Refresh Courses', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
         </div>

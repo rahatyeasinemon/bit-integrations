@@ -40,16 +40,7 @@ function Twilio({ formFields, setFlow, flow, allIntegURL }) {
 
   const saveConfig = () => {
     setIsLoading(true)
-    const resp = saveIntegConfig(
-      flow,
-      setFlow,
-      allIntegURL,
-      twilioConf,
-      navigate,
-      '',
-      '',
-      setIsLoading
-    )
+    const resp = saveIntegConfig(flow, setFlow, allIntegURL, twilioConf, navigate, '', '', setIsLoading)
     resp.then((res) => {
       if (res.success) {
         toast.success(res.data?.msg)
@@ -95,7 +86,8 @@ function Twilio({ formFields, setFlow, flow, allIntegURL }) {
             height: 'auto',
             overflow: 'visible'
           })
-        }}>
+        }}
+      >
         <TwilioIntegLayout
           formFields={formFields}
           handleInput={(e) => handleInput(e, twilioConf, setTwilioConf, setIsLoading, setSnackbar)}
@@ -109,7 +101,8 @@ function Twilio({ formFields, setFlow, flow, allIntegURL }) {
         <button
           onClick={() => nextPage(3)}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')} &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>

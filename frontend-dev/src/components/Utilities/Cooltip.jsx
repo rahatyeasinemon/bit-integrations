@@ -22,11 +22,7 @@ export default function Cooltip({ className, children, width = 'auto', icnSize =
       // arrow
       content={children}
     >
-      <div
-        role="button"
-        tabIndex="0"
-        className={`popper-icn cp d-in-b ig-c ${className}`}
-      >
+      <div role="button" tabIndex="0" className={`popper-icn cp d-in-b ig-c ${className}`}>
         <QuestionIcn size={icnSize} />
       </div>
     </Tippy>

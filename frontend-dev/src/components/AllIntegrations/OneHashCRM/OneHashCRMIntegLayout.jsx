@@ -70,7 +70,8 @@ export default function OneHashCRMIntegLayout({
         onChange={handleActionInput}
         name="actionName"
         value={oneHashCRMConf.actionName}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select an action', 'bit-integrations')}</option>
         <option value="lead" data-action_name="lead">
           {__('Create Lead', 'bit-integrations')}
@@ -164,15 +165,11 @@ export default function OneHashCRMIntegLayout({
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
               onClick={() =>
-                addFieldMap(
-                  oneHashCRMConf.field_map.length,
-                  oneHashCRMConf,
-                  setOneHashCRMConf,
-                  false
-                )
+                addFieldMap(oneHashCRMConf.field_map.length, oneHashCRMConf, setOneHashCRMConf, false)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

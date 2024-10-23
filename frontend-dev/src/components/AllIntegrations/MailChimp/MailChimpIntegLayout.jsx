@@ -46,7 +46,8 @@ export default function MailChimpIntegLayout({
         onChange={handleInput}
         name="module"
         value={mailChimpConf.module}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select Module', 'bit-integrations')}</option>
         {mailChimpConf?.moduleLists &&
           mailChimpConf.moduleLists.map((module, index) => (
@@ -60,7 +61,8 @@ export default function MailChimpIntegLayout({
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': '"Refresh module list"' }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -70,13 +72,15 @@ export default function MailChimpIntegLayout({
         onChange={handleInput}
         name="listId"
         value={mailChimpConf.listId}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select Audience List', 'bit-integrations')}</option>
         {mailChimpConf?.default?.audiencelist &&
           Object.keys(mailChimpConf.default.audiencelist).map((audiencelistName) => (
             <option
               key={audiencelistName}
-              value={mailChimpConf.default.audiencelist[audiencelistName].listId}>
+              value={mailChimpConf.default.audiencelist[audiencelistName].listId}
+            >
               {mailChimpConf.default.audiencelist[audiencelistName].listName}
             </option>
           ))}
@@ -88,7 +92,8 @@ export default function MailChimpIntegLayout({
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': '"Refresh Audience list"' }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -117,7 +122,8 @@ export default function MailChimpIntegLayout({
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Refresh MailChimp Tags', 'bit-integrations')}'` }}
             type="button"
-            disabled={loading?.tags}>
+            disabled={loading?.tags}
+          >
             &#x21BB;
           </button>
         </div>
@@ -139,19 +145,13 @@ export default function MailChimpIntegLayout({
             <b className="wdt-100">{__('Map Fields', 'bit-integrations')}</b>
             <button
               onClick={() =>
-                refreshFields(
-                  formID,
-                  mailChimpConf,
-                  setMailChimpConf,
-                  setSnackbar,
-                  loading,
-                  setLoading
-                )
+                refreshFields(formID, mailChimpConf, setMailChimpConf, setSnackbar, loading, setLoading)
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh fields', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading?.refreshFields}>
+              disabled={loading?.refreshFields}
+            >
               &#x21BB;
             </button>
           </div>
@@ -181,7 +181,8 @@ export default function MailChimpIntegLayout({
                 addFieldMap(mailChimpConf.field_map.length, mailChimpConf, setMailChimpConf)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>
@@ -222,7 +223,8 @@ export default function MailChimpIntegLayout({
                     )
                   }
                   className="icn-btn sh-sm"
-                  type="button">
+                  type="button"
+                >
                   +
                 </button>
               </div>

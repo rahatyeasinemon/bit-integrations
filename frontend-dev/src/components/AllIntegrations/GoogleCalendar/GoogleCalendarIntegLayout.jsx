@@ -33,7 +33,8 @@ export default function GoogleCalendarIntegLayout({
           onChange={(e) => inputHandler(e)}
           name="calendarId"
           value={googleCalendarConf.calendarId}
-          className="btcd-paper-inp w-5">
+          className="btcd-paper-inp w-5"
+        >
           <option value="">{__('Select Calendar', 'bit-integrations')}</option>
           {googleCalendarConf?.calendarLists &&
             googleCalendarConf.calendarLists.map(({ id, name, accessRole }) => (
@@ -43,12 +44,11 @@ export default function GoogleCalendarIntegLayout({
             ))}
         </select>
         <button
-          onClick={() =>
-            getAllGoogleCalendarLists(flowID, googleCalendarConf, setGoogleCalendarConf)
-          }
+          onClick={() => getAllGoogleCalendarLists(flowID, googleCalendarConf, setGoogleCalendarConf)}
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Fetch Calendar Lists', 'bit-integrations')}'` }}
-          type="button">
+          type="button"
+        >
           &#x21BB;
         </button>
       </div>
@@ -97,7 +97,8 @@ export default function GoogleCalendarIntegLayout({
             )
           }
           className="icn-btn sh-sm"
-          type="button">
+          type="button"
+        >
           +
         </button>
       </div>

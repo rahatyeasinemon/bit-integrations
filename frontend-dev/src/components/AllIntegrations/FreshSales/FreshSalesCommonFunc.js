@@ -48,13 +48,7 @@ export const handleInput = (
   setFreshSalesConf({ ...newConf })
 }
 
-export const moduleChange = (
-  formID,
-  freshSalesConf,
-  setFreshSalesConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const moduleChange = (formID, freshSalesConf, setFreshSalesConf, setIsLoading, setSnackbar) => {
   const newConf = { ...freshSalesConf }
 
   const module = newConf.moduleData.module
@@ -63,13 +57,11 @@ export const moduleChange = (
   newConf.field_map = [{ formField: '', freshSalesFormField: '' }]
 
   if (['Contact'].includes(module)) {
-    !newConf.default.views &&
-      accountRefreshViews(newConf, setFreshSalesConf, setIsLoading, setSnackbar)
+    !newConf.default.views && accountRefreshViews(newConf, setFreshSalesConf, setIsLoading, setSnackbar)
   }
 
   if (['Deal'].includes(module)) {
-    !newConf.default.views &&
-      contactRefreshViews(newConf, setFreshSalesConf, setIsLoading, setSnackbar)
+    !newConf.default.views && contactRefreshViews(newConf, setFreshSalesConf, setIsLoading, setSnackbar)
   }
 
   if (module !== '' && module !== undefined) {
@@ -127,8 +119,7 @@ export const contactViewChange = (
   newConf.field_map = [{ formField: '', freshSalesFormField: '' }]
 
   if (['Deal'].includes(view)) {
-    !newConf.default.contacts &&
-      refreshContacts(newConf, setFreshSalesConf, setIsLoading, setSnackbar)
+    !newConf.default.contacts && refreshContacts(newConf, setFreshSalesConf, setIsLoading, setSnackbar)
 
     if (!newConf.default.modules?.[view]?.fields && view !== '' && view !== undefined) {
       setTimeout(() => {
@@ -165,12 +156,7 @@ export const refreshFields = (module, freshSalesConf, setFreshSalesConf) => {
   })
 }
 
-export const accountRefreshViews = (
-  freshSalesConf,
-  setFreshSalesConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const accountRefreshViews = (freshSalesConf, setFreshSalesConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
   const requestParams = {
     api_key: freshSalesConf.api_key,
@@ -214,12 +200,7 @@ export const accountRefreshViews = (
     .catch(() => setIsLoading(false))
 }
 
-export const contactRefreshViews = (
-  freshSalesConf,
-  setFreshSalesConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const contactRefreshViews = (freshSalesConf, setFreshSalesConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
   const requestParams = {
     api_key: freshSalesConf.api_key,
@@ -373,9 +354,9 @@ export const checkMappedFields = (freshSalesConf) => {
         (mappedField) =>
           !mappedField.formField &&
           mappedField.freshSalesFormField &&
-          freshSalesConf?.default?.modules?.[
-            freshSalesConf.moduleData.module
-          ]?.requiredFields?.indexOf(mappedField.freshSalesFormField) !== -1
+          freshSalesConf?.default?.modules?.[freshSalesConf.moduleData.module]?.requiredFields?.indexOf(
+            mappedField.freshSalesFormField
+          ) !== -1
       )
     : []
   if (mappedFields.length > 0) {

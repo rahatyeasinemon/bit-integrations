@@ -67,9 +67,7 @@ export default function TinyMCE({
               icon: false,
               menu: formFields?.map(
                 (i) =>
-                  !i.type.match(
-                    /^(file-up|recaptcha|section|divider|image|advanced-file-up|)$/
-                  ) && {
+                  !i.type.match(/^(file-up|recaptcha|section|divider|image|advanced-file-up|)$/) && {
                     text: i.name,
                     onClick() {
                       editor.insertContent(insertFieldKey(i))

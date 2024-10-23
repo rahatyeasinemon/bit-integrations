@@ -56,9 +56,7 @@ function Woodpecker({ formFields, setFlow, flow, allIntegURL }) {
     { key: 'snippet15', label: __('snippet15', 'bit-integrations'), required: false }
   ]
 
-  const companyFields = [
-    { key: 'name', label: __('Company Name', 'bit-integrations'), required: true }
-  ]
+  const companyFields = [{ key: 'name', label: __('Company Name', 'bit-integrations'), required: true }]
 
   const [woodpeckerConf, setWoodpeckerConf] = useState({
     name: 'Woodpecker',
@@ -139,12 +137,11 @@ function Woodpecker({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}
+      >
         <WoodpeckerIntegLayout
           formFields={formFields}
-          handleInput={(e) =>
-            handleInput(e, woodpeckerConf, setWoodpeckerConf, setLoading, setSnackbar)
-          }
+          handleInput={(e) => handleInput(e, woodpeckerConf, setWoodpeckerConf, setLoading, setSnackbar)}
           woodpeckerConf={woodpeckerConf}
           setWoodpeckerConf={setWoodpeckerConf}
           loading={loading}
@@ -159,7 +156,8 @@ function Woodpecker({ formFields, setFlow, flow, allIntegURL }) {
             onClick={() => nextPage(3)}
             disabled={!checkMappedFields(woodpeckerConf)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
-            type="button">
+            type="button"
+          >
             {__('Next', 'bit-integrations')} &nbsp;
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

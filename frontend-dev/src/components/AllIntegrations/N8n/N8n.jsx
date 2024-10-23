@@ -38,10 +38,9 @@ function N8n({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 1 */}
       <div
         className="btcd-stp-page"
-        style={{ ...{ width: step === 1 && 1100 }, ...{ height: step === 1 && 'auto' } }}>
-        {n8nLinks?.youTubeLink && (
-          <TutorialLink title="n8n.io" youTubeLink={n8nLinks?.youTubeLink} />
-        )}
+        style={{ ...{ width: step === 1 && 1100 }, ...{ height: step === 1 && 'auto' } }}
+      >
+        {n8nLinks?.youTubeLink && <TutorialLink title="n8n.io" youTubeLink={n8nLinks?.youTubeLink} />}
         {n8nLinks?.docLink && <TutorialLink title="n8n.io" docLink={n8nLinks?.docLink} />}
 
         <WebHooksIntegration
@@ -59,7 +58,8 @@ function N8n({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ width: step === 2 && `${100}%`, height: step === 2 && 'auto' }}>
+        style={{ width: step === 2 && `${100}%`, height: step === 2 && 'auto' }}
+      >
         <WebHooksStepTwo
           step={step}
           saveConfig={() =>

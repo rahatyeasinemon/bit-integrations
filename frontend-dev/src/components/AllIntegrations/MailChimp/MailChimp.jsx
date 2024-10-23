@@ -28,9 +28,7 @@ function MailChimp({ formFields, setFlow, flow, allIntegURL }) {
     type: 'Mail Chimp',
     clientId: process.env.NODE_ENV === 'development' ? '343788104704' : '',
     clientSecret:
-      process.env.NODE_ENV === 'development'
-        ? '6095599b3071827e5049e6e43cfd6f5677d3960d14b3c10990'
-        : '',
+      process.env.NODE_ENV === 'development' ? '6095599b3071827e5049e6e43cfd6f5677d3960d14b3c10990' : '',
     listId: '',
     listName: '',
     tags: '',
@@ -85,9 +83,7 @@ function MailChimp({ formFields, setFlow, flow, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div
-        className="btcd-stp-page"
-        style={{ width: step === 2 && 900, height: step === 2 && 'auto' }}>
+      <div className="btcd-stp-page" style={{ width: step === 2 && 900, height: step === 2 && 'auto' }}>
         <MailChimpIntegLayout
           formID={formID}
           formFields={formFields}
@@ -115,7 +111,8 @@ function MailChimp({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => nextPage(3)}
           disabled={!mailChimpConf.listId || mailChimpConf.field_map.length < 1}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>

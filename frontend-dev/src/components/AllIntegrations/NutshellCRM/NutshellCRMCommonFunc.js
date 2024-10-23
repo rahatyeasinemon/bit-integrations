@@ -77,9 +77,7 @@ export const nutshellCRMAuthentication = (
       return
     }
     setLoading({ ...loading, auth: false })
-    toast.error(
-      __('Authorized failed, Please enter valid User Name & Api Token', 'bit-integrations')
-    )
+    toast.error(__('Authorized failed, Please enter valid User Name & Api Token', 'bit-integrations'))
   })
 }
 

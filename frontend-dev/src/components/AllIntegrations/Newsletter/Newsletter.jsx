@@ -89,7 +89,8 @@ function Newsletter({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}
+      >
         <NewsletterIntegLayout
           formFields={formFields}
           newsletterConf={newsletterConf}
@@ -102,7 +103,8 @@ function Newsletter({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => nextPage(3)}
           disabled={!checkMappedFields(newsletterConf)}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')} &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>

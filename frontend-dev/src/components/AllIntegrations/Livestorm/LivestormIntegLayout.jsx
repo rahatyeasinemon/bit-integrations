@@ -27,9 +27,7 @@ export default function LivestormIntegLayout({
       newConf[name] = val
 
       if (name === 'selectedEvent') {
-        newConf.field_map = generateMappedField(
-          newConf.allFields.filter((fld) => fld.eventId === val)
-        )
+        newConf.field_map = generateMappedField(newConf.allFields.filter((fld) => fld.eventId === val))
         delete newConf.selectedSession
         delete newConf.sessions
       }
@@ -61,7 +59,8 @@ export default function LivestormIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh Events', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.event}>
+              disabled={loading.event}
+            >
               &#x21BB;
             </button>
           </div>
@@ -90,17 +89,13 @@ export default function LivestormIntegLayout({
             />
             <button
               onClick={() =>
-                getAllSessions(
-                  livestormConf,
-                  setLivestormConf,
-                  livestormConf.selectedEvent,
-                  setLoading
-                )
+                getAllSessions(livestormConf, setLivestormConf, livestormConf.selectedEvent, setLoading)
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh Sessions', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.event}>
+              disabled={loading.event}
+            >
               &#x21BB;
             </button>
           </div>
@@ -154,15 +149,11 @@ export default function LivestormIntegLayout({
             <div className="txt-center btcbi-field-map-button mt-2">
               <button
                 onClick={() =>
-                  addFieldMap(
-                    livestormConf.field_map.length,
-                    livestormConf,
-                    setLivestormConf,
-                    false
-                  )
+                  addFieldMap(livestormConf.field_map.length, livestormConf, setLivestormConf, false)
                 }
                 className="icn-btn sh-sm"
-                type="button">
+                type="button"
+              >
                 +
               </button>
             </div>

@@ -8,12 +8,7 @@ import Loader from '../../Loaders/Loader'
 import ConfirmModal from '../../Utilities/ConfirmModal'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
-import {
-  getAllOwners,
-  getAllLeadLabels,
-  getDealStages,
-  getAllCurrencies
-} from './PipeDriveCommonFunc'
+import { getAllOwners, getAllLeadLabels, getDealStages, getAllCurrencies } from './PipeDriveCommonFunc'
 
 export default function PipeDriveActions({
   pipeDriveConf,
@@ -355,7 +350,8 @@ export default function PipeDriveActions({
         show={actionMdl.show === 'owner'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Owners', 'bit-integrations')}>
+        title={__('Owners', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
 
         {isLoading ? (
@@ -387,13 +383,12 @@ export default function PipeDriveActions({
               singleSelect
             />
             <button
-              onClick={() =>
-                getAllOwners(pipeDriveConf, setPipeDriveConf, setIsLoading, setSnackbar)
-              }
+              onClick={() => getAllOwners(pipeDriveConf, setPipeDriveConf, setIsLoading, setSnackbar)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Owners', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -407,7 +402,8 @@ export default function PipeDriveActions({
         show={actionMdl.show === 'lead_label'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Labels', 'bit-integrations')}>
+        title={__('Labels', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
 
         {isLoading ? (
@@ -442,7 +438,8 @@ export default function PipeDriveActions({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Labels', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -456,7 +453,8 @@ export default function PipeDriveActions({
         show={actionMdl.show === 'deal_stage'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Stages', 'bit-integrations')}>
+        title={__('Stages', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
 
         {isLoading ? (
@@ -488,13 +486,12 @@ export default function PipeDriveActions({
               singleSelect
             />
             <button
-              onClick={() =>
-                getDealStages(pipeDriveConf, setPipeDriveConf, setIsLoading, setSnackbar)
-              }
+              onClick={() => getDealStages(pipeDriveConf, setPipeDriveConf, setIsLoading, setSnackbar)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Stages', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -508,7 +505,8 @@ export default function PipeDriveActions({
         show={actionMdl.show === 'activities_type'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Types', 'bit-integrations')}>
+        title={__('Types', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
 
         {isLoading ? (
@@ -550,7 +548,8 @@ export default function PipeDriveActions({
         show={actionMdl.show === 'currency'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Currency', 'bit-integrations')}>
+        title={__('Currency', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
 
         {isLoading ? (
@@ -592,7 +591,8 @@ export default function PipeDriveActions({
         show={actionMdl.show === 'deal_status'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Status', 'bit-integrations')}>
+        title={__('Status', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
 
         {isLoading ? (
@@ -631,7 +631,8 @@ export default function PipeDriveActions({
         show={actionMdl.show === 'visible_to'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Visible To', 'bit-integrations')}>
+        title={__('Visible To', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
 
         {isLoading ? (
@@ -670,7 +671,8 @@ export default function PipeDriveActions({
         show={actionMdl.show === 'activities_participants'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Participants', 'bit-integrations')}>
+        title={__('Participants', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
 
         {isLoading ? (

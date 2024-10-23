@@ -30,10 +30,7 @@ export default function DokanIntegLayout({
 
       if (val === TASK_LIST_VALUES.CREATE_VENDOR || val === TASK_LIST_VALUES.UPDATE_VENDOR) {
         getDokanEUFields(newConf, setDokanConf, loading, setLoading)
-      } else if (
-        val === TASK_LIST_VALUES.DELETE_VENDOR ||
-        val === TASK_LIST_VALUES.WITHDRAW_REQUEST
-      ) {
+      } else if (val === TASK_LIST_VALUES.DELETE_VENDOR || val === TASK_LIST_VALUES.WITHDRAW_REQUEST) {
         getAllVendors(newConf, setDokanConf, loading, setLoading)
       }
     } else {
@@ -79,8 +76,7 @@ export default function DokanIntegLayout({
 
         {dokanConf.selectedTask === TASK_LIST_VALUES.REFUND_REQUEST && (
           <span className="action-delete-task-note">
-            The Dokan Pro plugin needs to be installed and activated to use this (Refund Request)
-            task.
+            The Dokan Pro plugin needs to be installed and activated to use this (Refund Request) task.
           </span>
         )}
         {(loading.euFields || loading.vendors) && (
@@ -113,7 +109,8 @@ export default function DokanIntegLayout({
                 onClick={() => getAllVendors(dokanConf, setDokanConf, loading, setLoading)}
                 className="icn-btn sh-sm ml-2 mr-2 tooltip"
                 style={{ '--tooltip-txt': `${__('Refresh Vendors', 'bit-integrations')}'` }}
-                type="button">
+                type="button"
+              >
                 &#x21BB;
               </button>
             </div>
@@ -198,11 +195,10 @@ export default function DokanIntegLayout({
             dokanConf.deleteVendorFieldMap)) && (
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
-              onClick={() =>
-                addFieldMap(dokanConf.field_map.length, dokanConf, setDokanConf, false)
-              }
+              onClick={() => addFieldMap(dokanConf.field_map.length, dokanConf, setDokanConf, false)}
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

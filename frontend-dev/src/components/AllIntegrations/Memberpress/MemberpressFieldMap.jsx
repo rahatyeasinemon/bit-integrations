@@ -25,8 +25,7 @@ export default function MemberpressFieldMap({
     }
   }, [])
 
-  const requiredFlds =
-    memberpressConf?.memberpressFields.filter((fld) => fld.required === true) || []
+  const requiredFlds = memberpressConf?.memberpressFields.filter((fld) => fld.required === true) || []
   const nonRequiredFlds =
     memberpressConf?.memberpressFields.filter((fld) => fld.required === false) || []
 
@@ -41,7 +40,8 @@ export default function MemberpressFieldMap({
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, memberpressConf, setMemberpressConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, memberpressConf, setMemberpressConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -55,7 +55,8 @@ export default function MemberpressFieldMap({
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -84,7 +85,8 @@ export default function MemberpressFieldMap({
             value={
               i < requiredFlds.length ? requiredFlds[i].key || '' : field.memberpressFormField || ''
             }
-            onChange={(ev) => handleFieldMapping(ev, i, memberpressConf, setMemberpressConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, memberpressConf, setMemberpressConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFlds.length ? (
               <option key={requiredFlds[i].key} value={requiredFlds[i].key}>
@@ -104,14 +106,16 @@ export default function MemberpressFieldMap({
             <button
               onClick={() => addFieldMap(i, memberpressConf, setMemberpressConf)}
               className="icn-btn sh-sm ml-2 mr-1"
-              type="button">
+              type="button"
+            >
               +
             </button>
             <button
               onClick={() => delFieldMap(i, memberpressConf, setMemberpressConf)}
               className="icn-btn sh-sm ml-1"
               type="button"
-              aria-label="btn">
+              aria-label="btn"
+            >
               <span className="btcd-icn icn-trash-2" />
             </button>
           </>

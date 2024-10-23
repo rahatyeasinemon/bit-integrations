@@ -84,9 +84,7 @@ export default function OneDriveActions({
   }
 
   const getFileUpFields = () =>
-    formFields
-      .filter((itm) => itm.type === 'file')
-      .map((itm) => ({ label: itm.label, value: itm.name }))
+    formFields.filter((itm) => itm.type === 'file').map((itm) => ({ label: itm.label, value: itm.name }))
 
   // useEffect(() => {
   //   const usersOption = [
@@ -192,7 +190,8 @@ export default function OneDriveActions({
         show={actionMdl.show === 'attachments'}
         close={() => setActionMdl({ show: false })}
         action={() => setActionMdl({ show: false })}
-        title={__('Select Attachment', 'bitform')}>
+        title={__('Select Attachment', 'bitform')}
+      >
         <div style={{ height: '95%' }}>
           <div className="mt-2">{__('Select File Upload Fields', 'bitform')}</div>
           <MultiSelect

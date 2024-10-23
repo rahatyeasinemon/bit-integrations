@@ -62,7 +62,8 @@ export default function ChangelogToggle() {
         onClick={() => {
           setStep(1)
           setShow(true)
-        }}>
+        }}
+      >
         <ChangelogIcn size={25} />
       </button>
       <Modal
@@ -74,7 +75,8 @@ export default function ChangelogToggle() {
         style={{
           height: 'auto',
           width: '550px'
-        }}>
+        }}
+      >
         {(step === 1 && show === true && (
           <>
             <div>
@@ -86,7 +88,8 @@ export default function ChangelogToggle() {
               <button
                 type="button"
                 className="btn round btcd-btn-lg purple purple-sh"
-                onClick={() => setStep(2)}>
+                onClick={() => setStep(2)}
+              >
                 {__('Next', 'bit-integrations')}
               </button>
             </div>
@@ -103,7 +106,8 @@ export default function ChangelogToggle() {
                       __('Updated at:  <b>%s</b>', 'bit-integrations'),
                       '16th October 2024'
                     )
-                  }}></small>
+                  }}
+                ></small>
               </div>
               <div className="changelog-content">
                 {/* <span className="new-integration">
@@ -158,7 +162,8 @@ export default function ChangelogToggle() {
                   <a
                     href="https://bitapps.pro/docs/bit-integrations/free-changelogs/"
                     target="_blank"
-                    rel="noreferrer">
+                    rel="noreferrer"
+                  >
                     {__('Click here')}&nbsp;
                     <ExternalLinkIcn size="14" />
                   </a>
@@ -194,7 +199,8 @@ export default function ChangelogToggle() {
                       <a
                         className="app-link-active"
                         target="blank"
-                        href="https://bitapps.pro/terms-of-service/">
+                        href="https://bitapps.pro/terms-of-service/"
+                      >
                         {__('Click here to see terms', 'bit-integrations')}
                       </a>
                     </div>
@@ -202,13 +208,15 @@ export default function ChangelogToggle() {
                       <button
                         type="button"
                         className="btn round btn-md gray gray-sh"
-                        onClick={() => closeModal()}>
+                        onClick={() => closeModal()}
+                      >
                         Skip
                       </button>
                       <button
                         type="button"
                         className="btn round btcd-btn-lg purple purple-sh"
-                        onClick={() => handleSubmit()}>
+                        onClick={() => handleSubmit()}
+                      >
                         {__('Accept and continue', 'bit-integrations')}
                       </button>
                     </div>

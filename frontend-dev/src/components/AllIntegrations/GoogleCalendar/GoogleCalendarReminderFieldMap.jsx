@@ -18,7 +18,8 @@ export default function GoogleCalendarReminderFieldMap({
         className="btcd-paper-inp mr-2"
         name="method"
         value={reminderField.method || ''}
-        onChange={(re) => handleReminderFieldMapping(re, rIndex)}>
+        onChange={(re) => handleReminderFieldMapping(re, rIndex)}
+      >
         <option value="">{__('Select Notification Type', 'bit-integrations')}</option>
         <option value="popup">{__('Notification', 'bit-integrations')}</option>
         <option value="email">{__('Email', 'bit-integrations')}</option>
@@ -35,7 +36,8 @@ export default function GoogleCalendarReminderFieldMap({
         onClick={() => delReminderFieldMap(rIndex, googleCalendarConf, setGoogleCalendarConf)}
         className="icn-btn sh-sm ml-1"
         type="button"
-        aria-label="btn">
+        aria-label="btn"
+      >
         <span className="btcd-icn icn-trash-2" />
       </button>
     </div>

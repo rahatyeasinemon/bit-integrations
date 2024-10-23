@@ -52,7 +52,8 @@ function CustomApi({ formFields, setFlow, flow, allIntegURL }) {
 
       <div
         className="btcd-stp-page"
-        style={{ ...(step === 2 && { width: 900, height: '1000px', overflow: 'visible' }) }}>
+        style={{ ...(step === 2 && { width: 900, height: '1000px', overflow: 'visible' }) }}
+      >
         <CustomApiIntegrationLayout
           formID={formID}
           formFields={formFields}
@@ -62,10 +63,7 @@ function CustomApi({ formFields, setFlow, flow, allIntegURL }) {
           step
           setStep
         />
-        <button
-          onClick={() => nextPage(3)}
-          className="btn btcd-btn-lg purple sh-sm flx"
-          type="button">
+        <button onClick={() => nextPage(3)} className="btn btcd-btn-lg purple sh-sm flx" type="button">
           {__('Next', 'bit-integrations')}
           &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />

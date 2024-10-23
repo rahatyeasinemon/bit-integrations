@@ -66,7 +66,8 @@ export default function SendinBlueIntegLayout({
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Refresh Sendinblue Lists', 'bit-integrations')}'` }}
           type="button"
-          disabled={isLoading}>
+          disabled={isLoading}
+        >
           &#x21BB;
         </button>
       </div>
@@ -89,19 +90,15 @@ export default function SendinBlueIntegLayout({
             <b className="wdt-100">{__('Map Fields', 'bit-integrations')}</b>
             <button
               onClick={() =>
-                refreshSendinBlueHeader(
-                  sendinBlueConf,
-                  setSendinBlueConf,
-                  setIsLoading,
-                  setSnackbar
-                )
+                refreshSendinBlueHeader(sendinBlueConf, setSendinBlueConf, setIsLoading, setSnackbar)
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{
                 '--tooltip-txt': `'${__('Refresh fields', 'bit-integrations')}'`
               }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -131,7 +128,8 @@ export default function SendinBlueIntegLayout({
                 addFieldMap(sendinBlueConf.field_map.length, sendinBlueConf, setSendinBlueConf)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>
@@ -146,13 +144,15 @@ export default function SendinBlueIntegLayout({
                     onChange={handleInput}
                     name="templateId"
                     value={sendinBlueConf?.templateId}
-                    className="btcd-paper-inp">
+                    className="btcd-paper-inp"
+                  >
                     <option value="">{__('Select Template', 'bit-integrations')}</option>
                     {sendinBlueConf?.default?.sblueTemplates &&
                       Object.values(sendinBlueConf.default.sblueTemplates).map((template) => (
                         <option
                           key={`sendinblue-${template.id + 2}`}
-                          value={template.id || sendinBlueConf.templateId}>
+                          value={template.id || sendinBlueConf.templateId}
+                        >
                           {template.name}
                         </option>
                       ))}
@@ -168,7 +168,8 @@ export default function SendinBlueIntegLayout({
                     '--tooltip-txt': `'${__('Refresh Sendinblue Templates', 'bit-integrations')}'`
                   }}
                   type="button"
-                  disabled={isLoading}>
+                  disabled={isLoading}
+                >
                   &#x21BB;
                 </button>
               </div>
@@ -181,7 +182,8 @@ export default function SendinBlueIntegLayout({
                   className="btcd-link"
                   href="https://help.sendinblue.com/hc/en-us/articles/211244629#h_01EWZJQBND3M8XTA37V018WX62"
                   target="_blank"
-                  rel="noreferrer">
+                  rel="noreferrer"
+                >
                   {__('How to create and active doi template', 'bit-integrations')}
                 </a>
               </small>

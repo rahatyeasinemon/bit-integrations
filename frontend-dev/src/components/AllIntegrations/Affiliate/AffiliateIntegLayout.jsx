@@ -40,7 +40,8 @@ export default function AffiliateIntegLayout({
         onChange={handleInput}
         name="mainAction"
         value={affiliateConf?.mainAction}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select Actions', 'bit-integrations')}</option>
         {affiliateConf?.allActions &&
           affiliateConf.allActions.map(({ key, label }) => (
@@ -70,13 +71,12 @@ export default function AffiliateIntegLayout({
               singleSelect
             />
             <button
-              onClick={() =>
-                getAllAffiliate(affiliateConf, setAffiliateConf, setIsLoading, setSnackbar)
-              }
+              onClick={() => getAllAffiliate(affiliateConf, setAffiliateConf, setIsLoading, setSnackbar)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Fetch All Affiliate List', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -122,11 +122,10 @@ export default function AffiliateIntegLayout({
         ))}
         <div className="txt-center btcbi-field-map-button mt-2">
           <button
-            onClick={() =>
-              addFieldMap(affiliateConf.field_map.length, affiliateConf, setAffiliateConf)
-            }
+            onClick={() => addFieldMap(affiliateConf.field_map.length, affiliateConf, setAffiliateConf)}
             className="icn-btn sh-sm"
-            type="button">
+            type="button"
+          >
             +
           </button>
         </div>
@@ -144,9 +143,7 @@ export default function AffiliateIntegLayout({
         />
       </>
       <br />
-      <Note
-        note={__('Some integrations will only work for logged-in users.', 'bit-integrations')}
-      />
+      <Note note={__('Some integrations will only work for logged-in users.', 'bit-integrations')} />
     </>
   )
 }

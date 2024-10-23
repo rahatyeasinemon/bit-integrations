@@ -55,7 +55,8 @@ export default function SmailyAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
       {smaily?.youTubeLink && <TutorialLink title="Smaily" youTubeLink={smaily?.youTubeLink} />}
       {smaily?.docLink && <TutorialLink title="Smaily" docLink={smaily?.docLink} />}
 
@@ -119,7 +120,8 @@ export default function SmailyAuthorization({
             className="btcd-link"
             href={`https://${smailyConf.subdomain}.sendsmaily.net/account/profile/#api`}
             target="_blank"
-            rel="noreferrer">
+            rel="noreferrer"
+          >
             {__('Smaily API Token', 'bit-integrations')}
           </a>
         </small>
@@ -143,7 +145,8 @@ export default function SmailyAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || loading.auth}>
+            disabled={isAuthorized || loading.auth}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -154,7 +157,8 @@ export default function SmailyAuthorization({
             onClick={nextPage}
             className="btn ml-auto btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

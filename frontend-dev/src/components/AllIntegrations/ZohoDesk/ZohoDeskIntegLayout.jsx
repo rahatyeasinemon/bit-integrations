@@ -19,11 +19,7 @@ export default function ZohoDeskIntegLayout({
     <>
       <br />
       <b className="wdt-200 d-in-b">{__('Portal:', 'bit-integrations')}</b>
-      <select
-        onChange={handleInput}
-        name="orgId"
-        value={deskConf.orgId}
-        className="btcd-paper-inp w-7">
+      <select onChange={handleInput} name="orgId" value={deskConf.orgId} className="btcd-paper-inp w-7">
         <option value="">{__('Select Portal', 'bit-integrations')}</option>
         {deskConf?.default?.organizations &&
           Object.values(deskConf.default.organizations).map((organization) => (
@@ -33,13 +29,12 @@ export default function ZohoDeskIntegLayout({
           ))}
       </select>
       <button
-        onClick={() =>
-          refreshOrganizations(formID, deskConf, setDeskConf, setIsLoading, setSnackbar)
-        }
+        onClick={() => refreshOrganizations(formID, deskConf, setDeskConf, setIsLoading, setSnackbar)}
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': `'${__('Refresh Desk Portals', 'bit-integrations')}'` }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -49,7 +44,8 @@ export default function ZohoDeskIntegLayout({
         onChange={handleInput}
         name="department"
         value={deskConf.department}
-        className="btcd-paper-inp w-7">
+        className="btcd-paper-inp w-7"
+      >
         <option value="">{__('Select Department', 'bit-integrations')}</option>
         {deskConf?.default?.departments?.[deskConf.orgId] &&
           Object.values(deskConf.default.departments[deskConf.orgId]).map((department) => (
@@ -63,7 +59,8 @@ export default function ZohoDeskIntegLayout({
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': `'${__('Refresh Desk Departments', 'bit-integrations')}'` }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -85,13 +82,12 @@ export default function ZohoDeskIntegLayout({
           <div className="mt-4">
             <b className="wdt-100">{__('Map Fields', 'bit-integrations')}</b>
             <button
-              onClick={() =>
-                refreshFields(formID, deskConf, setDeskConf, setIsLoading, setSnackbar)
-              }
+              onClick={() => refreshFields(formID, deskConf, setDeskConf, setIsLoading, setSnackbar)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh Desk Fields', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -121,7 +117,8 @@ export default function ZohoDeskIntegLayout({
                 <button
                   onClick={() => addFieldMap(deskConf.field_map.length, deskConf, setDeskConf)}
                   className="icn-btn sh-sm"
-                  type="button">
+                  type="button"
+                >
                   +
                 </button>
               </div>

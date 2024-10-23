@@ -46,7 +46,8 @@ export default function AcademyLmsAuthorization({
       style={{
         width: step === 1 && 900,
         height: step === 1 && 'auto'
-      }}>
+      }}
+    >
       {academyLms?.youTubeLink && (
         <TutorialLink title="Academy LMS" youTubeLink={academyLms?.youTubeLink} />
       )}
@@ -77,10 +78,7 @@ export default function AcademyLmsAuthorization({
             &times;
           </span>
           {sprintf(
-            __(
-              '%s plugin must be activated to integrate with Bit Integrations',
-              'bit-integrations'
-            ),
+            __('%s plugin must be activated to integrate with Bit Integrations', 'bit-integrations'),
             'Academy Lms'
           )}
         </div>
@@ -90,7 +88,8 @@ export default function AcademyLmsAuthorization({
         <button
           onClick={authorizeHandler}
           className="btn btcd-btn-lg purple sh-sm flx mt-5"
-          type="button">
+          type="button"
+        >
           {__('Connect', 'bit-integrations')}
         </button>
       )}
@@ -100,7 +99,8 @@ export default function AcademyLmsAuthorization({
           onClick={() => setStep(2)}
           className="btn btcd-btn-lg purple sh-sm flx mt-5"
           type="button"
-          disabled={!isAuthorized}>
+          disabled={!isAuthorized}
+        >
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>

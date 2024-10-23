@@ -143,9 +143,7 @@ function HighLevel({ formFields, setFlow, flow, allIntegURL }) {
         setLoading={setLoading}
       />
       {/* STEP 2 */}
-      <div
-        className="btcd-stp-page"
-        style={{ width: step === 2 && 900, height: step === 2 && 'auto' }}>
+      <div className="btcd-stp-page" style={{ width: step === 2 && 900, height: step === 2 && 'auto' }}>
         <HighLevelIntegLayout
           formID={formID}
           formFields={formFields}
@@ -158,7 +156,8 @@ function HighLevel({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => nextPage(3)}
           disabled={!highLevelConf?.selectedTask}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')} &nbsp;
           <BackIcn className="ml-1 rev-icn" />
         </button>

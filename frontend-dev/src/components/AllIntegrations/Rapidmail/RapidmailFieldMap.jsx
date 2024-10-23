@@ -8,13 +8,7 @@ import { generateMappedField } from './RapidmailCommonFunc'
 import TagifyInput from '../../Utilities/TagifyInput'
 import { handleCustomValue } from '../IntegrationHelpers/IntegrationHelpers'
 
-export default function RapidmailFieldMap({
-  i,
-  formFields,
-  field,
-  rapidmailConf,
-  setRapidmailConf
-}) {
+export default function RapidmailFieldMap({ i, formFields, field, rapidmailConf, setRapidmailConf }) {
   if (rapidmailConf?.field_map?.length === 1 && field.rapidmailFormField === '') {
     const newConf = { ...rapidmailConf }
     const tmp = generateMappedField(newConf)
@@ -22,8 +16,7 @@ export default function RapidmailFieldMap({
     setRapidmailConf(newConf)
   }
   const requiredFlds = rapidmailConf?.recipientsFields.filter((fld) => fld.required === true) || []
-  const nonRequiredFlds =
-    rapidmailConf?.recipientsFields.filter((fld) => fld.required === false) || []
+  const nonRequiredFlds = rapidmailConf?.recipientsFields.filter((fld) => fld.required === false) || []
 
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi
@@ -36,7 +29,8 @@ export default function RapidmailFieldMap({
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, rapidmailConf, setRapidmailConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, rapidmailConf, setRapidmailConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -50,7 +44,8 @@ export default function RapidmailFieldMap({
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -77,7 +72,8 @@ export default function RapidmailFieldMap({
             disabled={i < requiredFlds.length}
             name="rapidmailFormField"
             value={i < requiredFlds ? requiredFlds[i].label || '' : field.rapidmailFormField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, rapidmailConf, setRapidmailConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, rapidmailConf, setRapidmailConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFlds.length ? (
               <option key={requiredFlds[i].key} value={requiredFlds[i].key}>
@@ -97,14 +93,16 @@ export default function RapidmailFieldMap({
             <button
               onClick={() => addFieldMap(i, rapidmailConf, setRapidmailConf)}
               className="icn-btn sh-sm ml-2 mr-1"
-              type="button">
+              type="button"
+            >
               +
             </button>
             <button
               onClick={() => delFieldMap(i, rapidmailConf, setRapidmailConf)}
               className="icn-btn sh-sm ml-1"
               type="button"
-              aria-label="btn">
+              aria-label="btn"
+            >
               <span className="btcd-icn icn-trash-2" />
             </button>
           </>

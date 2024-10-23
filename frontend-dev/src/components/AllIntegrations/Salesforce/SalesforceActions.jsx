@@ -104,9 +104,7 @@ export default function SalesforceActions({
             />
           </div>
         )}
-        {['opportunity-create', 'event-create', 'case-create'].includes(
-          salesforceConf.actionName
-        ) && (
+        {['opportunity-create', 'event-create', 'case-create'].includes(salesforceConf.actionName) && (
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <TableCheckBox
               onChange={openAccountModel}
@@ -294,7 +292,8 @@ export default function SalesforceActions({
         show={actionMdl.show === 'campaign'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Campaign', 'bit-integrations')}>
+        title={__('Campaign', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2" />
         {isLoading ? (
           <Loader
@@ -311,7 +310,8 @@ export default function SalesforceActions({
             <select
               value={salesforceConf.actions.campaignId}
               className="btcd-paper-inp"
-              onChange={(e) => actionHandler(e.target.value, 'campaignId')}>
+              onChange={(e) => actionHandler(e.target.value, 'campaignId')}
+            >
               <option value="">{__('Select Campaign', 'bit-integrations')}</option>
               {salesforceConf?.default?.campaignLists &&
                 salesforceConf.default.campaignLists.map((item) => (
@@ -322,18 +322,13 @@ export default function SalesforceActions({
             </select>
             <button
               onClick={() =>
-                getAllCampaignList(
-                  formID,
-                  salesforceConf,
-                  setSalesforceConf,
-                  setIsLoading,
-                  setSnackbar
-                )
+                getAllCampaignList(formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar)
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': '"Refresh Campaign"' }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -349,7 +344,8 @@ export default function SalesforceActions({
         show={actionMdl.show === 'account'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Account', 'bit-integrations')}>
+        title={__('Account', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2" />
         {isLoading ? (
           <Loader
@@ -366,7 +362,8 @@ export default function SalesforceActions({
             <select
               value={salesforceConf.actions.accountId}
               className="btcd-paper-inp"
-              onChange={(e) => actionHandler(e.target.value, 'accountId')}>
+              onChange={(e) => actionHandler(e.target.value, 'accountId')}
+            >
               <option value="">{__('Select Account', 'bit-integrations')}</option>
               {salesforceConf?.default?.accountLists &&
                 salesforceConf.default.accountLists.map((item) => (
@@ -377,18 +374,13 @@ export default function SalesforceActions({
             </select>
             <button
               onClick={() =>
-                getAllAccountList(
-                  formID,
-                  salesforceConf,
-                  setSalesforceConf,
-                  setIsLoading,
-                  setSnackbar
-                )
+                getAllAccountList(formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar)
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': '"Refresh Account"' }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -404,7 +396,8 @@ export default function SalesforceActions({
         show={actionMdl.show === 'opportunityStage'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Opportunity Stage', 'bit-integrations')}>
+        title={__('Opportunity Stage', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2" />
         {isLoading ? (
           <Loader
@@ -421,7 +414,8 @@ export default function SalesforceActions({
             <select
               value={salesforceConf.actions.opportunityStageId}
               className="btcd-paper-inp"
-              onChange={(e) => actionHandler(e.target.value, 'opportunityStageId')}>
+              onChange={(e) => actionHandler(e.target.value, 'opportunityStageId')}
+            >
               <option value="">{__('Select Opportunity Stage', 'bit-integrations')}</option>
               {opportunityStage.map((item) => (
                 <option key={item.value} value={item.value}>
@@ -442,7 +436,8 @@ export default function SalesforceActions({
         show={actionMdl.show === 'opportunityType'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Opportunity Type', 'bit-integrations')}>
+        title={__('Opportunity Type', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2" />
         {isLoading ? (
           <Loader
@@ -459,7 +454,8 @@ export default function SalesforceActions({
             <select
               value={salesforceConf.actions.opportunityTypeId}
               className="btcd-paper-inp"
-              onChange={(e) => actionHandler(e.target.value, 'opportunityTypeId')}>
+              onChange={(e) => actionHandler(e.target.value, 'opportunityTypeId')}
+            >
               <option value="">{__('Select Opportunity Type', 'bit-integrations')}</option>
               {opportunityType.map((item) => (
                 <option key={item.value} value={item.value}>
@@ -480,7 +476,8 @@ export default function SalesforceActions({
         show={actionMdl.show === 'opportunityLeadSource'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Opportunity Lead Source', 'bit-integrations')}>
+        title={__('Opportunity Lead Source', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2" />
         {isLoading ? (
           <Loader
@@ -497,7 +494,8 @@ export default function SalesforceActions({
             <select
               value={salesforceConf.actions.opportunityLeadSourceId}
               className="btcd-paper-inp"
-              onChange={(e) => actionHandler(e.target.value, 'opportunityLeadSourceId')}>
+              onChange={(e) => actionHandler(e.target.value, 'opportunityLeadSourceId')}
+            >
               <option value="">{__('Select Opportunity Lead Source', 'bit-integrations')}</option>
               {opportunityLeadSource.map((item) => (
                 <option key={item.value} value={item.value}>
@@ -518,7 +516,8 @@ export default function SalesforceActions({
         show={actionMdl.show === 'contact'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Contact', 'bit-integrations')}>
+        title={__('Contact', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2" />
         {isLoading ? (
           <Loader
@@ -535,7 +534,8 @@ export default function SalesforceActions({
             <select
               value={salesforceConf.actions.contactId}
               className="btcd-paper-inp"
-              onChange={(e) => actionHandler(e.target.value, 'contactId')}>
+              onChange={(e) => actionHandler(e.target.value, 'contactId')}
+            >
               <option value="">{__('Select Contact', 'bit-integrations')}</option>
               {salesforceConf?.default?.contactLists &&
                 salesforceConf.default.contactLists.map((item) => (
@@ -546,18 +546,13 @@ export default function SalesforceActions({
             </select>
             <button
               onClick={() =>
-                getAllContactList(
-                  formID,
-                  salesforceConf,
-                  setSalesforceConf,
-                  setIsLoading,
-                  setSnackbar
-                )
+                getAllContactList(formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar)
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': '"Refresh Contact"' }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -573,7 +568,8 @@ export default function SalesforceActions({
         show={actionMdl.show === 'eventSubject'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Event Subject', 'bit-integrations')}>
+        title={__('Event Subject', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2" />
         {isLoading ? (
           <Loader
@@ -590,7 +586,8 @@ export default function SalesforceActions({
             <select
               value={salesforceConf.actions.eventSubjectId}
               className="btcd-paper-inp"
-              onChange={(e) => actionHandler(e.target.value, 'eventSubjectId')}>
+              onChange={(e) => actionHandler(e.target.value, 'eventSubjectId')}
+            >
               <option value="">{__('Select event subject', 'bit-integrations')}</option>
               {eventSubject.map((item) => (
                 <option key={item.value} value={item.value}>
@@ -611,7 +608,8 @@ export default function SalesforceActions({
         show={actionMdl.show === 'caseStatus'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Case Status', 'bit-integrations')}>
+        title={__('Case Status', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2" />
         {isLoading ? (
           <Loader
@@ -628,7 +626,8 @@ export default function SalesforceActions({
             <select
               value={salesforceConf.actions.caseStatusId}
               className="btcd-paper-inp"
-              onChange={(e) => actionHandler(e.target.value, 'caseStatusId')}>
+              onChange={(e) => actionHandler(e.target.value, 'caseStatusId')}
+            >
               <option value="">{__('Select Case status', 'bit-integrations')}</option>
               {salesforceConf?.caseStatus?.map((item, key) => (
                 <option key={key} value={item.value}>
@@ -643,7 +642,8 @@ export default function SalesforceActions({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': '"Refresh Case Status"' }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -659,7 +659,8 @@ export default function SalesforceActions({
         show={actionMdl.show === 'caseOrigin'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Case Origin', 'bit-integrations')}>
+        title={__('Case Origin', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2" />
         {isLoading ? (
           <Loader
@@ -676,7 +677,8 @@ export default function SalesforceActions({
             <select
               value={salesforceConf.actions.caseOriginId}
               className="btcd-paper-inp"
-              onChange={(e) => actionHandler(e.target.value, 'caseOriginId')}>
+              onChange={(e) => actionHandler(e.target.value, 'caseOriginId')}
+            >
               <option value="">{__('Select Case Origin', 'bit-integrations')}</option>
               {salesforceConf?.caseOrigins?.map((item, key) => (
                 <option key={key} value={item.value}>
@@ -691,7 +693,8 @@ export default function SalesforceActions({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': '"Refresh Case Origin"' }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -707,7 +710,8 @@ export default function SalesforceActions({
         show={actionMdl.show === 'casePriority'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Case Priority', 'bit-integrations')}>
+        title={__('Case Priority', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2" />
         {isLoading ? (
           <Loader
@@ -724,7 +728,8 @@ export default function SalesforceActions({
             <select
               value={salesforceConf.actions.casePriorityId}
               className="btcd-paper-inp"
-              onChange={(e) => actionHandler(e.target.value, 'casePriorityId')}>
+              onChange={(e) => actionHandler(e.target.value, 'casePriorityId')}
+            >
               <option value="">{__('Select Case Priority', 'bit-integrations')}</option>
               {salesforceConf?.casePriority?.map((item, key) => (
                 <option key={key} value={item.value}>
@@ -739,7 +744,8 @@ export default function SalesforceActions({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': '"Refresh Case Priority"' }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -755,7 +761,8 @@ export default function SalesforceActions({
         show={actionMdl.show === 'potentialLiability'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Potential liability', 'bit-integrations')}>
+        title={__('Potential liability', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2" />
         {isLoading ? (
           <Loader
@@ -772,7 +779,8 @@ export default function SalesforceActions({
             <select
               value={salesforceConf.actions.potentialLiabilityId}
               className="btcd-paper-inp"
-              onChange={(e) => actionHandler(e.target.value, 'potentialLiabilityId')}>
+              onChange={(e) => actionHandler(e.target.value, 'potentialLiabilityId')}
+            >
               <option value="">{__('Select Case potential liability', 'bit-integrations')}</option>
               {salesforceConf?.casePotentialLiability?.map((item, key) => (
                 <option key={key} value={item.value}>
@@ -793,7 +801,8 @@ export default function SalesforceActions({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': '"Refresh potential liability"' }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -809,7 +818,8 @@ export default function SalesforceActions({
         show={actionMdl.show === 'slaViolation'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('SLA Violation', 'bit-integrations')}>
+        title={__('SLA Violation', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2" />
         {isLoading ? (
           <Loader
@@ -826,7 +836,8 @@ export default function SalesforceActions({
             <select
               value={salesforceConf.actions.slaViolationId}
               className="btcd-paper-inp"
-              onChange={(e) => actionHandler(e.target.value, 'slaViolationId')}>
+              onChange={(e) => actionHandler(e.target.value, 'slaViolationId')}
+            >
               <option value="">{__('Select Case SLA violation', 'bit-integrations')}</option>
               {salesforceConf?.caseSLAViolation?.map((item, key) => (
                 <option key={key} value={item.value}>
@@ -836,18 +847,13 @@ export default function SalesforceActions({
             </select>
             <button
               onClick={() =>
-                getAllSLAViolation(
-                  formID,
-                  salesforceConf,
-                  setSalesforceConf,
-                  setIsLoading,
-                  setSnackbar
-                )
+                getAllSLAViolation(formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar)
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': '"Refresh SLA Violation"' }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -863,7 +869,8 @@ export default function SalesforceActions({
         show={actionMdl.show === 'accType'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Account Type', 'bit-integrations')}>
+        title={__('Add Account Type', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2" />
         {isLoading ? (
           <Loader
@@ -880,7 +887,8 @@ export default function SalesforceActions({
             <select
               value={salesforceConf.actions.selectedAccType}
               className="btcd-paper-inp"
-              onChange={(e) => actionHandler(e.target.value, 'selectedAccType')}>
+              onChange={(e) => actionHandler(e.target.value, 'selectedAccType')}
+            >
               <option value="">{__('Select type', 'bit-integrations')}</option>
               {accountTypes.map((item, key) => (
                 <option key={key} value={item}>
@@ -899,7 +907,8 @@ export default function SalesforceActions({
         show={actionMdl.show === 'ownership'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Account Ownership', 'bit-integrations')}>
+        title={__('Add Account Ownership', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2" />
         {isLoading ? (
           <Loader
@@ -916,7 +925,8 @@ export default function SalesforceActions({
             <select
               value={salesforceConf.actions.selectedOwnership}
               className="btcd-paper-inp"
-              onChange={(e) => actionHandler(e.target.value, 'selectedOwnership')}>
+              onChange={(e) => actionHandler(e.target.value, 'selectedOwnership')}
+            >
               <option value="">{__('Select Ownership', 'bit-integrations')}</option>
               {['Public', 'Private', 'Subsidiary', 'Other'].map((item, key) => (
                 <option key={key} value={item}>
@@ -935,7 +945,8 @@ export default function SalesforceActions({
         show={actionMdl.show === 'caseType'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Case Type', 'bit-integrations')}>
+        title={__('Add Case Type', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2" />
         {isLoading ? (
           <Loader
@@ -952,7 +963,8 @@ export default function SalesforceActions({
             <select
               value={salesforceConf.actions.caseType}
               className="btcd-paper-inp"
-              onChange={(e) => actionHandler(e.target.value, 'caseType')}>
+              onChange={(e) => actionHandler(e.target.value, 'caseType')}
+            >
               <option value="">{__('Select type', 'bit-integrations')}</option>
               {salesforceConf?.caseTypes?.map((item, key) => (
                 <option key={key} value={item.value}>
@@ -967,7 +979,8 @@ export default function SalesforceActions({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': '"Refresh Case Type"' }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -981,7 +994,8 @@ export default function SalesforceActions({
         show={actionMdl.show === 'caseReason'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Case Reason', 'bit-integrations')}>
+        title={__('Add Case Reason', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2" />
         {isLoading ? (
           <Loader
@@ -998,7 +1012,8 @@ export default function SalesforceActions({
             <select
               value={salesforceConf.actions.caseReason}
               className="btcd-paper-inp"
-              onChange={(e) => actionHandler(e.target.value, 'caseReason')}>
+              onChange={(e) => actionHandler(e.target.value, 'caseReason')}
+            >
               <option value="">{__('Select Reason', 'bit-integrations')}</option>
               {salesforceConf?.caseReasons?.map((item, key) => (
                 <option key={key} value={item.value}>
@@ -1013,7 +1028,8 @@ export default function SalesforceActions({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': '"Refresh Case Reason"' }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>

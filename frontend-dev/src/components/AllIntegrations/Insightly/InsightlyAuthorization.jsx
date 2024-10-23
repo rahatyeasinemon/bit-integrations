@@ -41,10 +41,9 @@ export default function InsightlyAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {insightly?.youTubeLink && (
-        <TutorialLink title="Insightly" youTubeLink={insightly?.youTubeLink} />
-      )}
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
+      {insightly?.youTubeLink && <TutorialLink title="Insightly" youTubeLink={insightly?.youTubeLink} />}
       {insightly?.docLink && <TutorialLink title="Insightly" docLink={insightly?.docLink} />}
 
       <div className="mt-3">
@@ -73,9 +72,7 @@ export default function InsightlyAuthorization({
         disabled={isInfo}
       />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.api_url}</div>
-      <small className="d-blk mt-3">
-        {__('Example: {name}.insightly.com', 'bit-integrations')}
-      </small>
+      <small className="d-blk mt-3">{__('Example: {name}.insightly.com', 'bit-integrations')}</small>
       <div className="mt-3">
         <b>{__('API Key:', 'bit-integrations')}</b>
       </div>
@@ -97,7 +94,8 @@ export default function InsightlyAuthorization({
             className="btcd-link"
             href={`https://crm.${insightlyConf.api_url}/Users/UserSettings#`}
             target="_blank"
-            rel="noreferrer">
+            rel="noreferrer"
+          >
             {__('Insightly API Token', 'bit-integrations')}
           </a>
         </small>
@@ -120,7 +118,8 @@ export default function InsightlyAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || loading.auth}>
+            disabled={isAuthorized || loading.auth}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -131,7 +130,8 @@ export default function InsightlyAuthorization({
             onClick={nextPage}
             className="btn ml-auto btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

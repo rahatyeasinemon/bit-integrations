@@ -76,12 +76,7 @@ export default function CampaignMonitorAuthorization({
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
 
-    refreshCampaignMonitorLists(
-      campaignMonitorConf,
-      setCampaignMonitorConf,
-      setIsLoading,
-      setSnackbar
-    )
+    refreshCampaignMonitorLists(campaignMonitorConf, setCampaignMonitorConf, setIsLoading, setSnackbar)
     setstep(2)
   }
 
@@ -97,7 +92,8 @@ export default function CampaignMonitorAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
       {campaignMonitor?.youTubeLink && (
         <TutorialLink title="Campaign Monitor" youTubeLink={campaignMonitor?.youTubeLink} />
       )}
@@ -154,7 +150,8 @@ export default function CampaignMonitorAuthorization({
           className="btcd-link"
           href="https://bitcode2.createsend.com/account/apikeys"
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {__('Campaign Monitor API Key', 'bit-integrations')}
         </a>
       </small>
@@ -181,7 +178,8 @@ export default function CampaignMonitorAuthorization({
             onClick={handleAuthorize}
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -192,7 +190,8 @@ export default function CampaignMonitorAuthorization({
             onClick={() => nextPage(2)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <BackIcn className="ml-1 rev-icn" />
           </button>

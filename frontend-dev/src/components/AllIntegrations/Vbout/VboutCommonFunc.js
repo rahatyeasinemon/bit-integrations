@@ -38,14 +38,7 @@ export const checkMappedFields = (vboutConf) => {
   }
   return true
 }
-export const handleAuthorize = (
-  confTmp,
-  setConf,
-  setError,
-  setisAuthorized,
-  loading,
-  setLoading
-) => {
+export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, loading, setLoading) => {
   if (!confTmp.auth_token) {
     setError({
       auth_token: !confTmp.auth_token ? __("Api Key can't be empty", 'bit-integrations') : ''

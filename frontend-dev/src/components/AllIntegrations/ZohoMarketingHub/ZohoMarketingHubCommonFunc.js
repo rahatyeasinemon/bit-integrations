@@ -30,13 +30,7 @@ export const handleInput = (
   setMarketingHubConf({ ...newConf })
 }
 
-export const listChange = (
-  marketingHubConf,
-  formID,
-  setMarketingHubConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const listChange = (marketingHubConf, formID, setMarketingHubConf, setIsLoading, setSnackbar) => {
   const newConf = { ...marketingHubConf }
   newConf.field_map = [{ formField: '', zohoFormField: 'Contact Email' }]
 

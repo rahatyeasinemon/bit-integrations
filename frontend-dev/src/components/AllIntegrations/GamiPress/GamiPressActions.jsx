@@ -57,7 +57,8 @@ export default function GamiPressActions({ trelloConf, setTrelloConf, formFields
         show={actionMdl.show === 'tag'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Position', 'bit-integrations')}>
+        title={__('Position', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Card Position', 'bit-integrations')}</div>
         {isLoading ? (

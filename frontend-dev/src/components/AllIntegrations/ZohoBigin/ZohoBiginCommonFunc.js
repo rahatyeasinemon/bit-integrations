@@ -53,14 +53,7 @@ export const handleTabChange = (
   settab(recordTab)
 }
 
-export const moduleChange = (
-  recordTab,
-  biginConf,
-  formID,
-  setBiginConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const moduleChange = (recordTab, biginConf, formID, setBiginConf, setIsLoading, setSnackbar) => {
   const newConf = { ...biginConf }
   const module = recordTab === 0 ? newConf.module : newConf.relatedlists[recordTab - 1].module
 
@@ -144,13 +137,7 @@ export const refreshModules = (formID, biginConf, setBiginConf, setIsLoading, se
     .catch(() => setIsLoading(false))
 }
 
-export const refreshPipelinesLayout = (
-  formID,
-  biginConf,
-  setBiginConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const refreshPipelinesLayout = (formID, biginConf, setBiginConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
   const refreshLayoutRequestParams = {
     formID,
@@ -241,14 +228,7 @@ export const refreshRelatedList = (formID, biginConf, setBiginConf, setIsLoading
     .catch(() => setIsLoading(false))
 }
 
-export const getFields = (
-  recordTab,
-  formID,
-  biginConf,
-  setBiginConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const getFields = (recordTab, formID, biginConf, setBiginConf, setIsLoading, setSnackbar) => {
   const module = recordTab === 0 ? biginConf.module : biginConf.relatedlists[recordTab - 1].module
   if (!module) {
     return
@@ -304,14 +284,7 @@ export const getFields = (
     .catch(() => setIsLoading(false))
 }
 
-export const refreshTags = (
-  recordTab,
-  formID,
-  biginConf,
-  setBiginConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const refreshTags = (recordTab, formID, biginConf, setBiginConf, setIsLoading, setSnackbar) => {
   const module = recordTab === 0 ? biginConf.module : biginConf.relatedlists[recordTab - 1].module
   if (!module) {
     return
@@ -419,9 +392,7 @@ export const checkMappedFields = (biginConf) => {
       )
     : []
   const mappedRelatedFields = biginConf.relatedlists.map((relatedlist) =>
-    relatedlist.field_map.filter(
-      (mappedField) => !mappedField.formField && mappedField.zohoFormField
-    )
+    relatedlist.field_map.filter((mappedField) => !mappedField.formField && mappedField.zohoFormField)
   )
 
   if (mappedFields.length > 0 || mappedRelatedFields.find((relatedField) => relatedField.length)) {

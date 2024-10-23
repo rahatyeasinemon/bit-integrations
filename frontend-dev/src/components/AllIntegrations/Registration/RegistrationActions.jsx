@@ -117,7 +117,8 @@ export default function RegistrationActions({ userConf, setUserConf }) {
           userConf?.action_type !== 'updated_user'
             ? __('WP User Role', 'bit-integrations')
             : __('Update WP User Role', 'bit-integrations')
-        }>
+        }
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select User Role', 'bit-integrations')}</div>
         {isLoading ? (
@@ -148,7 +149,8 @@ export default function RegistrationActions({ userConf, setUserConf }) {
                 onClick={() => getUserRoles(setIsLoading, setRoles)}
                 className="icn-btn sh-sm ml-2 mr-2 tooltip"
                 style={{ '--tooltip-txt': `${__('Refresh Roles', 'bit-integrations')}'` }}
-                type="button">
+                type="button"
+              >
                 &#x21BB;
               </button>
             </div>

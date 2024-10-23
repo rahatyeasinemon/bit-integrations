@@ -14,14 +14,7 @@ import Modal from '../../Utilities/Modal'
 import TitleModal from '../../Utilities/TitleModal'
 import { refreshAssigmentRules, refreshOwners, refreshTags } from './ZohoCRMCommonFunc'
 
-export default function ZohoCRMActions({
-  crmConf,
-  setCrmConf,
-  formFields,
-  tab,
-  formID,
-  setSnackbar
-}) {
+export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, formID, setSnackbar }) {
   const [upsertMdl, setUpsertMdl] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => {} })
@@ -298,9 +291,7 @@ export default function ZohoCRMActions({
         <TableCheckBox
           onChange={(e) => actionHandler(e, 'gclid')}
           checked={
-            tab === 0
-              ? 'gclid' in crmConf.actions
-              : 'gclid' in crmConf.relatedlists[tab - 1].actions
+            tab === 0 ? 'gclid' in crmConf.actions : 'gclid' in crmConf.relatedlists[tab - 1].actions
           }
           className="wdt-200 mt-4 mr-2"
           value="Capture_GCLID"
@@ -311,9 +302,7 @@ export default function ZohoCRMActions({
           <TableCheckBox
             onChange={(e) => actionHandler(e, 'upsert')}
             checked={
-              tab === 0
-                ? 'upsert' in crmConf.actions
-                : 'upsert' in crmConf.relatedlists[tab - 1].actions
+              tab === 0 ? 'upsert' in crmConf.actions : 'upsert' in crmConf.relatedlists[tab - 1].actions
             }
             className="wdt-200 mt-4 mr-2"
             value="Upsert_Record"
@@ -339,9 +328,7 @@ export default function ZohoCRMActions({
         <TableCheckBox
           onChange={() => setActionMdl({ show: 'tag_rec' })}
           checked={
-            tab === 0
-              ? 'tag_rec' in crmConf.actions
-              : 'tag_rec' in crmConf.relatedlists[tab - 1].actions
+            tab === 0 ? 'tag_rec' in crmConf.actions : 'tag_rec' in crmConf.relatedlists[tab - 1].actions
           }
           className="wdt-200 mt-4 mr-2"
           value="Tag_Records"
@@ -370,14 +357,13 @@ export default function ZohoCRMActions({
         show={actionMdl.show === 'attachment'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Select Attachment', 'bit-integrations')}>
+        title={__('Select Attachment', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2" />
         <div className="mt-2">{__('Select File Upload Fields', 'bit-integrations')}</div>
         <MultiSelect
           defaultValue={
-            tab === 0
-              ? crmConf.actions.attachment
-              : crmConf.relatedlists[tab - 1].actions.attachment
+            tab === 0 ? crmConf.actions.attachment : crmConf.relatedlists[tab - 1].actions.attachment
           }
           className="mt-2 w-9"
           onChange={(val) => actionHandler(val, 'attachment')}
@@ -395,7 +381,8 @@ export default function ZohoCRMActions({
         show={actionMdl.show === 'assignment_rules'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Assignment Rules', 'bit-integrations')}>
+        title={__('Assignment Rules', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2" />
         <div className="mt-2">{__('Assignment Rules', 'bit-integrations')}</div>
         {isLoading ? (
@@ -417,27 +404,28 @@ export default function ZohoCRMActions({
                   : crmConf.relatedlists[tab - 1].actions.assignment_rules
               }
               className="btcd-paper-inp"
-              onChange={(e) => actionHandler(e.target.value, 'assignment_rules')}>
+              onChange={(e) => actionHandler(e.target.value, 'assignment_rules')}
+            >
               <option value="">{__('Select Assignment Rule', 'bit-integrations')}</option>
               {crmConf?.default?.assignmentRules?.[module] &&
                 Object.keys(crmConf.default.assignmentRules[module]).map((assignmentName) => (
                   <option
                     key={assignmentName}
-                    value={crmConf.default.assignmentRules[module][assignmentName]}>
+                    value={crmConf.default.assignmentRules[module][assignmentName]}
+                  >
                     {assignmentName}
                   </option>
                 ))}
             </select>
             <button
-              onClick={() =>
-                refreshAssigmentRules(tab, crmConf, setCrmConf, setIsLoading, setSnackbar)
-              }
+              onClick={() => refreshAssigmentRules(tab, crmConf, setCrmConf, setIsLoading, setSnackbar)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{
                 '--tooltip-txt': `'${__('Refresh CRM Assignment Rules', 'bit-integrations')}'`
               }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -452,7 +440,8 @@ export default function ZohoCRMActions({
         show={actionMdl.show === 'tag_rec'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Tag Records', 'bit-integrations')}>
+        title={__('Tag Records', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <small>{__('Add a tag to records pushed to Zoho CRM', 'bit-integrations')}</small>
         <div className="mt-2">{__('Tag Name', 'bit-integrations')}</div>
@@ -478,13 +467,12 @@ export default function ZohoCRMActions({
               customValue
             />
             <button
-              onClick={() =>
-                refreshTags(tab, formID, crmConf, setCrmConf, setIsLoading, setSnackbar)
-              }
+              onClick={() => refreshTags(tab, formID, crmConf, setCrmConf, setIsLoading, setSnackbar)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh CRM Tags', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -499,7 +487,8 @@ export default function ZohoCRMActions({
         show={actionMdl.show === 'rec_owner'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Record Owner', 'bit-integrations')}>
+        title={__('Record Owner', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2" />
         <div className="mt-2">{__('Owner Name', 'bit-integrations')}</div>
         {isLoading ? (
@@ -516,12 +505,11 @@ export default function ZohoCRMActions({
           <div className="flx flx-between mt-2">
             <select
               value={
-                tab === 0
-                  ? crmConf.actions.rec_owner
-                  : crmConf.relatedlists[tab - 1].actions.rec_owner
+                tab === 0 ? crmConf.actions.rec_owner : crmConf.relatedlists[tab - 1].actions.rec_owner
               }
               className="btcd-paper-inp"
-              onChange={(e) => actionHandler(e.target.value, 'rec_owner')}>
+              onChange={(e) => actionHandler(e.target.value, 'rec_owner')}
+            >
               <option value="">{__('Select Owner', 'bit-integrations')}</option>
               {crmConf.default?.crmOwner &&
                 Object.values(crmConf.default.crmOwner)?.map((owner) => (
@@ -535,18 +523,15 @@ export default function ZohoCRMActions({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh CRM Owners', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
         )}
       </ConfirmModal>
 
-      <Modal
-        md
-        show={upsertMdl}
-        setModal={setUpsertMdl}
-        title={__('Upsert Record', 'bit-integrations')}>
+      <Modal md show={upsertMdl} setModal={setUpsertMdl} title={__('Upsert Record', 'bit-integrations')}>
         <div className="o-a">
           {tab === 0
             ? crmConf?.actions?.upsert && (
@@ -557,7 +542,8 @@ export default function ZohoCRMActions({
                   </small>
                   <ReactSortable
                     list={crmConf.actions.upsert?.crmField}
-                    setList={(l) => setUpsertSettings(l, 'list')}>
+                    setList={(l) => setUpsertSettings(l, 'list')}
+                  >
                     {crmConf.actions.upsert?.crmField?.map((itm) => (
                       <div key={`cf-${itm.i}`} className="upsert_rec w-7 mt-1 flx">
                         <span className="btcd-icn btcd-mnu mr-2" />
@@ -599,7 +585,8 @@ export default function ZohoCRMActions({
                   </small>
                   <ReactSortable
                     list={crmConf.relatedlists[tab - 1].actions.upsert?.crmField}
-                    setList={(l) => setUpsertSettings(l, 'list')}>
+                    setList={(l) => setUpsertSettings(l, 'list')}
+                  >
                     {crmConf.relatedlists[tab - 1].actions.upsert?.crmField?.map((itm) => (
                       <div key={`cf-${itm.i}`} className="upsert_rec w-7 mt-1 flx">
                         <span className="btcd-icn btcd-mnu mr-2" />

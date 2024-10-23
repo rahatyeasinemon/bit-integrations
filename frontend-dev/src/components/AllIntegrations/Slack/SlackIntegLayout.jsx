@@ -37,7 +37,8 @@ export default function SlackIntegLayout({ formFields, slackConf, setSlackConf, 
           onChange={handleInput}
           name="channel_id"
           value={slackConf.channel_id}
-          className="btcd-paper-inp w-5">
+          className="btcd-paper-inp w-5"
+        >
           <option value="">{__('Select Channel List', 'bit-integrations')}</option>
           {slackConf?.tokenDetails?.channels &&
             slackConf?.tokenDetails?.channels.map(({ id, name }) => (

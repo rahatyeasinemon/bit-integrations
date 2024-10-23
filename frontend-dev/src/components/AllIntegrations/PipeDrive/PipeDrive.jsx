@@ -22,8 +22,7 @@ function PipeDrive({ formFields, setFlow, flow, allIntegURL }) {
   const [pipeDriveConf, setPipeDriveConf] = useState({
     name: 'PipeDrive',
     type: 'PipeDrive',
-    api_key:
-      process.env.NODE_ENV === 'development' ? '58cd3b665628da407ba7b400909ceb2ebf84c772' : '',
+    api_key: process.env.NODE_ENV === 'development' ? '58cd3b665628da407ba7b400909ceb2ebf84c772' : '',
     default: {
       modules: {
         Leads: {
@@ -51,12 +50,7 @@ function PipeDrive({ formFields, setFlow, flow, allIntegURL }) {
         Persons: {
           required: true,
           requiredFields: ['name'],
-          relatedlists: [
-            { name: 'Activities' },
-            { name: 'Deals' },
-            { name: 'Leads' },
-            { name: 'Notes' }
-          ]
+          relatedlists: [{ name: 'Activities' }, { name: 'Deals' }, { name: 'Leads' }, { name: 'Notes' }]
         },
         Products: {
           requiredFields: ['name']
@@ -130,7 +124,8 @@ function PipeDrive({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}
+      >
         <PipeDriveIntegLayout
           tab={tab}
           settab={settab}
@@ -150,7 +145,8 @@ function PipeDrive({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => nextPage(3)}
           disabled={pipeDriveConf.moduleData.module === '' || pipeDriveConf.field_map.length < 1}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')} &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>

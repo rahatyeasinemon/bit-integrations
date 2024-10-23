@@ -54,11 +54,10 @@ export default function EnchargeIntegLayout({ formID, formFields, enchargeConf, 
           ))}
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
-              onClick={() =>
-                addFieldMap(enchargeConf.field_map.length, enchargeConf, setEnchargeConf)
-              }
+              onClick={() => addFieldMap(enchargeConf.field_map.length, enchargeConf, setEnchargeConf)}
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

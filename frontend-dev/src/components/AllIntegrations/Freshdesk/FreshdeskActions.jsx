@@ -10,12 +10,7 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { create } from 'mutative'
 import { getAllTicketFields } from './FreshdeskCommonFunc'
 
-export default function FreshdeskActions({
-  freshdeskConf,
-  setFreshdeskConf,
-  formFields,
-  setSnackbar
-}) {
+export default function FreshdeskActions({ freshdeskConf, setFreshdeskConf, formFields, setSnackbar }) {
   const [isLoading, setIsLoading] = useState(false)
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => {} })
   const actionHandler = (e, type) => {
@@ -175,7 +170,8 @@ export default function FreshdeskActions({
           show={actionMdl.show === 'status'}
           close={clsActionMdl}
           action={clsActionMdl}
-          title={__('Position', 'bit-integrations')}>
+          title={__('Position', 'bit-integrations')}
+        >
           <div className="btcd-hr mt-2 mb-2" />
           <div className="mt-2">{__('Select Status', 'bit-integrations')}</div>
           {isLoading ? (
@@ -221,7 +217,8 @@ export default function FreshdeskActions({
           show={actionMdl.show === 'priority'}
           close={clsActionMdl}
           action={clsActionMdl}
-          title={__('Position', 'bit-integrations')}>
+          title={__('Position', 'bit-integrations')}
+        >
           <div className="btcd-hr mt-2 mb-2" />
           <div className="mt-2">{__('Select Priority', 'bit-integrations')}</div>
           {isLoading ? (
@@ -269,7 +266,8 @@ export default function FreshdeskActions({
           show={actionMdl.show === 'ticket_type'}
           close={() => setActionMdl({ show: false })}
           action={() => setActionMdl({ show: false })}
-          title={__('Select type', 'bit-integrations')}>
+          title={__('Select type', 'bit-integrations')}
+        >
           <div className="btcd-hr mt-2" />
           <div className="mt-2">{__('Please select ticket type', 'bit-integrations')}</div>
           {isLoading ? (
@@ -288,7 +286,8 @@ export default function FreshdeskActions({
                 onChange={(e) => setAction(e.target.value, 'selected_ticket_type')}
                 name="ticket_type"
                 value={freshdeskConf.selected_ticket_type}
-                className="btcd-paper-inp w-10 mt-2">
+                className="btcd-paper-inp w-10 mt-2"
+              >
                 <option value="">{__('Select ticket type', 'bit-integrations')}</option>
                 {freshdeskConf?.ticketType?.map((itm, key) => (
                   <option key={key} value={itm}>
@@ -305,7 +304,8 @@ export default function FreshdeskActions({
                   '--tooltip-txt': `'${__('Refresh Ticket Field & Types', 'bit-integrations')}'`
                 }}
                 type="button"
-                disabled={isLoading}>
+                disabled={isLoading}
+              >
                 &#x21BB;
               </button>
             </div>
@@ -333,7 +333,8 @@ export default function FreshdeskActions({
           show={actionMdl.show === 'source'}
           close={() => setActionMdl({ show: false })}
           action={() => setActionMdl({ show: false })}
-          title={__('Select Source', 'bit-integrations')}>
+          title={__('Select Source', 'bit-integrations')}
+        >
           <div className="btcd-hr mt-2" />
           <div className="mt-2">{__('Please select ticket source', 'bit-integrations')}</div>
           {isLoading ? (
@@ -352,7 +353,8 @@ export default function FreshdeskActions({
                 onChange={(e) => setAction(e.target.value, 'selected_ticket_source')}
                 name="source"
                 value={freshdeskConf.selected_ticket_source}
-                className="btcd-paper-inp w-10 mt-2">
+                className="btcd-paper-inp w-10 mt-2"
+              >
                 <option value="">{__('Select ticket source', 'bit-integrations')}</option>
                 {freshdeskConf?.sources &&
                   Object.keys(freshdeskConf?.sources)?.map((itm, key) => (
@@ -370,7 +372,8 @@ export default function FreshdeskActions({
                   '--tooltip-txt': `'${__('Refresh Ticket Field & Sources', 'bit-integrations')}'`
                 }}
                 type="button"
-                disabled={isLoading}>
+                disabled={isLoading}
+              >
                 &#x21BB;
               </button>
             </div>
@@ -398,7 +401,8 @@ export default function FreshdeskActions({
           show={actionMdl.show === 'group'}
           close={() => setActionMdl({ show: false })}
           action={() => setActionMdl({ show: false })}
-          title={__('Select group', 'bit-integrations')}>
+          title={__('Select group', 'bit-integrations')}
+        >
           <div className="btcd-hr mt-2" />
           <div className="mt-2">{__('Please select ticket Group', 'bit-integrations')}</div>
           {isLoading ? (
@@ -417,7 +421,8 @@ export default function FreshdeskActions({
                 onChange={(e) => setAction(e.target.value, 'selected_ticket_group')}
                 name="group"
                 value={freshdeskConf.selected_ticket_group}
-                className="btcd-paper-inp w-10 mt-2">
+                className="btcd-paper-inp w-10 mt-2"
+              >
                 <option value="">{__('Select ticket group', 'bit-integrations')}</option>
                 {freshdeskConf?.groups &&
                   Object.keys(freshdeskConf?.groups)?.map((itm, key) => (
@@ -435,7 +440,8 @@ export default function FreshdeskActions({
                   '--tooltip-txt': `'${__('Refresh Ticket Field & Groups', 'bit-integrations')}'`
                 }}
                 type="button"
-                disabled={isLoading}>
+                disabled={isLoading}
+              >
                 &#x21BB;
               </button>
             </div>
@@ -463,7 +469,8 @@ export default function FreshdeskActions({
           show={actionMdl.show === 'product'}
           close={() => setActionMdl({ show: false })}
           action={() => setActionMdl({ show: false })}
-          title={__('Select Product', 'bit-integrations')}>
+          title={__('Select Product', 'bit-integrations')}
+        >
           <div className="btcd-hr mt-2" />
           <div className="mt-2">{__('Please select product', 'bit-integrations')}</div>
           {isLoading ? (
@@ -482,7 +489,8 @@ export default function FreshdeskActions({
                 onChange={(e) => setAction(e.target.value, 'selected_ticket_product')}
                 name="product"
                 value={freshdeskConf.selected_ticket_product}
-                className="btcd-paper-inp w-10 mt-2">
+                className="btcd-paper-inp w-10 mt-2"
+              >
                 <option value="">{__('Select Product', 'bit-integrations')}</option>
                 {freshdeskConf?.products &&
                   Object.keys(freshdeskConf?.products)?.map((itm, key) => (
@@ -500,7 +508,8 @@ export default function FreshdeskActions({
                   '--tooltip-txt': `'${__('Refresh Ticket Field & products', 'bit-integrations')}'`
                 }}
                 type="button"
-                disabled={isLoading}>
+                disabled={isLoading}
+              >
                 &#x21BB;
               </button>
             </div>
@@ -528,7 +537,8 @@ export default function FreshdeskActions({
           show={actionMdl.show === 'agent'}
           close={() => setActionMdl({ show: false })}
           action={() => setActionMdl({ show: false })}
-          title={__('Select Agent', 'bit-integrations')}>
+          title={__('Select Agent', 'bit-integrations')}
+        >
           <div className="btcd-hr mt-2" />
           <div className="mt-2">{__('Please select agent', 'bit-integrations')}</div>
           {isLoading ? (
@@ -547,7 +557,8 @@ export default function FreshdeskActions({
                 onChange={(e) => setAction(e.target.value, 'selected_ticket_agent')}
                 name="agent"
                 value={freshdeskConf.selected_ticket_agent}
-                className="btcd-paper-inp w-10 mt-2">
+                className="btcd-paper-inp w-10 mt-2"
+              >
                 <option value="">{__('Select Agent', 'bit-integrations')}</option>
                 {freshdeskConf?.agents &&
                   Object.keys(freshdeskConf?.agents)?.map((itm, key) => (
@@ -565,7 +576,8 @@ export default function FreshdeskActions({
                   '--tooltip-txt': `'${__('Refresh Ticket Field & agents', 'bit-integrations')}'`
                 }}
                 type="button"
-                disabled={isLoading}>
+                disabled={isLoading}
+              >
                 &#x21BB;
               </button>
             </div>
@@ -593,14 +605,16 @@ export default function FreshdeskActions({
           show={actionMdl.show === 'attachments'}
           close={() => setActionMdl({ show: false })}
           action={() => setActionMdl({ show: false })}
-          title={__('Select Attachment', 'bit-integrations')}>
+          title={__('Select Attachment', 'bit-integrations')}
+        >
           <div className="btcd-hr mt-2" />
           <div className="mt-2">{__('Please select file upload fields', 'bit-integrations')}</div>
           <select
             onChange={(e) => actionHandler(e, 'Attachments')}
             name="attachments"
             value={freshdeskConf.actions?.attachments}
-            className="btcd-paper-inp w-10 mt-2">
+            className="btcd-paper-inp w-10 mt-2"
+          >
             <option value="">{__('Select file upload field', 'bit-integrations')}</option>
             {formFields
               .filter((itm) => itm.type === 'file')
@@ -633,14 +647,16 @@ export default function FreshdeskActions({
           show={actionMdl.show === 'file'}
           close={() => setActionMdl({ show: false })}
           action={() => setActionMdl({ show: false })}
-          title={__('Select Attachment', 'bit-integrations')}>
+          title={__('Select Attachment', 'bit-integrations')}
+        >
           <div className="btcd-hr mt-2" />
           <div className="mt-2">{__('Please select file upload fields', 'bit-integrations')}</div>
           <select
             onChange={(e) => actionHandler(e, 'file')}
             name="file"
             value={freshdeskConf.actions?.file}
-            className="btcd-paper-inp w-10 mt-2">
+            className="btcd-paper-inp w-10 mt-2"
+          >
             <option value="">{__('Select file upload field', 'bit-integrations')}</option>
             {formFields
               .filter((itm) => itm.type === 'file')

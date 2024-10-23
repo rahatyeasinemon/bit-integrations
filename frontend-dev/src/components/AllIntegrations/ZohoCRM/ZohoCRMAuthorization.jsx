@@ -47,7 +47,8 @@ export default function ZohoCRMAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
       {zohoCRM?.youTubeLink && <TutorialLink title="Zoho CRM" youTubeLink={zohoCRM?.youTubeLink} />}
       {zohoCRM?.docLink && <TutorialLink title="Zoho CRM" docLink={zohoCRM?.docLink} />}
 
@@ -72,7 +73,8 @@ export default function ZohoCRMAuthorization({
         name="dataCenter"
         value={crmConf.dataCenter}
         className="btcd-paper-inp w-6 mt-1"
-        disabled={isInfo}>
+        disabled={isInfo}
+      >
         <option value="">{__('--Select a data center--', 'bit-integrations')}</option>
         <option value="com">zoho.com</option>
         <option value="eu">zoho.eu</option>
@@ -108,7 +110,8 @@ export default function ZohoCRMAuthorization({
           className="btcd-link"
           href={`https://api-console.zoho.${crmConf?.dataCenter || 'com'}/`}
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {__('Zoho API Console', 'bit-integrations')}
         </a>
       </small>
@@ -160,7 +163,8 @@ export default function ZohoCRMAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -171,7 +175,8 @@ export default function ZohoCRMAuthorization({
             onClick={nextPage}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

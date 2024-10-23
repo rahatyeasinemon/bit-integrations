@@ -46,9 +46,7 @@ export const handleAuthorize = (confTmp, setConf, setIsAuthorized, setIsLoading,
   if (!confTmp.clientId || !confTmp.clientSecret) {
     setError({
       clientId: !confTmp.clientId ? __("Client Id can't be empty", 'bit-integrations') : '',
-      clientSecret: !confTmp.clientSecret
-        ? __("Client Secret can't be empty", 'bit-integrations')
-        : ''
+      clientSecret: !confTmp.clientSecret ? __("Client Secret can't be empty", 'bit-integrations') : ''
     })
     return
   }

@@ -11,13 +11,7 @@ import {
   handleFieldMapping
 } from '../IntegrationHelpers/MailChimpIntegrationHelpers'
 
-export default function AcumbamailFieldMap({
-  i,
-  formFields,
-  field,
-  acumbamailConf,
-  setAcumbamailConf
-}) {
+export default function AcumbamailFieldMap({ i, formFields, field, acumbamailConf, setAcumbamailConf }) {
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi
   const isRequiredFld = acumbamailConf.default.allFields[acumbamailConf.listId].required?.includes(
@@ -39,7 +33,8 @@ export default function AcumbamailFieldMap({
           className="btcd-paper-inp mr-2"
           name="formField"
           value={field.formField || ''}
-          onChange={(ev) => handleFieldMapping(ev, i, acumbamailConf, setAcumbamailConf)}>
+          onChange={(ev) => handleFieldMapping(ev, i, acumbamailConf, setAcumbamailConf)}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           <optgroup label={__('Form Fields', 'bit-integrations')}>
             {formFields.map(
@@ -53,7 +48,8 @@ export default function AcumbamailFieldMap({
           </optgroup>
           <option value="custom">{__('Custom...', 'bit-integrations')}</option>
           <optgroup
-            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}>
+            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}
+          >
             {isPro &&
               SmartTagField?.map((f) => (
                 <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -80,7 +76,8 @@ export default function AcumbamailFieldMap({
           name="acumbamailFormField"
           disabled={i < 1}
           value={field.acumbamailFormField || ''}
-          onChange={(ev) => handleFieldMapping(ev, i, acumbamailConf, setAcumbamailConf)}>
+          onChange={(ev) => handleFieldMapping(ev, i, acumbamailConf, setAcumbamailConf)}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           {isRequiredFld &&
             requiredFlds.map((listField, indx) => (
@@ -102,14 +99,16 @@ export default function AcumbamailFieldMap({
           <button
             onClick={() => addFieldMap(i, acumbamailConf, setAcumbamailConf)}
             className="icn-btn sh-sm ml-2 mr-1"
-            type="button">
+            type="button"
+          >
             +
           </button>
           <button
             onClick={() => delFieldMap(i, acumbamailConf, setAcumbamailConf)}
             className="icn-btn sh-sm"
             type="button"
-            aria-label="btn">
+            aria-label="btn"
+          >
             <TrashIcn />
           </button>
         </>

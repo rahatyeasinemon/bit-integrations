@@ -68,7 +68,8 @@ export default function WPForoActions({ wpforoConf, setWPForoConf, loading, setL
             show={actionMdl.show === 'reputation'}
             close={clsActionMdl}
             action={clsActionMdl}
-            title={__('Reputations', 'bit-integrations')}>
+            title={__('Reputations', 'bit-integrations')}
+          >
             <div className="btcd-hr mt-2 mb-2" />
             <div className="mt-2 flx">
               {__('Select Reputation', 'bit-integrations')}
@@ -127,7 +128,8 @@ export default function WPForoActions({ wpforoConf, setWPForoConf, loading, setL
             show={actionMdl.show === 'group'}
             close={clsActionMdl}
             action={clsActionMdl}
-            title={__('Groups', 'bit-integrations')}>
+            title={__('Groups', 'bit-integrations')}
+          >
             <div className="btcd-hr mt-2 mb-2" />
             <div className="mt-2 flx">
               {__('Select group', 'bit-integrations')}
@@ -201,7 +203,8 @@ export default function WPForoActions({ wpforoConf, setWPForoConf, loading, setL
             show={actionMdl.show === 'forum'}
             close={clsActionMdl}
             action={clsActionMdl}
-            title={__('Forums', 'bit-integrations')}>
+            title={__('Forums', 'bit-integrations')}
+          >
             <div className="btcd-hr mt-2 mb-2" />
             <div className="mt-2 flx">
               {__('Select Forum', 'bit-integrations')}
@@ -242,7 +245,8 @@ export default function WPForoActions({ wpforoConf, setWPForoConf, loading, setL
             show={actionMdl.show === 'tags'}
             close={clsActionMdl}
             action={clsActionMdl}
-            title={__('Tags', 'bit-integrations')}>
+            title={__('Tags', 'bit-integrations')}
+          >
             <div className="btcd-hr mt-2 mb-2" />
             <div className="mt-2 flx">
               {__('Select tags', 'bit-integrations')}

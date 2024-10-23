@@ -30,9 +30,7 @@ function Notion({ formFields, setFlow, flow, allIntegURL }) {
     type: 'Notion',
     clientId: process.env.NODE_ENV === 'development' ? '3666dc6d-8e41-4e04-b0d7-c652b0fccfaa' : '',
     clientSecret:
-      process.env.NODE_ENV === 'development'
-        ? 'secret_hU4uEb602cEHr8F9r612UBcNfSDJBcn6uXod7F262c8'
-        : '',
+      process.env.NODE_ENV === 'development' ? 'secret_hU4uEb602cEHr8F9r612UBcNfSDJBcn6uXod7F262c8' : '',
     databaseId: '',
     field_map: [{ formFields: '', notionFormFields: '' }],
     notionFields: ''
@@ -70,7 +68,8 @@ function Notion({ formFields, setFlow, flow, allIntegURL }) {
             onClick={() => nextPage(notionConf, setStep, 3)}
             disabled={!notionConf.databaseId || notionConf.field_map.length < 1}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
-            type="button">
+            type="button"
+          >
             {__('Next')}
             &nbsp;
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />

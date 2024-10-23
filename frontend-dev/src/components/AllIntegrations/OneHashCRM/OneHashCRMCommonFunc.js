@@ -80,10 +80,7 @@ export const oneHashCRMAuthentication = (
     }
     setLoading({ ...loading, auth: false })
     toast.error(
-      __(
-        'Authorized failed, Please enter valid API Key & Secret or Access Api URL',
-        'bit-integrations'
-      )
+      __('Authorized failed, Please enter valid API Key & Secret or Access Api URL', 'bit-integrations')
     )
   })
 }

@@ -3,14 +3,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
 import { sprintf, __ } from '../../../Utils/i18nwrap'
 
-export const handleInput = (
-  e,
-  affiliateConf,
-  setAffiliateConf,
-  setIsLoading,
-  setSnackbar,
-  formID
-) => {
+export const handleInput = (e, affiliateConf, setAffiliateConf, setIsLoading, setSnackbar, formID) => {
   const newConf = { ...affiliateConf }
   const { name } = e.target
   if (e.target.value !== '') {
@@ -95,8 +88,7 @@ export const checkMappedFields = (affiliateConf) => {
 export const checkMappedFieldss = (affiliateConf) => {
   const mappedFields = affiliateConf?.field_map
     ? affiliateConf.field_map.filter(
-        (mappedField) =>
-          !mappedField.formField && mappedField.affiliateFormField && mappedField.required
+        (mappedField) => !mappedField.formField && mappedField.affiliateFormField && mappedField.required
       )
     : []
   if (mappedFields.length > 0) return false

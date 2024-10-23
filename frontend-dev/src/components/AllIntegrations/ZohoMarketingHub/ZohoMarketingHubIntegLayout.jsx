@@ -22,7 +22,8 @@ export default function ZohoMarketingHubIntegLayout({
         onChange={(event) => handleInput(event)}
         name="list"
         value={marketingHubConf.list}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select List', 'bit-integrations')}</option>
         {marketingHubConf?.default?.lists &&
           Object.values(marketingHubConf.default.lists).map((listApiName) => (
@@ -38,7 +39,8 @@ export default function ZohoMarketingHubIntegLayout({
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': `'${__('Refresh MarketingHub Lists', 'bit-integrations')}'` }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -74,7 +76,8 @@ export default function ZohoMarketingHubIntegLayout({
                 '--tooltip-txt': `'${__('Refresh MarketingHub Contact Fields', 'bit-integrations')}'`
               }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -103,14 +106,11 @@ export default function ZohoMarketingHubIntegLayout({
               <div className="txt-center btcbi-field-map-button mt-2">
                 <button
                   onClick={() =>
-                    addFieldMap(
-                      marketingHubConf.field_map.length,
-                      marketingHubConf,
-                      setMarketingHubConf
-                    )
+                    addFieldMap(marketingHubConf.field_map.length, marketingHubConf, setMarketingHubConf)
                   }
                   className="icn-btn sh-sm"
-                  type="button">
+                  type="button"
+                >
                   +
                 </button>
               </div>

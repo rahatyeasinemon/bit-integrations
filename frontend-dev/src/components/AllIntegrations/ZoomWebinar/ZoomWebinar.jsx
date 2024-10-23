@@ -84,7 +84,8 @@ function ZoomWebinar({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ width: step === 2 && 900, height: step === 2 && `${100}%` }}>
+        style={{ width: step === 2 && 900, height: step === 2 && `${100}%` }}
+      >
         <ZoomWebinarIntegLayout
           formID={formID}
           formFields={formFields}
@@ -108,7 +109,8 @@ function ZoomWebinar({ formFields, setFlow, flow, allIntegURL }) {
             zoomWebinarConf.selectedActions == null
           }
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>

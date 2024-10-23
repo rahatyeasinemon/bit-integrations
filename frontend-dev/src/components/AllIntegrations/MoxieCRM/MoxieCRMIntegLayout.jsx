@@ -49,7 +49,8 @@ export default function MoxieCRMIntegLayout({
         onChange={handleActionInput}
         name="actionName"
         value={moxiecrmConf.actionName}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select an action', 'bit-integrations')}</option>
         <option value="client">{__('Create Client', 'bit-integrations')}</option>
         <option value="contact">{__('Create Contact', 'bit-integrations')}</option>
@@ -64,7 +65,8 @@ export default function MoxieCRMIntegLayout({
             onChange={handleActionInput}
             name="recordType"
             value={moxiecrmConf.recordType}
-            className="btcd-paper-inp w-5">
+            className="btcd-paper-inp w-5"
+          >
             <option value="Client">{__('Client', 'bit-integrations')}</option>
             <option value="Prospect">{__('Prospect', 'bit-integrations')}</option>
           </select>
@@ -126,7 +128,8 @@ export default function MoxieCRMIntegLayout({
                 addFieldMap(moxiecrmConf.field_map.length, moxiecrmConf, setMoxieCRMConf, false)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

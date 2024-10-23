@@ -102,10 +102,7 @@ function ConstantContact({ formFields, setFlow, flow, allIntegURL }) {
     setTimeout(() => {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
-    if (
-      constantContactConf.actions?.address &&
-      !checkAddressFieldMapRequired(constantContactConf)
-    ) {
+    if (constantContactConf.actions?.address && !checkAddressFieldMapRequired(constantContactConf)) {
       setSnackbar({
         show: true,
         msg: __('Please map address required fields to continue.', 'bit-integrations')
@@ -138,21 +135,12 @@ function ConstantContact({ formFields, setFlow, flow, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div
-        className="btcd-stp-page"
-        style={{ width: step === 2 && 900, height: step === 2 && 'auto' }}>
+      <div className="btcd-stp-page" style={{ width: step === 2 && 900, height: step === 2 && 'auto' }}>
         <ConstantContactIntegLayout
           id={id}
           formFields={formFields}
           handleInput={(e) =>
-            handleInput(
-              e,
-              constantContactConf,
-              setConstantContactConf,
-              id,
-              setIsLoading,
-              setSnackbar
-            )
+            handleInput(e, constantContactConf, setConstantContactConf, id, setIsLoading, setSnackbar)
           }
           constantContactConf={constantContactConf}
           setConstantContactConf={setConstantContactConf}
@@ -162,11 +150,10 @@ function ConstantContact({ formFields, setFlow, flow, allIntegURL }) {
         />
         <button
           onClick={() => nextPage(3)}
-          disabled={
-            constantContactConf?.source_type === '' || constantContactConf.field_map.length < 1
-          }
+          disabled={constantContactConf?.source_type === '' || constantContactConf.field_map.length < 1}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>

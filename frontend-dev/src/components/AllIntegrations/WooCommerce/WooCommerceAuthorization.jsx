@@ -47,7 +47,8 @@ export default function WooCommerceAuthorization({
       style={{
         width: step === 1 && 900,
         height: step === 1 && 'auto'
-      }}>
+      }}
+    >
       {wooCommerce?.youTubeLink && (
         <TutorialLink title="WooCommerce" youTubeLink={wooCommerce?.youTubeLink} />
       )}
@@ -78,10 +79,7 @@ export default function WooCommerceAuthorization({
             &times;
           </span>
           {sprintf(
-            __(
-              '%s plugin must be activated to integrate with Bit Integrations',
-              'bit-integrations'
-            ),
+            __('%s plugin must be activated to integrate with Bit Integrations', 'bit-integrations'),
             'WooCommerce'
           )}
         </div>
@@ -91,7 +89,8 @@ export default function WooCommerceAuthorization({
         <button
           onClick={authorizeHandler}
           className="btn btcd-btn-lg purple sh-sm flx mt-5"
-          type="button">
+          type="button"
+        >
           {__('Connect', 'bit-integrations')}
         </button>
       )}
@@ -101,7 +100,8 @@ export default function WooCommerceAuthorization({
           onClick={() => setStep(2)}
           className="btn btcd-btn-lg purple sh-sm flx mt-5"
           type="button"
-          disabled={!isAuthorized}>
+          disabled={!isAuthorized}
+        >
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>

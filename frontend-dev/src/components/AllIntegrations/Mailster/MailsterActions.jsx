@@ -75,7 +75,8 @@ export default function MailsterActions({ mailsterConf, setMailsterConf, loading
         show={actionMdl.show === 'status'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Status', 'bit-integrations')}>
+        title={__('Status', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2 flx">
           {__('Select subscriber status', 'bit-integrations')}
@@ -107,7 +108,8 @@ export default function MailsterActions({ mailsterConf, setMailsterConf, loading
         show={actionMdl.show === 'lists'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Lists', 'bit-integrations')}>
+        title={__('Lists', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2 flx">
           {__('Select Lists', 'bit-integrations')}
@@ -147,7 +149,8 @@ export default function MailsterActions({ mailsterConf, setMailsterConf, loading
         show={actionMdl.show === 'tags'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Tags', 'bit-integrations')}>
+        title={__('Tags', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2 flx">
           {__('Select tags', 'bit-integrations')}

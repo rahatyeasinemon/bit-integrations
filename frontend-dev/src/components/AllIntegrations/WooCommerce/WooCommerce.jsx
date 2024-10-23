@@ -99,9 +99,7 @@ export default function WooCommerce({ formFields, setFlow, flow, allIntegURL }) 
         setSnackbar={setSnackbar}
       />
       {/* STEP 2 */}
-      <div
-        className="btcd-stp-page"
-        style={{ width: step === 2 && 1000, height: step === 2 && 'auto' }}>
+      <div className="btcd-stp-page" style={{ width: step === 2 && 1000, height: step === 2 && 'auto' }}>
         <WooCommerceIntegLayout
           wcConf={wcConf}
           setWcConf={setWcConf}
@@ -115,7 +113,8 @@ export default function WooCommerce({ formFields, setFlow, flow, allIntegURL }) 
           onClick={nextPage}
           // disabled={wcConf.workspace === '' || wcConf.table === '' || wcConf.field_map.length < 1}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>

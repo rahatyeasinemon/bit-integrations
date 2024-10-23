@@ -45,9 +45,7 @@ function EditLifterLms({ allIntegURL }) {
       <LifterLmsIntegLayout
         formID={formID}
         formFields={formFields}
-        handleInput={(e) =>
-          handleInput(e, lifterLmsConf, setLifterLmsConf, setIsLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, lifterLmsConf, setLifterLmsConf, setIsLoading, setSnackbar)}
         lifterLmsConf={lifterLmsConf}
         setLifterLmsConf={setLifterLmsConf}
         isLoading={isLoading}

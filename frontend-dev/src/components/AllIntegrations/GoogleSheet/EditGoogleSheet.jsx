@@ -45,9 +45,7 @@ function EditGoogleSheet({ allIntegURL }) {
       <GoogleSheetIntegLayout
         formID={formID}
         formFields={formFields}
-        handleInput={(e) =>
-          handleInput(e, sheetConf, setSheetConf, formID, setIsLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, sheetConf, setSheetConf, formID, setIsLoading, setSnackbar)}
         sheetConf={sheetConf}
         setSheetConf={setSheetConf}
         isLoading={isLoading}

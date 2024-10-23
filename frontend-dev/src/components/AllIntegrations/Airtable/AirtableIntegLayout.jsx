@@ -63,7 +63,8 @@ export default function AirtableIntegLayout({
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Refresh  Bases', 'bit-integrations')}'` }}
           type="button"
-          disabled={loading.bases}>
+          disabled={loading.bases}
+        >
           &#x21BB;
         </button>
       </div>
@@ -84,7 +85,8 @@ export default function AirtableIntegLayout({
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Refresh  Tables', 'bit-integrations')}'` }}
           type="button"
-          disabled={loading.tables || loading.bases || !airtableConf.selectedBase}>
+          disabled={loading.tables || loading.bases || !airtableConf.selectedBase}
+        >
           &#x21BB;
         </button>
       </div>
@@ -113,7 +115,8 @@ export default function AirtableIntegLayout({
                 className="icn-btn sh-sm ml-2 mr-2 tooltip"
                 style={{ '--tooltip-txt': `'${__('Refresh fields', 'bit-integrations')}'` }}
                 type="button"
-                disabled={loading.customFields}>
+                disabled={loading.customFields}
+              >
                 &#x21BB;
               </button>
             )}
@@ -162,7 +165,8 @@ export default function AirtableIntegLayout({
                   addFieldMap(airtableConf.field_map.length, airtableConf, setAirtableConf, false)
                 }
                 className="icn-btn sh-sm"
-                type="button">
+                type="button"
+              >
                 +
               </button>
             </div>

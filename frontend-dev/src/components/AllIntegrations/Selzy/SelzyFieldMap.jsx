@@ -22,9 +22,7 @@ function selzyFieldMap({ i, field, formFields, selzyConf, setSelzyConf }) {
   const requiredFields = selzyConf?.selzyFields.filter((fld) => fld.required === true) || []
 
   const nonRequiredStaticFields =
-    selzyConf.method === '1'
-      ? selzyConf?.selzyFields?.filter((fld) => fld.required === false) || []
-      : []
+    selzyConf.method === '1' ? selzyConf?.selzyFields?.filter((fld) => fld.required === false) || [] : []
   const nonRequiredCustomFields =
     selzyConf.method === '1'
       ? selzyConf?.default?.customFields?.filter((fld) => fld.required === false) || []
@@ -42,7 +40,8 @@ function selzyFieldMap({ i, field, formFields, selzyConf, setSelzyConf }) {
             onChange={(event) => {
               handleFieldMapping(event, i, selzyConf, setSelzyConf)
             }}
-            value={field.formField || ''}>
+            value={field.formField || ''}
+          >
             <option value="">{__('Select Field')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -56,7 +55,8 @@ function selzyFieldMap({ i, field, formFields, selzyConf, setSelzyConf }) {
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -85,9 +85,8 @@ function selzyFieldMap({ i, field, formFields, selzyConf, setSelzyConf }) {
             onChange={(event) => {
               handleFieldMapping(event, i, selzyConf, setSelzyConf)
             }}
-            value={
-              i < requiredFields.length ? requiredFields[i].key || '' : field.selzyFormField || ''
-            }>
+            value={i < requiredFields.length ? requiredFields[i].key || '' : field.selzyFormField || ''}
+          >
             <option value="">{__('Select Field')}</option>
             {i < requiredFields.length ? (
               <option key={requiredFields[i].key} value={requiredFields[i].key}>
@@ -107,14 +106,16 @@ function selzyFieldMap({ i, field, formFields, selzyConf, setSelzyConf }) {
             <button
               onClick={() => addFieldMap(i, selzyConf, setSelzyConf)}
               className="icn-btn sh-sm ml-2 mr-1"
-              type="button">
+              type="button"
+            >
               +
             </button>
             <button
               onClick={() => delFieldMap(i, selzyConf, setSelzyConf)}
               className="icn-btn sh-sm ml-1"
               type="button"
-              aria-label="btn">
+              aria-label="btn"
+            >
               <span className="btcd-icn icn-trash-2" />
             </button>
           </>

@@ -21,7 +21,8 @@ function TreeViewer({ data = [], onChange }) {
   return (
     <div
       className="bg-white rounded border py-3 table-webhook-div shadow mt-3"
-      style={{ maxHeight: '600px' }}>
+      style={{ maxHeight: '600px' }}
+    >
       <TreeView
         data={formatedData}
         aria-label="Checkbox tree"
@@ -51,7 +52,8 @@ function TreeViewer({ data = [], onChange }) {
               style={{
                 marginLeft: 40 * (level - 1),
                 opacity: isDisabled ? 0.5 : 1
-              }}>
+              }}
+            >
               {isBranch && <ArrowIcon isOpen={isExpanded} />}
               <CheckBoxIcon
                 className="checkbox-icon"

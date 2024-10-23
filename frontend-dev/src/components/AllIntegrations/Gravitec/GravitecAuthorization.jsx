@@ -51,10 +51,9 @@ export default function GravitecAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {gravitec?.youTubeLink && (
-        <TutorialLink title="Gravitec" youTubeLink={gravitec?.youTubeLink} />
-      )}
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
+      {gravitec?.youTubeLink && <TutorialLink title="Gravitec" youTubeLink={gravitec?.youTubeLink} />}
       {gravitec?.docLink && <TutorialLink title="Gravitec" docLink={gravitec?.docLink} />}
 
       <div className="mt-3">
@@ -118,7 +117,8 @@ export default function GravitecAuthorization({
         <a
           className="btcd-link"
           href="https://push.gravitec.net/push/1767754253528465408/settings/api"
-          target="_blank">
+          target="_blank"
+        >
           {__('Gravitec App key & Secret', 'bit-integrations')}
         </a>
       </small>
@@ -140,7 +140,8 @@ export default function GravitecAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || loading.auth}>
+            disabled={isAuthorized || loading.auth}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -151,7 +152,8 @@ export default function GravitecAuthorization({
             onClick={nextPage}
             className="btn ml-auto btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

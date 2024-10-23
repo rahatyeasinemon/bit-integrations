@@ -22,7 +22,8 @@ export default function ZohoAnalyticsIntegLayout({
         onChange={handleInput}
         name="workspace"
         value={analyticsConf.workspace}
-        className="btcd-paper-inp w-7">
+        className="btcd-paper-inp w-7"
+      >
         <option value="">{__('Select Workspace', 'bit-integrations')}</option>
         {analyticsConf?.default?.workspaces &&
           analyticsConf.default.workspaces.map((workspaceApiName) => (
@@ -38,7 +39,8 @@ export default function ZohoAnalyticsIntegLayout({
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': `'${__('Refresh Analytics Workspaces', 'bit-integrations')}'` }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -48,7 +50,8 @@ export default function ZohoAnalyticsIntegLayout({
         onChange={handleInput}
         name="table"
         value={analyticsConf.table}
-        className="btcd-paper-inp w-7">
+        className="btcd-paper-inp w-7"
+      >
         <option value="">{__('Select Table', 'bit-integrations')}</option>
         {analyticsConf?.default?.tables?.[analyticsConf.workspace] &&
           analyticsConf.default.tables[analyticsConf.workspace].map((tableApiName) => (
@@ -58,13 +61,12 @@ export default function ZohoAnalyticsIntegLayout({
           ))}
       </select>
       <button
-        onClick={() =>
-          refreshTables(formID, analyticsConf, setAnalyticsConf, setIsLoading, setSnackbar)
-        }
+        onClick={() => refreshTables(formID, analyticsConf, setAnalyticsConf, setIsLoading, setSnackbar)}
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': '"Refresh Analytics Tables"' }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -93,20 +95,15 @@ export default function ZohoAnalyticsIntegLayout({
             <b className="wdt-100">{__('Map Fields', 'bit-integrations')}</b>
             <button
               onClick={() =>
-                refreshTableHeaders(
-                  formID,
-                  analyticsConf,
-                  setAnalyticsConf,
-                  setIsLoading,
-                  setSnackbar
-                )
+                refreshTableHeaders(formID, analyticsConf, setAnalyticsConf, setIsLoading, setSnackbar)
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{
                 '--tooltip-txt': `'${__('Refresh Analytics Table Headers', 'bit-integrations')}'`
               }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -136,7 +133,8 @@ export default function ZohoAnalyticsIntegLayout({
                 addFieldMap(analyticsConf.field_map.length, analyticsConf, setAnalyticsConf)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

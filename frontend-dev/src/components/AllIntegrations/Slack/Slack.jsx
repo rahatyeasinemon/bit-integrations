@@ -26,7 +26,7 @@ function Slack({ formFields, setFlow, flow, allIntegURL }) {
     field_map: [{ formField: '', slackFormField: '' }],
     channel_id: '',
     body: '',
-    actions: {},
+    actions: {}
   })
 
   const nextPage = (val) => {
@@ -67,8 +67,8 @@ function Slack({ formFields, setFlow, flow, allIntegURL }) {
           ...(step === 2 && {
             width: 900,
             height: 'auto',
-            overflow: 'visible',
-          }),
+            overflow: 'visible'
+          })
         }}
       >
         <SlackIntegLayout
@@ -95,7 +95,17 @@ function Slack({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 3 */}
       <IntegrationStepThree
         step={step}
-        saveConfig={() => saveActionConf({ flow, setFlow, allIntegURL, conf: slackConf, navigate, setIsLoading, setSnackbar })}
+        saveConfig={() =>
+          saveActionConf({
+            flow,
+            setFlow,
+            allIntegURL,
+            conf: slackConf,
+            navigate,
+            setIsLoading,
+            setSnackbar
+          })
+        }
         isLoading={isLoading}
         dataConf={slackConf}
         setDataConf={setSlackConf}

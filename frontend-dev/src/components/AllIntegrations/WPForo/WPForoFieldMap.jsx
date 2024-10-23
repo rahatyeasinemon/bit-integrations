@@ -17,7 +17,8 @@ export default function WPForoFieldMap({ i, formFields, field, wpforoConf, setWP
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, wpforoConf, setWPForoConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, wpforoConf, setWPForoConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -53,7 +54,8 @@ export default function WPForoFieldMap({ i, formFields, field, wpforoConf, setWP
             disabled={i < requiredFields.length}
             name="wpforoField"
             value={i < requiredFields ? requiredFields[i].label || '' : field.wpforoField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, wpforoConf, setWPForoConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, wpforoConf, setWPForoConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFields.length ? (
               <option key={requiredFields[i].key} value={requiredFields[i].key}>
@@ -74,14 +76,16 @@ export default function WPForoFieldMap({ i, formFields, field, wpforoConf, setWP
               <button
                 onClick={() => addFieldMap(i, wpforoConf, setWPForoConf)}
                 className="icn-btn sh-sm ml-2 mr-1"
-                type="button">
+                type="button"
+              >
                 +
               </button>
               <button
                 onClick={() => delFieldMap(i, wpforoConf, setWPForoConf)}
                 className="icn-btn sh-sm ml-1"
                 type="button"
-                aria-label="btn">
+                aria-label="btn"
+              >
                 <span className="btcd-icn icn-trash-2" />
               </button>
             </>

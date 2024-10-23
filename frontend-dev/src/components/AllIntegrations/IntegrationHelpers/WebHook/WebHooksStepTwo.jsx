@@ -8,7 +8,8 @@ export default function WebHooksStepTwo({ saveConfig, edit, disabled, isLoading 
         onClick={saveConfig}
         className="btn btcd-btn-lg purple sh-sm flx"
         type="button"
-        disabled={disabled || isLoading}>
+        disabled={disabled || isLoading}
+      >
         {__('Save', 'bit-integrations')}
         {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
       </button>
@@ -20,7 +21,8 @@ export default function WebHooksStepTwo({ saveConfig, edit, disabled, isLoading 
         onClick={saveConfig}
         className="btn btcd-btn-lg purple sh-sm"
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         {__('Finish & Save', 'bit-integrations')}✔
         {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
       </button>

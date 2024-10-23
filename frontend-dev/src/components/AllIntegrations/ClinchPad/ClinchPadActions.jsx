@@ -89,7 +89,8 @@ export default function ClinchPadActions({ clinchPadConf, setClinchPadConf, load
         show={actionMdl.show === 'parentOrganization'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('ParentOrganizations', 'bit-integrations')}>
+        title={__('ParentOrganizations', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select ParentOrganization', 'bit-integrations')}</div>
         {loading.parentOrganizations ? (
@@ -120,7 +121,8 @@ export default function ClinchPadActions({ clinchPadConf, setClinchPadConf, load
               style={{
                 '--tooltip-txt': `${__('Refresh ParentOrganizations', 'bit-integrations')}'`
               }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -135,7 +137,8 @@ export default function ClinchPadActions({ clinchPadConf, setClinchPadConf, load
         show={actionMdl.show === 'contact'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Contacts', 'bit-integrations')}>
+        title={__('Contacts', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Contact', 'bit-integrations')}</div>
         {loading.CRMContacts ? (
@@ -164,7 +167,8 @@ export default function ClinchPadActions({ clinchPadConf, setClinchPadConf, load
               onClick={() => getAllCRMContacts(clinchPadConf, setClinchPadConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Contacts', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>

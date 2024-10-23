@@ -48,7 +48,8 @@ export default function PCloudAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
       {pCloud?.youTubeLink && <TutorialLink title="pCloud" youTubeLink={pCloud?.youTubeLink} />}
       {pCloud?.docLink && <TutorialLink title="pCloud" docLink={pCloud?.docLink} />}
 
@@ -82,7 +83,8 @@ export default function PCloudAuthorization({
           className="btcd-link"
           href="https://docs.pcloud.com/my_apps/"
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {__('pCloud API apps', 'bit-integrations')}
         </a>
       </small>
@@ -119,17 +121,12 @@ export default function PCloudAuthorization({
         <>
           <button
             onClick={() =>
-              handleAuthorization(
-                pCloudConf,
-                setPCloudConf,
-                setIsAuthorized,
-                setIsLoading,
-                setError
-              )
+              handleAuthorization(pCloudConf, setPCloudConf, setIsAuthorized, setIsLoading, setError)
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -140,7 +137,8 @@ export default function PCloudAuthorization({
             onClick={nextPage}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

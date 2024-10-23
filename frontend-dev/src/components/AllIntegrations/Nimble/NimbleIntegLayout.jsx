@@ -45,7 +45,8 @@ export default function NimbleIntegLayout({
             onChange={handleActionInput}
             name="actionName"
             value={nimbleConf.actionName}
-            className="btcd-paper-inp w-5">
+            className="btcd-paper-inp w-5"
+          >
             <option value="">{__('Select an action', 'bit-integrations')}</option>
             <option value="person" data-action_name="account">
               {__('Add people', 'bit-integrations')}
@@ -79,7 +80,8 @@ export default function NimbleIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh fields', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.allFields}>
+              disabled={loading.allFields}
+            >
               &#x21BB;
             </button>
           </div>
@@ -108,11 +110,10 @@ export default function NimbleIntegLayout({
           ))}
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
-              onClick={() =>
-                addFieldMap(nimbleConf.field_map.length, nimbleConf, setNimbleConf, false)
-              }
+              onClick={() => addFieldMap(nimbleConf.field_map.length, nimbleConf, setNimbleConf, false)}
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

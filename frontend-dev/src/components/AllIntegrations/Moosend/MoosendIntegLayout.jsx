@@ -50,7 +50,8 @@ function MoosendIntegLayout({ moosendConf, setMoosendConf, formFields, loading, 
             onChange={handleList}
             name="method"
             value={moosendConf?.method}
-            className="btcd-paper-inp w-5 mx-0">
+            className="btcd-paper-inp w-5 mx-0"
+          >
             <option value="">{__('Select Method')}</option>
             {moosendMethod.map((method) => (
               <option key={method.key} value={method.key}>
@@ -67,7 +68,8 @@ function MoosendIntegLayout({ moosendConf, setMoosendConf, formFields, loading, 
             onChange={handleList}
             name="listId"
             value={moosendConf?.listId}
-            className="btcd-paper-inp w-5 mx-0">
+            className="btcd-paper-inp w-5 mx-0"
+          >
             <option value="">{__('Select List')}</option>
             {moosendConf?.default?.lists &&
               moosendConf.default.lists.map((list) => (
@@ -81,7 +83,8 @@ function MoosendIntegLayout({ moosendConf, setMoosendConf, formFields, loading, 
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': '"Refresh list"' }}
             type="button"
-            disabled={loading.list}>
+            disabled={loading.list}
+          >
             &#x21BB;
           </button>
           {loading.list && <LoaderSm size="20" clr="#022217" className="ml-2" />}
@@ -118,7 +121,8 @@ function MoosendIntegLayout({ moosendConf, setMoosendConf, formFields, loading, 
                   addFieldMap(moosendConf.field_map.length, moosendConf, setMoosendConf, false)
                 }
                 className="icn-btn sh-sm"
-                type="button">
+                type="button"
+              >
                 +
               </button>
             </div>

@@ -84,9 +84,7 @@ export const emailOctopusAuthentication = (
       return
     }
     setLoading({ ...loading, auth: false })
-    toast.error(
-      __('Authorized failed, Please enter valid domain name & API key', 'bit-integrations')
-    )
+    toast.error(__('Authorized failed, Please enter valid domain name & API key', 'bit-integrations'))
   })
 }
 

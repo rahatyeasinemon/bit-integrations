@@ -38,7 +38,8 @@ export default function SendyIntegLayout({
         onChange={handleChange}
         name="brand_id"
         value={sendyConf.brand_id}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="test">{__('Select Brand', 'bit-integrations')}</option>
         {sendyConf?.default?.brandList &&
           sendyConf.default.brandList.map(({ brandId, brandName }) => (
@@ -52,7 +53,8 @@ export default function SendyIntegLayout({
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': `'${__('Fetch All List', 'bit-integrations')}'` }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -65,7 +67,8 @@ export default function SendyIntegLayout({
             onChange={handleChange}
             name="list_id"
             value={sendyConf.list_id}
-            className="btcd-paper-inp w-5">
+            className="btcd-paper-inp w-5"
+          >
             <option value="test">{__('Select List', 'bit-integrations')}</option>
             {sendyConf?.default?.lists &&
               sendyConf.default.lists.map(({ listId, listName }) => (
@@ -79,7 +82,8 @@ export default function SendyIntegLayout({
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Fetch All List', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
         </>
@@ -113,7 +117,8 @@ export default function SendyIntegLayout({
         <button
           onClick={() => addFieldMap(sendyConf.field_map.length, sendyConf, setSendyConf, false)}
           className="icn-btn sh-sm"
-          type="button">
+          type="button"
+        >
           +
         </button>
       </div>

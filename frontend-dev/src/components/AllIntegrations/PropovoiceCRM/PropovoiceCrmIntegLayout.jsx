@@ -45,7 +45,8 @@ export default function PropovoiceCrmIntegLayout({
         onChange={inputHandler}
         name="mainAction"
         value={propovoiceCrmConf?.mainAction}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select Actions', 'bit-integrations')}</option>
         {propovoiceCrmConf?.allActions &&
           propovoiceCrmConf.allActions.map(({ key, label }) => (
@@ -96,14 +97,11 @@ export default function PropovoiceCrmIntegLayout({
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
               onClick={() =>
-                addFieldMap(
-                  propovoiceCrmConf.field_map.length,
-                  propovoiceCrmConf,
-                  setPropovoiceCrmConf
-                )
+                addFieldMap(propovoiceCrmConf.field_map.length, propovoiceCrmConf, setPropovoiceCrmConf)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

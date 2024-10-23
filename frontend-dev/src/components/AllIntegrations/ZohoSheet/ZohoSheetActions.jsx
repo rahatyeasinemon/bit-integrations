@@ -83,7 +83,8 @@ export default function ZohoSheetActions({ zohoSheetConf, setZohoSheetConf, load
         show={actionMdl.show === 'tag'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Tags', 'bit-integrations')}>
+        title={__('Tags', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select tags', 'bit-integrations')}</div>
         {loading.tags ? (

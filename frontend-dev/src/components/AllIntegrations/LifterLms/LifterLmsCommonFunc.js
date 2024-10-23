@@ -3,14 +3,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
 import { sprintf, __ } from '../../../Utils/i18nwrap'
 
-export const handleInput = (
-  e,
-  lifterLmsConf,
-  setLifterLmsConf,
-  setIsLoading,
-  setSnackbar,
-  formID
-) => {
+export const handleInput = (e, lifterLmsConf, setLifterLmsConf, setIsLoading, setSnackbar, formID) => {
   const newConf = { ...lifterLmsConf }
   const { name } = e.target
   if (e.target.value !== '') {

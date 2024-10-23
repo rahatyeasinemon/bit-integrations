@@ -37,8 +37,8 @@ export const getWPJobManagerJobs = (data, setFlow) => {
 }
 
 export const getApplicationStatuses = (data, setFlow) => {
-  const loadStatuses = bitsFetch(null, 'wpjobmanager/get/application-statuses', null, 'GET')
-    .then((result) => {
+  const loadStatuses = bitsFetch(null, 'wpjobmanager/get/application-statuses', null, 'GET').then(
+    (result) => {
       if (result && result.data) {
         const tmpFlow = { ...data }
         tmpFlow.flow_details.statusList = result.data
@@ -46,10 +46,11 @@ export const getApplicationStatuses = (data, setFlow) => {
         return 'Application statuses fetched successfully'
       }
       return 'Application statuses fetching failed. please try again'
-    })
+    }
+  )
   toast.promise(loadStatuses, {
     success: (data) => data,
     error: __('Error Occurred', 'bit-integrations'),
-    loading: __('Loading application statuses...'),
+    loading: __('Loading application statuses...')
   })
 }

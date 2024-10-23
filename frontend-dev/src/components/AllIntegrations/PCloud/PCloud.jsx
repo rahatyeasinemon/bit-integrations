@@ -74,7 +74,8 @@ function PCloud({ formFields, setFlow, flow, allIntegURL }) {
             height: 'auto',
             overflow: 'visible'
           })
-        }}>
+        }}
+      >
         <PCloudIntegLayout
           flowID={flowID}
           formFields={formFields}
@@ -86,9 +87,9 @@ function PCloud({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => setStep(3)}
           disabled={!checkMappedFields(pCloudConf)}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
-          {__('Next', 'bit-integrations')}{' '}
-          <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+          type="button"
+        >
+          {__('Next', 'bit-integrations')} <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>
       </div>
 

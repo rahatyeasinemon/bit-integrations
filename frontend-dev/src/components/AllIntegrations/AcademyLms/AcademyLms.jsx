@@ -74,7 +74,8 @@ function AcademyLms({ formFields, setFlow, flow, allIntegURL }) {
             minHeight: step === 2 && `${260}px`,
             overflow: 'visible'
           })
-        }}>
+        }}
+      >
         <AcademyLmsIntegLayout
           formFields={formFields}
           handleInput={(e) =>
@@ -91,7 +92,8 @@ function AcademyLms({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => nextPage(3)}
           // disabled={!academyLmsConf?.recipient_id}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')} &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>

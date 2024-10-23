@@ -35,25 +35,26 @@ export default function BenchMarkIntegLayout({
         name="listId"
         id=""
         className="btcd-paper-inp w-5"
-        onChange={handleInput}>
+        onChange={handleInput}
+      >
         <option value="">{__('Select List', 'bit-integrations')}</option>
         {benchMarkConf?.default?.benchMarkLists &&
           Object.keys(benchMarkConf.default.benchMarkLists).map((listname) => (
             <option
               key={`${listname + 1}`}
-              value={benchMarkConf.default.benchMarkLists[listname].listId}>
+              value={benchMarkConf.default.benchMarkLists[listname].listId}
+            >
               {benchMarkConf.default.benchMarkLists[listname].listName}
             </option>
           ))}
       </select>
       <button
-        onClick={() =>
-          refreshBenchMarkList(benchMarkConf, setBenchMarkConf, setIsLoading, setSnackbar)
-        }
+        onClick={() => refreshBenchMarkList(benchMarkConf, setBenchMarkConf, setIsLoading, setSnackbar)}
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': '"Refresh BenchMark list"' }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -80,7 +81,8 @@ export default function BenchMarkIntegLayout({
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Refresh BenchMark Field', 'bit-integrations')}'` }}
           type="button"
-          disabled={isLoading}>
+          disabled={isLoading}
+        >
           &#x21BB;
         </button>
       </div>
@@ -112,7 +114,8 @@ export default function BenchMarkIntegLayout({
                 addFieldMap(benchMarkConf.field_map.length, benchMarkConf, setBenchMarkConf)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

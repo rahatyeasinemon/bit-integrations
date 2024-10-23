@@ -37,12 +37,10 @@ function UncannyAutomator({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 1 */}
       <div
         className="btcd-stp-page"
-        style={{ ...{ width: step === 1 && 1100 }, ...{ height: step === 1 && 'auto' } }}>
+        style={{ ...{ width: step === 1 && 1100 }, ...{ height: step === 1 && 'auto' } }}
+      >
         {uncannyAutomatorLinks?.youTubeLink && (
-          <TutorialLink
-            title="Uncanny Automator"
-            youTubeLink={uncannyAutomatorLinks?.youTubeLink}
-          />
+          <TutorialLink title="Uncanny Automator" youTubeLink={uncannyAutomatorLinks?.youTubeLink} />
         )}
         {uncannyAutomatorLinks?.docLink && (
           <TutorialLink title="Uncanny Automator" docLink={uncannyAutomatorLinks?.docLink} />
@@ -63,20 +61,12 @@ function UncannyAutomator({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ width: step === 2 && `${100}%`, height: step === 2 && 'auto' }}>
+        style={{ width: step === 2 && `${100}%`, height: step === 2 && 'auto' }}
+      >
         <WebHooksStepTwo
           step={step}
           saveConfig={() =>
-            saveIntegConfig(
-              flow,
-              setFlow,
-              allIntegURL,
-              uncannyAutomator,
-              navigate,
-              '',
-              '',
-              setIsLoading
-            )
+            saveIntegConfig(flow, setFlow, allIntegURL, uncannyAutomator, navigate, '', '', setIsLoading)
           }
           isLoading={isLoading}
         />

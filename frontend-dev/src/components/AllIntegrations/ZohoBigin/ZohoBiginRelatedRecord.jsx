@@ -34,25 +34,23 @@ export default function ZohoBiginRelatedRecord({
         name="module"
         value={biginConf?.relatedlists?.[tab - 1]?.module}
         className="btcd-paper-inp w-7"
-        disabled={!biginConf.module}>
+        disabled={!biginConf.module}
+      >
         <option value="">{__('Select Related Module', 'bit-integrations')}</option>
         {biginConf?.default.relatedlists?.[biginConf.module] &&
-          Object.values(biginConf.default.relatedlists[biginConf.module]).map(
-            (relatedlistApiName) => (
-              <option key={relatedlistApiName.api_name} value={relatedlistApiName.aMod}>
-                {relatedlistApiName.plural_label}
-              </option>
-            )
-          )}
+          Object.values(biginConf.default.relatedlists[biginConf.module]).map((relatedlistApiName) => (
+            <option key={relatedlistApiName.api_name} value={relatedlistApiName.aMod}>
+              {relatedlistApiName.plural_label}
+            </option>
+          ))}
       </select>
       <button
-        onClick={() =>
-          refreshRelatedList(formID, biginConf, setBiginConf, setIsLoading, setSnackbar)
-        }
+        onClick={() => refreshRelatedList(formID, biginConf, setBiginConf, setIsLoading, setSnackbar)}
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': `'${__('Refresh Bigin Related Lists', 'bit-integrations')}'` }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -106,15 +104,15 @@ export default function ZohoBiginRelatedRecord({
                 )
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>
           <br />
           <br />
           {Object.keys(
-            biginConf.default?.moduleData?.[biginConf.relatedlists[tab - 1].module]
-              ?.fileUploadFields
+            biginConf.default?.moduleData?.[biginConf.relatedlists[tab - 1].module]?.fileUploadFields
           ).length !== 0 && (
             <>
               <div className="mt-4">
@@ -154,7 +152,8 @@ export default function ZohoBiginRelatedRecord({
                     )
                   }
                   className="icn-btn sh-sm"
-                  type="button">
+                  type="button"
+                >
                   +
                 </button>
               </div>

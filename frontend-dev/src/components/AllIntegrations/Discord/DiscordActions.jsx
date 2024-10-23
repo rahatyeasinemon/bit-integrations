@@ -25,10 +25,7 @@ export default function DiscordActions({ formFields, discordConf, setDiscordConf
           className="wdt-200 mt-4 mr-2"
           value="Attachment"
           title={__('Attachments', 'bit-integrations')}
-          subTitle={__(
-            'Add attachments from Bit Integrations to send Discord.',
-            'bit-integrations'
-          )}
+          subTitle={__('Add attachments from Bit Integrations to send Discord.', 'bit-integrations')}
         />
       </div>
 
@@ -40,14 +37,16 @@ export default function DiscordActions({ formFields, discordConf, setDiscordConf
         show={actionMdl.show === 'attachments'}
         close={() => setActionMdl({ show: false })}
         action={() => setActionMdl({ show: false })}
-        title={__('Select Attachment', 'bit-integrations')}>
+        title={__('Select Attachment', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2" />
         <div className="mt-2">{__('Please select file upload fields', 'bit-integrations')}</div>
         <select
           onChange={(e) => actionHandler(e)}
           name="attachments"
           value={discordConf.actions?.attachments}
-          className="btcd-paper-inp w-10 mt-2">
+          className="btcd-paper-inp w-10 mt-2"
+        >
           <option value="">{__('Select file upload field', 'bit-integrations')}</option>
           {formFields
             .filter((itm) => itm.type === 'file')

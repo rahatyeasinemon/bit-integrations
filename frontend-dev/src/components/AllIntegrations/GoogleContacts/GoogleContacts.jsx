@@ -91,7 +91,8 @@ function GoogleContacts({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}
+      >
         <GoogleContactsIntegLayout
           flowID={flowID}
           formFields={formFields}
@@ -112,7 +113,8 @@ function GoogleContacts({ formFields, setFlow, flow, allIntegURL }) {
 
       <div
         className="btcd-stp-page"
-        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}
+      >
         <button
           onClick={() => setStep(3)}
           disabled={
@@ -121,7 +123,8 @@ function GoogleContacts({ formFields, setFlow, flow, allIntegURL }) {
             isLoading
           }
           className="btn ml-auto btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')}
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>

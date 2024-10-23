@@ -33,25 +33,26 @@ export default function LemlistIntegLayout({
         name="campaignId"
         id=""
         className="btcd-paper-inp w-5"
-        onChange={handleInput}>
+        onChange={handleInput}
+      >
         <option value="">{__('Select Campaigns', 'bit-integrations')}</option>
         {lemlistConf?.default?.lemlistCampaigns &&
           Object.keys(lemlistConf.default.lemlistCampaigns).map((campaignName) => (
             <option
               key={`${campaignName + 1}`}
-              value={lemlistConf.default.lemlistCampaigns[campaignName].campaignId}>
+              value={lemlistConf.default.lemlistCampaigns[campaignName].campaignId}
+            >
               {lemlistConf.default.lemlistCampaigns[campaignName].campaignName}
             </option>
           ))}
       </select>
       <button
-        onClick={() =>
-          refreshLemlistCampaign(lemlistConf, setLemlistConf, setIsLoading, setSnackbar)
-        }
+        onClick={() => refreshLemlistCampaign(lemlistConf, setLemlistConf, setIsLoading, setSnackbar)}
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': '"Refresh Lemlist campaign"' }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -72,13 +73,12 @@ export default function LemlistIntegLayout({
       <div className="mt-4">
         <b className="wdt-100">{__('Map Fields', 'bit-integrations')}</b>
         <button
-          onClick={() =>
-            refreshLemlistHeader(lemlistConf, setLemlistConf, setIsLoading, setSnackbar)
-          }
+          onClick={() => refreshLemlistHeader(lemlistConf, setLemlistConf, setIsLoading, setSnackbar)}
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Refresh Lemlist Field', 'bit-integrations')}'` }}
           type="button"
-          disabled={isLoading}>
+          disabled={isLoading}
+        >
           &#x21BB;
         </button>
       </div>
@@ -108,7 +108,8 @@ export default function LemlistIntegLayout({
             <button
               onClick={() => addFieldMap(lemlistConf.field_map.length, lemlistConf, setLemlistConf)}
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

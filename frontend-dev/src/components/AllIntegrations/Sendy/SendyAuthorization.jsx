@@ -57,7 +57,8 @@ export default function SendyAuthorization({ sendyConf, setSendyConf, step, sets
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
       {sendy?.youTubeLink && <TutorialLink title="Sendy" youTubeLink={sendy?.youTubeLink} />}
       {sendy?.docLink && <TutorialLink title="Sendy" docLink={sendy?.docLink} />}
 
@@ -89,11 +90,7 @@ export default function SendyAuthorization({ sendyConf, setSendyConf, step, sets
       <div style={{ color: 'red', fontSize: '15px' }}>{error.api_key}</div>
       <small className="d-blk mt-5">
         {__('To get API , Please Visit', 'bit-integrations')}{' '}
-        <a
-          className="btcd-link"
-          href="https://app.sendy.com/api-key"
-          target="_blank"
-          rel="noreferrer">
+        <a className="btcd-link" href="https://app.sendy.com/api-key" target="_blank" rel="noreferrer">
           {__('Sendy API Console', 'bit-integrations')}
         </a>
       </small>
@@ -131,7 +128,8 @@ export default function SendyAuthorization({ sendyConf, setSendyConf, step, sets
             onClick={handleAuthorize}
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -142,7 +140,8 @@ export default function SendyAuthorization({ sendyConf, setSendyConf, step, sets
             onClick={() => nextPage(2)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <BackIcn className="ml-1 rev-icn" />
           </button>

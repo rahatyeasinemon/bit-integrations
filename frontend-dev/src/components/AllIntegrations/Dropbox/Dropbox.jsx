@@ -67,7 +67,8 @@ function Dropbox({ formFields, setFlow, flow, allIntegURL }) {
             height: 'auto',
             overflow: 'visible'
           })
-        }}>
+        }}
+      >
         <DropboxIntegLayout
           flowID={flowID}
           formFields={formFields}
@@ -79,9 +80,9 @@ function Dropbox({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => setStep(3)}
           disabled={dropboxConf.field_map.length < 1}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
-          {__('Next', 'bit-integrations')}{' '}
-          <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+          type="button"
+        >
+          {__('Next', 'bit-integrations')} <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>
       </div>
 

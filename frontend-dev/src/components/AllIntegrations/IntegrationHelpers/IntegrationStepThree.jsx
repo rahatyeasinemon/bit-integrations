@@ -51,11 +51,7 @@ export default function IntegrationStepThree({
           </div>
           <br />
           {dataConf?.condition?.action_behavior === 'cond' && (
-            <ConditionalLogic
-              formFields={formFields}
-              dataConf={dataConf}
-              setDataConf={setDataConf}
-            />
+            <ConditionalLogic formFields={formFields} dataConf={dataConf} setDataConf={setDataConf} />
           )}
         </>
       )}
@@ -73,11 +69,7 @@ export default function IntegrationStepThree({
           </div>
           <br />
           {dataConf?.condition?.action_behavior === 'cond' && (
-            <ConditionalLogic
-              formFields={formFields}
-              dataConf={dataConf}
-              setDataConf={setDataConf}
-            />
+            <ConditionalLogic formFields={formFields} dataConf={dataConf} setDataConf={setDataConf} />
           )}
         </>
       )}
@@ -88,7 +80,8 @@ export default function IntegrationStepThree({
             onClick={saveConfig}
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isLoading || disabled}>
+            disabled={isLoading || disabled}
+          >
             {__('Update', 'bit-integrations')}
             {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
           </button>
@@ -96,13 +89,15 @@ export default function IntegrationStepThree({
       ) : (
         <div
           className="btcd-stp-page txt-center"
-          style={{ width: step === 3 && '100%', height: step === 3 && 'auto' }}>
+          style={{ width: step === 3 && '100%', height: step === 3 && 'auto' }}
+        >
           <h2 className="ml-3">{__('Successfully Integrated', 'bit-integrations')}</h2>
           <button
             onClick={saveConfig}
             className="btn btcd-btn-lg purple sh-sm"
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             {__('Finish & Save', 'bit-integrations')}✔
             {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
           </button>

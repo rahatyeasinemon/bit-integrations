@@ -42,7 +42,8 @@ export default function KirmilEmailAuthorization({
       style={{
         ...{ width: step === 1 && 900 },
         ...{ height: step === 1 && 'auto' }
-      }}>
+      }}
+    >
       {kirimEmail?.youTubeLink && (
         <TutorialLink title="Kirim Email" youTubeLink={kirimEmail?.youTubeLink} />
       )}
@@ -90,11 +91,7 @@ export default function KirmilEmailAuthorization({
       <div style={{ color: 'red' }}>{error.api_key}</div>
       <small className="d-blk mt-5">
         {__('To get Api key , Please Visit  ', 'bit-integrations')}
-        <a
-          className="btcd-link"
-          href="https://aplikasi.kirim.email/"
-          target="_blank"
-          rel="noreferrer">
+        <a className="btcd-link" href="https://aplikasi.kirim.email/" target="_blank" rel="noreferrer">
           {__('Kirim Email', 'bit-integrations')}
         </a>
       </small>
@@ -116,7 +113,8 @@ export default function KirmilEmailAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -127,7 +125,8 @@ export default function KirmilEmailAuthorization({
             onClick={nextPage}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

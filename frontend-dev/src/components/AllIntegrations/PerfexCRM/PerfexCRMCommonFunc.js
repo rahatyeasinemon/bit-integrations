@@ -132,10 +132,7 @@ export const perfexCRMAuthentication = (
     toast.error(
       String(result?.data)
         ? result?.data
-        : __(
-            'Authorized failed, Please enter valid API Token or Access API URL',
-            'bit-integrations'
-          )
+        : __('Authorized failed, Please enter valid API Token or Access API URL', 'bit-integrations')
     )
   })
 }

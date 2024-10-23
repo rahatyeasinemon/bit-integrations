@@ -8,12 +8,9 @@ import { addFieldMap, delFieldMap, handleFieldMapping } from './IntegrationHelpe
 
 export default function FlowluFieldMap({ i, formFields, field, flowluConf, setFlowluConf }) {
   const requiredFields =
-    (flowluConf?.flowluFields && flowluConf?.flowluFields.filter((fld) => fld.required === true)) ||
-    []
+    (flowluConf?.flowluFields && flowluConf?.flowluFields.filter((fld) => fld.required === true)) || []
   const allNonRequiredFields =
-    (flowluConf?.flowluFields &&
-      flowluConf?.flowluFields.filter((fld) => fld.required === false)) ||
-    []
+    (flowluConf?.flowluFields && flowluConf?.flowluFields.filter((fld) => fld.required === false)) || []
 
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi
@@ -26,7 +23,8 @@ export default function FlowluFieldMap({ i, formFields, field, flowluConf, setFl
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, flowluConf, setFlowluConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, flowluConf, setFlowluConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -40,7 +38,8 @@ export default function FlowluFieldMap({ i, formFields, field, flowluConf, setFl
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -66,10 +65,9 @@ export default function FlowluFieldMap({ i, formFields, field, flowluConf, setFl
             className="btcd-paper-inp"
             disabled={i < requiredFields.length}
             name="flowluFormField"
-            value={
-              i < requiredFields.length ? requiredFields[i].key || '' : field.flowluFormField || ''
-            }
-            onChange={(ev) => handleFieldMapping(ev, i, flowluConf, setFlowluConf)}>
+            value={i < requiredFields.length ? requiredFields[i].key || '' : field.flowluFormField || ''}
+            onChange={(ev) => handleFieldMapping(ev, i, flowluConf, setFlowluConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFields.length ? (
               <option key={requiredFields[i].key} value={requiredFields[i].key}>
@@ -89,14 +87,16 @@ export default function FlowluFieldMap({ i, formFields, field, flowluConf, setFl
             <button
               onClick={() => addFieldMap(i, flowluConf, setFlowluConf)}
               className="icn-btn sh-sm ml-2 mr-1"
-              type="button">
+              type="button"
+            >
               +
             </button>
             <button
               onClick={() => delFieldMap(i, flowluConf, setFlowluConf)}
               className="icn-btn sh-sm ml-1"
               type="button"
-              aria-label="btn">
+              aria-label="btn"
+            >
               <span className="btcd-icn icn-trash-2" />
             </button>
           </>

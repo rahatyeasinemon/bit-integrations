@@ -29,8 +29,7 @@ function EmailOctopus({ formFields, setFlow, flow, allIntegURL }) {
   const [emailOctopusConf, setEmailOctopusConf] = useState({
     name: 'EmailOctopus',
     type: 'EmailOctopus',
-    auth_token:
-      process.env.NODE_ENV === 'development' ? 'cb8a0959-b750-48b3-8d91-d4a7fad5d278' : '',
+    auth_token: process.env.NODE_ENV === 'development' ? 'cb8a0959-b750-48b3-8d91-d4a7fad5d278' : '',
     field_map: [{ formField: '', emailOctopusFormField: '' }],
     emailOctopusFields: [],
     lists: [],
@@ -96,7 +95,8 @@ function EmailOctopus({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}
+      >
         <EmailOctopusIntegLayout
           formFields={formFields}
           handleInput={(e) =>
@@ -114,7 +114,8 @@ function EmailOctopus({ formFields, setFlow, flow, allIntegURL }) {
             onClick={() => nextPage(3)}
             disabled={!checkMappedFields(emailOctopusConf)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
-            type="button">
+            type="button"
+          >
             {__('Next', 'bit-integrations')} &nbsp;
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

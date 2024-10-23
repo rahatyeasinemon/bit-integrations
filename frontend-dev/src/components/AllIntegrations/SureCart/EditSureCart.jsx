@@ -64,9 +64,7 @@ function EditSureCart({ allIntegURL }) {
             setSnackbar
           })
         }
-        disabled={
-          !sureCartConf.mainAction || isLoading || !checkMappedFields(sureCartConf.field_map)
-        }
+        disabled={!sureCartConf.mainAction || isLoading || !checkMappedFields(sureCartConf.field_map)}
         isLoading={isLoading}
         dataConf={sureCartConf}
         setDataConf={setSureCartConf}

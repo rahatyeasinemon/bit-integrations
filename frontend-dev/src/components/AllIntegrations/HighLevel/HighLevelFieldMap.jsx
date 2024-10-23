@@ -7,16 +7,9 @@ import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import TagifyInput from '../../Utilities/TagifyInput'
 import { handleCustomValue } from '../IntegrationHelpers/IntegrationHelpers'
 
-export default function HighLevelFieldMap({
-  i,
-  formFields,
-  field,
-  highLevelConf,
-  setHighLevelConf
-}) {
+export default function HighLevelFieldMap({ i, formFields, field, highLevelConf, setHighLevelConf }) {
   const requiredFields = highLevelConf?.highLevelFields.filter((fld) => fld.required === true) || []
-  const notResquiredField =
-    highLevelConf?.highLevelFields?.filter((fld) => fld.required === false) || []
+  const notResquiredField = highLevelConf?.highLevelFields?.filter((fld) => fld.required === false) || []
 
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi
@@ -51,7 +44,8 @@ export default function HighLevelFieldMap({
           className="btcd-paper-inp mr-2"
           name="formField"
           value={field.formField || ''}
-          onChange={(ev) => handleFieldMapping(ev, i)}>
+          onChange={(ev) => handleFieldMapping(ev, i)}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           <optgroup label="Campaign Fields">
             {formFields?.map((f) => (
@@ -88,7 +82,8 @@ export default function HighLevelFieldMap({
           name="highLevelField"
           value={i < requiredFields ? requiredFields[i].label || '' : field.highLevelField || ''}
           onChange={(ev) => handleFieldMapping(ev, i)}
-          disabled={i < requiredFields.length}>
+          disabled={i < requiredFields.length}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           {i < requiredFields.length ? (
             <option key={requiredFields[i].key} value={requiredFields[i].key}>
@@ -112,7 +107,8 @@ export default function HighLevelFieldMap({
             onClick={() => delFieldMap(i)}
             className="icn-btn sh-sm ml-2"
             type="button"
-            aria-label="btn">
+            aria-label="btn"
+          >
             <TrashIcn />
           </button>
         </>

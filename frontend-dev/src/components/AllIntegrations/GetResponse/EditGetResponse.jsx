@@ -66,9 +66,7 @@ function EditGetResponse({ allIntegURL }) {
       <GetResponseIntegLayout
         formID={flow.triggered_entity_id}
         formFields={formField}
-        handleInput={(e) =>
-          handleInput(e, getResponseConf, setGetResponseConf, setLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, getResponseConf, setGetResponseConf, setLoading, setSnackbar)}
         getResponseConf={getResponseConf}
         setGetResponseConf={setGetResponseConf}
         loading={loading}

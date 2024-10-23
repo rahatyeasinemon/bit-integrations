@@ -86,9 +86,7 @@ function EditBuddyBoss({ allIntegURL }) {
       <BuddyBossIntegLayout
         formID={formID}
         formFields={formFields}
-        handleInput={(e) =>
-          handleInput(e, buddyBossConf, setBuddyBossConf, setIsLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, buddyBossConf, setBuddyBossConf, setIsLoading, setSnackbar)}
         buddyBossConf={buddyBossConf}
         setBuddyBossConf={setBuddyBossConf}
         isLoading={isLoading}

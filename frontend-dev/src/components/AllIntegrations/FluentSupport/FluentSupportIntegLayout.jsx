@@ -44,7 +44,8 @@ export default function FluentSupportIntegLayout({
                 '--tooltip-txt': `'${__('Refresh Custom Ticket Fields', 'bit-integrations')}'`
               }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -71,14 +72,11 @@ export default function FluentSupportIntegLayout({
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
               onClick={() =>
-                addFieldMap(
-                  fluentSupportConf.field_map.length,
-                  fluentSupportConf,
-                  setFluentSupportConf
-                )
+                addFieldMap(fluentSupportConf.field_map.length, fluentSupportConf, setFluentSupportConf)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

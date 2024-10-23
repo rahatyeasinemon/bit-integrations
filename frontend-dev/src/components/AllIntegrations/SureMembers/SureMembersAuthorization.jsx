@@ -41,7 +41,8 @@ export default function SureMembersAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
       {sureMembers?.youTubeLink && (
         <TutorialLink title="SureMembers" youTubeLink={sureMembers?.youTubeLink} />
       )}
@@ -66,17 +67,12 @@ export default function SureMembersAuthorization({
         <div>
           <button
             onClick={() =>
-              sureMembersAuthentication(
-                sureMembersConf,
-                setError,
-                setIsAuthorized,
-                loading,
-                setLoading
-              )
+              sureMembersAuthentication(sureMembersConf, setError, setIsAuthorized, loading, setLoading)
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || loading.auth}>
+            disabled={isAuthorized || loading.auth}
+          >
             {isAuthorized
               ? __('Connected ✔', 'bit-integrations')
               : __('Connect to SureMembers', 'bit-integrations')}
@@ -87,7 +83,8 @@ export default function SureMembersAuthorization({
             onClick={nextPage}
             className="btn ml-auto btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

@@ -69,7 +69,8 @@ export default function SalesflareIntegLayout({
         onChange={handleActionInput}
         name="actionName"
         value={salesflareConf.actionName}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select an action', 'bit-integrations')}</option>
         <option value="accounts" data-action_name="accounts">
           {__('Create Account', 'bit-integrations')}
@@ -115,7 +116,8 @@ export default function SalesflareIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh Stages', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.account}>
+              disabled={loading.account}
+            >
               &#x21BB;
             </button>
           </div>
@@ -139,13 +141,12 @@ export default function SalesflareIntegLayout({
               closeOnSelect
             />
             <button
-              onClick={() =>
-                getallPipelines(salesflareConf, setSalesflareConf, loading, setLoading)
-              }
+              onClick={() => getallPipelines(salesflareConf, setSalesflareConf, loading, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh pipelines', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.pipeline}>
+              disabled={loading.pipeline}
+            >
               &#x21BB;
             </button>
           </div>
@@ -195,7 +196,8 @@ export default function SalesflareIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh custom fields', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -225,15 +227,11 @@ export default function SalesflareIntegLayout({
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
               onClick={() =>
-                addFieldMap(
-                  salesflareConf.field_map.length,
-                  salesflareConf,
-                  setSalesflareConf,
-                  false
-                )
+                addFieldMap(salesflareConf.field_map.length, salesflareConf, setSalesflareConf, false)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

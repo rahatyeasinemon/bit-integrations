@@ -200,10 +200,7 @@ function EditFormInteg({ setSnackbar, className = '' }) {
       }
     }
     if (trigger === 'FluentCrm') {
-      if (
-        data.triggered_entity_id === 'fluentcrm-1' ||
-        data.triggered_entity_id === 'fluentcrm-2'
-      ) {
+      if (data.triggered_entity_id === 'fluentcrm-1' || data.triggered_entity_id === 'fluentcrm-2') {
         getFluentCrmTags(data, setFlow)
       } else if (
         data.triggered_entity_id === 'fluentcrm-3' ||
@@ -404,7 +401,8 @@ function EditFormInteg({ setSnackbar, className = '' }) {
           name="triggered_entity_id"
           value={flow.triggered_entity_id}
           onChange={handle}
-          className={`btcd-paper-inp w-5 ${className}`}>
+          className={`btcd-paper-inp w-5 ${className}`}
+        >
           <option value="">{__('Select Form', 'bit-integrations')}</option>
           {forms?.map((form) => (
             <option key={form.id} value={form.id}>

@@ -37,7 +37,8 @@ export default function ZohoBiginFieldMap({
           className="btcd-paper-inp mr-2"
           name="formField"
           value={field.formField || ''}
-          onChange={(ev) => handleFieldMapping(ev, i, biginConf, setBiginConf, uploadFields, tab)}>
+          onChange={(ev) => handleFieldMapping(ev, i, biginConf, setBiginConf, uploadFields, tab)}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           <optgroup label={__('Form Fields', 'bit-integrations')}>
             {uploadFields
@@ -60,7 +61,8 @@ export default function ZohoBiginFieldMap({
           </optgroup>
           {!uploadFields && <option value="custom">{__('Custom...', 'bit-integrations')}</option>}
           <optgroup
-            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}>
+            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}
+          >
             {isPro &&
               SmartTagField?.map((f) => (
                 <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -87,7 +89,8 @@ export default function ZohoBiginFieldMap({
           disabled={!isNotRequired}
           name="zohoFormField"
           value={field.zohoFormField || ''}
-          onChange={(ev) => handleFieldMapping(ev, i, biginConf, setBiginConf, uploadFields, tab)}>
+          onChange={(ev) => handleFieldMapping(ev, i, biginConf, setBiginConf, uploadFields, tab)}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           {biginConf.default.moduleData?.[module]?.fields &&
             Object.values(biginConf.default.moduleData[module].fields).map((fieldApiName) =>
@@ -111,14 +114,16 @@ export default function ZohoBiginFieldMap({
           <button
             onClick={() => addFieldMap(i, biginConf, setBiginConf, uploadFields, tab)}
             className="icn-btn sh-sm ml-2 mr-1"
-            type="button">
+            type="button"
+          >
             +
           </button>
           <button
             onClick={() => delFieldMap(i, biginConf, setBiginConf, uploadFields, tab)}
             className="icn-btn sh-sm ml-1"
             type="button"
-            aria-label="btn">
+            aria-label="btn"
+          >
             <TrashIcn />
           </button>
         </>

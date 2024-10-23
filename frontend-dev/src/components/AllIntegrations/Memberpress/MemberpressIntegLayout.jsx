@@ -40,7 +40,8 @@ export default function MemberpressIntegLayout({
         onChange={handleInput}
         name="mainAction"
         value={memberpressConf?.mainAction}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select Actions', 'bit-integrations')}</option>
         {memberpressConf?.allActions &&
           memberpressConf.allActions.map(({ key, label }) => (
@@ -76,7 +77,8 @@ export default function MemberpressIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Fetch All Membership', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -128,7 +130,8 @@ export default function MemberpressIntegLayout({
                   addFieldMap(memberpressConf.field_map.length, memberpressConf, setMemberpressConf)
                 }
                 className="icn-btn sh-sm"
-                type="button">
+                type="button"
+              >
                 +
               </button>
             </div>
@@ -151,9 +154,7 @@ export default function MemberpressIntegLayout({
         )}
       </>
       <br />
-      <Note
-        note={__('Some integrations will only work for logged-in users.', 'bit-integrations')}
-      />
+      <Note note={__('Some integrations will only work for logged-in users.', 'bit-integrations')} />
     </>
   )
 }

@@ -25,7 +25,8 @@ export default function ZohoBiginIntegLayout({
         name="module"
         value={biginConf.module}
         className="btcd-paper-inp w-5"
-        disabled={tab === 1}>
+        disabled={tab === 1}
+      >
         <option value="">{__('Select Module', 'bit-integrations')}</option>
         {biginConf.default &&
           biginConf.default.modules &&
@@ -41,7 +42,8 @@ export default function ZohoBiginIntegLayout({
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Refresh Bigin Modules', 'bit-integrations')}'` }}
           type="button"
-          disabled={isLoading}>
+          disabled={isLoading}
+        >
           &#x21BB;
         </button>
       )}
@@ -55,7 +57,8 @@ export default function ZohoBiginIntegLayout({
             name="pLayout"
             value={biginConf.pLayout}
             className="btcd-paper-inp w-5"
-            disabled={tab === 1}>
+            disabled={tab === 1}
+          >
             <option value="">{__('Select Layout', 'bit-integrations')}</option>
             {biginConf.default &&
               biginConf.default.pLayouts &&
@@ -75,7 +78,8 @@ export default function ZohoBiginIntegLayout({
                 '--tooltip-txt': `'${__('Refresh pipelines Layouts', 'bit-integrations')}'`
               }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           )}

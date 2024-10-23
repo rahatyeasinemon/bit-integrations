@@ -3,10 +3,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import CampaignMonitorActions from './CampaignMonitorActions'
-import {
-  refreshCampaignMonitorFields,
-  refreshCampaignMonitorLists
-} from './CampaignMonitorCommonFunc'
+import { refreshCampaignMonitorFields, refreshCampaignMonitorLists } from './CampaignMonitorCommonFunc'
 import CampaignMonitorFieldMap from './CampaignMonitorFieldMap'
 
 export default function CampaignMonitorIntegLayout({
@@ -36,7 +33,8 @@ export default function CampaignMonitorIntegLayout({
         name="listId"
         id=""
         className="btcd-paper-inp w-5"
-        onChange={handleInput}>
+        onChange={handleInput}
+      >
         <option value="">{__('Select Subscriber List', 'bit-integrations')}</option>
         {campaignMonitorConf?.default?.campaignMonitorLists &&
           campaignMonitorConf.default.campaignMonitorLists.map((list) => (
@@ -57,7 +55,8 @@ export default function CampaignMonitorIntegLayout({
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': '"Refresh CampaignMonitor campaign"' }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -91,7 +90,8 @@ export default function CampaignMonitorIntegLayout({
             '--tooltip-txt': `'${__('Refresh CampaignMonitor Field', 'bit-integrations')}'`
           }}
           type="button"
-          disabled={isLoading}>
+          disabled={isLoading}
+        >
           &#x21BB;
         </button>
       </div>
@@ -127,7 +127,8 @@ export default function CampaignMonitorIntegLayout({
                 )
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

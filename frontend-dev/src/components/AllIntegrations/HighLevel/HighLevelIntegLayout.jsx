@@ -59,11 +59,7 @@ export default function HighLevelIntegLayout({
     const newConf = { ...highLevelConf }
     newConf[type] = val
 
-    if (
-      val &&
-      newConf.selectedTask === TASK_LIST_VALUES.UPDATE_TASK &&
-      type === 'selectedContact'
-    ) {
+    if (val && newConf.selectedTask === TASK_LIST_VALUES.UPDATE_TASK && type === 'selectedContact') {
       getHLTasks(newConf, setHighLevelConf, loading, setLoading)
     }
 
@@ -139,7 +135,8 @@ export default function HighLevelIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh pipeline list', 'bit-integrations')}'` }}
               disabled={loading.contacts || loading.pipelines}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -180,7 +177,8 @@ export default function HighLevelIntegLayout({
               loading.pipelines ||
               loading.opportunities
             }
-            type="button">
+            type="button"
+          >
             &#x21BB;
           </button>
         </div>
@@ -206,7 +204,8 @@ export default function HighLevelIntegLayout({
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Refresh contact list', 'bit-integrations')}'` }}
             disabled={loading.contacts}
-            type="button">
+            type="button"
+          >
             &#x21BB;
           </button>
         </div>
@@ -231,7 +230,8 @@ export default function HighLevelIntegLayout({
             disabled={
               !highLevelConf.selectedContact || loading.contacts || loading.users || loading.hlTasks
             }
-            type="button">
+            type="button"
+          >
             &#x21BB;
           </button>
         </div>
@@ -257,7 +257,8 @@ export default function HighLevelIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh assignee list', 'bit-integrations')}'` }}
               disabled={loading.contacts || loading.users}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -365,7 +366,8 @@ export default function HighLevelIntegLayout({
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Refresh custom fields', 'bit-integrations')}'` }}
             type="button"
-            disabled={loading.customFields || loading.contacts}>
+            disabled={loading.customFields || loading.contacts}
+          >
             &#x21BB;
           </button>
         )}
@@ -399,7 +401,8 @@ export default function HighLevelIntegLayout({
                 addFieldMap(highLevelConf.field_map.length, highLevelConf, setHighLevelConf)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

@@ -70,12 +70,7 @@ export default function ActiveCampaignIntegLayout({
 
   useEffect(() => {
     activeCampaignLists &&
-      refreshActiveCampaingTags(
-        activeCampaingConf,
-        setActiveCampaingConf,
-        setIsLoading,
-        setSnackbar
-      )
+      refreshActiveCampaingTags(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeCampaignLists])
 
@@ -88,30 +83,28 @@ export default function ActiveCampaignIntegLayout({
         name="listId"
         id=""
         className="btcd-paper-inp w-5"
-        onChange={handleInput}>
+        onChange={handleInput}
+      >
         <option value="">{__('Select List', 'bit-integrations')}</option>
         {activeCampaingConf?.default?.activeCampaignLists &&
           Object.keys(activeCampaingConf.default.activeCampaignLists).map((listname) => (
             <option
               key={`${listname + 1}`}
-              value={activeCampaingConf.default.activeCampaignLists[listname].listId}>
+              value={activeCampaingConf.default.activeCampaignLists[listname].listId}
+            >
               {activeCampaingConf.default.activeCampaignLists[listname].listName}
             </option>
           ))}
       </select>
       <button
         onClick={() =>
-          refreshActiveCampaingList(
-            activeCampaingConf,
-            setActiveCampaingConf,
-            setIsLoading,
-            setSnackbar
-          )
+          refreshActiveCampaingList(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)
         }
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': '"Refresh Activecapmaign list"' }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -144,7 +137,8 @@ export default function ActiveCampaignIntegLayout({
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Refresh Activecapmaign Tags', 'bit-integrations')}'` }}
           type="button"
-          disabled={isLoading}>
+          disabled={isLoading}
+        >
           &#x21BB;
         </button>
       </div>
@@ -182,7 +176,8 @@ export default function ActiveCampaignIntegLayout({
                 '--tooltip-txt': `'${__('Refresh Activecapmaign Tags', 'bit-integrations')}'`
               }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -233,7 +228,8 @@ export default function ActiveCampaignIntegLayout({
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Refresh Activecapmaign Field', 'bit-integrations')}'` }}
           type="button"
-          disabled={isLoading}>
+          disabled={isLoading}
+        >
           &#x21BB;
         </button>
       </div>
@@ -269,7 +265,8 @@ export default function ActiveCampaignIntegLayout({
                 )
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

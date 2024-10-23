@@ -24,8 +24,7 @@ export default function GetResponseFieldMap({
   }
 
   const requiredFlds = getResponseConf?.contactsFields.filter((fld) => fld.required === true) || []
-  const nonRequiredFlds =
-    getResponseConf?.contactsFields.filter((fld) => fld.required === false) || []
+  const nonRequiredFlds = getResponseConf?.contactsFields.filter((fld) => fld.required === false) || []
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi
 
@@ -37,7 +36,8 @@ export default function GetResponseFieldMap({
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, getResponseConf, setGetResponseConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, getResponseConf, setGetResponseConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -51,7 +51,8 @@ export default function GetResponseFieldMap({
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -77,10 +78,9 @@ export default function GetResponseFieldMap({
             className="btcd-paper-inp"
             disabled={i < requiredFlds.length}
             name="getResponseFormField"
-            value={
-              i < requiredFlds ? requiredFlds[i].label || '' : field.getResponseFormField || ''
-            }
-            onChange={(ev) => handleFieldMapping(ev, i, getResponseConf, setGetResponseConf)}>
+            value={i < requiredFlds ? requiredFlds[i].label || '' : field.getResponseFormField || ''}
+            onChange={(ev) => handleFieldMapping(ev, i, getResponseConf, setGetResponseConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFlds.length ? (
               <option key={requiredFlds[i].key} value={requiredFlds[i].key}>
@@ -100,14 +100,16 @@ export default function GetResponseFieldMap({
             <button
               onClick={() => addFieldMap(i, getResponseConf, setGetResponseConf)}
               className="icn-btn sh-sm ml-2 mr-1"
-              type="button">
+              type="button"
+            >
               +
             </button>
             <button
               onClick={() => delFieldMap(i, getResponseConf, setGetResponseConf)}
               className="icn-btn sh-sm ml-1"
               type="button"
-              aria-label="btn">
+              aria-label="btn"
+            >
               <span className="btcd-icn icn-trash-2" />
             </button>
           </>

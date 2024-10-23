@@ -46,13 +46,12 @@ export default function KeapIntegLayout({
         <div className="mt-4">
           <b className="wdt-100">{__('Map Fields', 'bit-integrations')}</b>
           <button
-            onClick={() =>
-              refreshCustomFields(id, keapConf, setKeapConf, setIsLoading, setSnackbar)
-            }
+            onClick={() => refreshCustomFields(id, keapConf, setKeapConf, setIsLoading, setSnackbar)}
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Refresh Lemlist Field', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
         </div>
@@ -80,7 +79,8 @@ export default function KeapIntegLayout({
           <button
             onClick={() => addFieldMap(keapConf.field_map.length, keapConf, setKeapConf)}
             className="icn-btn sh-sm"
-            type="button">
+            type="button"
+          >
             +
           </button>
         </div>

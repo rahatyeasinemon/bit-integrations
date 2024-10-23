@@ -53,7 +53,8 @@ export default function ElasticEmailIntegLayout({
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Fetch All Recipients', 'bit-integrations')}'` }}
           type="button"
-          disabled={isLoading}>
+          disabled={isLoading}
+        >
           &#x21BB;
         </button>
       </div>
@@ -86,15 +87,11 @@ export default function ElasticEmailIntegLayout({
       <div className="txt-center btcbi-field-map-button mt-2">
         <button
           onClick={() =>
-            addFieldMap(
-              elasticEmailConf.field_map.length,
-              elasticEmailConf,
-              setElasticEmailConf,
-              false
-            )
+            addFieldMap(elasticEmailConf.field_map.length, elasticEmailConf, setElasticEmailConf, false)
           }
           className="icn-btn sh-sm"
-          type="button">
+          type="button"
+        >
           +
         </button>
       </div>

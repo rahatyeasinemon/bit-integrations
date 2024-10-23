@@ -46,7 +46,8 @@ export default function GoogleContactsAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
       {googleContacts?.youTubeLink && (
         <TutorialLink title="Google Contacts" youTubeLink={googleContacts?.youTubeLink} />
       )}
@@ -94,7 +95,8 @@ export default function GoogleContactsAuthorization({
           className="btcd-link"
           href="https://console.developers.google.com/apis/credentials"
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {__('Google API Console', 'bit-integrations')}
         </a>
       </small>
@@ -141,7 +143,8 @@ export default function GoogleContactsAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -152,7 +155,8 @@ export default function GoogleContactsAuthorization({
             onClick={nextPage}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

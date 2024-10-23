@@ -134,7 +134,8 @@ export default function ZendeskActions({ zendeskConf, setZendeskConf, loading, s
         show={actionMdl.show === 'lead'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Leads', 'bit-integrations')}>
+        title={__('Leads', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Lead', 'bit-integrations')}</div>
         {loading.leads ? (
@@ -160,7 +161,8 @@ export default function ZendeskActions({ zendeskConf, setZendeskConf, loading, s
               onClick={() => getAllLeads(zendeskConf, setZendeskConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Leads', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -175,7 +177,8 @@ export default function ZendeskActions({ zendeskConf, setZendeskConf, loading, s
         show={actionMdl.show === 'parentOrganization'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('ParentOrganizations', 'bit-integrations')}>
+        title={__('ParentOrganizations', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select ParentOrganization', 'bit-integrations')}</div>
         {loading.parentOrganizations ? (
@@ -206,7 +209,8 @@ export default function ZendeskActions({ zendeskConf, setZendeskConf, loading, s
               style={{
                 '--tooltip-txt': `${__('Refresh ParentOrganizations', 'bit-integrations')}'`
               }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -221,7 +225,8 @@ export default function ZendeskActions({ zendeskConf, setZendeskConf, loading, s
         show={actionMdl.show === 'team'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Teams', 'bit-integrations')}>
+        title={__('Teams', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Team', 'bit-integrations')}</div>
         {loading.teams ? (
@@ -247,7 +252,8 @@ export default function ZendeskActions({ zendeskConf, setZendeskConf, loading, s
               onClick={() => getAllTeams(zendeskConf, setZendeskConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Teams', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -262,7 +268,8 @@ export default function ZendeskActions({ zendeskConf, setZendeskConf, loading, s
         show={actionMdl.show === 'currency'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Currencies', 'bit-integrations')}>
+        title={__('Currencies', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Currency', 'bit-integrations')}</div>
         {loading.currencies ? (
@@ -291,7 +298,8 @@ export default function ZendeskActions({ zendeskConf, setZendeskConf, loading, s
               onClick={() => getAllCurrencies(zendeskConf, setZendeskConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Currencies', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -305,7 +313,8 @@ export default function ZendeskActions({ zendeskConf, setZendeskConf, loading, s
         show={actionMdl.show === 'stage'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Stages', 'bit-integrations')}>
+        title={__('Stages', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Stage', 'bit-integrations')}</div>
         {loading.stages ? (
@@ -334,7 +343,8 @@ export default function ZendeskActions({ zendeskConf, setZendeskConf, loading, s
               onClick={() => getAllStages(zendeskConf, setZendeskConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Stages', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -389,7 +399,8 @@ export default function ZendeskActions({ zendeskConf, setZendeskConf, loading, s
         show={actionMdl.show === 'followUp'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Follow Up', 'bit-integrations')}>
+        title={__('Follow Up', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="flx flx-center mt-2">
           <MultiSelect
@@ -413,7 +424,8 @@ export default function ZendeskActions({ zendeskConf, setZendeskConf, loading, s
         show={actionMdl.show === 'leadType'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Lead types', 'bit-integrations')}>
+        title={__('Lead types', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="flx flx-center mt-2">
           <MultiSelect

@@ -25,15 +25,7 @@ export default function PipeDriveRelatedRecord({
   const { isPro } = btcbi
 
   useEffect(() => {
-    handleTabChange(
-      indx + 1,
-      settab,
-      formID,
-      pipeDriveConf,
-      setPipeDriveConf,
-      setIsLoading,
-      setSnackbar
-    )
+    handleTabChange(indx + 1, settab, formID, pipeDriveConf, setPipeDriveConf, setIsLoading, setSnackbar)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   // eslint-disable-next-line no-undef
@@ -57,10 +49,7 @@ export default function PipeDriveRelatedRecord({
         {!isPro && (
           <div className="pro-blur flx p-3">
             <div className="pro">
-              <a
-                href="https://bitapps.pro/bit-integrations/#pricing"
-                target="_blank"
-                rel="noreferrer">
+              <a href="https://bitapps.pro/bit-integrations/#pricing" target="_blank" rel="noreferrer">
                 {__('Related List', 'bit-integrations')} {__('Available On', 'bit-integrations')}
                 <span className="txt-pro"> ({__('Pro', 'bit-integrations')})</span>
               </a>
@@ -73,7 +62,8 @@ export default function PipeDriveRelatedRecord({
           name="module"
           value={pipeDriveConf?.relatedlists?.[tab - 1]?.module}
           className="btcd-paper-inp w-7"
-          disabled={!pipeDriveConf.moduleData?.module}>
+          disabled={!pipeDriveConf.moduleData?.module}
+        >
           <option value="">{__('Select Related Module', 'bit-integrations')}</option>
           {pipeDriveConf.default.modules[pipeDriveConf.moduleData.module]?.relatedlists?.map(
             (relatedlistApiName) => (
@@ -124,7 +114,8 @@ export default function PipeDriveRelatedRecord({
                   )
                 }
                 className="icn-btn sh-sm"
-                type="button">
+                type="button"
+              >
                 +
               </button>
             </div>

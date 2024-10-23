@@ -48,8 +48,7 @@ function App() {
     removeUnwantedCSS()
   }, [])
 
-  const isValidUser =
-    typeof btcbi !== 'undefined' ? ('isPro' in btcbi ? btcbi.isPro : false) : false
+  const isValidUser = typeof btcbi !== 'undefined' ? ('isPro' in btcbi ? btcbi.isPro : false) : false
 
   return (
     <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
@@ -82,7 +81,8 @@ function App() {
                 target="_blank"
                 href="https://wordpress.org/support/plugin/bit-integrations/reviews/#new-post"
                 className={`app-link ${btcbi.isPro ? '' : 'green blink'} `}
-                rel="noreferrer">
+                rel="noreferrer"
+              >
                 {__('Review us', 'bit-integrations')}
               </a>
             </nav>

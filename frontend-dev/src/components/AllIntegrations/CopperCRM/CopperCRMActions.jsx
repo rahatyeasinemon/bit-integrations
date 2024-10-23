@@ -138,7 +138,8 @@ export default function CopperCRMActions({ coppercrmConf, setCopperCRMConf, load
         show={actionMdl.show === 'opportunity'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Opportunities', 'bit-integrations')}>
+        title={__('Opportunities', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Opportunity', 'bit-integrations')}</div>
         {loading.opportunities ? (
@@ -167,7 +168,8 @@ export default function CopperCRMActions({ coppercrmConf, setCopperCRMConf, load
               onClick={() => getAllOpportunities(coppercrmConf, setCopperCRMConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Opportunities', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -182,7 +184,8 @@ export default function CopperCRMActions({ coppercrmConf, setCopperCRMConf, load
         show={actionMdl.show === 'owner'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Owners', 'bit-integrations')}>
+        title={__('Owners', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Owner', 'bit-integrations')}</div>
         {loading.owners ? (
@@ -211,7 +214,8 @@ export default function CopperCRMActions({ coppercrmConf, setCopperCRMConf, load
               onClick={() => getAllOwners(coppercrmConf, setCopperCRMConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Owners', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -226,7 +230,8 @@ export default function CopperCRMActions({ coppercrmConf, setCopperCRMConf, load
         show={actionMdl.show === 'company'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Companies', 'bit-integrations')}>
+        title={__('Companies', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Company', 'bit-integrations')}</div>
         {loading.companies ? (
@@ -255,7 +260,8 @@ export default function CopperCRMActions({ coppercrmConf, setCopperCRMConf, load
               onClick={() => getAllCompanies(coppercrmConf, setCopperCRMConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Companies', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -270,7 +276,8 @@ export default function CopperCRMActions({ coppercrmConf, setCopperCRMConf, load
         show={actionMdl.show === 'pipelineStage'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('PipelineStages', 'bit-integrations')}>
+        title={__('PipelineStages', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select PipelineStage', 'bit-integrations')}</div>
         {loading.pipelineStages ? (
@@ -299,7 +306,8 @@ export default function CopperCRMActions({ coppercrmConf, setCopperCRMConf, load
               onClick={() => getAllPipelineStages(coppercrmConf, setCopperCRMConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh PipelineStages', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -354,7 +362,8 @@ export default function CopperCRMActions({ coppercrmConf, setCopperCRMConf, load
         show={actionMdl.show === 'followUp'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Follow Up', 'bit-integrations')}>
+        title={__('Follow Up', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="flx flx-center mt-2">
           <MultiSelect
@@ -378,7 +387,8 @@ export default function CopperCRMActions({ coppercrmConf, setCopperCRMConf, load
         show={actionMdl.show === 'opportunityType'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Opportunity types', 'bit-integrations')}>
+        title={__('Opportunity types', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="flx flx-center mt-2">
           <MultiSelect

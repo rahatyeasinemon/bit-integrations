@@ -5,13 +5,7 @@ import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import TagifyInput from '../../Utilities/TagifyInput'
 import { handleCustomValue } from '../IntegrationHelpers/IntegrationHelpers'
 
-export default function JetEngineFieldMap({
-  i,
-  formFields,
-  field,
-  jetEngineConf,
-  setJetEngineConf
-}) {
+export default function JetEngineFieldMap({ i, formFields, field, jetEngineConf, setJetEngineConf }) {
   const requiredFields = jetEngineConf?.staticFields.filter((fld) => fld.required === true) || []
   const customFields = jetEngineConf?.staticFields?.filter((fld) => fld.required === false) || []
 
@@ -23,7 +17,8 @@ export default function JetEngineFieldMap({
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, jetEngineConf, setJetEngineConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, jetEngineConf, setJetEngineConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -59,7 +54,8 @@ export default function JetEngineFieldMap({
             disabled={i < requiredFields.length}
             name="jetEngineField"
             value={i < requiredFields ? requiredFields[i].label || '' : field.jetEngineField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, jetEngineConf, setJetEngineConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, jetEngineConf, setJetEngineConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFields.length ? (
               <option key={requiredFields[i].key} value={requiredFields[i].key}>
@@ -80,14 +76,16 @@ export default function JetEngineFieldMap({
               <button
                 onClick={() => addFieldMap(i, jetEngineConf, setJetEngineConf)}
                 className="icn-btn sh-sm ml-2 mr-1"
-                type="button">
+                type="button"
+              >
                 +
               </button>
               <button
                 onClick={() => delFieldMap(i, jetEngineConf, setJetEngineConf)}
                 className="icn-btn sh-sm ml-1"
                 type="button"
-                aria-label="btn">
+                aria-label="btn"
+              >
                 <span className="btcd-icn icn-trash-2" />
               </button>
             </>

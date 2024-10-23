@@ -56,14 +56,7 @@ function EditMailercloud({ allIntegURL }) {
       <IntegrationStepThree
         edit
         saveConfig={() => {
-          saveUpdateConfig(
-            flow,
-            allIntegURL,
-            mailercloudConf,
-            navigate,
-            { edit: 1 },
-            setUpdateLoading
-          )
+          saveUpdateConfig(flow, allIntegURL, mailercloudConf, navigate, { edit: 1 }, setUpdateLoading)
         }}
         isLoading={loading.update}
         disabled={mailercloudConf.field_map.length < 1}

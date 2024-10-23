@@ -49,7 +49,8 @@ export default function MailPoetIntegLayout({
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Refresh MailPoet List', 'bit-integrations')}'` }}
           type="button"
-          disabled={isLoading}>
+          disabled={isLoading}
+        >
           &#x21BB;
         </button>
       </div>
@@ -91,11 +92,10 @@ export default function MailPoetIntegLayout({
           ))}
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
-              onClick={() =>
-                addFieldMap(mailPoetConf.field_map.length, mailPoetConf, setMailPoetConf)
-              }
+              onClick={() => addFieldMap(mailPoetConf.field_map.length, mailPoetConf, setMailPoetConf)}
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

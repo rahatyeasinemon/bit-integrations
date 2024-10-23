@@ -31,21 +31,19 @@ export const getTopicByLesson = (val, course_id, tmpNewFlow, setNewFlow, edit = 
     lesson_id: val,
     course_id
   }
-  const loadPostTypes = bitsFetch(null, 'get_all_topic_by_lesson', queryParams, 'GET').then(
-    (result) => {
-      if (result && result.success) {
-        const newConf = { ...tmpNewFlow }
-        if (!edit) {
-          newConf.triggerData.topics = result.data
-        } else {
-          newConf.flow_details.topics = result.data
-        }
-        setNewFlow({ ...newConf })
-        return __('Fetched Topic successfully', 'bit-integrations')
+  const loadPostTypes = bitsFetch(null, 'get_all_topic_by_lesson', queryParams, 'GET').then((result) => {
+    if (result && result.success) {
+      const newConf = { ...tmpNewFlow }
+      if (!edit) {
+        newConf.triggerData.topics = result.data
+      } else {
+        newConf.flow_details.topics = result.data
       }
-      return __('Topics fetching failed. please try again', 'bit-integrations')
+      setNewFlow({ ...newConf })
+      return __('Fetched Topic successfully', 'bit-integrations')
     }
-  )
+    return __('Topics fetching failed. please try again', 'bit-integrations')
+  })
   toast.promise(loadPostTypes, {
     success: (data) => data,
     error: __('Error Occurred', 'bit-integrations'),

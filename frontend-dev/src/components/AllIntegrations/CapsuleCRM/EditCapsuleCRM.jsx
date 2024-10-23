@@ -75,9 +75,7 @@ function EditCapsuleCRM({ allIntegURL }) {
       <CapsuleCRMIntegLayout
         formID={flow.triggered_entity_id}
         formFields={formField}
-        handleInput={(e) =>
-          handleInput(e, capsulecrmConf, setCapsuleCRMConf, setLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, capsulecrmConf, setCapsuleCRMConf, setLoading, setSnackbar)}
         capsulecrmConf={capsulecrmConf}
         setCapsuleCRMConf={setCapsuleCRMConf}
         loading={loading}

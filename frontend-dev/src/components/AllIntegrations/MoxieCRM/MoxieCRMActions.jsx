@@ -115,7 +115,8 @@ export default function MoxieCRMActions({ moxiecrmConf, setMoxieCRMConf, loading
         show={actionMdl.show === 'client'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Clients', 'bit-integrations')}>
+        title={__('Clients', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Client', 'bit-integrations')}</div>
         {loading.clients ? (
@@ -144,7 +145,8 @@ export default function MoxieCRMActions({ moxiecrmConf, setMoxieCRMConf, loading
               onClick={() => getAllClients(moxiecrmConf, setMoxieCRMConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Clients', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -158,7 +160,8 @@ export default function MoxieCRMActions({ moxiecrmConf, setMoxieCRMConf, loading
         show={actionMdl.show === 'pipelineStage'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('PipelineStages', 'bit-integrations')}>
+        title={__('PipelineStages', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select PipelineStage', 'bit-integrations')}</div>
         {loading.pipelineStages ? (
@@ -187,7 +190,8 @@ export default function MoxieCRMActions({ moxiecrmConf, setMoxieCRMConf, loading
               onClick={() => getAllPipelineStages(moxiecrmConf, setMoxieCRMConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh PipelineStages', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>

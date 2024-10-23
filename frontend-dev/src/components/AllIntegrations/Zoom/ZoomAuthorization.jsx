@@ -58,7 +58,8 @@ export default function ZoomAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}
+    >
       {zoomMeeting?.youTubeLink && (
         <TutorialLink title="Zoom Meeting" youTubeLink={zoomMeeting?.youTubeLink} />
       )}
@@ -103,7 +104,8 @@ export default function ZoomAuthorization({
           className="btcd-link"
           href="https://marketplace.zoom.us/develop/create"
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {__('Get Zoom client id and secret', 'bit-integrations')}
         </a>
       </small>
@@ -150,7 +152,8 @@ export default function ZoomAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized}>
+            disabled={isAuthorized}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -161,7 +164,8 @@ export default function ZoomAuthorization({
             onClick={() => nextPage(2)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <BackIcn className="ml-1 rev-icn" />
           </button>

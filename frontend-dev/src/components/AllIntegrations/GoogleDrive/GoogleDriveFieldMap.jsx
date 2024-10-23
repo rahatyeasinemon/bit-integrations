@@ -28,7 +28,8 @@ export default function GoogleDriveFieldMap({
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i)}>
+            onChange={(ev) => handleFieldMapping(ev, i)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields
@@ -43,7 +44,8 @@ export default function GoogleDriveFieldMap({
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -57,7 +59,8 @@ export default function GoogleDriveFieldMap({
             className="btcd-paper-inp"
             name="googleDriveFormField"
             value={field.googleDriveFormField}
-            onChange={(ev) => handleFieldMapping(ev, i)}>
+            onChange={(ev) => handleFieldMapping(ev, i)}
+          >
             <option value="">{__('Select Folder', 'bit-integrations')}</option>
             {sortByField(googleDriveConf.foldersList, 'name', 'ASC').map(({ name, id }) => (
               <option key={id} value={id}>
@@ -69,14 +72,16 @@ export default function GoogleDriveFieldMap({
         <button
           onClick={() => addFieldMap(i, googleDriveConf, setGoogleDriveConf)}
           className="icn-btn sh-sm ml-2 mr-1"
-          type="button">
+          type="button"
+        >
           +
         </button>
         <button
           onClick={() => delFieldMap(i, googleDriveConf, setGoogleDriveConf)}
           className="icn-btn sh-sm ml-1"
           type="button"
-          aria-label="btn">
+          aria-label="btn"
+        >
           <span className="btcd-icn icn-trash-2" />
         </button>
       </div>

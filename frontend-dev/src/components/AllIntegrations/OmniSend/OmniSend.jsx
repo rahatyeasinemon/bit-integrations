@@ -163,12 +163,11 @@ function OmniSend({ formFields, setFlow, flow, allIntegURL }) {
             height: 'auto',
             overflow: 'visible'
           })
-        }}>
+        }}
+      >
         <OmniSendIntegLayout
           formFields={formFields}
-          handleInput={(e) =>
-            handleInput(e, omniSendConf, setOmniSendConf, setLoading, setSnackbar)
-          }
+          handleInput={(e) => handleInput(e, omniSendConf, setOmniSendConf, setLoading, setSnackbar)}
           omniSendConf={omniSendConf}
           setOmniSendConf={setOmniSendConf}
           loading={loading}
@@ -179,7 +178,8 @@ function OmniSend({ formFields, setFlow, flow, allIntegURL }) {
         <button
           onClick={() => nextPage(3)}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')} &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>

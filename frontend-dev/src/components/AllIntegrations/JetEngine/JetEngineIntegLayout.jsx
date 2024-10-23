@@ -40,10 +40,7 @@ export default function JetEngineIntegLayout({
       if (val === TASK_LIST_VALUES.UPDATE_POST_TYPE || val === TASK_LIST_VALUES.DELETE_POST_TYPE) {
         getJetEngineCPTList(newConf, setJetEngineConf, loading, setLoading)
       }
-      if (
-        val === TASK_LIST_VALUES.UPDATE_CONTENT_TYPE ||
-        val === TASK_LIST_VALUES.DELETE_CONTENT_TYPE
-      ) {
+      if (val === TASK_LIST_VALUES.UPDATE_CONTENT_TYPE || val === TASK_LIST_VALUES.DELETE_CONTENT_TYPE) {
         getJetEngineCCTList(newConf, setJetEngineConf, loading, setLoading)
       }
       if (val === TASK_LIST_VALUES.UPDATE_TAXONOMY || val === TASK_LIST_VALUES.DELETE_TAXONOMY) {
@@ -117,7 +114,8 @@ export default function JetEngineIntegLayout({
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh relation list', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -142,7 +140,8 @@ export default function JetEngineIntegLayout({
                 }
                 className="icn-btn sh-sm ml-2 mr-2 tooltip"
                 style={{ '--tooltip-txt': `'${__('Refresh parent objects', 'bit-integrations')}'` }}
-                type="button">
+                type="button"
+              >
                 &#x21BB;
               </button>
             </div>
@@ -162,7 +161,8 @@ export default function JetEngineIntegLayout({
                 }
                 className="icn-btn sh-sm ml-2 mr-2 tooltip"
                 style={{ '--tooltip-txt': `'${__('Refresh child objects', 'bit-integrations')}'` }}
-                type="button">
+                type="button"
+              >
                 &#x21BB;
               </button>
             </div>
@@ -197,12 +197,11 @@ export default function JetEngineIntegLayout({
               singleSelect
             />
             <button
-              onClick={() =>
-                getJetEngineCPTList(jetEngineConf, setJetEngineConf, loading, setLoading)
-              }
+              onClick={() => getJetEngineCPTList(jetEngineConf, setJetEngineConf, loading, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh CPT List', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -221,12 +220,11 @@ export default function JetEngineIntegLayout({
               singleSelect
             />
             <button
-              onClick={() =>
-                getJetEngineCCTList(jetEngineConf, setJetEngineConf, loading, setLoading)
-              }
+              onClick={() => getJetEngineCCTList(jetEngineConf, setJetEngineConf, loading, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh CCT List', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -245,12 +243,11 @@ export default function JetEngineIntegLayout({
               singleSelect
             />
             <button
-              onClick={() =>
-                getJetEngineTaxList(jetEngineConf, setJetEngineConf, loading, setLoading)
-              }
+              onClick={() => getJetEngineTaxList(jetEngineConf, setJetEngineConf, loading, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh Tax List', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -325,15 +322,11 @@ export default function JetEngineIntegLayout({
               <div className="txt-center btcbi-field-map-button mt-2">
                 <button
                   onClick={() =>
-                    addFieldMap(
-                      jetEngineConf.field_map.length,
-                      jetEngineConf,
-                      setJetEngineConf,
-                      false
-                    )
+                    addFieldMap(jetEngineConf.field_map.length, jetEngineConf, setJetEngineConf, false)
                   }
                   className="icn-btn sh-sm"
-                  type="button">
+                  type="button"
+                >
                   +
                 </button>
               </div>

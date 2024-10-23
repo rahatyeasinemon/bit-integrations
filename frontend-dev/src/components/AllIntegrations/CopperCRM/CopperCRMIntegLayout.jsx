@@ -52,7 +52,8 @@ export default function CopperCRMIntegLayout({
         onChange={handleActionInput}
         name="actionName"
         value={coppercrmConf.actionName}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select an action', 'bit-integrations')}</option>
         <option value="company">{__('Create Company', 'bit-integrations')}</option>
         <option value="person">{__('Create Person', 'bit-integrations')}</option>
@@ -92,7 +93,8 @@ export default function CopperCRMIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh peoples', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.CRMPeoples}>
+              disabled={loading.CRMPeoples}
+            >
               &#x21BB;
             </button>
           </div>
@@ -120,7 +122,8 @@ export default function CopperCRMIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh pipelines', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.CRMPipelines}>
+              disabled={loading.CRMPipelines}
+            >
               &#x21BB;
             </button>
           </div>
@@ -147,7 +150,8 @@ export default function CopperCRMIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh fields', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.CRMPipelines}>
+              disabled={loading.CRMPipelines}
+            >
               &#x21BB;
             </button>
           </div>
@@ -180,7 +184,8 @@ export default function CopperCRMIntegLayout({
                 addFieldMap(coppercrmConf.field_map.length, coppercrmConf, setCopperCRMConf, false)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

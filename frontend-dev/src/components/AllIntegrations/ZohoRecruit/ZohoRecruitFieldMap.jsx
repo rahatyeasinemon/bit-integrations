@@ -47,9 +47,8 @@ export default function ZohoRecruitFieldMap({
           className="btcd-paper-inp mr-2"
           name="formField"
           value={field.formField || ''}
-          onChange={(ev) =>
-            handleFieldMapping(ev, i, recruitConf, setRecruitConf, uploadFields, tab)
-          }>
+          onChange={(ev) => handleFieldMapping(ev, i, recruitConf, setRecruitConf, uploadFields, tab)}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           <optgroup label={__('Form Fields', 'bit-integrations')}>
             {uploadFields
@@ -72,7 +71,8 @@ export default function ZohoRecruitFieldMap({
           </optgroup>
           {!uploadFields && <option value="custom">{__('Custom...', 'bit-integrations')}</option>}
           <optgroup
-            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}>
+            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}
+          >
             {isPro &&
               SmartTagField?.map((f) => (
                 <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -99,25 +99,15 @@ export default function ZohoRecruitFieldMap({
           disabled={!isNotRequired}
           name="zohoFormField"
           value={field.zohoFormField || ''}
-          onChange={(ev) =>
-            handleFieldMapping(ev, i, recruitConf, setRecruitConf, uploadFields, tab)
-          }>
+          onChange={(ev) => handleFieldMapping(ev, i, recruitConf, setRecruitConf, uploadFields, tab)}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           {uploadFields
             ? recruitConf.default.moduleData?.[module]?.fileUploadFields &&
-              Object.keys(recruitConf.default.moduleData[module].fileUploadFields).map(
-                (fieldApiName) =>
-                  isNotRequired ? (
-                    recruitConf.default.moduleData[module].fileUploadFields[fieldApiName]
-                      .required === 'false' && (
-                      <option key={fieldApiName} value={fieldApiName}>
-                        {
-                          recruitConf.default.moduleData[module].fileUploadFields[fieldApiName]
-                            .display_label
-                        }
-                      </option>
-                    )
-                  ) : (
+              Object.keys(recruitConf.default.moduleData[module].fileUploadFields).map((fieldApiName) =>
+                isNotRequired ? (
+                  recruitConf.default.moduleData[module].fileUploadFields[fieldApiName].required ===
+                    'false' && (
                     <option key={fieldApiName} value={fieldApiName}>
                       {
                         recruitConf.default.moduleData[module].fileUploadFields[fieldApiName]
@@ -125,12 +115,16 @@ export default function ZohoRecruitFieldMap({
                       }
                     </option>
                   )
+                ) : (
+                  <option key={fieldApiName} value={fieldApiName}>
+                    {recruitConf.default.moduleData[module].fileUploadFields[fieldApiName].display_label}
+                  </option>
+                )
               )
             : recruitConf.default.moduleData?.[module]?.fields &&
               Object.keys(recruitConf.default.moduleData[module].fields).map((fieldApiName) =>
                 isNotRequired ? (
-                  recruitConf.default.moduleData[module].fields[fieldApiName].required ===
-                    'false' && (
+                  recruitConf.default.moduleData[module].fields[fieldApiName].required === 'false' && (
                     <option key={fieldApiName} value={fieldApiName}>
                       {recruitConf.default.moduleData[module].fields[fieldApiName].display_label}
                     </option>
@@ -146,7 +140,8 @@ export default function ZohoRecruitFieldMap({
       <button
         onClick={() => addFieldMap(i, recruitConf, setRecruitConf, uploadFields, tab)}
         className="icn-btn sh-sm ml-2 mr-1"
-        type="button">
+        type="button"
+      >
         +
       </button>
       {isNotRequired && (
@@ -154,7 +149,8 @@ export default function ZohoRecruitFieldMap({
           onClick={() => delFieldMap(i, recruitConf, setRecruitConf, uploadFields, tab)}
           className="icn-btn sh-sm ml-1"
           type="button"
-          aria-label="btn">
+          aria-label="btn"
+        >
           <TrashIcn />
         </button>
       )}

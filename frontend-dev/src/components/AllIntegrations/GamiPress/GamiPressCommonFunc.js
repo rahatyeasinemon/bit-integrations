@@ -3,14 +3,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
 import { sprintf, __ } from '../../../Utils/i18nwrap'
 
-export const handleInput = (
-  e,
-  gamiPressConf,
-  setGamiPressConf,
-  setIsLoading,
-  setSnackbar,
-  formID
-) => {
+export const handleInput = (e, gamiPressConf, setGamiPressConf, setIsLoading, setSnackbar, formID) => {
   const newConf = { ...gamiPressConf }
   const { name } = e.target
   if (e.target.value !== '') {
@@ -48,12 +41,7 @@ export const fetchAllRankType = (gamiPressConf, setGamiPressConf, setIsLoading, 
     .catch(() => setIsLoading(false))
 }
 
-export const fetchAllAchievementType = (
-  gamiPressConf,
-  setGamiPressConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const fetchAllAchievementType = (gamiPressConf, setGamiPressConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
   bitsFetch(null, 'gamiPress_fetch_all_achievement_type')
     .then((result) => {

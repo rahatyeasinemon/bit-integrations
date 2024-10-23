@@ -49,7 +49,8 @@ export default function PipeDriveNewRecord({
               onChange={handleInput}
               name="organization_id"
               value={pipeDriveConf.moduleData?.organization_id || ''}
-              className="btcd-paper-inp w-5">
+              className="btcd-paper-inp w-5"
+            >
               <option value="">{__('Select Organization', 'bit-integrations')}</option>
               {pipeDriveConf?.default?.organizations &&
                 pipeDriveConf.default.organizations.map((data, indx) => (
@@ -65,7 +66,8 @@ export default function PipeDriveNewRecord({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh organizations', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
             <br />
@@ -81,7 +83,8 @@ export default function PipeDriveNewRecord({
               onChange={handleInput}
               name="person_id"
               value={pipeDriveConf.moduleData?.person_id || ''}
-              className="btcd-paper-inp w-5">
+              className="btcd-paper-inp w-5"
+            >
               <option value="">{__('Select Person', 'bit-integrations')}</option>
               {pipeDriveConf?.default?.persons &&
                 pipeDriveConf.default.persons.map((data, indx) => (
@@ -91,13 +94,12 @@ export default function PipeDriveNewRecord({
                 ))}
             </select>
             <button
-              onClick={() =>
-                refreshPersons(pipeDriveConf, setPipeDriveConf, setIsLoading, setSnackbar)
-              }
+              onClick={() => refreshPersons(pipeDriveConf, setPipeDriveConf, setIsLoading, setSnackbar)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh persons', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
             <br />
@@ -145,7 +147,8 @@ export default function PipeDriveNewRecord({
                   )
                 }
                 className="icn-btn sh-sm"
-                type="button">
+                type="button"
+              >
                 +
               </button>
             </div>

@@ -22,8 +22,7 @@ function NotionIntegLayout({ notionConf, setNotionConf, formFields, loading, set
     }
     switch (name) {
       case 'databaseId':
-        newConf.databaseId === '' &&
-          (newConf.field_map = [{ formFields: '', notionFormFields: '' }])
+        newConf.databaseId === '' && (newConf.field_map = [{ formFields: '', notionFormFields: '' }])
         if (newConf.databaseId) {
           setLoading({ ...loading, field: true })
           newConf.notionFields = await getFieldsProperties(newConf, setNotionConf)
@@ -50,7 +49,8 @@ function NotionIntegLayout({ notionConf, setNotionConf, formFields, loading, set
             onChange={handleList}
             name="databaseId"
             value={notionConf?.databaseId}
-            className="btcd-paper-inp w-5 mx-0">
+            className="btcd-paper-inp w-5 mx-0"
+          >
             <option value="">{__('Select Database', 'bit-integrations')}</option>
             {notionConf?.default?.databaseLists &&
               notionConf?.default.databaseLists.map((database) => (
@@ -64,7 +64,8 @@ function NotionIntegLayout({ notionConf, setNotionConf, formFields, loading, set
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': '"Refresh list"' }}
             type="button"
-            disabled={loading.list}>
+            disabled={loading.list}
+          >
             &#x21BB;
           </button>
           {loading.list && <LoaderSm size="20" clr="#022217" className="ml-2" />}
@@ -79,7 +80,8 @@ function NotionIntegLayout({ notionConf, setNotionConf, formFields, loading, set
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Refresh custom fields', 'bit-integrations')}'` }}
             type="button"
-            disabled={loading.field}>
+            disabled={loading.field}
+          >
             &#x21BB;
           </button>
 
@@ -105,11 +107,10 @@ function NotionIntegLayout({ notionConf, setNotionConf, formFields, loading, set
 
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
-              onClick={() =>
-                addFieldMap(notionConf.field_map.length, notionConf, setNotionConf, false)
-              }
+              onClick={() => addFieldMap(notionConf.field_map.length, notionConf, setNotionConf, false)}
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

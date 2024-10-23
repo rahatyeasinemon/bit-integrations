@@ -52,10 +52,9 @@ export default function MailMintAuthorization({
       style={{
         width: step === 1 && 900,
         height: step === 1 && 'auto'
-      }}>
-      {mailMint?.youTubeLink && (
-        <TutorialLink title="Mail Mint" youTubeLink={mailMint?.youTubeLink} />
-      )}
+      }}
+    >
+      {mailMint?.youTubeLink && <TutorialLink title="Mail Mint" youTubeLink={mailMint?.youTubeLink} />}
       {mailMint?.docLink && <TutorialLink title="Mail Mint" docLink={mailMint?.docLink} />}
 
       <div className="mt-3">
@@ -83,10 +82,7 @@ export default function MailMintAuthorization({
             &times;
           </span>
           {sprintf(
-            __(
-              '%s plugin must be activated to integrate with Bit Integrations',
-              'bit-integrations'
-            ),
+            __('%s plugin must be activated to integrate with Bit Integrations', 'bit-integrations'),
             'Mail Mint'
           )}
         </div>
@@ -96,7 +92,8 @@ export default function MailMintAuthorization({
         <button
           onClick={authorizeHandler}
           className="btn btcd-btn-lg purple sh-sm flx mt-5"
-          type="button">
+          type="button"
+        >
           {__('Connect', 'bit-integrations')}
         </button>
       )}
@@ -106,7 +103,8 @@ export default function MailMintAuthorization({
           onClick={() => setStep(2)}
           className="btn btcd-btn-lg purple sh-sm flx mt-5"
           type="button"
-          disabled={!isAuthorized}>
+          disabled={!isAuthorized}
+        >
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>

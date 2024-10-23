@@ -43,7 +43,8 @@ export default function FluentSupportAuthorization({
       style={{
         ...{ width: step === 1 && 900 },
         ...{ height: step === 1 && 'auto' }
-      }}>
+      }}
+    >
       {fluentSupport?.youTubeLink && (
         <TutorialLink title="Fluent Support" youTubeLink={fluentSupport?.youTubeLink} />
       )}
@@ -79,7 +80,8 @@ export default function FluentSupportAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Connected ✔', 'bit-integrations')
               : __('Connect to Fluent Support', 'bit-integrations')}
@@ -90,7 +92,8 @@ export default function FluentSupportAuthorization({
             onClick={nextPage}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

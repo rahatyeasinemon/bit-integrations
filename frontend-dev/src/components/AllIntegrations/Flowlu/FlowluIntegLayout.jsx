@@ -68,7 +68,8 @@ export default function FlowluIntegLayout({
         onChange={handleActionInput}
         name="actionName"
         value={flowluConf.actionName}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select an action', 'bit-integrations')}</option>
         <option value="account" data-action_name="account">
           {__('Create Account', 'bit-integrations')}
@@ -101,7 +102,8 @@ export default function FlowluIntegLayout({
               onChange={(e) => setChanges(e.target.value, 'selectedAccountType')}
               name="selectedAccountType"
               value={flowluConf.selectedAccountType}
-              className="btcd-paper-inp w-5">
+              className="btcd-paper-inp w-5"
+            >
               <option value="">{__('Select an account type', 'bit-integrations')}</option>
               <option value="1">{__('Organization', 'bit-integrations')}</option>
               <option value="2">{__('Contact', 'bit-integrations')}</option>
@@ -135,7 +137,8 @@ export default function FlowluIntegLayout({
                 className="icn-btn sh-sm ml-2 mr-2 tooltip"
                 style={{ '--tooltip-txt': `'${__('Refresh Pipeline', 'bit-integrations')}'` }}
                 type="button"
-                disabled={loading.pipeline}>
+                disabled={loading.pipeline}
+              >
                 &#x21BB;
               </button>
             </div>
@@ -170,7 +173,8 @@ export default function FlowluIntegLayout({
                   '--tooltip-txt': `'${__('Refresh Opportunity stages', 'bit-integrations')}'`
                 }}
                 type="button"
-                disabled={loading.stage}>
+                disabled={loading.stage}
+              >
                 &#x21BB;
               </button>
             </div>
@@ -198,7 +202,8 @@ export default function FlowluIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh fields', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.CRMPipelines}>
+              disabled={loading.CRMPipelines}
+            >
               &#x21BB;
             </button>
           </div>
@@ -227,11 +232,10 @@ export default function FlowluIntegLayout({
           ))}
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
-              onClick={() =>
-                addFieldMap(flowluConf.field_map.length, flowluConf, setFlowluConf, false)
-              }
+              onClick={() => addFieldMap(flowluConf.field_map.length, flowluConf, setFlowluConf, false)}
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

@@ -75,7 +75,8 @@ export default function SalesmateIntegLayout({
         onChange={handleActionInput}
         name="actionName"
         value={salesmateConf.actionId}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select an action', 'bit-integrations')}</option>
         <option value="1" data-action_name="contact">
           {__('Create Contact', 'bit-integrations')}
@@ -138,7 +139,8 @@ export default function SalesmateIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh Primary Contacts', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.CRMContact}>
+              disabled={loading.CRMContact}
+            >
               &#x21BB;
             </button>
           </div>
@@ -169,7 +171,8 @@ export default function SalesmateIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh Owners', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.CRMOwners}>
+              disabled={loading.CRMOwners}
+            >
               &#x21BB;
             </button>
           </div>
@@ -192,13 +195,12 @@ export default function SalesmateIntegLayout({
               singleSelect
             />
             <button
-              onClick={() =>
-                getAllCRMPipelines(salesmateConf, setSalesmateConf, loading, setLoading)
-              }
+              onClick={() => getAllCRMPipelines(salesmateConf, setSalesmateConf, loading, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh pipelines', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.CRMPipelines}>
+              disabled={loading.CRMPipelines}
+            >
               &#x21BB;
             </button>
           </div>
@@ -250,7 +252,8 @@ export default function SalesmateIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh fields', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.CRMPipelines}>
+              disabled={loading.CRMPipelines}
+            >
               &#x21BB;
             </button>
           </div>
@@ -283,7 +286,8 @@ export default function SalesmateIntegLayout({
                 addFieldMap(salesmateConf.field_map.length, salesmateConf, setSalesmateConf, false)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

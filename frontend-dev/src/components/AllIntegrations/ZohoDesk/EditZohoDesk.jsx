@@ -67,9 +67,7 @@ function EditZohoDesk({ allIntegURL }) {
       <ZohoDeskIntegLayout
         formID={formID}
         formFields={formFields}
-        handleInput={(e) =>
-          handleInput(e, deskConf, setDeskConf, formID, setIsLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, deskConf, setDeskConf, formID, setIsLoading, setSnackbar)}
         deskConf={deskConf}
         setDeskConf={setDeskConf}
         isLoading={isLoading}
@@ -80,9 +78,7 @@ function EditZohoDesk({ allIntegURL }) {
       <IntegrationStepThree
         edit
         saveConfig={saveConfig}
-        disabled={
-          deskConf.department === '' || deskConf.table === '' || deskConf.field_map.length < 1
-        }
+        disabled={deskConf.department === '' || deskConf.table === '' || deskConf.field_map.length < 1}
         dataConf={deskConf}
         setDataConf={setDeskConf}
         formFields={formFields}

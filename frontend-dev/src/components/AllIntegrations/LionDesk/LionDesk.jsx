@@ -48,8 +48,7 @@ function LionDesk({ formFields, setFlow, flow, allIntegURL }) {
   const [lionDeskConf, setLionDeskConf] = useState({
     name: 'LionDesk',
     type: 'LionDesk',
-    clientId:
-      process.env.NODE_ENV === 'development' ? '6a245650854440d0dada1f57df066852a0bc3cef' : '',
+    clientId: process.env.NODE_ENV === 'development' ? '6a245650854440d0dada1f57df066852a0bc3cef' : '',
     clientSecret:
       process.env.NODE_ENV === 'development' ? '6109fe54a44160eb8ded60a94d7d74c725622fb5' : '',
     field_map: [{ formField: '', lionDeskFormField: '' }],
@@ -120,12 +119,11 @@ function LionDesk({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}
+      >
         <LionDeskIntegLayout
           formFields={formFields}
-          handleInput={(e) =>
-            handleInput(e, lionDeskConf, setLionDeskConf, setLoading, setSnackbar)
-          }
+          handleInput={(e) => handleInput(e, lionDeskConf, setLionDeskConf, setLoading, setSnackbar)}
           lionDeskConf={lionDeskConf}
           setLionDeskConf={setLionDeskConf}
           loading={loading}
@@ -140,7 +138,8 @@ function LionDesk({ formFields, setFlow, flow, allIntegURL }) {
             onClick={() => nextPage(3)}
             disabled={!checkMappedFields(lionDeskConf)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
-            type="button">
+            type="button"
+          >
             {__('Next', 'bit-integrations')} &nbsp;
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

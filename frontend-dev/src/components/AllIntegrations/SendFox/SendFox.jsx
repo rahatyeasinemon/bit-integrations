@@ -37,9 +37,7 @@ function SendFox({ formFields, setFlow, flow, allIntegURL }) {
   ]
 
   const listFields = [{ key: 'name', label: __('Name', 'bit-integrations'), required: true }]
-  const unsubscribeFields = [
-    { key: 'email', label: __('Email', 'bit-integrations'), required: true }
-  ]
+  const unsubscribeFields = [{ key: 'email', label: __('Email', 'bit-integrations'), required: true }]
 
   const [sendFoxConf, setSendFoxConf] = useState({
     name: 'SendFox',
@@ -89,7 +87,8 @@ function SendFox({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}
+      >
         <SendFoxIntegLayout
           formFields={formFields}
           handleInput={(e) =>
@@ -106,7 +105,8 @@ function SendFox({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => nextPage(3)}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
           type="button"
-          disabled={isDisabled(sendFoxConf)}>
+          disabled={isDisabled(sendFoxConf)}
+        >
           {__('Next', 'bit-integrations')} &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>

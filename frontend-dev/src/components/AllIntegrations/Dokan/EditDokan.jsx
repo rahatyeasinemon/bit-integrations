@@ -42,10 +42,7 @@ function EditDokan({ allIntegURL }) {
       return
     }
 
-    if (
-      dokanConf.selectedTask !== TASK_LIST_VALUES.DELETE_VENDOR &&
-      !checkMappedFields(dokanConf)
-    ) {
+    if (dokanConf.selectedTask !== TASK_LIST_VALUES.DELETE_VENDOR && !checkMappedFields(dokanConf)) {
       toast.error(__('Please map mandatory fields!', 'bit-integrations'))
       return
     }

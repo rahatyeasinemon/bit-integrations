@@ -34,8 +34,7 @@ function MailBluster({ formFields, setFlow, flow, allIntegURL }) {
   const [mailBlusterConf, setMailBlusterConf] = useState({
     name: 'MailBluster',
     type: 'MailBluster',
-    auth_token:
-      process.env.NODE_ENV === 'development' ? '394bebe6-e8dc-4070-a028-d3fd36eacf9e' : '',
+    auth_token: process.env.NODE_ENV === 'development' ? '394bebe6-e8dc-4070-a028-d3fd36eacf9e' : '',
     field_map: [{ formField: '', mailBlusterFormField: '' }],
     staticFields,
     subscribed: '',
@@ -99,7 +98,8 @@ function MailBluster({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}
+      >
         <MailBlusterIntegLayout
           formFields={formFields}
           handleInput={(e) =>
@@ -117,7 +117,8 @@ function MailBluster({ formFields, setFlow, flow, allIntegURL }) {
             onClick={() => nextPage(3)}
             disabled={!mailBlusterConf?.subscribed}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
-            type="button">
+            type="button"
+          >
             {__('Next', 'bit-integrations')} &nbsp;
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

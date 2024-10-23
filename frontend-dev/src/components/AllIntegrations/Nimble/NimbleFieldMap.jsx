@@ -21,8 +21,7 @@ export default function NimbleFieldMap({ i, formFields, field, nimbleConf, setNi
   }
 
   const requiredFields = (allFields && allFields?.filter((fld) => fld.required === true)) || []
-  const allNonRequiredFields =
-    (allFields && allFields?.filter((fld) => fld.required === false)) || []
+  const allNonRequiredFields = (allFields && allFields?.filter((fld) => fld.required === false)) || []
 
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi
@@ -35,7 +34,8 @@ export default function NimbleFieldMap({ i, formFields, field, nimbleConf, setNi
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, nimbleConf, setNimbleConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, nimbleConf, setNimbleConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -49,7 +49,8 @@ export default function NimbleFieldMap({ i, formFields, field, nimbleConf, setNi
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -75,10 +76,9 @@ export default function NimbleFieldMap({ i, formFields, field, nimbleConf, setNi
             className="btcd-paper-inp"
             disabled={i < requiredFields?.length}
             name="nimbleFormField"
-            value={
-              i < requiredFields.length ? requiredFields[i].key || '' : field.nimbleFormField || ''
-            }
-            onChange={(ev) => handleFieldMapping(ev, i, nimbleConf, setNimbleConf)}>
+            value={i < requiredFields.length ? requiredFields[i].key || '' : field.nimbleFormField || ''}
+            onChange={(ev) => handleFieldMapping(ev, i, nimbleConf, setNimbleConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFields?.length ? (
               <option key={requiredFields[i].key} value={requiredFields[i].key}>
@@ -98,14 +98,16 @@ export default function NimbleFieldMap({ i, formFields, field, nimbleConf, setNi
             <button
               onClick={() => addFieldMap(i, nimbleConf, setNimbleConf)}
               className="icn-btn sh-sm ml-2 mr-1"
-              type="button">
+              type="button"
+            >
               +
             </button>
             <button
               onClick={() => delFieldMap(i, nimbleConf, setNimbleConf)}
               className="icn-btn sh-sm ml-1"
               type="button"
-              aria-label="btn">
+              aria-label="btn"
+            >
               <span className="btcd-icn icn-trash-2" />
             </button>
           </>

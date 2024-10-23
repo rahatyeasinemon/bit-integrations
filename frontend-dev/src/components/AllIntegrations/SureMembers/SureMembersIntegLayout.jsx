@@ -81,7 +81,8 @@ export default function SureMembersIntegLayout({
                   )
                 }
                 className="icn-btn sh-sm"
-                type="button">
+                type="button"
+              >
                 +
               </button>
             </div>

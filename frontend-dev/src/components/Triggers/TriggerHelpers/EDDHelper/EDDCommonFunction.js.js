@@ -11,10 +11,7 @@ export const getAllEDDProduct = (data, setFlow) => {
       setFlow({ ...tmpFlow })
       return __('All easy digital downloads  product fetched successfully', 'bit-integrations')
     }
-    return __(
-      'Easy digital downloads  product fetching failed. please try again',
-      'bit-integrations'
-    )
+    return __('Easy digital downloads  product fetching failed. please try again', 'bit-integrations')
   })
   toast.promise(loadPostTypes, {
     success: (data) => data,

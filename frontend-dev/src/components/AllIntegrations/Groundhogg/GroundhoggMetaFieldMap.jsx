@@ -27,10 +27,8 @@ export default function GroundhoggMetaFieldMap({
       setGroundhoggConf(newConf)
     }
   }, [])
-  const requiredFlds =
-    groundhoggConf?.contactMetaFields.filter((fld) => fld.required === true) || []
-  const nonRequiredFlds =
-    groundhoggConf?.contactMetaFields.filter((fld) => fld.required === false) || []
+  const requiredFlds = groundhoggConf?.contactMetaFields.filter((fld) => fld.required === true) || []
+  const nonRequiredFlds = groundhoggConf?.contactMetaFields.filter((fld) => fld.required === false) || []
 
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi
@@ -43,7 +41,8 @@ export default function GroundhoggMetaFieldMap({
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleMetaFieldMapping(ev, i, groundhoggConf, setGroundhoggConf)}>
+            onChange={(ev) => handleMetaFieldMapping(ev, i, groundhoggConf, setGroundhoggConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -57,7 +56,8 @@ export default function GroundhoggMetaFieldMap({
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-gh-${f.name}`} value={f.name}>
@@ -86,11 +86,10 @@ export default function GroundhoggMetaFieldMap({
             disabled={i < requiredFlds.length}
             name="GroundhoggMetaMapField"
             value={
-              i < requiredFlds.length
-                ? requiredFlds[i].key || ''
-                : field.GroundhoggMetaMapField || ''
+              i < requiredFlds.length ? requiredFlds[i].key || '' : field.GroundhoggMetaMapField || ''
             }
-            onChange={(ev) => handleMetaFieldMapping(ev, i, groundhoggConf, setGroundhoggConf)}>
+            onChange={(ev) => handleMetaFieldMapping(ev, i, groundhoggConf, setGroundhoggConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFlds.length ? (
               <option key={requiredFlds[i].key} value={requiredFlds[i].key}>
@@ -111,14 +110,16 @@ export default function GroundhoggMetaFieldMap({
             <button
               onClick={() => addMetaFieldMap(i, groundhoggConf, setGroundhoggConf, false)}
               className="icn-btn sh-sm ml-2 mr-1"
-              type="button">
+              type="button"
+            >
               +
             </button>
             <button
               onClick={() => delMetaFieldMap(i, groundhoggConf, setGroundhoggConf)}
               className="icn-btn sh-sm ml-1"
               type="button"
-              aria-label="btn">
+              aria-label="btn"
+            >
               <span className="btcd-icn icn-trash-2" />
             </button>
           </>

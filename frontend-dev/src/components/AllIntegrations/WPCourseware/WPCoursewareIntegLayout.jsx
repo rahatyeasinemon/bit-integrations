@@ -39,7 +39,8 @@ export default function WPCoursewareIntegLayout({
           onChange={(e) => inputHandler(e)}
           name="action"
           value={wpCoursewareConf.action}
-          className="btcd-paper-inp w-5">
+          className="btcd-paper-inp w-5"
+        >
           <option value="">{__('Select Action', 'bit-integrations')}</option>
           {wpCoursewareConf?.default?.WPCWActions &&
             Object.values(wpCoursewareConf.default.WPCWActions).map(({ id, title }) => (
@@ -67,19 +68,15 @@ export default function WPCoursewareIntegLayout({
           />
           <button
             onClick={() =>
-              getWPCoursewareCourses(
-                wpCoursewareConf,
-                setWPCoursewareConf,
-                setIsLoading,
-                setSnackbar
-              )
+              getWPCoursewareCourses(wpCoursewareConf, setWPCoursewareConf, setIsLoading, setSnackbar)
             }
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{
               '--tooltip-txt': `'${__('Refresh WP Courseware Courses', 'bit-integrations')}'`
             }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
         </div>

@@ -22,7 +22,8 @@ export default function AcumbamailIntegLayout({
         onChange={handleInput}
         name="mainAction"
         value={acumbamailConf.mainAction}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select Actions', 'bit-integrations')}</option>
         {acumbamailConf.allActions &&
           acumbamailConf.allActions.map(({ key, label }) => (
@@ -38,7 +39,8 @@ export default function AcumbamailIntegLayout({
         onChange={handleInput}
         name="listId"
         value={acumbamailConf.listId}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select List', 'bit-integrations')}</option>
         {acumbamailConf?.default?.allLists &&
           Object.entries(acumbamailConf.default.allLists).map((item) => (
@@ -52,7 +54,8 @@ export default function AcumbamailIntegLayout({
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': `'${__('Fetch Subscriber List', 'bit-integrations')}'` }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -76,7 +79,8 @@ export default function AcumbamailIntegLayout({
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Refresh Acumbamail Fields', 'bit-integrations')}'` }}
           type="button"
-          disabled={isLoading}>
+          disabled={isLoading}
+        >
           &#x21BB;
         </button>
       </div>
@@ -108,7 +112,8 @@ export default function AcumbamailIntegLayout({
                 addFieldMap(acumbamailConf.field_map.length, acumbamailConf, setAcumbamailConf)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

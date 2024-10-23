@@ -56,10 +56,9 @@ export default function LionDeskAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {lionDesk?.youTubeLink && (
-        <TutorialLink title="LionDesk" youTubeLink={lionDesk?.youTubeLink} />
-      )}
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
+      {lionDesk?.youTubeLink && <TutorialLink title="LionDesk" youTubeLink={lionDesk?.youTubeLink} />}
       {lionDesk?.docLink && <TutorialLink title="LionDesk" docLink={lionDesk?.docLink} />}
 
       <div className="mt-3">
@@ -120,7 +119,8 @@ export default function LionDeskAuthorization({
           className="btcd-link"
           href="http://developers.liondesk.com/account/apps"
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {__('Lion Desk Apps', 'bit-integrations')}
         </a>
       </small>
@@ -145,7 +145,8 @@ export default function LionDeskAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -156,7 +157,8 @@ export default function LionDeskAuthorization({
             onClick={nextPage}
             className="btn ml-auto btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

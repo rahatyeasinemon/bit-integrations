@@ -35,9 +35,8 @@ export default function ZohoCreatorFieldMap({
   else
     isNotRequired =
       field.zohoFormField === '' ||
-      creatorConf.default?.fields?.[applicationId]?.[formId]?.required?.indexOf(
-        field.zohoFormField
-      ) === -1
+      creatorConf.default?.fields?.[applicationId]?.[formId]?.required?.indexOf(field.zohoFormField) ===
+        -1
 
   return (
     <div className="flx mt-2 mb-2 btcbi-field-map">
@@ -46,7 +45,8 @@ export default function ZohoCreatorFieldMap({
           className="btcd-paper-inp mr-2"
           name="formField"
           value={field.formField || ''}
-          onChange={(ev) => handleFieldMapping(ev, i, creatorConf, setCreatorConf, uploadFields)}>
+          onChange={(ev) => handleFieldMapping(ev, i, creatorConf, setCreatorConf, uploadFields)}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           <optgroup label={__('Form Fields', 'bit-integrations')}>
             {uploadFields
@@ -69,7 +69,8 @@ export default function ZohoCreatorFieldMap({
           </optgroup>
           <option value="custom">{__('Custom...', 'bit-integrations')}</option>
           <optgroup
-            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}>
+            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}
+          >
             {isPro &&
               SmartTagField?.map((f) => (
                 <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -96,7 +97,8 @@ export default function ZohoCreatorFieldMap({
           name="zohoFormField"
           value={field.zohoFormField || ''}
           disabled={!isNotRequired}
-          onChange={(ev) => handleFieldMapping(ev, i, creatorConf, setCreatorConf, uploadFields)}>
+          onChange={(ev) => handleFieldMapping(ev, i, creatorConf, setCreatorConf, uploadFields)}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           {uploadFields
             ? creatorConf.default?.fields?.[applicationId]?.[formId]?.fileUploadFields &&
@@ -115,19 +117,18 @@ export default function ZohoCreatorFieldMap({
                   )
               )
             : creatorConf.default?.fields?.[applicationId]?.[formId]?.fields &&
-              Object.values(creatorConf.default.fields[applicationId][formId].fields).map(
-                (apiField) =>
-                  isNotRequired ? (
-                    apiField.required === false && (
-                      <option key={apiField.displayLabel} value={apiField.apiName}>
-                        {apiField.displayLabel}
-                      </option>
-                    )
-                  ) : (
+              Object.values(creatorConf.default.fields[applicationId][formId].fields).map((apiField) =>
+                isNotRequired ? (
+                  apiField.required === false && (
                     <option key={apiField.displayLabel} value={apiField.apiName}>
                       {apiField.displayLabel}
                     </option>
                   )
+                ) : (
+                  <option key={apiField.displayLabel} value={apiField.apiName}>
+                    {apiField.displayLabel}
+                  </option>
+                )
               )}
         </select>
       </div>
@@ -137,14 +138,16 @@ export default function ZohoCreatorFieldMap({
           <button
             onClick={() => addFieldMap(i, creatorConf, setCreatorConf, uploadFields)}
             className="icn-btn sh-sm ml-2 mr-1"
-            type="button">
+            type="button"
+          >
             +
           </button>
           <button
             onClick={() => delFieldMap(i, creatorConf, setCreatorConf, uploadFields)}
             className="icn-btn sh-sm ml-1"
             type="button"
-            aria-label="btn">
+            aria-label="btn"
+          >
             <TrashIcn />
           </button>
         </>

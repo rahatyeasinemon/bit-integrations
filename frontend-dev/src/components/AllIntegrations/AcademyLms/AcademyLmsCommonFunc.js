@@ -34,20 +34,18 @@ export const moduleChange = (academyLmsConf, setAcademyLmsConf, setIsLoading, se
 export const getAllCourses = (academyLmsConf, setAcademyLmsConf, setIsLoading, value = null) => {
   setIsLoading(true)
   const queryParams = { type: value }
-  const loadPostTypes = bitsFetch(null, 'academy_lms_all_course', queryParams, 'GET').then(
-    (result) => {
-      if (result && result.success) {
-        const newConf = { ...academyLmsConf }
-        if (!newConf.default) newConf.default = {}
-        newConf.default.courses = result.data
-        setAcademyLmsConf({ ...newConf })
-        setIsLoading(false)
-        return __('Courses fetched successfully', 'bit-integrations')
-      }
+  const loadPostTypes = bitsFetch(null, 'academy_lms_all_course', queryParams, 'GET').then((result) => {
+    if (result && result.success) {
+      const newConf = { ...academyLmsConf }
+      if (!newConf.default) newConf.default = {}
+      newConf.default.courses = result.data
+      setAcademyLmsConf({ ...newConf })
       setIsLoading(false)
-      return __('Courses fetch failed. please try again', 'bit-integrations')
+      return __('Courses fetched successfully', 'bit-integrations')
     }
-  )
+    setIsLoading(false)
+    return __('Courses fetch failed. please try again', 'bit-integrations')
+  })
   toast.promise(loadPostTypes, {
     success: (data) => data,
     error: __('Error Occurred', 'bit-integrations'),

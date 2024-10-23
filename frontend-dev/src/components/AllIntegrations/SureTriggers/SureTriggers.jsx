@@ -37,7 +37,8 @@ function SureTriggers({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 1 */}
       <div
         className="btcd-stp-page"
-        style={{ ...{ width: step === 1 && 1100 }, ...{ height: step === 1 && 'auto' } }}>
+        style={{ ...{ width: step === 1 && 1100 }, ...{ height: step === 1 && 'auto' } }}
+      >
         {sureTriggersLinks?.youTubeLink && (
           <TutorialLink title="SureTriggers" youTubeLink={sureTriggersLinks?.youTubeLink} />
         )}
@@ -60,20 +61,12 @@ function SureTriggers({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ width: step === 2 && `${100}%`, height: step === 2 && 'auto' }}>
+        style={{ width: step === 2 && `${100}%`, height: step === 2 && 'auto' }}
+      >
         <WebHooksStepTwo
           step={step}
           saveConfig={() =>
-            saveIntegConfig(
-              flow,
-              setFlow,
-              allIntegURL,
-              sureTriggers,
-              navigate,
-              '',
-              '',
-              setIsLoading
-            )
+            saveIntegConfig(flow, setFlow, allIntegURL, sureTriggers, navigate, '', '', setIsLoading)
           }
           isLoading={isLoading}
         />

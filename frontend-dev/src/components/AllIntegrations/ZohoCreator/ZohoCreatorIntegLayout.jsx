@@ -23,7 +23,8 @@ export default function ZohoCreatorIntegLayout({
         onChange={handleInput}
         name="applicationId"
         value={creatorConf.applicationId}
-        className="btcd-paper-inp w-7">
+        className="btcd-paper-inp w-7"
+      >
         <option value="">{__('Select Application', 'bit-integrations')}</option>
         {creatorConf?.default?.applications &&
           Object.values(creatorConf.default.applications).map((application) => (
@@ -39,7 +40,8 @@ export default function ZohoCreatorIntegLayout({
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': '"Refresh Creator Portals"' }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -49,7 +51,8 @@ export default function ZohoCreatorIntegLayout({
         onChange={handleInput}
         name="formId"
         value={creatorConf.formId}
-        className="btcd-paper-inp w-7">
+        className="btcd-paper-inp w-7"
+      >
         <option value="">{__('Select Form', 'bit-integrations')}</option>
         {creatorConf?.default?.forms?.[creatorConf.applicationId] &&
           Object.values(creatorConf.default.forms[creatorConf.applicationId]).map((form) => (
@@ -63,7 +66,8 @@ export default function ZohoCreatorIntegLayout({
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': '"Refresh Creator Departments"' }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -91,7 +95,8 @@ export default function ZohoCreatorIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh Creator Fields', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -119,11 +124,10 @@ export default function ZohoCreatorIntegLayout({
               ))}
               <div className="txt-center btcbi-field-map-button mt-2">
                 <button
-                  onClick={() =>
-                    addFieldMap(creatorConf.field_map.length, creatorConf, setCreatorConf)
-                  }
+                  onClick={() => addFieldMap(creatorConf.field_map.length, creatorConf, setCreatorConf)}
                   className="icn-btn sh-sm"
-                  type="button">
+                  type="button"
+                >
                   +
                 </button>
               </div>
@@ -169,7 +173,8 @@ export default function ZohoCreatorIntegLayout({
                         )
                       }
                       className="icn-btn sh-sm"
-                      type="button">
+                      type="button"
+                    >
                       +
                     </button>
                   </div>

@@ -15,8 +15,7 @@ export default function GoogleCalendarFieldMap({
 }) {
   const isRequired = field.required
   const notRequiredField =
-    googleCalendarConf?.default &&
-    Object.values(googleCalendarConf?.default).filter((f) => !f.required)
+    googleCalendarConf?.default && Object.values(googleCalendarConf?.default).filter((f) => !f.required)
   const { isPro } = useRecoilValue($btcbi)
 
   const handleFieldMapping = (event, index) => {
@@ -44,7 +43,8 @@ export default function GoogleCalendarFieldMap({
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i)}>
+            onChange={(ev) => handleFieldMapping(ev, i)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -58,7 +58,8 @@ export default function GoogleCalendarFieldMap({
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -85,7 +86,8 @@ export default function GoogleCalendarFieldMap({
             name="googleCalendarFormField"
             value={field.googleCalendarFormField}
             onChange={(ev) => handleFieldMapping(ev, i)}
-            disabled={isRequired}>
+            disabled={isRequired}
+          >
             <option value="">{__('Select Fields', 'bit-integrations')}</option>
             {isRequired
               ? googleCalendarConf?.default &&
@@ -107,14 +109,16 @@ export default function GoogleCalendarFieldMap({
             <button
               onClick={() => addFieldMap(i, googleCalendarConf, setGoogleCalendarConf)}
               className="icn-btn sh-sm ml-2 mr-1"
-              type="button">
+              type="button"
+            >
               +
             </button>
             <button
               onClick={() => delFieldMap(i, googleCalendarConf, setGoogleCalendarConf)}
               className="icn-btn sh-sm ml-1"
               type="button"
-              aria-label="btn">
+              aria-label="btn"
+            >
               <span className="btcd-icn icn-trash-2" />
             </button>
           </>

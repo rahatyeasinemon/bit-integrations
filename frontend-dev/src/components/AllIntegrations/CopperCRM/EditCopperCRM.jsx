@@ -75,9 +75,7 @@ function EditCopperCRM({ allIntegURL }) {
       <CopperCRMIntegLayout
         formID={flow.triggered_entity_id}
         formFields={formField}
-        handleInput={(e) =>
-          handleInput(e, coppercrmConf, setCopperCRMConf, setLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, coppercrmConf, setCopperCRMConf, setLoading, setSnackbar)}
         coppercrmConf={coppercrmConf}
         setCopperCRMConf={setCopperCRMConf}
         loading={loading}

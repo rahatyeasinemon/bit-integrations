@@ -21,7 +21,8 @@ export default function OneDriveFieldMap({ i, formFields, field, oneDriveConf, s
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i)}>
+            onChange={(ev) => handleFieldMapping(ev, i)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields
@@ -36,7 +37,8 @@ export default function OneDriveFieldMap({ i, formFields, field, oneDriveConf, s
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -50,7 +52,8 @@ export default function OneDriveFieldMap({ i, formFields, field, oneDriveConf, s
             className="btcd-paper-inp"
             name="OneDriveFormField"
             value={field.OneDriveFormField}
-            onChange={(ev) => handleFieldMapping(ev, i)}>
+            onChange={(ev) => handleFieldMapping(ev, i)}
+          >
             <option value="">{__('Select Folder', 'bit-integrations')}</option>
             {sortByField(oneDriveConf.foldersList, 'name', 'ASC').map(({ name, id }) => (
               <option key={id} value={id}>

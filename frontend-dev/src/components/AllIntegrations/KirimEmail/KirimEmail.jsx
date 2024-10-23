@@ -35,8 +35,7 @@ function KirimEmail({ formFields, setFlow, flow, allIntegURL }) {
     type: 'Kirim Email',
     mainAction: '',
     userName: 'vaishak',
-    api_key:
-      process.env.NODE_ENV === 'development' ? 'BUXDv7EH86lGZFVQsm5W1hgLnqcJdOSzvaishak' : '',
+    api_key: process.env.NODE_ENV === 'development' ? 'BUXDv7EH86lGZFVQsm5W1hgLnqcJdOSzvaishak' : '',
     field_map: [{ formField: '', kirimEmailFormField: '' }],
     subscriberFields,
     allActions,
@@ -78,7 +77,8 @@ function KirimEmail({ formFields, setFlow, flow, allIntegURL }) {
             height: 'auto',
             overflow: 'visible'
           })
-        }}>
+        }}
+      >
         <KirimEmailIntegLayout
           formFields={formFields}
           handleInput={(e) =>
@@ -100,7 +100,8 @@ function KirimEmail({ formFields, setFlow, flow, allIntegURL }) {
               (kirimEmailConf.listId === '' || kirimEmailConf.listId === undefined))
           }
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>

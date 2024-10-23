@@ -52,7 +52,8 @@ export default function SureMembersActions({
         show={actionMdl.show === 'group'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Groups', 'bit-integrations')}>
+        title={__('Groups', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2 flx">
           {__('Select group', 'bit-integrations')}

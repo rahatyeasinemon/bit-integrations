@@ -73,9 +73,7 @@ function EditOneHashCRM({ allIntegURL }) {
       <OneHashCRMIntegLayout
         formID={flow.triggered_entity_id}
         formFields={formField}
-        handleInput={(e) =>
-          handleInput(e, oneHashCRMConf, setOneHashCRMConf, setLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, oneHashCRMConf, setOneHashCRMConf, setLoading, setSnackbar)}
         oneHashCRMConf={oneHashCRMConf}
         setOneHashCRMConf={setOneHashCRMConf}
         loading={loading}

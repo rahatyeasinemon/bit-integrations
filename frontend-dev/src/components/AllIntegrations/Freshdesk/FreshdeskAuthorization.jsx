@@ -50,10 +50,9 @@ export default function FreshdeskAuthorization({
       style={{
         ...{ width: step === 1 && 900 },
         ...{ height: step === 1 && 'auto' }
-      }}>
-      {freshdesk?.youTubeLink && (
-        <TutorialLink title="Freshdesk" youTubeLink={freshdesk?.youTubeLink} />
-      )}
+      }}
+    >
+      {freshdesk?.youTubeLink && <TutorialLink title="Freshdesk" youTubeLink={freshdesk?.youTubeLink} />}
       {freshdesk?.docLink && <TutorialLink title="Freshdesk" docLink={freshdesk?.docLink} />}
 
       <div className="mt-3">
@@ -75,7 +74,8 @@ export default function FreshdeskAuthorization({
           className="btcd-link"
           href="https://bitcode-help.freshdesk.com/a/profiles/72009210017/edit"
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {__('FreshDesk Console', 'bit-integrations')}
         </a>
       </small>
@@ -123,7 +123,8 @@ export default function FreshdeskAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -134,7 +135,8 @@ export default function FreshdeskAuthorization({
             onClick={nextPage}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

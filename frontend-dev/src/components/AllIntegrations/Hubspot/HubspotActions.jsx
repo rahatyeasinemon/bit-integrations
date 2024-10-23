@@ -261,10 +261,7 @@ export default function HubspotActions({
           onChange={(e) => actionHandler(e, 'update')}
           className="wdt-200 mt-4 mr-2"
           value="update"
-          title={__(
-            `Update ${hubspotConf?.actionName} ${!isPro ? '(Pro)' : ''}`,
-            'bit-integrations'
-          )}
+          title={__(`Update ${hubspotConf?.actionName} ${!isPro ? '(Pro)' : ''}`, 'bit-integrations')}
           subTitle={
             isPro
               ? __('Update Record', 'bit-integrations')
@@ -289,7 +286,8 @@ export default function HubspotActions({
         show={actionMdl.show === 'contact_owner'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Contact Owner', 'bit-integrations')}>
+        title={__('Contact Owner', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         {loading.owners ? (
           <Loader
@@ -319,7 +317,8 @@ export default function HubspotActions({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Owners', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.owners}>
+              disabled={loading.owners}
+            >
               &#x21BB;
             </button>
           </div>
@@ -334,7 +333,8 @@ export default function HubspotActions({
         show={actionMdl.show === 'lifecycle_stage'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Lifecycle Stage', 'bit-integrations')}>
+        title={__('Lifecycle Stage', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="flx flx-center mt-2">
           <MultiSelect
@@ -359,7 +359,8 @@ export default function HubspotActions({
         show={actionMdl.show === 'lead_status'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Lead Status', 'bit-integrations')}>
+        title={__('Lead Status', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="flx flx-center mt-2">
           <MultiSelect
@@ -384,7 +385,8 @@ export default function HubspotActions({
         show={actionMdl.show === 'contact'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Contacts', 'bit-integrations')}>
+        title={__('Contacts', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         {loading.contacts ? (
           <Loader
@@ -413,7 +415,8 @@ export default function HubspotActions({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh CRM Tags', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.contacts}>
+              disabled={loading.contacts}
+            >
               &#x21BB;
             </button>
           </div>
@@ -428,7 +431,8 @@ export default function HubspotActions({
         show={actionMdl.show === 'company'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Company', 'bit-integrations')}>
+        title={__('Company', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         {loading.companies ? (
           <Loader
@@ -457,7 +461,8 @@ export default function HubspotActions({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh CRM Tags', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.companies}>
+              disabled={loading.companies}
+            >
               &#x21BB;
             </button>
           </div>
@@ -472,7 +477,8 @@ export default function HubspotActions({
         show={actionMdl.show === 'deal_type'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Deal Type', 'bit-integrations')}>
+        title={__('Deal Type', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="flx flx-center mt-2">
           <MultiSelect
@@ -494,7 +500,8 @@ export default function HubspotActions({
         show={actionMdl.show === 'priority'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Priority', 'bit-integrations')}>
+        title={__('Priority', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="flx flx-center mt-2">
           <MultiSelect
@@ -516,7 +523,8 @@ export default function HubspotActions({
         show={actionMdl.show === 'company_type'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Type', 'bit-integrations')}>
+        title={__('Type', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="flx flx-center mt-2">
           <MultiSelect
@@ -538,7 +546,8 @@ export default function HubspotActions({
         show={actionMdl.show === 'industry'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Industry', 'bit-integrations')}>
+        title={__('Industry', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         {loading.industry ? (
           <Loader
@@ -568,7 +577,8 @@ export default function HubspotActions({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Industry', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.industry}>
+              disabled={loading.industry}
+            >
               &#x21BB;
             </button>
           </div>

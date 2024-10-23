@@ -7,15 +7,8 @@ import { $btcbi } from '../../../GlobalStates'
 import TagifyInput from '../../Utilities/TagifyInput'
 import { handleCustomValue } from '../IntegrationHelpers/IntegrationHelpers'
 
-export default function ZohoSheetFieldMap({
-  i,
-  formFields,
-  field,
-  zohoSheetConf,
-  setZohoSheetConf
-}) {
-  const requiredFields =
-    zohoSheetConf?.workSheetHeaders?.filter((fld) => fld.required === true) || []
+export default function ZohoSheetFieldMap({ i, formFields, field, zohoSheetConf, setZohoSheetConf }) {
+  const requiredFields = zohoSheetConf?.workSheetHeaders?.filter((fld) => fld.required === true) || []
   const nonRequiredFields =
     zohoSheetConf?.workSheetHeaders?.filter((fld) => fld.required === false) || []
 
@@ -30,7 +23,8 @@ export default function ZohoSheetFieldMap({
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, zohoSheetConf, setZohoSheetConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, zohoSheetConf, setZohoSheetConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -44,7 +38,8 @@ export default function ZohoSheetFieldMap({
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -70,10 +65,9 @@ export default function ZohoSheetFieldMap({
             className="btcd-paper-inp"
             disabled={i < requiredFields.length}
             name="zohoSheetFormField"
-            value={
-              i < requiredFields ? requiredFields[i].label || '' : field.zohoSheetFormField || ''
-            }
-            onChange={(ev) => handleFieldMapping(ev, i, zohoSheetConf, setZohoSheetConf)}>
+            value={i < requiredFields ? requiredFields[i].label || '' : field.zohoSheetFormField || ''}
+            onChange={(ev) => handleFieldMapping(ev, i, zohoSheetConf, setZohoSheetConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFields.length ? (
               <option key={requiredFields[i].key} value={requiredFields[i].key}>
@@ -93,14 +87,16 @@ export default function ZohoSheetFieldMap({
             <button
               onClick={() => addFieldMap(i, zohoSheetConf, setZohoSheetConf)}
               className="icn-btn sh-sm ml-2 mr-1"
-              type="button">
+              type="button"
+            >
               +
             </button>
             <button
               onClick={() => delFieldMap(i, zohoSheetConf, setZohoSheetConf)}
               className="icn-btn sh-sm ml-1"
               type="button"
-              aria-label="btn">
+              aria-label="btn"
+            >
               <span className="btcd-icn icn-trash-2" />
             </button>
           </>

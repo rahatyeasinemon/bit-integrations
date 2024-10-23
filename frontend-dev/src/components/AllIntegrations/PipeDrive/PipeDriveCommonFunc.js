@@ -51,14 +51,7 @@ export const handleInput = (
 
   switch (e.target.name) {
     case 'module':
-      newConf = moduleChange(
-        recordTab,
-        formID,
-        newConf,
-        setPipeDriveConf,
-        setIsLoading,
-        setSnackbar
-      )
+      newConf = moduleChange(recordTab, formID, newConf, setPipeDriveConf, setIsLoading, setSnackbar)
       break
     default:
       break
@@ -80,8 +73,7 @@ export const moduleChange = (
 ) => {
   const newConf = { ...pipeDriveConf }
   if (!newConf.relatedlists[recordTab - 1]) newConf.relatedlists[recordTab - 1] = {}
-  const module =
-    recordTab === 0 ? newConf.moduleData.module : newConf.relatedlists[recordTab - 1].module
+  const module = recordTab === 0 ? newConf.moduleData.module : newConf.relatedlists[recordTab - 1].module
 
   if (recordTab === 0) {
     newConf.actions = {}
@@ -90,8 +82,7 @@ export const moduleChange = (
     if (['Leads', 'Deals', 'Activities', 'Notes'].includes(module)) {
       !newConf.default.organizations &&
         refreshOrganizations(newConf, setPipeDriveConf, setIsLoading, setSnackbar)
-      !newConf.default.persons &&
-        refreshPersons(newConf, setPipeDriveConf, setIsLoading, setSnackbar)
+      !newConf.default.persons && refreshPersons(newConf, setPipeDriveConf, setIsLoading, setSnackbar)
     }
 
     if (module !== '' && module !== undefined) {
@@ -111,8 +102,7 @@ export const moduleChange = (
         refreshFields(module, newConf, setPipeDriveConf, recordTab)
       }, 1000)
     } else {
-      newConf.relatedlists[recordTab - 1].field_map = newConf.default.modules?.[module]
-        ?.requiredFields
+      newConf.relatedlists[recordTab - 1].field_map = newConf.default.modules?.[module]?.requiredFields
         ? generateMappedField(recordTab, newConf)
         : [{ formField: '', pipeDriveFormField: '' }]
     }
@@ -146,12 +136,7 @@ export const refreshFields = (module, pipeDriveConf, setPipeDriveConf, recordTab
   })
 }
 
-export const refreshOrganizations = (
-  pipeDriveConf,
-  setPipeDriveConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const refreshOrganizations = (pipeDriveConf, setPipeDriveConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
   const requestParams = {
     api_key: pipeDriveConf.api_key,
@@ -389,9 +374,7 @@ export const getDealStages = (pipeDriveConf, setPipeDriveConf, setIsLoading, set
 
 export const generateMappedField = (recordTab, pipeDriveConf) => {
   const module =
-    recordTab === 0
-      ? pipeDriveConf.moduleData.module
-      : pipeDriveConf.relatedlists[recordTab - 1].module
+    recordTab === 0 ? pipeDriveConf.moduleData.module : pipeDriveConf.relatedlists[recordTab - 1].module
 
   const requiredFlds = pipeDriveConf?.default?.modules?.[module]?.fields?.filter(
     (fld) => fld.required === true
@@ -410,9 +393,9 @@ export const checkMappedFields = (pipeDriveConf) => {
         (mappedField) =>
           !mappedField.formField &&
           mappedField.pipeDriveFormField &&
-          pipeDriveConf?.default?.modules?.[
-            pipeDriveConf.moduleData.module
-          ]?.requiredFields?.indexOf(mappedField.pipeDriveFormField) !== -1
+          pipeDriveConf?.default?.modules?.[pipeDriveConf.moduleData.module]?.requiredFields?.indexOf(
+            mappedField.pipeDriveFormField
+          ) !== -1
       )
     : []
   const mappedRelatedFields = pipeDriveConf.relatedlists.map((relatedlist) =>

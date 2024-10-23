@@ -59,7 +59,8 @@ export default function InsightlyIntegLayout({
         onChange={handleActionInput}
         name="actionName"
         value={insightlyConf.actionName}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select an action', 'bit-integrations')}</option>
         <option value="organisation">{__('Create Organisation', 'bit-integrations')}</option>
         <option value="contact">{__('Create Contact', 'bit-integrations')}</option>
@@ -104,7 +105,8 @@ export default function InsightlyIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh lead status', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.LeadStatuses}>
+              disabled={loading.LeadStatuses}
+            >
               &#x21BB;
             </button>
           </div>
@@ -129,7 +131,8 @@ export default function InsightlyIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh lead source', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.LeadSources}>
+              disabled={loading.LeadSources}
+            >
               &#x21BB;
             </button>
           </div>
@@ -157,7 +160,8 @@ export default function InsightlyIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh pipelines', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.CRMPipelines}>
+              disabled={loading.CRMPipelines}
+            >
               &#x21BB;
             </button>
           </div>
@@ -172,8 +176,7 @@ export default function InsightlyIntegLayout({
               <b className="wdt-200 d-in-b">{__('Select Stage:', 'bit-integrations')}</b>
               <MultiSelect
                 options={insightlyConf?.CRMPipelineStages?.filter(
-                  (CRMPipelineStage) =>
-                    CRMPipelineStage.pipeline_id == insightlyConf.selectedCRMPipeline
+                  (CRMPipelineStage) => CRMPipelineStage.pipeline_id == insightlyConf.selectedCRMPipeline
                 ).map((CRMPipelineStage) => ({
                   label: CRMPipelineStage.name,
                   value: CRMPipelineStage.id
@@ -191,7 +194,8 @@ export default function InsightlyIntegLayout({
                   '--tooltip-txt': `'${__('Refresh pipeline stages', 'bit-integrations')}'`
                 }}
                 type="button"
-                disabled={loading.CRMPipelineStages}>
+                disabled={loading.CRMPipelineStages}
+              >
                 &#x21BB;
               </button>
             </div>
@@ -242,7 +246,8 @@ export default function InsightlyIntegLayout({
                 addFieldMap(insightlyConf.field_map.length, insightlyConf, setInsightlyConf, false)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

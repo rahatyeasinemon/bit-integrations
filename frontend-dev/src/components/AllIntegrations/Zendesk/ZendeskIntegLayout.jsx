@@ -62,7 +62,8 @@ export default function ZendeskIntegLayout({
         onChange={handleActionInput}
         name="actionName"
         value={zendeskConf.actionName}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select an action', 'bit-integrations')}</option>
         <option value="organization">{__('Create Organization', 'bit-integrations')}</option>
         <option value="contact">{__('Create Contact', 'bit-integrations')}</option>
@@ -103,7 +104,8 @@ export default function ZendeskIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh Companies', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.CRMCompanies}>
+              disabled={loading.CRMCompanies}
+            >
               &#x21BB;
             </button>
           </div>
@@ -131,7 +133,8 @@ export default function ZendeskIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh Contacts', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.CRMContacts}>
+              disabled={loading.CRMContacts}
+            >
               &#x21BB;
             </button>
           </div>
@@ -160,7 +163,8 @@ export default function ZendeskIntegLayout({
                 className="icn-btn sh-sm ml-2 mr-2 tooltip"
                 style={{ '--tooltip-txt': `'${__('Refresh Sources', 'bit-integrations')}'` }}
                 type="button"
-                disabled={loading.CRMSources}>
+                disabled={loading.CRMSources}
+              >
                 &#x21BB;
               </button>
             </div>
@@ -187,7 +191,8 @@ export default function ZendeskIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh fields', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.CRMSources}>
+              disabled={loading.CRMSources}
+            >
               &#x21BB;
             </button>
           </div>
@@ -220,7 +225,8 @@ export default function ZendeskIntegLayout({
                 addFieldMap(zendeskConf.field_map.length, zendeskConf, setZendeskConf, false)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

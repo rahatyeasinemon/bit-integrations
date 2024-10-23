@@ -116,7 +116,8 @@ export default function WebHooksIntegration({
             onChange={(e) => handleInput(e, webHooks, setWebHooks)}
             defaultValue={webHooks.method}
             className="btcd-paper-inp mt-1"
-            disabled={isInfo}>
+            disabled={isInfo}
+          >
             {method.map((itm, indx) => (
               <option key={`method-${indx * 2}`} value={itm}>
                 {itm}
@@ -136,7 +137,8 @@ export default function WebHooksIntegration({
       {!isInfo && (
         <Button
           onClick={() => testWebHook(webHooks, setIsLoading, setSnackbar)}
-          className="btn btcd-btn-o-purple">
+          className="btn btcd-btn-o-purple"
+        >
           {__('Test Webhook', 'bit-integrations')}
           {isLoading && <LoaderSm size={14} clr="#022217" className="ml-2" />}
         </Button>
@@ -205,19 +207,12 @@ export default function WebHooksIntegration({
           </div>
           <br />
           {webHooks?.condition?.action_behavior === 'cond' && (
-            <ConditionalLogic
-              formFields={formFields}
-              dataConf={webHooks}
-              setDataConf={setWebHooks}
-            />
+            <ConditionalLogic formFields={formFields} dataConf={webHooks} setDataConf={setWebHooks} />
           )}
         </>
       )}
       {create && (
-        <button
-          onClick={() => nextPage()}
-          className="btn btcd-btn-lg purple sh-sm flx"
-          type="button">
+        <button onClick={() => nextPage()} className="btn btcd-btn-lg purple sh-sm flx" type="button">
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>

@@ -78,19 +78,13 @@ function FluentSupport({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}
+      >
         <FluentSupportIntegLayout
           formID={formID}
           formFields={formFields}
           handleInput={(e) =>
-            handleInput(
-              e,
-              fluentSupportConf,
-              setFluentSupportConf,
-              formID,
-              setIsLoading,
-              setSnackbar
-            )
+            handleInput(e, fluentSupportConf, setFluentSupportConf, formID, setIsLoading, setSnackbar)
           }
           fluentSupportConf={fluentSupportConf}
           setFluentSupportConf={setFluentSupportConf}
@@ -102,12 +96,11 @@ function FluentSupport({ formFields, setFlow, flow, allIntegURL }) {
         <button
           onClick={() => nextPage(3)}
           disabled={
-            isLoading ||
-            fluentSupportConf.field_map.length < 1 ||
-            !checkMappedFields(fluentSupportConf)
+            isLoading || fluentSupportConf.field_map.length < 1 || !checkMappedFields(fluentSupportConf)
           }
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')} &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>

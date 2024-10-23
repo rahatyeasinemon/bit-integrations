@@ -13,7 +13,6 @@ import UserRadioButton from '../../Utilities/UserRadioButton'
 import bitsFetch from '../../../Utils/bitsFetch'
 import Loader from '../../Loaders/Loader'
 
-
 export default function GoogleSheetAuthorization({
   formID,
   sheetConf,
@@ -31,96 +30,102 @@ export default function GoogleSheetAuthorization({
   const btcbi = useRecoilValue($btcbi)
   const { googleSheet } = tutorialLinks
   const [authData, setAuthData] = useState([])
-  const [grantToken, setGrantToken] = useRecoilState(grantTokenAtom);
+  const [grantToken, setGrantToken] = useRecoilState(grantTokenAtom)
 
-  const [selectedAuthType, setSelectedAuthType] = useState('');
+  const [selectedAuthType, setSelectedAuthType] = useState('')
 
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null)
 
   const handleAuthUser = (index) => {
-    setSelectedUser(index);
-  };
+    setSelectedUser(index)
+  }
 
   const handleChange = (option) => {
-    const confTmp = {...sheetConf}
+    const confTmp = { ...sheetConf }
     confTmp.selectedAuthType = option
     setSheetConf(confTmp)
-    setSelectedAuthType(option);
+    setSelectedAuthType(option)
     setisAuthorized(false)
-    if (option === "One Click Authorization") {
+    if (option === 'One Click Authorization') {
       if (process.env.NODE_ENV !== 'development') {
         confTmp.clientId = ''
-        confTmp.clientSecret = '' 
+        confTmp.clientSecret = ''
       }
       setSheetConf(confTmp)
-      manageAuth(option);
+      manageAuth(option)
       setIsLoading(false)
     }
-  };
+  }
 
   const manageAuth = (option) => {
-      handleAuthorize(sheetConf, option, setError, setIsLoading);
+    handleAuthorize(sheetConf, option, setError, setIsLoading)
   }
 
   useEffect(() => {
     setIsLoading(true)
     bitsFetch(sheetConf.type, 'auth/get').then((res) => {
-        if (res.success && res.data.data.length > 0) {
-          setAuthData(res.data.data);
-          setIsLoading(false)
-        }else{
-          setIsLoading(false)
-        }
+      if (res.success && res.data.data.length > 0) {
+        setAuthData(res.data.data)
+        setIsLoading(false)
+      } else {
+        setIsLoading(false)
+      }
     })
-  }, []);
+  }, [])
 
   const handleGrantToken = async (grantToken) => {
-    await tokenHelper(grantToken, sheetConf, setSheetConf, selectedAuthType, authData, setAuthData, setIsLoading, setSnackbar);
-    
+    await tokenHelper(
+      grantToken,
+      sheetConf,
+      setSheetConf,
+      selectedAuthType,
+      authData,
+      setAuthData,
+      setIsLoading,
+      setSnackbar
+    )
+
     setGrantToken(undefined)
   }
 
   useEffect(() => {
-    if (!grantToken) return;
-    
-    handleGrantToken(grantToken);
-  }, [grantToken]);  
+    if (!grantToken) return
 
-  
+    handleGrantToken(grantToken)
+  }, [grantToken])
+
   const handleInput = (e) => {
     const newConf = { ...sheetConf }
-      const rmError = { ...error }
-      rmError[e.target.name] = ''
-      newConf[e.target.name] = e.target.value
-      setError(rmError)
-      setSheetConf(newConf)
+    const rmError = { ...error }
+    rmError[e.target.name] = ''
+    newConf[e.target.name] = e.target.value
+    setError(rmError)
+    setSheetConf(newConf)
   }
-  
+
   const nextPage = () => {
     const newConf = { ...sheetConf }
-    newConf.tokenDetails = authData[selectedUser] ? authData[selectedUser].tokenDetails : '';
-    newConf.authId = authData[selectedUser] ? authData[selectedUser].id : '';
+    newConf.tokenDetails = authData[selectedUser] ? authData[selectedUser].tokenDetails : ''
+    newConf.authId = authData[selectedUser] ? authData[selectedUser].id : ''
     setSheetConf(newConf)
 
     setTimeout(() => {
-      document.getElementById('btcd-settings-wrp').scrollTop = 0;
-    }, 300);
-    setstep(2);
+      document.getElementById('btcd-settings-wrp').scrollTop = 0
+    }, 300)
+    setstep(2)
 
-    refreshSpreadsheets(formID, newConf, setSheetConf, setIsLoading, setSnackbar);
-  };
+    refreshSpreadsheets(formID, newConf, setSheetConf, setIsLoading, setSnackbar)
+  }
 
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
       {googleSheet?.youTubeLink && (
         <TutorialLink title="Google Sheets" youTubeLink={googleSheet?.youTubeLink} />
       )}
-      {googleSheet?.docLink && (
-        <TutorialLink title="Google Sheets" docLink={googleSheet?.docLink} />
-      )}
-
+      {googleSheet?.docLink && <TutorialLink title="Google Sheets" docLink={googleSheet?.docLink} />}
 
       <div>
         <h2>Choose channel</h2>
@@ -132,39 +137,92 @@ export default function GoogleSheetAuthorization({
         />
       </div>
 
-      {selectedAuthType === "Custom Authorization" &&        
+      {selectedAuthType === 'Custom Authorization' && (
         <div>
-          <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
-          <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={sheetConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
-  
-          <div className="mt-3"><b>{__('Homepage URL:', 'bit-integrations')}</b></div>
-          <CopyText value={`${window.location.origin}`} className="field-key-cpy w-6 ml-0" setSnackbar={setSnackbar} />
-  
-          <div className="mt-3"><b>{__('Authorized Redirect URIs:', 'bit-integrations')}</b></div>
-          <CopyText value={redirectLocation || `${btcbi.api.base}/redirect`} className="field-key-cpy w-6 ml-0" setSnackbar={setSnackbar} />
-  
+          <div className="mt-3">
+            <b>{__('Integration Name:', 'bit-integrations')}</b>
+          </div>
+          <input
+            className="btcd-paper-inp w-6 mt-1"
+            onChange={handleInput}
+            name="name"
+            value={sheetConf.name}
+            type="text"
+            placeholder={__('Integration Name...', 'bit-integrations')}
+          />
+
+          <div className="mt-3">
+            <b>{__('Homepage URL:', 'bit-integrations')}</b>
+          </div>
+          <CopyText
+            value={`${window.location.origin}`}
+            className="field-key-cpy w-6 ml-0"
+            setSnackbar={setSnackbar}
+          />
+
+          <div className="mt-3">
+            <b>{__('Authorized Redirect URIs:', 'bit-integrations')}</b>
+          </div>
+          <CopyText
+            value={redirectLocation || `${btcbi.api.base}/redirect`}
+            className="field-key-cpy w-6 ml-0"
+            setSnackbar={setSnackbar}
+          />
+
           <small className="d-blk mt-5">
-            {__('To get Client ID and SECRET , Please Visit', 'bit-integrations')}
-            {' '}
-            <a className="btcd-link" href="https://console.developers.google.com/apis/credentials" target="_blank" rel="noreferrer">{__('Google API Console', 'bit-integrations')}</a>
+            {__('To get Client ID and SECRET , Please Visit', 'bit-integrations')}{' '}
+            <a
+              className="btcd-link"
+              href="https://console.developers.google.com/apis/credentials"
+              target="_blank"
+              rel="noreferrer"
+            >
+              {__('Google API Console', 'bit-integrations')}
+            </a>
           </small>
-  
-          <div className="mt-3"><b>{__('Client id:', 'bit-integrations')}</b></div>
-          <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="clientId" value={sheetConf.clientId} type="text" placeholder={__('Client id...', 'bit-integrations')} disabled={isInfo} />
+
+          <div className="mt-3">
+            <b>{__('Client id:', 'bit-integrations')}</b>
+          </div>
+          <input
+            className="btcd-paper-inp w-6 mt-1"
+            onChange={handleInput}
+            name="clientId"
+            value={sheetConf.clientId}
+            type="text"
+            placeholder={__('Client id...', 'bit-integrations')}
+            disabled={isInfo}
+          />
           <div style={{ color: 'red', fontSize: '15px' }}>{error.clientId}</div>
-  
-          <div className="mt-3"><b>{__('Client secret:', 'bit-integrations')}</b></div>
-          <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="clientSecret" value={sheetConf.clientSecret} type="text" placeholder={__('Client secret...', 'bit-integrations')} disabled={isInfo} />
+
+          <div className="mt-3">
+            <b>{__('Client secret:', 'bit-integrations')}</b>
+          </div>
+          <input
+            className="btcd-paper-inp w-6 mt-1"
+            onChange={handleInput}
+            name="clientSecret"
+            value={sheetConf.clientSecret}
+            type="text"
+            placeholder={__('Client secret...', 'bit-integrations')}
+            disabled={isInfo}
+          />
           <div style={{ color: 'red', fontSize: '15px' }}>{error.clientSecret}</div>
-          
-          <button onClick={() =>  manageAuth(selectedAuthType)} className="btn btcd-btn-lg purple sh-sm flx" type="button" disabled={ isLoading}>
-            {isAuthorized ? __('Authorized ✔', 'bit-integrations') : __('Authorize', 'bit-integrations')}
+
+          <button
+            onClick={() => manageAuth(selectedAuthType)}
+            className="btn btcd-btn-lg purple sh-sm flx"
+            type="button"
+            disabled={isLoading}
+          >
+            {isAuthorized
+              ? __('Authorized ✔', 'bit-integrations')
+              : __('Authorize', 'bit-integrations')}
             {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
           </button>
           <br />
-              
         </div>
-      }
+      )}
       {isLoading && selectedAuthType !== 'Custom Authorization' && (
         <Loader
           style={{
@@ -176,26 +234,36 @@ export default function GoogleSheetAuthorization({
           }}
         />
       )}
-      {authData.length > 0 &&
+      {authData.length > 0 && (
         <>
           <h2>Choose your connected account</h2>
           <UserRadioButton
             authData={authData}
-            setAuthData = {setAuthData}
+            setAuthData={setAuthData}
             selectedUser={selectedUser}
             setSelectedUser={setSelectedUser}
             handleAuthUser={handleAuthUser}
           />
         </>
-      }
-      {(isAuthorized &&  selectedAuthType === "One Click Authorization")&&
-        (<button onClick={() =>  manageAuth()} className="btn btcd-btn-lg purple sh-sm flx" type="button" disabled={isLoading}>
+      )}
+      {isAuthorized && selectedAuthType === 'One Click Authorization' && (
+        <button
+          onClick={() => manageAuth()}
+          className="btn btcd-btn-lg purple sh-sm flx"
+          type="button"
+          disabled={isLoading}
+        >
           {isAuthorized ? __('Authorized ✔', 'bit-integrations') : __('Authorize', 'bit-integrations')}
           {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
         </button>
       )}
       <br />
-      <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg purple sh-sm flx" type="button" disabled={ selectedUser == null || authData.length === 0}>
+      <button
+        onClick={() => nextPage(2)}
+        className="btn f-right btcd-btn-lg purple sh-sm flx"
+        type="button"
+        disabled={selectedUser == null || authData.length === 0}
+      >
         {__('Next', 'bit-integrations')}
         <BackIcn className="ml-1 rev-icn" />
       </button>

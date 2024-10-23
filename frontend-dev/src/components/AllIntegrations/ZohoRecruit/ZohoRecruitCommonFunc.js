@@ -144,13 +144,7 @@ export const refreshModules = (formID, recruitConf, setRecruitConf, setIsLoading
     .catch(() => setIsLoading(false))
 }
 
-export const refreshNoteTypes = (
-  formID,
-  recruitConf,
-  setRecruitConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const refreshNoteTypes = (formID, recruitConf, setRecruitConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
   const refreshModulesRequestParams = {
     formID,
@@ -197,13 +191,7 @@ export const refreshNoteTypes = (
     .catch(() => setIsLoading(false))
 }
 
-export const refreshRelatedList = (
-  formID,
-  recruitConf,
-  setRecruitConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const refreshRelatedList = (formID, recruitConf, setRecruitConf, setIsLoading, setSnackbar) => {
   if (!recruitConf.module) {
     return
   }
@@ -250,16 +238,8 @@ export const refreshRelatedList = (
     .catch(() => setIsLoading(false))
 }
 
-export const getFields = (
-  recordTab,
-  formID,
-  recruitConf,
-  setRecruitConf,
-  setIsLoading,
-  setSnackbar
-) => {
-  const module =
-    recordTab === 0 ? recruitConf.module : recruitConf.relatedlists[recordTab - 1].module
+export const getFields = (recordTab, formID, recruitConf, setRecruitConf, setIsLoading, setSnackbar) => {
+  const module = recordTab === 0 ? recruitConf.module : recruitConf.relatedlists[recordTab - 1].module
   if (!module) {
     return
   }
@@ -315,8 +295,7 @@ export const getFields = (
 }
 
 export const generateMappedField = (recordTab, recruitConf, uploadFields) => {
-  const module =
-    recordTab === 0 ? recruitConf.module : recruitConf.relatedlists[recordTab - 1].module
+  const module = recordTab === 0 ? recruitConf.module : recruitConf.relatedlists[recordTab - 1].module
   if (uploadFields) {
     return recruitConf.default.moduleData[module].requiredFileUploadFields.length > 0
       ? recruitConf.default.moduleData[module].requiredFileUploadFields?.map((field) => ({
@@ -355,9 +334,7 @@ export const checkMappedFields = (recruitConf) => {
       )
     : []
   const mappedRelatedFields = recruitConf.relatedlists.map((relatedlist) =>
-    relatedlist.field_map.filter(
-      (mappedField) => !mappedField.formField && mappedField.zohoFormField
-    )
+    relatedlist.field_map.filter((mappedField) => !mappedField.formField && mappedField.zohoFormField)
   )
   const mappedRelatedUploadFields = recruitConf.relatedlists.map((relatedlist) =>
     relatedlist.upload_field_map.filter(

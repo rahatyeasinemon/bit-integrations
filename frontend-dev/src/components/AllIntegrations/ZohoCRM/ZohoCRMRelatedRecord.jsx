@@ -48,14 +48,16 @@ export default function ZohoCRMRelatedRecord({
           name="module"
           value={crmConf?.relatedlists?.[tab - 1]?.module}
           className="btcd-paper-inp w-7"
-          disabled={!crmConf.module}>
+          disabled={!crmConf.module}
+        >
           <option value="">{__('Select Related Module', 'bit-integrations')}</option>
           {crmConf?.default?.relatedlists?.[crmConf.module] &&
             Object.values(crmConf.default.relatedlists[crmConf.module]).map(
               (relatedlistApiName, index) => (
                 <option
                   key={`${relatedlistApiName?.name}-${indx}-${index}`}
-                  value={relatedlistApiName.module}>
+                  value={relatedlistApiName.module}
+                >
                   {relatedlistApiName.name}
                 </option>
               )
@@ -66,7 +68,8 @@ export default function ZohoCRMRelatedRecord({
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Refresh CRM Related Lists', 'bit-integrations')}'` }}
           type="button"
-          disabled={isLoading}>
+          disabled={isLoading}
+        >
           &#x21BB;
         </button>
         <br />
@@ -78,7 +81,8 @@ export default function ZohoCRMRelatedRecord({
         name="layout"
         value={crmConf?.relatedlists?.[tab - 1]?.layout}
         className="btcd-paper-inp w-7"
-        disabled={!crmConf?.relatedlists?.[tab - 1]?.module}>
+        disabled={!crmConf?.relatedlists?.[tab - 1]?.module}
+      >
         <option value="">{__('Select Layout', 'bit-integrations')}</option>
         {crmConf?.default?.layouts?.[crmConf.relatedlists?.[tab - 1]?.module] &&
           Object.keys(crmConf.default.layouts[crmConf.relatedlists[tab - 1].module]).map(
@@ -94,7 +98,8 @@ export default function ZohoCRMRelatedRecord({
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': '"Refresh CRM Layouts"' }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -140,7 +145,8 @@ export default function ZohoCRMRelatedRecord({
                 )
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>
@@ -193,7 +199,8 @@ export default function ZohoCRMRelatedRecord({
                       )
                     }
                     className="icn-btn sh-sm"
-                    type="button">
+                    type="button"
+                  >
                     +
                   </button>
                 </div>

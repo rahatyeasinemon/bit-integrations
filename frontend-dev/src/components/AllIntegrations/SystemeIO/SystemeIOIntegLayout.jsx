@@ -62,7 +62,8 @@ export default function SystemeIOIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh Tags', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.tag}>
+              disabled={loading.tag}
+            >
               &#x21BB;
             </button>
           </div>
@@ -79,7 +80,8 @@ export default function SystemeIOIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh Contact Fields', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.fields}>
+              disabled={loading.fields}
+            >
               &#x21BB;
             </button>
           </div>
@@ -112,7 +114,8 @@ export default function SystemeIOIntegLayout({
                 addFieldMap(systemeIOConf.field_map.length, systemeIOConf, setSystemeIOConf, false)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

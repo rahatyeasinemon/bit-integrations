@@ -9,13 +9,10 @@ export default function Welcome({ setModal, isValidUser, integrations }) {
     <div className="btcd-greeting">
       <img src={greeting} alt="" />
       <h2>{__('Welcome to Bit Integrations', 'bit-integrations')}</h2>
-      <div className="sub">
-        {__('Thank you for installing Bit Integrations.', 'bit-integrations')}
-      </div>
+      <div className="sub">{__('Thank you for installing Bit Integrations.', 'bit-integrations')}</div>
       {/* <Link to="/flow/new" className="btn round btcd-btn-lg dp-purple">
         {__('Create Integration', 'bit-integrations')}
       </Link> */}
-
 
       <Link to="/flow/new" className="btn round btcd-btn-lg purple purple-sh">
         {__('Create Integration', 'bit-integrations')}

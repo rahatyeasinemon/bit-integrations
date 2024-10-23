@@ -7,12 +7,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import ConfirmModal from '../../Utilities/ConfirmModal'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 
-export default function OneHashCRMActions({
-  oneHashCRMConf,
-  setOneHashCRMConf,
-  loading,
-  setLoading
-}) {
+export default function OneHashCRMActions({ oneHashCRMConf, setOneHashCRMConf, loading, setLoading }) {
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => {} })
 
   const actionHandler = (e, type) => {
@@ -72,12 +67,7 @@ export default function OneHashCRMActions({
     } else if (type === 'RequestType') {
       if (e.target?.checked) {
         newConf.actions.RequestType = true
-        newConf.RequestTypes = [
-          'Product Enquiry',
-          'Request For Information',
-          'Suggestions',
-          'Other'
-        ]
+        newConf.RequestTypes = ['Product Enquiry', 'Request For Information', 'Suggestions', 'Other']
       } else {
         delete newConf.actions.RequestType
       }
@@ -192,7 +182,8 @@ export default function OneHashCRMActions({
         show={actionMdl.show === 'leadSource'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Source', 'bit-integrations')}>
+        title={__('Add Source', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Source', 'bit-integrations')}</div>
 
@@ -219,7 +210,8 @@ export default function OneHashCRMActions({
         show={actionMdl.show === 'LeadAddressType'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Address Type', 'bit-integrations')}>
+        title={__('Add Address Type', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Address Type', 'bit-integrations')}</div>
 
@@ -246,7 +238,8 @@ export default function OneHashCRMActions({
         show={actionMdl.show === 'LeadType'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Lead Type', 'bit-integrations')}>
+        title={__('Add Lead Type', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Lead Type', 'bit-integrations')}</div>
 
@@ -270,7 +263,8 @@ export default function OneHashCRMActions({
         show={actionMdl.show === 'RequestType'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Request Type', 'bit-integrations')}>
+        title={__('Add Request Type', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Request Type', 'bit-integrations')}</div>
 
@@ -294,7 +288,8 @@ export default function OneHashCRMActions({
         show={actionMdl.show === 'MarketSegment'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Market Segment', 'bit-integrations')}>
+        title={__('Add Market Segment', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Market Segment', 'bit-integrations')}</div>
 
@@ -321,7 +316,8 @@ export default function OneHashCRMActions({
         show={actionMdl.show === 'ContactStatus'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Industry', 'bit-integrations')}>
+        title={__('Add Industry', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Industry', 'bit-integrations')}</div>
 

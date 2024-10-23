@@ -116,7 +116,8 @@ export default function GroundhoggActions({ groundhoggConf, setGroundhoggConf, f
           show={actionMdl.show === 'tag'}
           close={clsActionMdl}
           action={clsActionMdl}
-          title={__('Tags', 'bit-integrations')}>
+          title={__('Tags', 'bit-integrations')}
+        >
           <div className="btcd-hr mt-2 mb-2" />
           <div className="mt-2">{__('Select tag', 'bit-integrations')}</div>
           {isLoading ? (
@@ -139,15 +140,14 @@ export default function GroundhoggActions({ groundhoggConf, setGroundhoggConf, f
                 customValue
               />
               <button
-                onClick={() =>
-                  fetchAllTags(null, groundhoggConf, setGroundhoggConf, setIsLoading, null)
-                }
+                onClick={() => fetchAllTags(null, groundhoggConf, setGroundhoggConf, setIsLoading, null)}
                 className="icn-btn sh-sm ml-2 mr-4 tooltip"
                 style={{
                   '--tooltip-txt': `'${__('Refresh Groundhogg Tags', 'bit-integrations')}'`
                 }}
                 type="button"
-                disabled={isLoading}>
+                disabled={isLoading}
+              >
                 &#x21BB;
               </button>
             </div>
@@ -173,7 +173,8 @@ export default function GroundhoggActions({ groundhoggConf, setGroundhoggConf, f
           show={actionMdl.show === 'optin_status'}
           close={clsActionMdl}
           action={clsActionMdl}
-          title={__('Optin status', 'bit-integrations')}>
+          title={__('Optin status', 'bit-integrations')}
+        >
           <div className="btcd-hr mt-2 mb-2" />
           <div className="mt-2">{__('Select Optin status', 'bit-integrations')}</div>
           {isLoading ? (

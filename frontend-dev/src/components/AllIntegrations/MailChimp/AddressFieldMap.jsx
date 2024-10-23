@@ -1,10 +1,7 @@
 import TrashIcn from '../../../Icons/TrashIcn'
 import { __ } from '../../../Utils/i18nwrap'
 
-import {
-  delAddressFieldMap,
-  handleAddress
-} from '../IntegrationHelpers/MailChimpIntegrationHelpers'
+import { delAddressFieldMap, handleAddress } from '../IntegrationHelpers/MailChimpIntegrationHelpers'
 
 export default function AddressFieldMap({
   i,
@@ -22,7 +19,8 @@ export default function AddressFieldMap({
         className="btcd-paper-inp mr-2"
         name="formField"
         value={field.formField || ''}
-        onChange={(ev) => handleAddress(ev, i, mailChimpConf, setMailChimpConf)}>
+        onChange={(ev) => handleAddress(ev, i, mailChimpConf, setMailChimpConf)}
+      >
         <option value="">{__('Select Field', 'bit-integrations')}</option>
         {formFields.map(
           (f) =>
@@ -38,7 +36,8 @@ export default function AddressFieldMap({
         name="mailChimpAddressField"
         value={field.mailChimpAddressField || ''}
         onChange={(ev) => handleAddress(ev, i, mailChimpConf, setMailChimpConf, addressField)}
-        disabled={isRequired}>
+        disabled={isRequired}
+      >
         <option value="">{__('Select Field', 'bit-integrations')}</option>
         {isRequired
           ? Object.values(addressField).map((listField, indx) => (
@@ -57,7 +56,8 @@ export default function AddressFieldMap({
           onClick={() => delAddressFieldMap(i, mailChimpConf, setMailChimpConf)}
           className="icn-btn sh-sm ml-1"
           type="button"
-          aria-label="btn">
+          aria-label="btn"
+        >
           <TrashIcn />
         </button>
       )}

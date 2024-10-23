@@ -74,12 +74,11 @@ function Discord({ formFields, setFlow, flow, allIntegURL }) {
             height: 'auto',
             overflow: 'visible'
           })
-        }}>
+        }}
+      >
         <DiscordIntegLayout
           formFields={formFields}
-          handleInput={(e) =>
-            handleInput(e, discordConf, setDiscordConf, setIsLoading, setSnackbar)
-          }
+          handleInput={(e) => handleInput(e, discordConf, setDiscordConf, setIsLoading, setSnackbar)}
           discordConf={discordConf}
           setDiscordConf={setDiscordConf}
           isLoading={isLoading}
@@ -91,7 +90,8 @@ function Discord({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => nextPage(3)}
           disabled={discordConf.selectedChannel === '' || discordConf.selectedServer === ''}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>

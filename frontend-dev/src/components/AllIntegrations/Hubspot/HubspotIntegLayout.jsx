@@ -60,7 +60,8 @@ export default function HubspotIntegLayout({
           onChange={handleInputP}
           name="actionName"
           value={hubspotConf?.actionName}
-          className="btcd-paper-inp w-5">
+          className="btcd-paper-inp w-5"
+        >
           <option value="">{__('Select Action', 'bit-integrations')}</option>
           {action.map(({ label, value }) => (
             <option key={label} value={value}>
@@ -92,7 +93,8 @@ export default function HubspotIntegLayout({
                 onChange={handleInputP}
                 name="pipeline"
                 value={hubspotConf?.pipeline}
-                className="btcd-paper-inp w-5">
+                className="btcd-paper-inp w-5"
+              >
                 <option value="">{__('Select Pipeline', 'bit-integrations')}</option>
                 {hubspotConf?.default?.pipelines.map(({ pipelineId, pipelineName }) => (
                   <option key={pipelineId} value={pipelineId}>
@@ -110,7 +112,8 @@ export default function HubspotIntegLayout({
                 onChange={handleInput}
                 name="stage"
                 value={hubspotConf?.stage}
-                className="btcd-paper-inp w-5">
+                className="btcd-paper-inp w-5"
+              >
                 <option value="">{__('Select Stage', 'bit-integrations')}</option>
                 {hubspotConf?.stageTmp?.[0]?.map(({ stageId, stageName }) => (
                   <option key={stageId} value={stageId}>
@@ -141,7 +144,8 @@ export default function HubspotIntegLayout({
                 className="icn-btn sh-sm ml-2 mr-2 tooltip"
                 style={{ '--tooltip-txt': `'${__('Refresh custom fields', 'bit-integrations')}'` }}
                 type="button"
-                disabled={loading.customFields}>
+                disabled={loading.customFields}
+              >
                 &#x21BB;
               </button>
             </b>
@@ -184,7 +188,8 @@ export default function HubspotIntegLayout({
                 addFieldMap(hubspotConf.field_map.length, hubspotConf, setHubspotConf, false)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

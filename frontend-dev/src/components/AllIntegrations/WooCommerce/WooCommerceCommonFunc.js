@@ -70,8 +70,7 @@ export const refreshFields = (wcConf, setWcConf, setIsLoading, setSnackbar) => {
             if (!newConf?.order) newConf.order = {}
             if (!newConf?.customer) newConf.customer = {}
             if (!newConf?.line_item) newConf.line_item = {}
-            if (!newConf?.order?.field_map)
-              newConf.order.field_map = [{ formField: '', wcField: '' }]
+            if (!newConf?.order?.field_map) newConf.order.field_map = [{ formField: '', wcField: '' }]
             if (!newConf?.customer?.field_map)
               newConf.customer.field_map = [{ formField: '', wcField: '' }]
             if (!newConf?.line_item?.field_map)

@@ -200,7 +200,8 @@ export default function ConstantContactActions({
         show={actionMdl.show === 'address_type'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Address Type', 'bit-integrations')}>
+        title={__('Address Type', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
 
         <div className="flx flx-between mt-2">
@@ -225,7 +226,8 @@ export default function ConstantContactActions({
         show={actionMdl.show === 'phone_type'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Phone Type', 'bit-integrations')}>
+        title={__('Phone Type', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
 
         <div className="flx flx-between mt-2">
@@ -250,7 +252,8 @@ export default function ConstantContactActions({
         show={actionMdl.show === 'list_ids'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Lists', 'bit-integrations')}>
+        title={__('Lists', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
 
         {isLoading.list ? (
@@ -277,17 +280,13 @@ export default function ConstantContactActions({
             />
             <button
               onClick={() =>
-                getAllContactLists(
-                  constantContactConf,
-                  setConstantContactConf,
-                  isLoading,
-                  setIsLoading
-                )
+                getAllContactLists(constantContactConf, setConstantContactConf, isLoading, setIsLoading)
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Lists', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading.list}>
+              disabled={isLoading.list}
+            >
               &#x21BB;
             </button>
           </div>
@@ -301,7 +300,8 @@ export default function ConstantContactActions({
         show={actionMdl.show === 'tag_ids'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Tags', 'bit-integrations')}>
+        title={__('Tags', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
 
         {isLoading.tag ? (
@@ -333,7 +333,8 @@ export default function ConstantContactActions({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Tags', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading.tag}>
+              disabled={isLoading.tag}
+            >
               &#x21BB;
             </button>
           </div>

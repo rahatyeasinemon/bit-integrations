@@ -54,7 +54,8 @@ function EditWebhookInteg({ setSnackbar }) {
         <button
           onClick={handleFetch}
           className="btn btcd-btn-lg purple sh-sm flx mt-1 ml-1"
-          type="button">
+          type="button"
+        >
           {flow.triggerDetail?.data
             ? __('Fetched ✔', 'bit-integrations')
             : __('Fetch', 'bit-integrations')}

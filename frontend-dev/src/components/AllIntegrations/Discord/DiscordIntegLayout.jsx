@@ -70,7 +70,8 @@ export default function DiscordIntegLayout({
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Refresh Server List', 'bit-integrations')}'` }}
           type="button"
-          disabled={isLoading.servers}>
+          disabled={isLoading.servers}
+        >
           &#x21BB;
         </button>
       </div>
@@ -95,7 +96,8 @@ export default function DiscordIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh Channel List', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading.channels}>
+              disabled={isLoading.channels}
+            >
               &#x21BB;
             </button>
           </div>

@@ -8,13 +8,7 @@ import { generateMappedField } from './LearnDashCommonFunc'
 import TagifyInput from '../../Utilities/TagifyInput'
 import { handleCustomValue } from '../IntegrationHelpers/IntegrationHelpers'
 
-export default function LearnDashFieldMap({
-  i,
-  formFields,
-  field,
-  learnDashConf,
-  setLearnDashConf
-}) {
+export default function LearnDashFieldMap({ i, formFields, field, learnDashConf, setLearnDashConf }) {
   if (learnDashConf?.field_map?.length === 1 && field.learnDeshFormField === '') {
     const newConf = { ...learnDashConf }
     const tmp = generateMappedField(newConf)
@@ -23,8 +17,7 @@ export default function LearnDashFieldMap({
   }
 
   const requiredFlds = learnDashConf?.createGroupFields.filter((fld) => fld.required === true) || []
-  const nonRequiredFlds =
-    learnDashConf?.createGroupFields.filter((fld) => fld.required === false) || []
+  const nonRequiredFlds = learnDashConf?.createGroupFields.filter((fld) => fld.required === false) || []
 
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi
@@ -37,7 +30,8 @@ export default function LearnDashFieldMap({
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, learnDashConf, setLearnDashConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, learnDashConf, setLearnDashConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -51,7 +45,8 @@ export default function LearnDashFieldMap({
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -77,10 +72,9 @@ export default function LearnDashFieldMap({
             className="btcd-paper-inp"
             disabled={i < requiredFlds.length}
             name="learnDeshFormField"
-            value={
-              i < requiredFlds.length ? requiredFlds[i].key || '' : field.learnDeshFormField || ''
-            }
-            onChange={(ev) => handleFieldMapping(ev, i, learnDashConf, setLearnDashConf)}>
+            value={i < requiredFlds.length ? requiredFlds[i].key || '' : field.learnDeshFormField || ''}
+            onChange={(ev) => handleFieldMapping(ev, i, learnDashConf, setLearnDashConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFlds.length ? (
               <option key={requiredFlds[i].key} value={requiredFlds[i].key}>
@@ -100,14 +94,16 @@ export default function LearnDashFieldMap({
             <button
               onClick={() => addFieldMap(i, learnDashConf, setLearnDashConf)}
               className="icn-btn sh-sm ml-2 mr-1"
-              type="button">
+              type="button"
+            >
               +
             </button>
             <button
               onClick={() => delFieldMap(i, learnDashConf, setLearnDashConf)}
               className="icn-btn sh-sm ml-1"
               type="button"
-              aria-label="btn">
+              aria-label="btn"
+            >
               <span className="btcd-icn icn-trash-2" />
             </button>
           </>

@@ -41,10 +41,8 @@ function Rapidmail({ formFields, setFlow, flow, allIntegURL }) {
   const [rapidmailConf, setRapidmailConf] = useState({
     name: 'Rapidmail',
     type: 'Rapidmail',
-    username:
-      process.env.NODE_ENV === 'development' ? '3794a7c6ad7cc48871b97c2b68f328e374a089d2' : '',
-    password:
-      process.env.NODE_ENV === 'development' ? 'd7db58d60026707dc677fd5b240e9de4b5bd7841' : '',
+    username: process.env.NODE_ENV === 'development' ? '3794a7c6ad7cc48871b97c2b68f328e374a089d2' : '',
+    password: process.env.NODE_ENV === 'development' ? 'd7db58d60026707dc677fd5b240e9de4b5bd7841' : '',
     field_map: [{ formField: '', rapidmailFormField: '' }],
     recipientsFields,
     actions: {
@@ -110,12 +108,11 @@ function Rapidmail({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}
+      >
         <RapidmailIntegLayout
           formFields={formFields}
-          handleInput={(e) =>
-            handleInput(e, rapidmailConf, setRapidmailConf, setIsLoading, setSnackbar)
-          }
+          handleInput={(e) => handleInput(e, rapidmailConf, setRapidmailConf, setIsLoading, setSnackbar)}
           rapidmailConf={rapidmailConf}
           setRapidmailConf={setRapidmailConf}
           isLoading={isLoading}
@@ -127,7 +124,8 @@ function Rapidmail({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => nextPage(3)}
           disabled={!rapidmailConf?.recipient_id}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')} &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>

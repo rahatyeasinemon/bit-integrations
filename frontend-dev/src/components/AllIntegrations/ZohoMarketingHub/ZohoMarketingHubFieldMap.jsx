@@ -21,9 +21,7 @@ export default function ZohoMarketingHubFieldMap({
 }) {
   const isNotRequired =
     field.zohoFormField === '' ||
-    marketingHubConf.default.fields[marketingHubConf.list].required?.indexOf(
-      field.zohoFormField
-    ) === -1
+    marketingHubConf.default.fields[marketingHubConf.list].required?.indexOf(field.zohoFormField) === -1
 
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi
@@ -35,7 +33,8 @@ export default function ZohoMarketingHubFieldMap({
           className="btcd-paper-inp mr-2"
           name="formField"
           value={field.formField || ''}
-          onChange={(ev) => handleFieldMapping(ev, i, marketingHubConf, setMarketingHubConf)}>
+          onChange={(ev) => handleFieldMapping(ev, i, marketingHubConf, setMarketingHubConf)}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           <optgroup label={__('Form Fields', 'bit-integrations')}>
             {formFields.map(
@@ -49,7 +48,8 @@ export default function ZohoMarketingHubFieldMap({
           </optgroup>
           <option value="custom">{__('Custom...', 'bit-integrations')}</option>
           <optgroup
-            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}>
+            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}
+          >
             {isPro &&
               SmartTagField?.map((f) => (
                 <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -76,7 +76,8 @@ export default function ZohoMarketingHubFieldMap({
           name="zohoFormField"
           value={field.zohoFormField || ''}
           disabled={!isNotRequired}
-          onChange={(ev) => handleFieldMapping(ev, i, marketingHubConf, setMarketingHubConf)}>
+          onChange={(ev) => handleFieldMapping(ev, i, marketingHubConf, setMarketingHubConf)}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           {isNotRequired ? (
             marketingHubConf?.default?.fields?.[marketingHubConf.list]?.fields &&
@@ -98,7 +99,8 @@ export default function ZohoMarketingHubFieldMap({
       <button
         onClick={() => addFieldMap(i, marketingHubConf, setMarketingHubConf)}
         className="icn-btn sh-sm ml-2 mr-1"
-        type="button">
+        type="button"
+      >
         +
       </button>
       {isNotRequired && (
@@ -106,7 +108,8 @@ export default function ZohoMarketingHubFieldMap({
           onClick={() => delFieldMap(i, marketingHubConf, setMarketingHubConf)}
           className="icn-btn sh-sm ml-1"
           type="button"
-          aria-label="btn">
+          aria-label="btn"
+        >
           <TrashIcn />
         </button>
       )}

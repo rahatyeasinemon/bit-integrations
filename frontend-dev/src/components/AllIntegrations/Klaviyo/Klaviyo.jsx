@@ -54,7 +54,8 @@ function Klaviyo({ formFields, setFlow, flow, allIntegURL }) {
 
       <div
         className="btcd-stp-page"
-        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}
+      >
         <KlaviyoIntegLayout
           formFields={formFields}
           klaviyoConf={klaviyoConf}
@@ -67,7 +68,8 @@ function Klaviyo({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => nextPage(klaviyoConf, setStep, 3)}
           disabled={!klaviyoConf.listId || klaviyoConf.field_map.length < 1}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')}
           &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
@@ -76,9 +78,7 @@ function Klaviyo({ formFields, setFlow, flow, allIntegURL }) {
 
       <IntegrationStepThree
         step={step}
-        saveConfig={() =>
-          saveConfig(flow, setFlow, allIntegURL, klaviyoConf, navigate, setIsLoading)
-        }
+        saveConfig={() => saveConfig(flow, setFlow, allIntegURL, klaviyoConf, navigate, setIsLoading)}
         isLoading={isLoading}
         dataConf={klaviyoConf}
         setDataConf={setKlaviyoConf}

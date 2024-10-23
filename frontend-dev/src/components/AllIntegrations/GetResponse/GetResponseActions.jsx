@@ -114,7 +114,8 @@ export default function GetResponseActions({
         show={actionMdl.show === 'tag'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Tags', 'bit-integrations')}>
+        title={__('Tags', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select contact Tags', 'bit-integrations')}</div>
         {loading.tags ? (
@@ -139,7 +140,8 @@ export default function GetResponseActions({
               onClick={() => getAllTags(getResponseConf, setGetResponseConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Groups', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -155,7 +157,8 @@ export default function GetResponseActions({
           show={actionMdl.show === 'dayOfCycle'}
           close={clsActionMdl}
           action={clsActionMdl}
-          title={__('Autoresponder day', 'bit-integrations')}>
+          title={__('Autoresponder day', 'bit-integrations')}
+        >
           <div className="btcd-hr mt-2 mb-2" />
           <div className="mt-3">
             <b>{__('Autoresponder day', 'bit-integrations')}</b>

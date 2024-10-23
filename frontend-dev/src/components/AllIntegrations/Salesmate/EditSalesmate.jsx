@@ -71,9 +71,7 @@ function EditSalesmate({ allIntegURL }) {
       <SalesmateIntegLayout
         formID={flow.triggered_entity_id}
         formFields={formField}
-        handleInput={(e) =>
-          handleInput(e, salesmateConf, setSalesmateConf, setLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, salesmateConf, setSalesmateConf, setLoading, setSnackbar)}
         salesmateConf={salesmateConf}
         setSalesmateConf={setSalesmateConf}
         loading={loading}

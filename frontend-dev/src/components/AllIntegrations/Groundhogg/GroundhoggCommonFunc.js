@@ -101,13 +101,7 @@ export const handleAuthorize = (
   })
 }
 
-export const fetchAllTags = (
-  formID,
-  groundhoggConf,
-  setGroundhoggConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const fetchAllTags = (formID, groundhoggConf, setGroundhoggConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
 
   const requestParams = {

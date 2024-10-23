@@ -34,7 +34,8 @@ function Authorization({ webHooks, setWebHooks, isInfo, setTab }) {
           onChange={handleInput}
           name="authType"
           defaultValue={webHooks?.authType}
-          disabled={isInfo}>
+          disabled={isInfo}
+        >
           <option>{__('Select Authorization', 'bit-integrations')}</option>
           <option value="Basic">{__('Basic', 'bit-integrations')}</option>
           <option value="Bearer">{__('Bearer Token', 'bit-integrations')}</option>

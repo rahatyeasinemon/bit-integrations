@@ -74,7 +74,8 @@ export default function GroundhoggIntegLayout({
         onChange={handleInput}
         name="mainAction"
         value={groundhoggConf.mainAction}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select Actions', 'bit-integrations')}</option>
         {groundhoggConf.allActions &&
           groundhoggConf.allActions.map(({ key, label }) => (
@@ -138,15 +139,11 @@ export default function GroundhoggIntegLayout({
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
               onClick={() =>
-                addFieldMap(
-                  groundhoggConf.field_map.length,
-                  groundhoggConf,
-                  setGroundhoggConf,
-                  false
-                )
+                addFieldMap(groundhoggConf.field_map.length, groundhoggConf, setGroundhoggConf, false)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>
@@ -196,7 +193,8 @@ export default function GroundhoggIntegLayout({
               )
             }
             className="icn-btn sh-sm"
-            type="button">
+            type="button"
+          >
             +
           </button>
         </div>
@@ -212,13 +210,12 @@ export default function GroundhoggIntegLayout({
             customValue
           />
           <button
-            onClick={() =>
-              fetchAllTags(null, groundhoggConf, setGroundhoggConf, setIsLoading, null)
-            }
+            onClick={() => fetchAllTags(null, groundhoggConf, setGroundhoggConf, setIsLoading, null)}
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Refresh Groundhogg Tags', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
         </div>

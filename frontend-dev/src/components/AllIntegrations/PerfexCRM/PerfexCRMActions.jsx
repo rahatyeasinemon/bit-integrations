@@ -194,7 +194,8 @@ export default function PerfexCRMActions({ perfexCRMConf, setPerfexCRMConf, load
         show={actionMdl.show === 'direction'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Direction', 'bit-integrations')}>
+        title={__('Direction', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Direction', 'bit-integrations')}</div>
 
@@ -217,7 +218,8 @@ export default function PerfexCRMActions({ perfexCRMConf, setPerfexCRMConf, load
         show={actionMdl.show === 'leadStatus'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Lead Status Id', 'bit-integrations')}>
+        title={__('Add Lead Status Id', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="flx">
           <b className="wdt-200 d-in-b">{__('Lead Status Id:', 'bit-integrations')}</b>
@@ -233,7 +235,8 @@ export default function PerfexCRMActions({ perfexCRMConf, setPerfexCRMConf, load
             className="icn-btn sh-sm ml-2 mr-2 tooltip info-view mt-1"
             style={{
               '--tooltip-txt': `'${__('Go to PerfexCRM Admin area & select the following menu: "SETUP → Leads → Statuses".', 'bit-integrations')}'`
-            }}>
+            }}
+          >
             &#x21;
           </span>
         </div>
@@ -246,7 +249,8 @@ export default function PerfexCRMActions({ perfexCRMConf, setPerfexCRMConf, load
         show={actionMdl.show === 'leadSource'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Lead Source Id', 'bit-integrations')}>
+        title={__('Add Lead Source Id', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="flx">
           <b className="wdt-200 d-in-b">{__('Lead Source Id:', 'bit-integrations')}</b>
@@ -262,7 +266,8 @@ export default function PerfexCRMActions({ perfexCRMConf, setPerfexCRMConf, load
             className="icn-btn sh-sm ml-2 mr-2 tooltip info-view mt-1"
             style={{
               '--tooltip-txt': `'${__('Go to PerfexCRM Admin area & select the following menu: "SETUP → Leads → Sources".', 'bit-integrations')}'`
-            }}>
+            }}
+          >
             &#x21;
           </span>
         </div>
@@ -276,7 +281,8 @@ export default function PerfexCRMActions({ perfexCRMConf, setPerfexCRMConf, load
         show={actionMdl.show === 'permission'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Permission', 'bit-integrations')}>
+        title={__('Add Permission', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Permission', 'bit-integrations')}</div>
 
@@ -301,7 +307,8 @@ export default function PerfexCRMActions({ perfexCRMConf, setPerfexCRMConf, load
         show={actionMdl.show === 'projectMembers'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Project Members', 'bit-integrations')}>
+        title={__('Add Project Members', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Project Member', 'bit-integrations')}</div>
 
@@ -330,7 +337,8 @@ export default function PerfexCRMActions({ perfexCRMConf, setPerfexCRMConf, load
               onClick={() => getAllStaffs(perfexCRMConf, setPerfexCRMConf, loading, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Project Members', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>

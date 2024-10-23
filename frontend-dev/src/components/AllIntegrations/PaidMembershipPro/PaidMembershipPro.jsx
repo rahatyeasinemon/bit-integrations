@@ -62,7 +62,8 @@ function PaidMembershipPro({ formFields, setFlow, flow, allIntegURL, isInfo, edi
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ ...(step === 2 && { width: 900, minHeight: '350px', overflow: 'visible' }) }}>
+        style={{ ...(step === 2 && { width: 900, minHeight: '350px', overflow: 'visible' }) }}
+      >
         <PaidMembershipProIntegLayout
           formFields={formFields}
           handleInput={(e) =>
@@ -93,7 +94,8 @@ function PaidMembershipPro({ formFields, setFlow, flow, allIntegURL, isInfo, edi
             paidMembershipProConf.selectedMembership === undefined
           }
           className="btn f-left btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')}
           &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />

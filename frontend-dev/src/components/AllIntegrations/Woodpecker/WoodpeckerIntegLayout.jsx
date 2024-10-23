@@ -72,16 +72,19 @@ export default function WoodpeckerIntegLayout({
         onChange={handleActionInput}
         name="actionName"
         value={woodpeckerConf.actionName}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select an action', 'bit-integrations')}</option>
         <option
           value="adding_prospects_to_the_prospects_list"
-          data-action_name="Adding prospects to the Prospects list">
+          data-action_name="Adding prospects to the Prospects list"
+        >
           {__('Adding prospects to the Prospects list', 'bit-integrations')}
         </option>
         <option
           value="adding_prospects_to_the_campaign"
-          data-action_name="Adding prospects to the Campaign">
+          data-action_name="Adding prospects to the Campaign"
+        >
           {__('Adding prospects to the Campaign', 'bit-integrations')}
         </option>
         <option value="create_company" data-action_name="Create Company">
@@ -120,13 +123,12 @@ export default function WoodpeckerIntegLayout({
                 closeOnSelect
               />
               <button
-                onClick={() =>
-                  getAllCampaign(woodpeckerConf, setWoodpeckerConf, loading, setLoading)
-                }
+                onClick={() => getAllCampaign(woodpeckerConf, setWoodpeckerConf, loading, setLoading)}
                 className="icn-btn sh-sm ml-2 mr-2 tooltip"
                 style={{ '--tooltip-txt': `'${__('Refresh Campaigns', 'bit-integrations')}'` }}
                 type="button"
-                disabled={loading.campaign}>
+                disabled={loading.campaign}
+              >
                 &#x21BB;
               </button>
             </div>
@@ -176,15 +178,11 @@ export default function WoodpeckerIntegLayout({
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
               onClick={() =>
-                addFieldMap(
-                  woodpeckerConf.field_map.length,
-                  woodpeckerConf,
-                  setWoodpeckerConf,
-                  false
-                )
+                addFieldMap(woodpeckerConf.field_map.length, woodpeckerConf, setWoodpeckerConf, false)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>
@@ -194,10 +192,7 @@ export default function WoodpeckerIntegLayout({
             <b className="wdt-100">{__('Utilities', 'bit-integrations')}</b>
           </div>
           <div className="btcd-hr mt-1" />
-          <WoodpeckerActions
-            woodpeckerConf={woodpeckerConf}
-            setWoodpeckerConf={setWoodpeckerConf}
-          />
+          <WoodpeckerActions woodpeckerConf={woodpeckerConf} setWoodpeckerConf={setWoodpeckerConf} />
         </div>
       )}
     </>

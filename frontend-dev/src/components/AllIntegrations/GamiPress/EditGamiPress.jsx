@@ -45,9 +45,7 @@ function EditGamiPress({ allIntegURL }) {
       <GamiPressIntegLayout
         formID={formID}
         formFields={formFields}
-        handleInput={(e) =>
-          handleInput(e, gamiPressConf, setGamiPressConf, setIsLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, gamiPressConf, setGamiPressConf, setIsLoading, setSnackbar)}
         gamiPressConf={gamiPressConf}
         setGamiPressConf={setGamiPressConf}
         isLoading={isLoading}

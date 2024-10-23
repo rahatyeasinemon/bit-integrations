@@ -53,10 +53,9 @@ export default function LivestormAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {livestorm?.youTubeLink && (
-        <TutorialLink title="Livestorm" youTubeLink={livestorm?.youTubeLink} />
-      )}
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
+      {livestorm?.youTubeLink && <TutorialLink title="Livestorm" youTubeLink={livestorm?.youTubeLink} />}
       {livestorm?.docLink && <TutorialLink title="Livestorm" docLink={livestorm?.docLink} />}
 
       <div className="mt-3">
@@ -92,7 +91,8 @@ export default function LivestormAuthorization({
         <a
           className="btcd-link"
           href="https://app.livestorm.co/#/settings?page=settings&tab=integrations&id=public-api"
-          target="_blank">
+          target="_blank"
+        >
           {__('Livestorm API Token', 'bit-integrations')}
         </a>
       </small>
@@ -114,7 +114,8 @@ export default function LivestormAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || loading.auth}>
+            disabled={isAuthorized || loading.auth}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -125,7 +126,8 @@ export default function LivestormAuthorization({
             onClick={nextPage}
             className="btn ml-auto btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

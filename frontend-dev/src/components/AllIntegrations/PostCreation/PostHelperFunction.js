@@ -77,22 +77,21 @@ export const checkMappedJEFields = (data) => {
 }
 
 export const refreshAcfFields = (acfConf, setAcfFields, setAcfFile) => {
-  const loadAcfFields = bitsFetch(
-    { post_type: acfConf?.post_type },
-    'bitforms_get_custom_field'
-  ).then((res) => {
-    if (res !== undefined && res.success) {
-      if (res?.data?.acfFields) {
-        setAcfFields(res.data.acfFields)
+  const loadAcfFields = bitsFetch({ post_type: acfConf?.post_type }, 'bitforms_get_custom_field').then(
+    (res) => {
+      if (res !== undefined && res.success) {
+        if (res?.data?.acfFields) {
+          setAcfFields(res.data.acfFields)
+        }
+        if (res?.data?.acfFile) {
+          setAcfFile(res.data.acfFile)
+        }
       }
-      if (res?.data?.acfFile) {
-        setAcfFile(res.data.acfFile)
-      }
+      if (res?.data?.acfFields.length !== 0 || res?.data?.acfFile.length !== 0)
+        return 'Successfully refresh ACF Fields.'
+      return __('ACF Fields not found', 'bit-integrations')
     }
-    if (res?.data?.acfFields.length !== 0 || res?.data?.acfFile.length !== 0)
-      return 'Successfully refresh ACF Fields.'
-    return __('ACF Fields not found', 'bit-integrations')
-  })
+  )
   toast.promise(loadAcfFields, {
     success: (data) => data,
     error: __('Error Occurred', 'bit-integrations'),

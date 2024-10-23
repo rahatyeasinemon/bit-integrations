@@ -9,12 +9,7 @@ import ConfirmModal from '../../Utilities/ConfirmModal'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import { getAllTags } from './SalesflareCommonFunc'
 
-export default function SalesflareActions({
-  salesflareConf,
-  setSalesflareConf,
-  loading,
-  setLoading
-}) {
+export default function SalesflareActions({ salesflareConf, setSalesflareConf, loading, setLoading }) {
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => {} })
 
   const actionHandler = (e, type) => {
@@ -64,7 +59,8 @@ export default function SalesflareActions({
         show={actionMdl.show === 'tags'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Tags', 'bit-integrations')}>
+        title={__('Add Tags', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select tags', 'bit-integrations')}</div>
 
@@ -90,7 +86,8 @@ export default function SalesflareActions({
               onClick={() => getAllTags(salesflareConf, setSalesflareConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Tags', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>

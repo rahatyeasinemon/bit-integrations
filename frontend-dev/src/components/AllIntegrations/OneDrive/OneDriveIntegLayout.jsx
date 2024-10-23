@@ -23,7 +23,8 @@ export default function OneDriveIntegLayout({
         }
         name="folder"
         value={oneDriveConf.folderMap[0] || oneDriveConf.folder}
-        className="btcd-paper-inp w-7">
+        className="btcd-paper-inp w-7"
+      >
         <option value="">{__('Select Folder', 'bit-integrations')}</option>
         {oneDriveConf?.default?.rootFolders &&
           oneDriveConf.default.rootFolders.map((teamFolderApi) => (
@@ -39,7 +40,8 @@ export default function OneDriveIntegLayout({
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': `'${__('Refresh  Folders', 'bit-integrations')}'` }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -56,25 +58,19 @@ export default function OneDriveIntegLayout({
                 marginRight: 2,
                 height: 58,
                 marginTop: -60
-              }}>
+              }}
+            >
               <div className="sub-tree" />
             </div>
             <div className="flx sub-folder w-7">
               <select
                 onChange={(e) =>
-                  handleInput(
-                    e,
-                    oneDriveConf,
-                    setOneDriveConf,
-                    formID,
-                    setIsLoading,
-                    setSnackbar,
-                    i + 1
-                  )
+                  handleInput(e, oneDriveConf, setOneDriveConf, formID, setIsLoading, setSnackbar, i + 1)
                 }
                 name="folder"
                 value={oneDriveConf.folderMap[i + 1] || oneDriveConf.folder}
-                className="btcd-paper-inp">
+                className="btcd-paper-inp"
+              >
                 <option value={oneDriveConf.folderMap[i]}>/ root</option>
                 {oneDriveConf?.default?.folders?.[folder] &&
                   oneDriveConf.default.folders[folder].map((folderApi) => (
@@ -97,7 +93,8 @@ export default function OneDriveIntegLayout({
                 className="d-non icn-btn sh-sm ml-2 mr-2 tooltip"
                 style={{ '--tooltip-txt': `'${__('Refresh Sub Folders', 'bit-integrations')}'` }}
                 type="button"
-                disabled={isLoading}>
+                disabled={isLoading}
+              >
                 &#x21BB;
               </button>
             </div>

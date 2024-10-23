@@ -17,11 +17,7 @@ export default function BitFormIntegLayout({
     <>
       <br />
       <b className="wdt-200 d-in-b">{__('Forms:', 'bit-integrations')}</b>
-      <select
-        onChange={handleInput}
-        name="id"
-        value={bitFormConf.id}
-        className="btcd-paper-inp w-5">
+      <select onChange={handleInput} name="id" value={bitFormConf.id} className="btcd-paper-inp w-5">
         <option value="">{__('Select Form', 'bit-integrations')}</option>
         {
           // eslint-disable-next-line camelcase
@@ -38,7 +34,8 @@ export default function BitFormIntegLayout({
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': `'${__('Fetch All Form', 'bit-integrations')}'` }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -85,7 +82,8 @@ export default function BitFormIntegLayout({
             <button
               onClick={() => addFieldMap(bitFormConf.field_map.length, bitFormConf, setBitFormConf)}
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

@@ -10,13 +10,7 @@ import Cooltip from '../../Utilities/Cooltip'
 import { useState } from 'react'
 import { create } from 'mutative'
 
-export default function SendinBlueFieldMap({
-  i,
-  formFields,
-  field,
-  sendinBlueConf,
-  setSendinBlueConf
-}) {
+export default function SendinBlueFieldMap({ i, formFields, field, sendinBlueConf, setSendinBlueConf }) {
   const [options, setOptions] = useState([])
   const isRequired = field.required
   const notResquiredField =
@@ -67,7 +61,8 @@ export default function SendinBlueFieldMap({
           className="btcd-paper-inp mr-2"
           name="formField"
           value={field.formField || ''}
-          onChange={(ev) => handleFieldMapping(ev, i)}>
+          onChange={(ev) => handleFieldMapping(ev, i)}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           <optgroup label={__('Form Fields', 'bit-integrations')}>
             {formFields.map(
@@ -82,7 +77,8 @@ export default function SendinBlueFieldMap({
           <option value="custom">{__('Custom...', 'bit-integrations')}</option>
 
           <optgroup
-            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}>
+            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}
+          >
             {isPro &&
               SmartTagField?.map((f) => (
                 <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -109,7 +105,8 @@ export default function SendinBlueFieldMap({
           name="sendinBlueField"
           value={field.sendinBlueField}
           onChange={(ev) => handleFieldMapping(ev, i)}
-          disabled={isRequired}>
+          disabled={isRequired}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           {isRequired
             ? sendinBlueConf?.default?.fields &&
@@ -150,7 +147,8 @@ export default function SendinBlueFieldMap({
               onClick={() => delFieldMap(i)}
               className="icn-btn sh-sm ml-2"
               type="button"
-              aria-label="btn">
+              aria-label="btn"
+            >
               <TrashIcn />
             </button>
           </>

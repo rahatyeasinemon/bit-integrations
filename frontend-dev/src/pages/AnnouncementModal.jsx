@@ -24,7 +24,8 @@ export default function AnnouncementModal() {
         title={__('New Product Release', 'bit-integrations')}
         type="button"
         className="announcement-btn"
-        onClick={() => setShow(true)}>
+        onClick={() => setShow(true)}
+      >
         <img src={announcement} style={{ marginRight: '8px', width: '30px' }} />
         {__('New Product Release', 'bit-integrations')}
         <span className="star" />
@@ -41,7 +42,8 @@ export default function AnnouncementModal() {
         }}
         setModal={() => setShow(false)}
         noPadding={true}
-        closeIcon={true}>
+        closeIcon={true}
+      >
         <div>
           <a href={Early_Bird_URL} target="_blank" rel="noreferrer">
             <img src={promo} style={{ width: '100%', marginTop: '-10px' }} alt="Early Bird Offer" />
@@ -55,7 +57,8 @@ export default function AnnouncementModal() {
             bottom: '-25px',
             left: '50%',
             transform: 'translateX(-50%)'
-          }}>
+          }}
+        >
           <a className="footer-btn purple" href={Early_Bird_URL} target="_blank" rel="noreferrer">
             {__('Grab the Deal', 'bit-integrations')}
             <ExternalLinkIcn size={16} className="" />

@@ -75,9 +75,7 @@ function MoosendAuthorization({
         <ErrorField error={error.authKey} />
         {!isInfo && (
           <AuthorizeButton
-            onclick={() =>
-              handleAuthorize(moosendConf, setError, setAuthorized, loading, setLoading)
-            }
+            onclick={() => handleAuthorize(moosendConf, setError, setAuthorized, loading, setLoading)}
             nextPage={nextPage}
             auth={authorized}
             loading={loading.auth}

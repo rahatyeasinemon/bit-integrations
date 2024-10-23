@@ -41,7 +41,8 @@ export default function WPForoAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
       {wpforo?.youTubeLink && <TutorialLink title="wpforo" youTubeLink={wpforo?.youTubeLink} />}
       {wpforo?.docLink && <TutorialLink title="wpforo" docLink={wpforo?.docLink} />}
 
@@ -68,7 +69,8 @@ export default function WPForoAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || loading.auth}>
+            disabled={isAuthorized || loading.auth}
+          >
             {isAuthorized
               ? __('Connected ✔', 'bit-integrations')
               : __('Connect to WPForo', 'bit-integrations')}
@@ -79,7 +81,8 @@ export default function WPForoAuthorization({
             onClick={nextPage}
             className="btn ml-auto btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

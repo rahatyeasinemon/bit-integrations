@@ -51,7 +51,8 @@ export default function PodsFieldMap({
           className="btcd-paper-inp mr-2"
           name="formField"
           value={field.formField || ''}
-          onChange={(ev) => handleFieldMapping(propName, ev, i, podsConf, setPodsConf)}>
+          onChange={(ev) => handleFieldMapping(propName, ev, i, podsConf, setPodsConf)}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           {fieldType === 'fields' ? (
             <>
@@ -70,7 +71,8 @@ export default function PodsFieldMap({
                 label={sprintf(
                   __('General Smart Codes %s', 'bit-integrations'),
                   isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-                )}>
+                )}
+              >
                 {isPro &&
                   SmartTagField?.map((f) => (
                     <option key={`ff-zhcrm-${f.name}`} value={f.name}>
@@ -106,7 +108,8 @@ export default function PodsFieldMap({
           name={fldName}
           value={field[fldName] || ''}
           onChange={(ev) => handleFieldMapping(propName, ev, i, podsConf, setPodsConf)}
-          disabled={isRequired}>
+          disabled={isRequired}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           {podFields?.map((header) => (
             <option key={`${header.key}-1`} value={header.key}>
@@ -120,7 +123,8 @@ export default function PodsFieldMap({
         <button
           onClick={() => addFieldMap(propName, i, podsConf, setPodsConf)}
           className="icn-btn sh-sm ml-2 mr-1"
-          type="button">
+          type="button"
+        >
           +
         </button>
       ) : (
@@ -128,14 +132,16 @@ export default function PodsFieldMap({
           <button
             onClick={() => addFieldMap(propName, i, podsConf, setPodsConf)}
             className="icn-btn sh-sm ml-2 mr-1"
-            type="button">
+            type="button"
+          >
             +
           </button>
           <button
             onClick={() => delFieldMap(propName, i, podsConf, setPodsConf)}
             className="icn-btn sh-sm ml-1"
             type="button"
-            aria-label="btn">
+            aria-label="btn"
+          >
             <TrashIcn />
           </button>
         </>

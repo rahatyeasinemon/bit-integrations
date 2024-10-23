@@ -21,8 +21,7 @@ export const checkMappedFields = (propovoiceCrmConf) => {
           mappedField.formField === '' ||
           mappedField.salesflareFormField === '' ||
           (mappedField.formField === 'custom' && mappedField.customValue === '') ||
-          (mappedField.salesflareFormField === 'customFieldKey' &&
-            mappedField.customFieldKey === '')
+          (mappedField.salesflareFormField === 'customFieldKey' && mappedField.customFieldKey === '')
       )
     : []
   if (mappedFields.length > 0) {

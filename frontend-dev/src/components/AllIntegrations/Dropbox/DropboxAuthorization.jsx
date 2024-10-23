@@ -57,7 +57,8 @@ export default function DropboxAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
       {dropbox?.youTubeLink && <TutorialLink title="Dropbox" youTubeLink={dropbox?.youTubeLink} />}
       {dropbox?.docLink && <TutorialLink title="Dropbox" docLink={dropbox?.docLink} />}
 
@@ -81,7 +82,8 @@ export default function DropboxAuthorization({
           className="btcd-link"
           rel="noreferrer"
           target="_blank"
-          href="https://www.dropbox.com/developers/apps/create?_tk=pilot_lp&_ad=ctabtn1&_camp=create">
+          href="https://www.dropbox.com/developers/apps/create?_tk=pilot_lp&_ad=ctabtn1&_camp=create"
+        >
           {__('Dropbox API Console', 'bit-integrations')}
         </a>
       </small>
@@ -121,7 +123,8 @@ export default function DropboxAuthorization({
           className="btcd-link"
           style={{ cursor: 'pointer' }}
           onClick={getAccessCode}
-          aria-hidden="true">
+          aria-hidden="true"
+        >
           {__('Dropbox Access Code', 'bit-integrations')}
         </span>
       </small>
@@ -148,7 +151,8 @@ export default function DropboxAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -159,7 +163,8 @@ export default function DropboxAuthorization({
             onClick={nextPage}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

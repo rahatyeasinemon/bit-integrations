@@ -48,7 +48,8 @@ export default function PropovoiceCrmAuthorization({
       style={{
         width: step === 1 && 900,
         height: step === 1 && 'auto'
-      }}>
+      }}
+    >
       {propovoiceCrm?.youTubeLink && (
         <TutorialLink title="Propovoice CRM" youTubeLink={propovoiceCrm?.youTubeLink} />
       )}
@@ -81,10 +82,7 @@ export default function PropovoiceCrmAuthorization({
             &times;
           </span>
           {sprintf(
-            __(
-              '%s plugin must be activated to integrate with Bit Integrations',
-              'bit-integrations'
-            ),
+            __('%s plugin must be activated to integrate with Bit Integrations', 'bit-integrations'),
             'Propovoice CRM'
           )}
         </div>
@@ -94,7 +92,8 @@ export default function PropovoiceCrmAuthorization({
         <button
           onClick={authorizeHandler}
           className="btn btcd-btn-lg purple sh-sm flx mt-5"
-          type="button">
+          type="button"
+        >
           {__('Connect', 'bit-integrations')}
         </button>
       )}
@@ -104,7 +103,8 @@ export default function PropovoiceCrmAuthorization({
           onClick={() => setStep(2)}
           className="btn btcd-btn-lg purple sh-sm flx mt-5"
           type="button"
-          disabled={!isAuthorized}>
+          disabled={!isAuthorized}
+        >
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>

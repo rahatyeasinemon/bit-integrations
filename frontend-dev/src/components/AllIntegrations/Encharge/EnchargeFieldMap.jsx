@@ -45,7 +45,8 @@ export default function EnchargeFieldMap({ i, formFields, field, enchargeConf, s
         className="btcd-paper-inp mr-2"
         name="formField"
         value={field.formField || ''}
-        onChange={(ev) => handleFieldMapping(ev, i)}>
+        onChange={(ev) => handleFieldMapping(ev, i)}
+      >
         <optgroup label={__('Form Fields', 'bit-integrations')}>
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           {formFields.map(
@@ -62,7 +63,8 @@ export default function EnchargeFieldMap({ i, formFields, field, enchargeConf, s
           label={sprintf(
             __('General Smart Codes %s', 'bit-integrations'),
             isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-          )}>
+          )}
+        >
           {isPro &&
             SmartTagField?.map((f) => (
               <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -89,7 +91,8 @@ export default function EnchargeFieldMap({ i, formFields, field, enchargeConf, s
         name="enChargeFields"
         value={field.enChargeFields}
         onChange={(ev) => handleFieldMapping(ev, i)}
-        disabled={isRequired}>
+        disabled={isRequired}
+      >
         <option value="">{__('Select Field', 'bit-integrations')}</option>
         {isRequired
           ? enchargeConf?.default?.fields &&
@@ -114,7 +117,8 @@ export default function EnchargeFieldMap({ i, formFields, field, enchargeConf, s
             onClick={() => delFieldMap(i)}
             className="icn-btn sh-sm ml-2"
             type="button"
-            aria-label="btn">
+            aria-label="btn"
+          >
             <TrashIcn />
           </button>
         </>

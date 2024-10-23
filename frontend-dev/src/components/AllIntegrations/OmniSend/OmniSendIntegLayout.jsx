@@ -93,7 +93,8 @@ export default function OmniSendIntegLayout({
             name="email_status"
             value={omniSendConf.email_status}
             className="btcd-paper-inp w-5"
-            required>
+            required
+          >
             <option value="">{__('Select Status', 'bit-integrations')}</option>
             <option value="subscribed">{__('Subscribed', 'bit-integrations')}</option>
             <option value="unsubscribed">{__('Unsubscribed', 'bit-integrations')}</option>
@@ -110,7 +111,8 @@ export default function OmniSendIntegLayout({
             name="sms_status"
             value={omniSendConf.sms_status}
             className="btcd-paper-inp w-5"
-            required>
+            required
+          >
             <option value="">{__('Select Status', 'bit-integrations')}</option>
             <option value="subscribed">{__('Subscribed', 'bit-integrations')}</option>
             <option value="unsubscribed">{__('Unsubscribed', 'bit-integrations')}</option>
@@ -119,8 +121,7 @@ export default function OmniSendIntegLayout({
         </div>
       )}
 
-      {(omniSendConf.channels.search('email') !== -1 ||
-        omniSendConf.channels.search('sms') !== -1) && (
+      {(omniSendConf.channels.search('email') !== -1 || omniSendConf.channels.search('sms') !== -1) && (
         <>
           <br />
           <div className="mt-5">
@@ -166,7 +167,8 @@ export default function OmniSendIntegLayout({
                 addFieldMap(omniSendConf.field_map.length, omniSendConf, setOmniSendConf, false)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

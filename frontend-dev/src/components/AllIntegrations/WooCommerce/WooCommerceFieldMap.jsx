@@ -75,7 +75,8 @@ export default function WooCommerceFieldMap({
           className="btcd-paper-inp mr-2"
           name="formField"
           value={field.formField || ''}
-          onChange={(ev) => handleFieldMapping(ev, i)}>
+          onChange={(ev) => handleFieldMapping(ev, i)}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           {uploadFields
             ? formFields.map(
@@ -114,27 +115,28 @@ export default function WooCommerceFieldMap({
           name="wcField"
           value={field.wcField || ''}
           onChange={(ev) => handleFieldMapping(ev, i)}
-          disabled={isRequired}>
+          disabled={isRequired}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
-          {Object.values(
-            wcConf.default.fields[module][uploadFields ? 'uploadFields' : 'fields']
-          ).map((fld) => {
-            if (isRequired) {
-              if (fld.required && fld.fieldKey === field.wcField) {
+          {Object.values(wcConf.default.fields[module][uploadFields ? 'uploadFields' : 'fields']).map(
+            (fld) => {
+              if (isRequired) {
+                if (fld.required && fld.fieldKey === field.wcField) {
+                  return (
+                    <option key={`${fld.fieldKey}-1`} value={fld.fieldKey}>
+                      {fld.fieldName}
+                    </option>
+                  )
+                }
+              } else if (!fld.required) {
                 return (
                   <option key={`${fld.fieldKey}-1`} value={fld.fieldKey}>
                     {fld.fieldName}
                   </option>
                 )
               }
-            } else if (!fld.required) {
-              return (
-                <option key={`${fld.fieldKey}-1`} value={fld.fieldKey}>
-                  {fld.fieldName}
-                </option>
-              )
             }
-          })}
+          )}
         </select>
       </div>
       {!isRequired && (
@@ -146,7 +148,8 @@ export default function WooCommerceFieldMap({
             onClick={() => delFieldMap(i)}
             className="icn-btn sh-sm ml-2"
             type="button"
-            aria-label="btn">
+            aria-label="btn"
+          >
             <TrashIcn />
           </button>
         </>

@@ -63,9 +63,7 @@ export const mailsterAuthentication = (
       return
     }
     setLoading({ ...loading, auth: false })
-    toast.error(
-      __('Connection failed: install and active Mailster plugin first!', 'bit-integrations')
-    )
+    toast.error(__('Connection failed: install and active Mailster plugin first!', 'bit-integrations'))
   })
 }
 

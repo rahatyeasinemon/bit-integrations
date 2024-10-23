@@ -51,10 +51,9 @@ export default function HighLevelAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {highLevel?.youTubeLink && (
-        <TutorialLink title="HighLevel" youTubeLink={highLevel?.youTubeLink} />
-      )}
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
+      {highLevel?.youTubeLink && <TutorialLink title="HighLevel" youTubeLink={highLevel?.youTubeLink} />}
       {highLevel?.docLink && <TutorialLink title="HighLevel" docLink={highLevel?.docLink} />}
 
       <div className="mt-3 wdt-200">
@@ -108,7 +107,8 @@ export default function HighLevelAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || loading.auth}>
+            disabled={isAuthorized || loading.auth}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -119,7 +119,8 @@ export default function HighLevelAuthorization({
             onClick={() => nextPage(2)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <BackIcn className="ml-1 rev-icn" />
           </button>

@@ -34,25 +34,23 @@ export default function DirectIqIntegLayout({
         name="listId"
         id=""
         className="btcd-paper-inp w-5"
-        onChange={handleInput}>
+        onChange={handleInput}
+      >
         <option value="">{__('Select List', 'bit-integrations')}</option>
         {directIqConf?.default?.directIqLists &&
           Object.keys(directIqConf.default.directIqLists).map((listname) => (
-            <option
-              key={`${listname + 1}`}
-              value={directIqConf.default.directIqLists[listname].listId}>
+            <option key={`${listname + 1}`} value={directIqConf.default.directIqLists[listname].listId}>
               {directIqConf.default.directIqLists[listname].listName}
             </option>
           ))}
       </select>
       <button
-        onClick={() =>
-          refreshDirectIqList(directIqConf, setDirectIqConf, setIsLoading, setSnackbar)
-        }
+        onClick={() => refreshDirectIqList(directIqConf, setDirectIqConf, setIsLoading, setSnackbar)}
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': '"Refresh DirectIq list"' }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -73,13 +71,12 @@ export default function DirectIqIntegLayout({
       <div className="mt-4">
         <b className="wdt-100">{__('Map Fields', 'bit-integrations')}</b>
         <button
-          onClick={() =>
-            refreshDirectIqHeader(directIqConf, setDirectIqConf, setIsLoading, setSnackbar)
-          }
+          onClick={() => refreshDirectIqHeader(directIqConf, setDirectIqConf, setIsLoading, setSnackbar)}
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Refresh DirectIq Field', 'bit-integrations')}'` }}
           type="button"
-          disabled={isLoading}>
+          disabled={isLoading}
+        >
           &#x21BB;
         </button>
       </div>
@@ -107,11 +104,10 @@ export default function DirectIqIntegLayout({
           ))}
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
-              onClick={() =>
-                addFieldMap(directIqConf.field_map.length, directIqConf, setDirectIqConf)
-              }
+              onClick={() => addFieldMap(directIqConf.field_map.length, directIqConf, setDirectIqConf)}
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

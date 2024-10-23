@@ -52,7 +52,8 @@ export default function DripFieldMap({ i, formFields, field, dripConf, setDripCo
           className="btcd-paper-inp mr-2"
           name="formField"
           value={field.formField || ''}
-          onChange={(ev) => handleFieldMapping(ev, i)}>
+          onChange={(ev) => handleFieldMapping(ev, i)}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           <optgroup label={__('Campaign Fields', 'bit-integrations')}>
             {formFields?.map((f) => (
@@ -63,7 +64,8 @@ export default function DripFieldMap({ i, formFields, field, dripConf, setDripCo
           </optgroup>
           <option value="custom">{__('Custom...', 'bit-integrations')}</option>
           <optgroup
-            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}>
+            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}
+          >
             {isPro &&
               SmartTagField?.map((f) => (
                 <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -90,7 +92,8 @@ export default function DripFieldMap({ i, formFields, field, dripConf, setDripCo
           name="dripField"
           value={i < requiredFields ? requiredFields[i].label || '' : field.dripField || ''}
           onChange={(ev) => handleFieldMapping(ev, i)}
-          disabled={i < requiredFields.length}>
+          disabled={i < requiredFields.length}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           {i < requiredFields.length ? (
             <option key={requiredFields[i].key} value={requiredFields[i].key}>
@@ -114,7 +117,8 @@ export default function DripFieldMap({ i, formFields, field, dripConf, setDripCo
             onClick={() => delFieldMap(i)}
             className="icn-btn sh-sm ml-2"
             type="button"
-            aria-label="btn">
+            aria-label="btn"
+          >
             <TrashIcn />
           </button>
         </>

@@ -23,8 +23,7 @@ function OneDrive({ formFields, setFlow, flow, allIntegURL }) {
     name: 'OneDrive',
     type: 'OneDrive',
     clientId: process.env.NODE_ENV === 'development' ? '91e6cdfd-fe9b-44c7-ab6d-5ee077accc7a' : '',
-    clientSecret:
-      process.env.NODE_ENV === 'development' ? 'VaP7Q~ATIStGXRn1oOQrAz1tKv-fMUM2g7Ku7' : '',
+    clientSecret: process.env.NODE_ENV === 'development' ? 'VaP7Q~ATIStGXRn1oOQrAz1tKv-fMUM2g7Ku7' : '',
     field_map: [{ formField: '', OneDriveFormField: '' }],
     folder: '',
     folderMap: [],
@@ -75,7 +74,8 @@ function OneDrive({ formFields, setFlow, flow, allIntegURL }) {
             height: 'auto',
             overflow: 'visible'
           })
-        }}>
+        }}
+      >
         <OneDriveIntegLayout
           flowID={flowID}
           formFields={formFields}
@@ -90,9 +90,9 @@ function OneDrive({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => setStep(3)}
           disabled={!oneDriveConf.actions.attachments || !oneDriveConf.folder}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
-          {__('Next', 'bit-integrations')}{' '}
-          <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+          type="button"
+        >
+          {__('Next', 'bit-integrations')} <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>
       </div>
       <IntegrationStepThree step={step} saveConfig={() => saveConfig()} isLoading={isLoading} />

@@ -27,7 +27,8 @@ export default function MailBlusterIntegLayout({
         onChange={handleInput}
         name="subscribed"
         value={mailBlusterConf.subscribed}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select subscription type', 'bit-integrations')}</option>
         <option value="true">{__('Subscribed', 'bit-integrations')}</option>
         <option value="false">{__('Unsubscribed', 'bit-integrations')}</option>
@@ -64,7 +65,8 @@ export default function MailBlusterIntegLayout({
                 className="icn-btn sh-sm ml-2 mr-2 tooltip"
                 style={{ '--tooltip-txt': `'${__('Refresh custom fields', 'bit-integrations')}'` }}
                 type="button"
-                disabled={loading.customFields}>
+                disabled={loading.customFields}
+              >
                 &#x21BB;
               </button>
             </b>
@@ -94,15 +96,11 @@ export default function MailBlusterIntegLayout({
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
               onClick={() =>
-                addFieldMap(
-                  mailBlusterConf.field_map.length,
-                  mailBlusterConf,
-                  setMailBlusterConf,
-                  false
-                )
+                addFieldMap(mailBlusterConf.field_map.length, mailBlusterConf, setMailBlusterConf, false)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

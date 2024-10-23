@@ -9,13 +9,7 @@ import { generateMappedField } from './GroundhoggCommonFunc'
 import TagifyInput from '../../Utilities/TagifyInput'
 import { handleCustomValue } from '../IntegrationHelpers/IntegrationHelpers'
 
-export default function GroundhoggFieldMap({
-  i,
-  formFields,
-  field,
-  groundhoggConf,
-  setGroundhoggConf
-}) {
+export default function GroundhoggFieldMap({ i, formFields, field, groundhoggConf, setGroundhoggConf }) {
   useEffect(() => {
     if (groundhoggConf?.field_map?.length === 1 && field.GroundhoggMapField === '') {
       const newConf = { ...groundhoggConf }
@@ -26,8 +20,7 @@ export default function GroundhoggFieldMap({
   }, [])
 
   const requiredFlds = groundhoggConf?.contactsFields.filter((fld) => fld.required === true) || []
-  const nonRequiredFlds =
-    groundhoggConf?.contactsFields.filter((fld) => fld.required === false) || []
+  const nonRequiredFlds = groundhoggConf?.contactsFields.filter((fld) => fld.required === false) || []
 
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi
@@ -40,7 +33,8 @@ export default function GroundhoggFieldMap({
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, groundhoggConf, setGroundhoggConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, groundhoggConf, setGroundhoggConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -54,7 +48,8 @@ export default function GroundhoggFieldMap({
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-gh-${f.name}`} value={f.name}>
@@ -80,10 +75,9 @@ export default function GroundhoggFieldMap({
             className="btcd-paper-inp"
             disabled={i < requiredFlds.length}
             name="GroundhoggMapField"
-            value={
-              i < requiredFlds.length ? requiredFlds[i].key || '' : field.GroundhoggMapField || ''
-            }
-            onChange={(ev) => handleFieldMapping(ev, i, groundhoggConf, setGroundhoggConf)}>
+            value={i < requiredFlds.length ? requiredFlds[i].key || '' : field.GroundhoggMapField || ''}
+            onChange={(ev) => handleFieldMapping(ev, i, groundhoggConf, setGroundhoggConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFlds.length ? (
               <option key={requiredFlds[i].key} value={requiredFlds[i].key}>
@@ -103,14 +97,16 @@ export default function GroundhoggFieldMap({
             <button
               onClick={() => addFieldMap(i, groundhoggConf, setGroundhoggConf)}
               className="icn-btn sh-sm ml-2 mr-1"
-              type="button">
+              type="button"
+            >
               +
             </button>
             <button
               onClick={() => delFieldMap(i, groundhoggConf, setGroundhoggConf)}
               className="icn-btn sh-sm ml-1"
               type="button"
-              aria-label="btn">
+              aria-label="btn"
+            >
               <span className="btcd-icn icn-trash-2" />
             </button>
           </>

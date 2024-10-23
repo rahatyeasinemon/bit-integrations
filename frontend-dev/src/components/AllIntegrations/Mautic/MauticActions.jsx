@@ -54,7 +54,8 @@ export default function MauticActions({ mauticConf, setMauticConf, formFields })
         show={actionMdl.show === 'tag'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Tag Records', 'bit-integrations')}>
+        title={__('Tag Records', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <small>{__('Add a tag to contacts', 'bit-integrations')}</small>
         <div className="mt-2">{__('Tag Name', 'bit-integrations')}</div>
@@ -85,7 +86,8 @@ export default function MauticActions({ mauticConf, setMauticConf, formFields })
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh CRM Tags', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>

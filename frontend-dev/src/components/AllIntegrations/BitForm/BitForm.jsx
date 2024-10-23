@@ -25,8 +25,7 @@ function BitForm({ formFields, setFlow, flow, allIntegURL }) {
     name: 'Bit Form',
     type: 'Bit Form',
     domainName: siteURL,
-    api_key:
-      process.env.NODE_ENV === 'development' ? '59971a5c6213ecbb4e58bf91b4a56962f05311d8' : '',
+    api_key: process.env.NODE_ENV === 'development' ? '59971a5c6213ecbb4e58bf91b4a56962f05311d8' : '',
     id: '',
     field_map: [{ formField: '', BitFormMapField: '' }],
     address_field: [],
@@ -75,7 +74,8 @@ function BitForm({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}
+      >
         <BitFormIntegLayout
           formFields={formFields}
           handleInput={(e) =>
@@ -99,7 +99,8 @@ function BitForm({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => nextPage(3)}
           disabled={bitFormConf.field_map.length < 2 || isLoading}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')} &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>

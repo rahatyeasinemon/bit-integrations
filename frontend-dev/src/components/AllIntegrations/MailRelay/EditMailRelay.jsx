@@ -66,9 +66,7 @@ function EditMailRelay({ allIntegURL }) {
       <MailRelayIntegLayout
         formID={flow.triggered_entity_id}
         formFields={formField}
-        handleInput={(e) =>
-          handleInput(e, mailRelayConf, setMailRelayConf, setLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, mailRelayConf, setMailRelayConf, setLoading, setSnackbar)}
         mailRelayConf={mailRelayConf}
         setMailRelayConf={setMailRelayConf}
         loading={loading}

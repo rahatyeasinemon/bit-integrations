@@ -42,10 +42,9 @@ export default function SureCartAuthorization({
       style={{
         ...{ width: step === 1 && 900 },
         ...{ height: step === 1 && 'auto' }
-      }}>
-      {sureCart?.youTubeLink && (
-        <TutorialLink title="SureCart" youTubeLink={sureCart?.youTubeLink} />
-      )}
+      }}
+    >
+      {sureCart?.youTubeLink && <TutorialLink title="SureCart" youTubeLink={sureCart?.youTubeLink} />}
       {sureCart?.docLink && <TutorialLink title="SureCart" docLink={sureCart?.docLink} />}
 
       <div className="mt-3">
@@ -80,7 +79,8 @@ export default function SureCartAuthorization({
           className="btcd-link"
           href="https://app.surecart.com/developer"
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {__('SureCart', 'bit-integrations')}
         </a>
       </small>
@@ -102,7 +102,8 @@ export default function SureCartAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -113,7 +114,8 @@ export default function SureCartAuthorization({
             onClick={nextPage}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

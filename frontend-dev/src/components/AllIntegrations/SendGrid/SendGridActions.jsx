@@ -53,7 +53,8 @@ export default function SendGridActions({ sendGridConf, setSendGridConf, loading
         show={actionMdl.show === 'lists'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Lists', 'bit-integrations')}>
+        title={__('Lists', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select contact lists', 'bit-integrations')}</div>
         {loading.lists ? (
@@ -78,7 +79,8 @@ export default function SendGridActions({ sendGridConf, setSendGridConf, loading
               onClick={() => getLists(sendGridConf, setSendGridConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Lists', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>

@@ -22,7 +22,8 @@ export default function RapidmailIntegLayout({
         onChange={handleInput}
         name="recipient_id"
         value={rapidmailConf.recipient_id}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select Recipients', 'bit-integrations')}</option>
         {rapidmailConf?.default?.recipientlists &&
           rapidmailConf.default.recipientlists.map(({ id, name }) => (
@@ -36,7 +37,8 @@ export default function RapidmailIntegLayout({
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': `'${__('Fetch All Recipients', 'bit-integrations')}'` }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -71,7 +73,8 @@ export default function RapidmailIntegLayout({
             addFieldMap(rapidmailConf.field_map.length, rapidmailConf, setRapidmailConf, false)
           }
           className="icn-btn sh-sm"
-          type="button">
+          type="button"
+        >
           +
         </button>
       </div>

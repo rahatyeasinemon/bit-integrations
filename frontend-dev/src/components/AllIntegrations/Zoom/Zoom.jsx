@@ -74,13 +74,12 @@ function Zoom({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ width: step === 2 && 900, height: step === 2 && `${100}%` }}>
+        style={{ width: step === 2 && 900, height: step === 2 && `${100}%` }}
+      >
         <ZoomIntegLayout
           formID={formID}
           formFields={formFields}
-          handleInput={(e) =>
-            handleInput(e, zoomConf, setZoomConf, formID, setIsLoading, setSnackbar)
-          }
+          handleInput={(e) => handleInput(e, zoomConf, setZoomConf, formID, setIsLoading, setSnackbar)}
           zoomConf={zoomConf}
           setZoomConf={setZoomConf}
           isLoading={isLoading}
@@ -98,7 +97,8 @@ function Zoom({ formFields, setFlow, flow, allIntegURL }) {
             zoomConf.selectedActions == null
           }
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>

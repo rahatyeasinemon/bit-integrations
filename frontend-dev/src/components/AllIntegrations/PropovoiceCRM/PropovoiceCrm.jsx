@@ -85,7 +85,8 @@ function PropovoiceCrm({ formFields, setFlow, flow, allIntegURL }) {
             height: 'auto',
             overflow: 'visible'
           })
-        }}>
+        }}
+      >
         <PropovoiceCrmIntegLayout
           formFields={formFields}
           handleInput={(e) =>
@@ -101,7 +102,8 @@ function PropovoiceCrm({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => nextPage(3)}
           disabled={!checkMappedFields(propovoiceCrmConf)}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>

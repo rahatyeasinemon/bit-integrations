@@ -50,7 +50,8 @@ export default function ZohoRecruitIntegLayout({
         name="module"
         value={recruitConf.module}
         className="btcd-paper-inp w-5"
-        disabled={tab === 1}>
+        disabled={tab === 1}
+      >
         <option value="">{__('Select Module', 'bit-integrations')}</option>
         {recruitConf.default &&
           recruitConf.default.modules &&
@@ -62,13 +63,12 @@ export default function ZohoRecruitIntegLayout({
       </select>
       {tab === 0 && (
         <button
-          onClick={() =>
-            refreshModules(formID, recruitConf, setRecruitConf, setIsLoading, setSnackbar)
-          }
+          onClick={() => refreshModules(formID, recruitConf, setRecruitConf, setIsLoading, setSnackbar)}
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': '"Refresh Recruit Modules"' }}
           type="button"
-          disabled={isLoading}>
+          disabled={isLoading}
+        >
           &#x21BB;
         </button>
       )}
@@ -87,7 +87,8 @@ export default function ZohoRecruitIntegLayout({
                   onClick={() => removeRelatedTab(indx)}
                   className="icn-btn"
                   aria-label="delete-relatedlist"
-                  type="button">
+                  type="button"
+                >
                   <CloseIcn size="14" />
                 </button>
               </>
@@ -97,7 +98,8 @@ export default function ZohoRecruitIntegLayout({
               onClick={addNewRelatedTab}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': '"Add More Related List"' }}
-              type="button">
+              type="button"
+            >
               +
             </button>
           )}

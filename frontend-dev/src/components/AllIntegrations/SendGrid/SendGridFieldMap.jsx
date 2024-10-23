@@ -11,8 +11,7 @@ import { handleCustomValue } from '../IntegrationHelpers/IntegrationHelpers'
 
 export default function SendGridFieldMap({ i, formFields, field, sendGridConf, setSendGridConf }) {
   const requiredFields = sendGridConf?.staticFields.filter((fld) => fld.required === true) || []
-  const nonRequriedFields =
-    sendGridConf?.staticFields?.filter((fld) => fld.required === false) || []
+  const nonRequriedFields = sendGridConf?.staticFields?.filter((fld) => fld.required === false) || []
   const allNonrequriedFields = [...nonRequriedFields, ...sendGridConf.customFields]
 
   if (sendGridConf?.field_map?.length === 1 && field.sendGridFormField === '') {
@@ -33,7 +32,8 @@ export default function SendGridFieldMap({ i, formFields, field, sendGridConf, s
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, sendGridConf, setSendGridConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, sendGridConf, setSendGridConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -47,7 +47,8 @@ export default function SendGridFieldMap({ i, formFields, field, sendGridConf, s
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -73,10 +74,9 @@ export default function SendGridFieldMap({ i, formFields, field, sendGridConf, s
             className="btcd-paper-inp"
             disabled={i < requiredFields.length}
             name="sendGridFormField"
-            value={
-              i < requiredFields ? requiredFields[i].label || '' : field.sendGridFormField || ''
-            }
-            onChange={(ev) => handleFieldMapping(ev, i, sendGridConf, setSendGridConf)}>
+            value={i < requiredFields ? requiredFields[i].label || '' : field.sendGridFormField || ''}
+            onChange={(ev) => handleFieldMapping(ev, i, sendGridConf, setSendGridConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFields.length ? (
               <option key={requiredFields[i].key} value={requiredFields[i].key}>
@@ -96,14 +96,16 @@ export default function SendGridFieldMap({ i, formFields, field, sendGridConf, s
             <button
               onClick={() => addFieldMap(i, sendGridConf, setSendGridConf)}
               className="icn-btn sh-sm ml-2 mr-1"
-              type="button">
+              type="button"
+            >
               +
             </button>
             <button
               onClick={() => delFieldMap(i, sendGridConf, setSendGridConf)}
               className="icn-btn sh-sm ml-1"
               type="button"
-              aria-label="btn">
+              aria-label="btn"
+            >
               <span className="btcd-icn icn-trash-2" />
             </button>
           </>

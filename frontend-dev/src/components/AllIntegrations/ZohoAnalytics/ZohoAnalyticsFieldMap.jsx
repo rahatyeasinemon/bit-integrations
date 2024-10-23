@@ -50,7 +50,8 @@ export default function ZohoAnalyticsFieldMap({
           className="btcd-paper-inp mr-2"
           name="formField"
           value={field.formField || ''}
-          onChange={(ev) => handleFieldMapping(ev, i)}>
+          onChange={(ev) => handleFieldMapping(ev, i)}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           <optgroup label={__('Form Fields', 'bit-integrations')}>
             {formFields.map(
@@ -64,7 +65,8 @@ export default function ZohoAnalyticsFieldMap({
           </optgroup>
           <option value="custom">{__('Custom...', 'bit-integrations')}</option>
           <optgroup
-            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}>
+            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}
+          >
             {isPro &&
               SmartTagField?.map((f) => (
                 <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -90,28 +92,29 @@ export default function ZohoAnalyticsFieldMap({
           className="btcd-paper-inp"
           name="zohoFormField"
           value={field.zohoFormField || ''}
-          onChange={(ev) => handleFieldMapping(ev, i)}>
+          onChange={(ev) => handleFieldMapping(ev, i)}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
-          {Object.values(analyticsConf.default.tables.headers[analyticsConf.table]).map(
-            (header) => (
-              <option key={`${header}-1`} value={header}>
-                {header}
-              </option>
-            )
-          )}
+          {Object.values(analyticsConf.default.tables.headers[analyticsConf.table]).map((header) => (
+            <option key={`${header}-1`} value={header}>
+              {header}
+            </option>
+          ))}
         </select>
       </div>
       <button
         onClick={() => addFieldMap(i, analyticsConf, setAnalyticsConf)}
         className="icn-btn sh-sm ml-2 mr-1"
-        type="button">
+        type="button"
+      >
         +
       </button>
       <button
         onClick={() => delFieldMap(i)}
         className="icn-btn sh-sm ml-2"
         type="button"
-        aria-label="btn">
+        aria-label="btn"
+      >
         <TrashIcn />
       </button>
     </div>

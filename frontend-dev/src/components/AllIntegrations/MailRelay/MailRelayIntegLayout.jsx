@@ -34,7 +34,8 @@ export default function MailRelayIntegLayout({
         onChange={handleInput}
         name="status"
         value={mailRelayConf.status}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select subscriber status', 'bit-integrations')}</option>
         <option value="active">{__('Active', 'bit-integrations')}</option>
         <option value="inactive">{__('Inactive', 'bit-integrations')}</option>
@@ -73,7 +74,8 @@ export default function MailRelayIntegLayout({
                   '--tooltip-txt': `'${__('Refresh custom fields', 'bit-integrations')}'`
                 }}
                 type="button"
-                disabled={loading.customFields}>
+                disabled={loading.customFields}
+              >
                 &#x21BB;
               </button>
             </b>
@@ -106,7 +108,8 @@ export default function MailRelayIntegLayout({
                 addFieldMap(mailRelayConf.field_map.length, mailRelayConf, setMailRelayConf, false)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

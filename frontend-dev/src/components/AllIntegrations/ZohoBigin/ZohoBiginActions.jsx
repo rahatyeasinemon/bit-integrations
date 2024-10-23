@@ -101,10 +101,7 @@ export default function ZohoBiginActions({
                 className="wdt-200 mt-4 mr-2"
                 value="notes"
                 title={__('Add a Note', 'bit-integrations')}
-                subTitle={__(
-                  'Add a note from bitform to pushed to Zoho Bigin.',
-                  'bit-integrations'
-                )}
+                subTitle={__('Add a note from bitform to pushed to Zoho Bigin.', 'bit-integrations')}
               />
             )}
           </>
@@ -172,7 +169,8 @@ export default function ZohoBiginActions({
         show={actionMdl.show === 'attachments'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Select Attachment', 'bit-integrations')}>
+        title={__('Select Attachment', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2" />
         <div className="mt-2">{__('Select File Upload Fields', 'bit-integrations')}</div>
         <MultiSelect
@@ -197,7 +195,8 @@ export default function ZohoBiginActions({
         show={actionMdl.show === 'photo'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Upload Photo', 'bit-integrations')}>
+        title={__('Upload Photo', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2" />
         <div className="mt-2">{__('Select File Upload Fields', 'bit-integrations')}</div>
         <MultiSelect
@@ -221,7 +220,8 @@ export default function ZohoBiginActions({
         show={recOwnerMdl}
         close={() => setrecOwnerMdl(false)}
         action={() => setrecOwnerMdl(false)}
-        title={__('Record Owner', 'bit-integrations')}>
+        title={__('Record Owner', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         {isLoading ? (
           <Loader
@@ -251,13 +251,12 @@ export default function ZohoBiginActions({
               customValue
             />
             <button
-              onClick={() =>
-                refreshUsers(formID, biginConf, setBiginConf, setIsLoading, setSnackbar)
-              }
+              onClick={() => refreshUsers(formID, biginConf, setBiginConf, setIsLoading, setSnackbar)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': '"Refresh Users"' }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -273,7 +272,8 @@ export default function ZohoBiginActions({
           show={notesMdl}
           close={() => setNotesMdl(false)}
           action={() => setNotesMdl(false)}
-          title={__('Notes', 'bit-integrations')}>
+          title={__('Notes', 'bit-integrations')}
+        >
           <div className="btcd-hr mt-2 mb-2" />
           {isLoading ? (
             <Loader
@@ -302,7 +302,8 @@ export default function ZohoBiginActions({
               <div className="mt-2 mb-1">{__('Note Content', 'bit-integrations')}</div>
               <select
                 className="btcd-paper-inp w-5"
-                onChange={(e) => handleNoteAction('field', e.target.value)}>
+                onChange={(e) => handleNoteAction('field', e.target.value)}
+              >
                 <option value="">{__('Field', 'bit-integrations')}</option>
                 {formFields.map(
                   (f) =>
@@ -337,7 +338,8 @@ export default function ZohoBiginActions({
           show={actionMdl.show === 'tags'}
           close={clsActionMdl}
           action={clsActionMdl}
-          title={__('Add Tags', 'bit-integrations')}>
+          title={__('Add Tags', 'bit-integrations')}
+        >
           <div className="btcd-hr mt-2 mb-2" />
           {isLoading ? (
             <Loader
@@ -375,7 +377,8 @@ export default function ZohoBiginActions({
                 className="icn-btn sh-sm ml-2 mr-2 tooltip"
                 style={{ '--tooltip-txt': `'${__('Refresh Tags', 'bit-integrations')}'` }}
                 type="button"
-                disabled={isLoading}>
+                disabled={isLoading}
+              >
                 &#x21BB;
               </button>
             </div>

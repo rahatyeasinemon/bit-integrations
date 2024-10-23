@@ -460,11 +460,13 @@ export const handleAuthorize = (
     return
   }
   setIsLoading(true)
-  const apiEndpoint = `https://accounts.zoho.${confTmp.dataCenter
-    }/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${confTmp.clientId
-    }&prompt=Consent&access_type=offline&state=${encodeURIComponent(
-      window.location.href
-    )}/redirect&redirect_uri=${encodeURIComponent(`${btcbi.api.base}`)}/redirect`
+  const apiEndpoint = `https://accounts.zoho.${
+    confTmp.dataCenter
+  }/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${
+    confTmp.clientId
+  }&prompt=Consent&access_type=offline&state=${encodeURIComponent(
+    window.location.href
+  )}/redirect&redirect_uri=${encodeURIComponent(`${btcbi.api.base}`)}/redirect`
   const authWindow = window.open(apiEndpoint, integ, 'width=400,height=609,toolbar=off')
   const popupURLCheckTimer = setInterval(() => {
     if (authWindow.closed) {
@@ -545,8 +547,9 @@ const tokenHelper = (
       ) {
         setSnackbar({
           show: true,
-          msg: `${__('Authorization failed Cause:', 'bit-integrations')}${result.data.data || result.data
-            }. ${__('please try again', 'bit-integrations')}`
+          msg: `${__('Authorization failed Cause:', 'bit-integrations')}${
+            result.data.data || result.data
+          }. ${__('please try again', 'bit-integrations')}`
         })
       } else {
         setSnackbar({

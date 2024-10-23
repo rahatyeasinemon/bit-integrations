@@ -51,7 +51,8 @@ export default function AgiledIntegLayout({
         onChange={handleActionInput}
         name="actionName"
         value={agiledConf.actionName}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select an action', 'bit-integrations')}</option>
         <option value="account">{__('Create Account', 'bit-integrations')}</option>
         <option value="contact">{__('Create Contact', 'bit-integrations')}</option>
@@ -77,7 +78,8 @@ export default function AgiledIntegLayout({
             onChange={handleInput}
             name="contactRole"
             value={agiledConf.contactRole}
-            className="btcd-paper-inp w-5">
+            className="btcd-paper-inp w-5"
+          >
             <option value="">{__('Select a role', 'bit-integrations')}</option>
             <option value="Lead">{__('Lead', 'bit-integrations')}</option>
             <option value="Client">{__('Client', 'bit-integrations')}</option>
@@ -107,7 +109,8 @@ export default function AgiledIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh pipelines', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.CRMPipelines}>
+              disabled={loading.CRMPipelines}
+            >
               &#x21BB;
             </button>
           </div>
@@ -135,7 +138,8 @@ export default function AgiledIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh pipeline stages', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.CRMPipelineStages}>
+              disabled={loading.CRMPipelineStages}
+            >
               &#x21BB;
             </button>
           </div>
@@ -182,11 +186,10 @@ export default function AgiledIntegLayout({
           ))}
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
-              onClick={() =>
-                addFieldMap(agiledConf.field_map.length, agiledConf, setAgiledConf, false)
-              }
+              onClick={() => addFieldMap(agiledConf.field_map.length, agiledConf, setAgiledConf, false)}
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

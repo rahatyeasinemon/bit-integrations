@@ -46,7 +46,8 @@ export default function TelegramIntegLayout({
           onChange={handleInput}
           name="chat_id"
           value={telegramConf.chat_id}
-          className="btcd-paper-inp w-5">
+          className="btcd-paper-inp w-5"
+        >
           <option value="">{__('Select Chat List', 'bit-integrations')}</option>
           {telegramConf?.default?.telegramChatLists &&
             Object.keys(telegramConf.default.telegramChatLists)
@@ -54,19 +55,19 @@ export default function TelegramIntegLayout({
               .map((chatListname) => (
                 <option
                   key={chatListname}
-                  value={telegramConf.default.telegramChatLists[chatListname].id}>
+                  value={telegramConf.default.telegramChatLists[chatListname].id}
+                >
                   {telegramConf.default.telegramChatLists[chatListname].name}
                 </option>
               ))}
         </select>
         <button
-          onClick={() =>
-            refreshGetUpdates(telegramConf, setTelegramConf, setIsLoading, setSnackbar)
-          }
+          onClick={() => refreshGetUpdates(telegramConf, setTelegramConf, setIsLoading, setSnackbar)}
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Refresh Telegram List', 'bit-integrations')}'` }}
           type="button"
-          disabled={isLoading}>
+          disabled={isLoading}
+        >
           &#x21BB;
         </button>
       </div>

@@ -211,7 +211,8 @@ export default function FlowluActions({ flowluConf, setFlowluConf, loading, setL
         show={actionMdl.show === 'category'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Category', 'bit-integrations')}>
+        title={__('Add Category', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Category', 'bit-integrations')}</div>
         {loading.accountCategories ? (
@@ -241,7 +242,8 @@ export default function FlowluActions({ flowluConf, setFlowluConf, loading, setL
               onClick={() => getAllAccountCategories(flowluConf, setFlowluConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Categories', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -256,7 +258,8 @@ export default function FlowluActions({ flowluConf, setFlowluConf, loading, setL
         show={actionMdl.show === 'industry'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Industry', 'bit-integrations')}>
+        title={__('Add Industry', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Industry', 'bit-integrations')}</div>
         {loading.industry ? (
@@ -285,7 +288,8 @@ export default function FlowluActions({ flowluConf, setFlowluConf, loading, setL
               onClick={() => getAllIndustry(flowluConf, setFlowluConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Industry', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -300,7 +304,8 @@ export default function FlowluActions({ flowluConf, setFlowluConf, loading, setL
         show={actionMdl.show === 'source'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Source', 'bit-integrations')}>
+        title={__('Add Source', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Source', 'bit-integrations')}</div>
         {loading.source ? (
@@ -329,7 +334,8 @@ export default function FlowluActions({ flowluConf, setFlowluConf, loading, setL
               onClick={() => getAllSource(flowluConf, setFlowluConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Source', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -344,7 +350,8 @@ export default function FlowluActions({ flowluConf, setFlowluConf, loading, setL
         show={actionMdl.show === 'customer'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Customer', 'bit-integrations')}>
+        title={__('Add Customer', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Customer', 'bit-integrations')}</div>
         {loading.customer ? (
@@ -373,7 +380,8 @@ export default function FlowluActions({ flowluConf, setFlowluConf, loading, setL
               onClick={() => getAllCustomer(flowluConf, setFlowluConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Customer', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -388,7 +396,8 @@ export default function FlowluActions({ flowluConf, setFlowluConf, loading, setL
         show={actionMdl.show === 'manager'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Project Manager', 'bit-integrations')}>
+        title={__('Add Project Manager', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Project Manager', 'bit-integrations')}</div>
         {loading.manager ? (
@@ -417,7 +426,8 @@ export default function FlowluActions({ flowluConf, setFlowluConf, loading, setL
               onClick={() => getAllManagers(flowluConf, setFlowluConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Project Manager', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -432,7 +442,8 @@ export default function FlowluActions({ flowluConf, setFlowluConf, loading, setL
         show={actionMdl.show === 'projectStage'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Project Stage', 'bit-integrations')}>
+        title={__('Add Project Stage', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Project Stage', 'bit-integrations')}</div>
         {loading.projectStage ? (
@@ -461,7 +472,8 @@ export default function FlowluActions({ flowluConf, setFlowluConf, loading, setL
               onClick={() => getAllProjectStage(flowluConf, setFlowluConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Project Stage', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -476,7 +488,8 @@ export default function FlowluActions({ flowluConf, setFlowluConf, loading, setL
         show={actionMdl.show === 'portfolio'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Project Portfolio', 'bit-integrations')}>
+        title={__('Add Project Portfolio', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Project Portfolio', 'bit-integrations')}</div>
         {loading.portfolio ? (
@@ -505,7 +518,8 @@ export default function FlowluActions({ flowluConf, setFlowluConf, loading, setL
               onClick={() => getAllPortfolio(flowluConf, setFlowluConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Project portfolio', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -520,7 +534,8 @@ export default function FlowluActions({ flowluConf, setFlowluConf, loading, setL
         show={actionMdl.show === 'priority'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Project Priority', 'bit-integrations')}>
+        title={__('Add Project Priority', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Project Priority', 'bit-integrations')}</div>
         {loading.portfolio ? (
@@ -557,7 +572,8 @@ export default function FlowluActions({ flowluConf, setFlowluConf, loading, setL
         show={actionMdl.show === 'projectOpportunity'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Project Opportunity', 'bit-integrations')}>
+        title={__('Add Project Opportunity', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Project Opportunity', 'bit-integrations')}</div>
         {loading.projectOpportunity ? (
@@ -588,7 +604,8 @@ export default function FlowluActions({ flowluConf, setFlowluConf, loading, setL
               style={{
                 '--tooltip-txt': `${__('Refresh Project Opportunity', 'bit-integrations')}'`
               }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>

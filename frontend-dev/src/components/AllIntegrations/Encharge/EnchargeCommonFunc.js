@@ -12,7 +12,7 @@ export const refreshEnchargeHeader = (enchargeConf, setEnchargeConf, setIsLoadin
   const refreshEnchargeHeaderData = { api_key: enchargeConf.api_key }
   const newConf = { ...enchargeConf }
   bitsFetch(refreshEnchargeHeaderData, 'encharge_headers')
-    .then(result => {
+    .then((result) => {
       if (result && result.success) {
         if (!newConf.default) {
           newConf.default = {}
@@ -20,23 +20,38 @@ export const refreshEnchargeHeader = (enchargeConf, setEnchargeConf, setIsLoadin
         if (result.data.enChargeFields) {
           newConf.default.fields = result.data.enChargeFields
           const { fields } = newConf.default
-          newConf.field_map = Object.values(fields).filter(f => f.required).map(f => ({ formField: '', enChargeFields: f.fieldId, required: true }))
+          newConf.field_map = Object.values(fields)
+            .filter((f) => f.required)
+            .map((f) => ({ formField: '', enChargeFields: f.fieldId, required: true }))
           setSnackbar({ show: true, msg: __('Encharge fields refreshed', 'bit-integrations') })
         } else {
-          setSnackbar({ show: true, msg: __('No Encharge fields found. Try changing the header row number or try again', 'bit-integrations') })
+          setSnackbar({
+            show: true,
+            msg: __(
+              'No Encharge fields found. Try changing the header row number or try again',
+              'bit-integrations'
+            )
+          })
         }
 
         setEnchargeConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: __('Encharge fields refresh failed. please try again', 'bit-integrations') })
+        setSnackbar({
+          show: true,
+          msg: __('Encharge fields refresh failed. please try again', 'bit-integrations')
+        })
       }
       setIsLoading(false)
     })
     .catch(() => setIsLoading(false))
 }
 
-export const checkMappedFields = enChargeFields => {
-  const mappedFields = enChargeFields?.field_map ? enChargeFields.field_map.filter(mappedField => (!mappedField.formField && mappedField.enChargeFields && mappedField.required)) : []
+export const checkMappedFields = (enChargeFields) => {
+  const mappedFields = enChargeFields?.field_map
+    ? enChargeFields.field_map.filter(
+        (mappedField) => !mappedField.formField && mappedField.enChargeFields && mappedField.required
+      )
+    : []
   if (mappedFields.length > 0) return false
   return true
 }

@@ -166,9 +166,7 @@ export default function EditRegistration({ allIntegURL }) {
 
       <br />
       <Note
-        note={
-          userConf?.action_type === 'updated_user' ? userUpdateInstruction : userCreateInstruction
-        }
+        note={userConf?.action_type === 'updated_user' ? userUpdateInstruction : userCreateInstruction}
       />
 
       {userConf?.condition && (
@@ -184,11 +182,7 @@ export default function EditRegistration({ allIntegURL }) {
           </div>
           <br />
           {userConf?.condition?.action_behavior === 'cond' && (
-            <ConditionalLogic
-              formFields={formFields}
-              dataConf={userConf}
-              setDataConf={setUserConf}
-            />
+            <ConditionalLogic formFields={formFields} dataConf={userConf} setDataConf={setUserConf} />
           )}
         </>
       )}
@@ -197,7 +191,8 @@ export default function EditRegistration({ allIntegURL }) {
         className="btn f-left btcd-btn-lg purple sh-sm flx"
         type="button"
         onClick={saveConfig}
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         {__('Update', 'bit-integrations')}
 
         {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}

@@ -19,8 +19,7 @@ function MailercloudFieldMap({ i, field, formFields, mailercloudConf, setMailerc
     setMailercloudConf(newConf)
   }
 
-  const requiredFields =
-    mailercloudConf?.default?.fields.filter((fld) => fld.required === true) || []
+  const requiredFields = mailercloudConf?.default?.fields.filter((fld) => fld.required === true) || []
 
   const nonrequiredFields =
     mailercloudConf?.default?.fields.filter((fld) => fld.required === false) || []
@@ -35,7 +34,8 @@ function MailercloudFieldMap({ i, field, formFields, mailercloudConf, setMailerc
             onChange={(event) => {
               handleFieldMapping(event, i, mailercloudConf, setMailercloudConf)
             }}
-            value={field.formField || ''}>
+            value={field.formField || ''}
+          >
             <option value="">{__('Select Field')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -49,7 +49,8 @@ function MailercloudFieldMap({ i, field, formFields, mailercloudConf, setMailerc
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -81,10 +82,9 @@ function MailercloudFieldMap({ i, field, formFields, mailercloudConf, setMailerc
               handleFieldMapping(event, i, mailercloudConf, setMailercloudConf)
             }}
             value={
-              i < requiredFields.length
-                ? requiredFields[i].key || ''
-                : field.mailercloudFormField || ''
-            }>
+              i < requiredFields.length ? requiredFields[i].key || '' : field.mailercloudFormField || ''
+            }
+          >
             <option value="">{__('Select Field')}</option>
             {i < requiredFields.length ? (
               <option key={requiredFields[i].key} value={requiredFields[i].key}>
@@ -103,14 +103,16 @@ function MailercloudFieldMap({ i, field, formFields, mailercloudConf, setMailerc
         <button
           onClick={() => addFieldMap(i, mailercloudConf, setMailercloudConf)}
           className="icn-btn sh-sm ml-2 mr-1"
-          type="button">
+          type="button"
+        >
           +
         </button>
         <button
           onClick={() => delFieldMap(i, mailercloudConf, setMailercloudConf)}
           className="icn-btn sh-sm ml-1"
           type="button"
-          aria-label="btn">
+          aria-label="btn"
+        >
           <span className="btcd-icn icn-trash-2" />
         </button>
       </div>

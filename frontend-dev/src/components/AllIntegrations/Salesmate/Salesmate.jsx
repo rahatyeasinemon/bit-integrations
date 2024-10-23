@@ -24,8 +24,7 @@ function Salesmate({ formFields, setFlow, flow, allIntegURL }) {
   const [salesmateConf, setSalesmateConf] = useState({
     name: 'Salesmate',
     type: 'Salesmate',
-    session_token:
-      process.env.NODE_ENV === 'development' ? 'a2e39d10-b9d2-11ed-8056-0d118e2d3ff7' : '',
+    session_token: process.env.NODE_ENV === 'development' ? 'a2e39d10-b9d2-11ed-8056-0d118e2d3ff7' : '',
     link_name: process.env.NODE_ENV === 'development' ? 'bitcode' : '',
     field_map: [{ formField: '', salesmateFormField: '' }],
     actionName: '',
@@ -110,12 +109,11 @@ function Salesmate({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}
+      >
         <SalesmateIntegLayout
           formFields={formFields}
-          handleInput={(e) =>
-            handleInput(e, salesmateConf, setSalesmateConf, setLoading, setSnackbar)
-          }
+          handleInput={(e) => handleInput(e, salesmateConf, setSalesmateConf, setLoading, setSnackbar)}
           salesmateConf={salesmateConf}
           setSalesmateConf={setSalesmateConf}
           loading={loading}
@@ -130,7 +128,8 @@ function Salesmate({ formFields, setFlow, flow, allIntegURL }) {
             onClick={() => nextPage(3)}
             disabled={!checkMappedFields(salesmateConf)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
-            type="button">
+            type="button"
+          >
             {__('Next', 'bit-integrations')} &nbsp;
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

@@ -25,8 +25,7 @@ function GoogleDrive({ formFields, setFlow, flow, allIntegURL }) {
       process.env.NODE_ENV === 'development'
         ? '169745940494-ambvaatv48bcnoebo0cqqg6u4427mbcf.apps.googleusercontent.com'
         : '',
-    clientSecret:
-      process.env.NODE_ENV === 'development' ? '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' : '',
+    clientSecret: process.env.NODE_ENV === 'development' ? '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' : '',
     field_map: [{ formField: '', googleDriveFormField: '' }],
     foldersList: [],
     actions: {}
@@ -76,7 +75,8 @@ function GoogleDrive({ formFields, setFlow, flow, allIntegURL }) {
             height: 'auto',
             overflow: 'visible'
           })
-        }}>
+        }}
+      >
         <GoogleDriveIntegLayout
           flowID={flowID}
           formFields={formFields}
@@ -88,9 +88,9 @@ function GoogleDrive({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => setStep(3)}
           disabled={googleDriveConf.field_map.length < 1}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
-          {__('Next', 'bit-integrations')}{' '}
-          <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+          type="button"
+        >
+          {__('Next', 'bit-integrations')} <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>
       </div>
 

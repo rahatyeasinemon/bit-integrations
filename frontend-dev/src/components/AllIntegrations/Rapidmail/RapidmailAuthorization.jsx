@@ -51,10 +51,9 @@ export default function RapidmailAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {rapidmail?.youTubeLink && (
-        <TutorialLink title="Rapidmail" youTubeLink={rapidmail?.youTubeLink} />
-      )}
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
+      {rapidmail?.youTubeLink && <TutorialLink title="Rapidmail" youTubeLink={rapidmail?.youTubeLink} />}
       {rapidmail?.docLink && <TutorialLink title="Rapidmail" docLink={rapidmail?.docLink} />}
 
       <div className="mt-3">
@@ -113,7 +112,8 @@ export default function RapidmailAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -124,7 +124,8 @@ export default function RapidmailAuthorization({
             onClick={nextPage}
             className="btn ml-auto btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

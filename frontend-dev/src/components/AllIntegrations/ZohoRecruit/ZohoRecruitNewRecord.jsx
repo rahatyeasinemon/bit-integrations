@@ -68,7 +68,8 @@ export default function ZohoRecruitNewRecord({
                 addFieldMap(recruitConf.field_map.length, recruitConf, setRecruitConf, false, tab)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>
@@ -115,7 +116,8 @@ export default function ZohoRecruitNewRecord({
                     )
                   }
                   className="icn-btn sh-sm"
-                  type="button">
+                  type="button"
+                >
                   +
                 </button>
               </div>

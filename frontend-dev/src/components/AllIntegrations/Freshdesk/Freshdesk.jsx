@@ -77,12 +77,11 @@ function Freshdesk({ formFields, setFlow, flow, allIntegURL }) {
             height: 'auto',
             overflow: 'visible'
           })
-        }}>
+        }}
+      >
         <FreshdeskIntegLayout
           formFields={formFields}
-          handleInput={(e) =>
-            handleInput(e, freshdeskConf, setFreshdeskConf, setIsLoading, setSnackbar)
-          }
+          handleInput={(e) => handleInput(e, freshdeskConf, setFreshdeskConf, setIsLoading, setSnackbar)}
           freshdeskConf={freshdeskConf}
           setFreshdeskConf={setFreshdeskConf}
           isLoading={isLoading}
@@ -96,11 +95,11 @@ function Freshdesk({ formFields, setFlow, flow, allIntegURL }) {
             !freshdeskConf.priority ||
             !freshdeskConf.status ||
             !checkMappedFields(freshdeskConf?.field_map) ||
-            (freshdeskConf.contactShow &&
-              !checkMappedFieldsContact(freshdeskConf?.field_map_contact))
+            (freshdeskConf.contactShow && !checkMappedFieldsContact(freshdeskConf?.field_map_contact))
           }
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>

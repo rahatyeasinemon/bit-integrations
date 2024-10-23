@@ -145,10 +145,7 @@ export default function ZohoRecruitActions({
                   className="wdt-200 mt-4 mr-2"
                   value="notes"
                   title={__('Add a Note', 'bit-integrations')}
-                  subTitle={__(
-                    'Add a note from bitform to pushed to Zoho Recruit.',
-                    'bit-integrations'
-                  )}
+                  subTitle={__('Add a note from bitform to pushed to Zoho Recruit.', 'bit-integrations')}
                 />
               </>
             )}
@@ -175,7 +172,8 @@ export default function ZohoRecruitActions({
         show={recOwnerMdl}
         close={() => setrecOwnerMdl(false)}
         action={() => setrecOwnerMdl(false)}
-        title={__('Record Owner', 'bit-integrations')}>
+        title={__('Record Owner', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Owner ID', 'bit-integrations')}</div>
         <div className="flx flx-between">
@@ -203,7 +201,8 @@ export default function ZohoRecruitActions({
           show={notesMdl}
           close={() => setNotesMdl(false)}
           action={() => setNotesMdl(false)}
-          title={__('Notes', 'bit-integrations')}>
+          title={__('Notes', 'bit-integrations')}
+        >
           <div className="btcd-hr mt-2 mb-2" />
 
           {isLoading ? (
@@ -222,13 +221,15 @@ export default function ZohoRecruitActions({
                 <select
                   className="btcd-paper-inp"
                   onChange={(e) => handleNoteAction('type', e.target.value)}
-                  value={recruitConf.actions?.note?.type || ''}>
+                  value={recruitConf.actions?.note?.type || ''}
+                >
                   <option value="">{__('Select Note Type', 'bit-integrations')}</option>
                   {recruitConf?.default?.noteTypes &&
                     Object.values(recruitConf.default.noteTypes).map((noteTypes) => (
                       <option
                         key={noteTypes.noteTypeId}
-                        value={`${noteTypes.noteTypeId}__${noteTypes.noteTypeName}`}>
+                        value={`${noteTypes.noteTypeId}__${noteTypes.noteTypeName}`}
+                      >
                         {noteTypes.noteTypeName}
                       </option>
                     ))}
@@ -240,14 +241,16 @@ export default function ZohoRecruitActions({
                   className="icn-btn sh-sm ml-2 mr-2 tooltip"
                   style={{ '--tooltip-txt': '"Refresh Note Types"' }}
                   type="button"
-                  disabled={isLoading}>
+                  disabled={isLoading}
+                >
                   &#x21BB;
                 </button>
               </div>
               <div className="mt-2 mb-1">{__('Note Content', 'bit-integrations')}</div>
               <select
                 className="btcd-paper-inp w-5"
-                onChange={(e) => handleNoteAction('field', e.target.value)}>
+                onChange={(e) => handleNoteAction('field', e.target.value)}
+              >
                 <option value="">{__('Field', 'bit-integrations')}</option>
                 {formFields.map(
                   (f) =>

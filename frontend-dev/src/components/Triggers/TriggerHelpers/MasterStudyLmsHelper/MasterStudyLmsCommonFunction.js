@@ -3,18 +3,16 @@ import bitsFetch from '../../../../Utils/bitsFetch'
 import { __ } from '../../../../Utils/i18nwrap'
 
 export const getAllMasterStudyLmsCourse = (data, setFlow) => {
-  const loadPostTypes = bitsFetch(null, 'get_masterStudyLms_all_course', null, 'GET').then(
-    (result) => {
-      if (result && result.success) {
-        const tmpFlow = { ...data }
-        tmpFlow.flow_details.allCourse = result.data
+  const loadPostTypes = bitsFetch(null, 'get_masterStudyLms_all_course', null, 'GET').then((result) => {
+    if (result && result.success) {
+      const tmpFlow = { ...data }
+      tmpFlow.flow_details.allCourse = result.data
 
-        setFlow({ ...tmpFlow })
-        return __('All MasterStudyLms course fetched successfully', 'bit-integrations')
-      }
-      return __('MasterStudyLms course fetching failed. please try again', 'bit-integrations')
+      setFlow({ ...tmpFlow })
+      return __('All MasterStudyLms course fetched successfully', 'bit-integrations')
     }
-  )
+    return __('MasterStudyLms course fetching failed. please try again', 'bit-integrations')
+  })
   toast.promise(loadPostTypes, {
     success: (data) => data,
     error: __('Error Occurred', 'bit-integrations'),
@@ -23,18 +21,16 @@ export const getAllMasterStudyLmsCourse = (data, setFlow) => {
 }
 
 export const getAllMasterStudyLmsLesson = (data, setFlow) => {
-  const loadPostTypes = bitsFetch(null, 'get_masterStudyLms_all_lesson', null, 'GET').then(
-    (result) => {
-      if (result && result.success) {
-        const tmpFlow = { ...data }
-        tmpFlow.flow_details.allLesson = result.data
+  const loadPostTypes = bitsFetch(null, 'get_masterStudyLms_all_lesson', null, 'GET').then((result) => {
+    if (result && result.success) {
+      const tmpFlow = { ...data }
+      tmpFlow.flow_details.allLesson = result.data
 
-        setFlow({ ...tmpFlow })
-        return __('All MasterStudyLms lesson fetched successfully', 'bit-integrations')
-      }
-      return __('MasterStudyLms lesson fetching failed. please try again', 'bit-integrations')
+      setFlow({ ...tmpFlow })
+      return __('All MasterStudyLms lesson fetched successfully', 'bit-integrations')
     }
-  )
+    return __('MasterStudyLms lesson fetching failed. please try again', 'bit-integrations')
+  })
   toast.promise(loadPostTypes, {
     success: (data) => data,
     error: __('Error Occurred', 'bit-integrations'),

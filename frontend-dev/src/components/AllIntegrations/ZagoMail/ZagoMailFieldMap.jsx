@@ -50,7 +50,8 @@ export default function ZagoMailFieldMap({ i, formFields, field, zagoMailConf, s
           className="btcd-paper-inp mr-2"
           name="formField"
           value={field.formField || ''}
-          onChange={(ev) => handleFieldMapping(ev, i)}>
+          onChange={(ev) => handleFieldMapping(ev, i)}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           <optgroup label={__('List Fields', 'bit-integrations')}>
             {formFields?.map((f) => (
@@ -61,7 +62,8 @@ export default function ZagoMailFieldMap({ i, formFields, field, zagoMailConf, s
           </optgroup>
           <option value="custom">{__('Custom...', 'bit-integrations')}</option>
           <optgroup
-            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}>
+            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}
+          >
             {isPro &&
               SmartTagField?.map((f) => (
                 <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -87,7 +89,8 @@ export default function ZagoMailFieldMap({ i, formFields, field, zagoMailConf, s
           name="zagoMailField"
           value={field.zagoMailField}
           onChange={(ev) => handleFieldMapping(ev, i)}
-          disabled={isRequired}>
+          disabled={isRequired}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           {isRequired
             ? zagoMailConf?.default?.fields &&
@@ -113,7 +116,8 @@ export default function ZagoMailFieldMap({ i, formFields, field, zagoMailConf, s
             onClick={() => delFieldMap(i)}
             className="icn-btn sh-sm ml-2"
             type="button"
-            aria-label="btn">
+            aria-label="btn"
+          >
             <TrashIcn />
           </button>
         </>

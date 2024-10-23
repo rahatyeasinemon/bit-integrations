@@ -48,10 +48,9 @@ export default function LifterLmsAuthorization({
       style={{
         width: step === 1 && 900,
         height: step === 1 && 'auto'
-      }}>
-      {lifterLms?.youTubeLink && (
-        <TutorialLink title="LifterLMS" youTubeLink={lifterLms?.youTubeLink} />
-      )}
+      }}
+    >
+      {lifterLms?.youTubeLink && <TutorialLink title="LifterLMS" youTubeLink={lifterLms?.youTubeLink} />}
       {lifterLms?.docLink && <TutorialLink title="LifterLMS" docLink={lifterLms?.docLink} />}
 
       <div className="mt-3">
@@ -79,10 +78,7 @@ export default function LifterLmsAuthorization({
             &times;
           </span>
           {sprintf(
-            __(
-              '%s plugin must be activated to integrate with Bit Integrations',
-              'bit-integrations'
-            ),
+            __('%s plugin must be activated to integrate with Bit Integrations', 'bit-integrations'),
             'LifterLms'
           )}
         </div>
@@ -92,7 +88,8 @@ export default function LifterLmsAuthorization({
         <button
           onClick={authorizeHandler}
           className="btn btcd-btn-lg purple sh-sm flx mt-5"
-          type="button">
+          type="button"
+        >
           {__('Connect', 'bit-integrations')}
         </button>
       )}
@@ -102,7 +99,8 @@ export default function LifterLmsAuthorization({
           onClick={() => setStep(2)}
           className="btn btcd-btn-lg purple sh-sm flx mt-5"
           type="button"
-          disabled={!isAuthorized}>
+          disabled={!isAuthorized}
+        >
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>

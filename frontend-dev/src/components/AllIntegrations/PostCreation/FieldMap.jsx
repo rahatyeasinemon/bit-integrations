@@ -7,15 +7,7 @@ import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import { addFieldMap, delFieldMap, handleFieldMapping } from './PostHelperFunction'
 import { $btcbi } from '../../../GlobalStates'
 
-export default function FieldMap({
-  i,
-  type,
-  formFields,
-  field,
-  postConf,
-  setPostConf,
-  customFields
-}) {
+export default function FieldMap({ i, type, formFields, field, postConf, setPostConf, customFields }) {
   const fldType = {
     acf: {
       propName: 'acf_map',
@@ -49,7 +41,8 @@ export default function FieldMap({
           className="btcd-paper-inp mr-2"
           name="formField"
           value={field.formField || ''}
-          onChange={(ev) => handleFieldMapping(propName, ev, i, postConf, setPostConf)}>
+          onChange={(ev) => handleFieldMapping(propName, ev, i, postConf, setPostConf)}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           <optgroup label={__('Form Fields', 'bit-integrations')}>
             {formFields?.map((f) => (
@@ -60,7 +53,8 @@ export default function FieldMap({
           </optgroup>
           <option value="custom">{__('Custom...', 'bit-integrations')}</option>
           <optgroup
-            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}>
+            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}
+          >
             {isPro &&
               SmartTagField?.map((f) => (
                 <option key={`ff-zhcrm-${f.name}`} value={f.name}>
@@ -85,7 +79,8 @@ export default function FieldMap({
           name={fldName}
           value={field[fldName] || ''}
           onChange={(ev) => handleFieldMapping(propName, ev, i, postConf, setPostConf)}
-          disabled={isRequired}>
+          disabled={isRequired}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           {customFields?.map((header) => (
             <option key={`${header.key}-1`} value={header.key}>
@@ -100,14 +95,16 @@ export default function FieldMap({
           <button
             onClick={() => addFieldMap(propName, i, postConf, setPostConf)}
             className="icn-btn sh-sm ml-2 mr-1"
-            type="button">
+            type="button"
+          >
             +
           </button>
           <button
             onClick={() => delFieldMap(propName, i, postConf, setPostConf)}
             className="icn-btn sh-sm ml-1"
             type="button"
-            aria-label="btn">
+            aria-label="btn"
+          >
             <TrashIcn />
           </button>
         </>

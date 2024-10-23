@@ -71,7 +71,8 @@ export default function CustomApiAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && '1000px' } }}>
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && '1000px' } }}
+    >
       {customApi?.youTubeLink && (
         <TutorialLink title="Custom Api" youTubeLink={customApi?.youTubeLink} />
       )}
@@ -223,7 +224,8 @@ export default function CustomApiAuthorization({
           onClick={() => setStep(2)}
           disabled={isDisabled(customApiConf.authType) || isLoading}
           className="btn btcd-btn-lg purple sh-sm "
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')}
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>

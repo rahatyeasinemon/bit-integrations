@@ -106,7 +106,8 @@ export default function FreshdeskActions({ freshdeskConf, setFreshdeskConf, form
           show={actionMdl.show === 'status'}
           close={clsActionMdl}
           action={clsActionMdl}
-          title={__('Position', 'bit-integrations')}>
+          title={__('Position', 'bit-integrations')}
+        >
           <div className="btcd-hr mt-2 mb-2" />
           <div className="mt-2">{__('Select Status', 'bit-integrations')}</div>
           {isLoading ? (
@@ -152,7 +153,8 @@ export default function FreshdeskActions({ freshdeskConf, setFreshdeskConf, form
           show={actionMdl.show === 'priority'}
           close={clsActionMdl}
           action={clsActionMdl}
-          title={__('Position', 'bit-integrations')}>
+          title={__('Position', 'bit-integrations')}
+        >
           <div className="btcd-hr mt-2 mb-2" />
           <div className="mt-2">{__('Select Priority', 'bit-integrations')}</div>
           {isLoading ? (
@@ -199,14 +201,16 @@ export default function FreshdeskActions({ freshdeskConf, setFreshdeskConf, form
           show={actionMdl.show === 'attachments'}
           close={() => setActionMdl({ show: false })}
           action={() => setActionMdl({ show: false })}
-          title={__('Select Attachment', 'bit-integrations')}>
+          title={__('Select Attachment', 'bit-integrations')}
+        >
           <div className="btcd-hr mt-2" />
           <div className="mt-2">{__('Please select file upload fields', 'bit-integrations')}</div>
           <select
             onChange={(e) => actionHandler(e, 'Attachments')}
             name="attachments"
             value={freshdeskConf.actions?.attachments}
-            className="btcd-paper-inp w-10 mt-2">
+            className="btcd-paper-inp w-10 mt-2"
+          >
             <option value="">{__('Select file upload field', 'bit-integrations')}</option>
             {formFields
               .filter((itm) => itm.type === 'file')
@@ -239,14 +243,16 @@ export default function FreshdeskActions({ freshdeskConf, setFreshdeskConf, form
           show={actionMdl.show === 'file'}
           close={() => setActionMdl({ show: false })}
           action={() => setActionMdl({ show: false })}
-          title={__('Select Attachment', 'bit-integrations')}>
+          title={__('Select Attachment', 'bit-integrations')}
+        >
           <div className="btcd-hr mt-2" />
           <div className="mt-2">{__('Please select file upload fields', 'bit-integrations')}</div>
           <select
             onChange={(e) => actionHandler(e, 'file')}
             name="file"
             value={freshdeskConf.actions?.file}
-            className="btcd-paper-inp w-10 mt-2">
+            className="btcd-paper-inp w-10 mt-2"
+          >
             <option value="">{__('Select file upload field', 'bit-integrations')}</option>
             {formFields
               .filter((itm) => itm.type === 'file')

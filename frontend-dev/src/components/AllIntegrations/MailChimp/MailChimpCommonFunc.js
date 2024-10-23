@@ -79,13 +79,7 @@ export const refreshModules = (setMailChimpConf, setIsLoading, setSnackbar) => {
     .catch((e) => setIsLoading(false))
 }
 
-export const refreshAudience = (
-  formID,
-  mailChimpConf,
-  setMailChimpConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const refreshAudience = (formID, mailChimpConf, setMailChimpConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
   const refreshModulesRequestParams = {
     formID,

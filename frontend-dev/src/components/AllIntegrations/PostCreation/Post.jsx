@@ -149,16 +149,7 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
 
   const saveConfig = () => {
     setIsLoading(true)
-    const resp = saveIntegConfig(
-      flow,
-      setFlow,
-      allIntegURL,
-      postConf,
-      navigate,
-      '',
-      '',
-      setIsLoading
-    )
+    const resp = saveIntegConfig(flow, setFlow, allIntegURL, postConf, navigate, '', '', setIsLoading)
     resp.then((res) => {
       if (res.success) {
         setSnackbar({ show: true, msg: res.data?.msg })
@@ -184,7 +175,8 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
       </div>
       <div
         className="btcd-stp-page"
-        style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+        style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+      >
         <div className="mt-3">
           <b>{__('Integration Name', 'bit-integrations')}</b>
         </div>
@@ -213,7 +205,8 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
           <select
             name="post_type"
             onChange={(e) => getCustomFields(e.target.name, e.target.value)}
-            className="btcd-paper-inp w-5 mt-1">
+            className="btcd-paper-inp w-5 mt-1"
+          >
             <option disabled selected>
               {('Select Post Type', 'bit-integrations')}
             </option>
@@ -227,7 +220,8 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
             onClick={() => refreshPostTypes(postTypes, setPostTypes)}
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Refresh Post Types', 'bit-integrations')}'` }}
-            type="button">
+            type="button"
+          >
             &#x21BB;
           </button>
         </div>
@@ -247,7 +241,8 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
         <select
           name="post_status"
           onChange={(e) => handleInput(e.target.name, e.target.value)}
-          className="btcd-paper-inp w-5 mt-2">
+          className="btcd-paper-inp w-5 mt-2"
+        >
           <option disabled selected>
             {__('Select Status', 'bit-integrations')}
           </option>
@@ -271,7 +266,8 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
           <select
             name="post_author"
             onChange={(e) => handleInput(e.target.name, e.target.value)}
-            className="btcd-paper-inp w-5 mt-2">
+            className="btcd-paper-inp w-5 mt-2"
+          >
             <option disabled selected>
               {__('Select Author', 'bit-integrations')}
             </option>
@@ -290,7 +286,8 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
         <select
           name="comment_status"
           onChange={(e) => handleInput(e.target.name, e.target.value)}
-          className="btcd-paper-inp w-5 mt-2">
+          className="btcd-paper-inp w-5 mt-2"
+        >
           <option disabled selected>
             {__('Select Status', 'bit-integrations')}
           </option>
@@ -330,7 +327,8 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
           <button
             onClick={() => addFieldMap('post_map', postConf.post_map.length, postConf, setPostConf)}
             className="icn-btn sh-sm"
-            type="button">
+            type="button"
+          >
             +
           </button>
         </div>
@@ -338,20 +336,20 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
         <button
           onClick={() => nextPage(2)}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')}
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>
       </div>
       <div
         className="btcd-stp-page"
-        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}
+      >
         <CustomField
           formID={formID}
           formFields={formFields}
-          handleInput={(e) =>
-            handleInput(e, postConf, setPostConf, formID, setIsLoading, setSnackbar)
-          }
+          handleInput={(e) => handleInput(e, postConf, setPostConf, formID, setIsLoading, setSnackbar)}
           postConf={postConf}
           setPostConf={setPostConf}
           isLoading={isLoading}
@@ -365,7 +363,8 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
         <button
           onClick={() => nextPage(3)}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')}
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>

@@ -19,7 +19,8 @@ function LogicChip({ logic, nested, onChange }) {
         <select
           value={logic}
           onChange={onChange}
-          className={`btcd-logic-chip ${nested && 'scl-7 op-8'}`}>
+          className={`btcd-logic-chip ${nested && 'scl-7 op-8'}`}
+        >
           <option value="or">OR</option>
           <option value="and">AND</option>
         </select>

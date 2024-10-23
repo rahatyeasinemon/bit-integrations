@@ -34,7 +34,8 @@ function IFTTT({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 1 */}
       <div
         className="btcd-stp-page"
-        style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+        style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+      >
         {iFTTT?.youTubeLink && <TutorialLink title="IFTTT" youTubeLink={iFTTT?.youTubeLink} />}
         {iFTTT?.docLink && <TutorialLink title="IFTTT" docLink={iFTTT?.docLink} />}
 
@@ -53,7 +54,8 @@ function IFTTT({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ width: step === 2 && `${100}%`, height: step === 2 && 'auto' }}>
+        style={{ width: step === 2 && `${100}%`, height: step === 2 && 'auto' }}
+      >
         <WebHooksStepTwo
           step={step}
           saveConfig={() =>

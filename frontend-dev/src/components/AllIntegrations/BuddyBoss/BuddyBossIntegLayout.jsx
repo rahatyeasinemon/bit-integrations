@@ -100,7 +100,8 @@ export default function BuddyBossIntegLayout({
         onChange={handleInput}
         name="mainAction"
         value={buddyBossConf?.mainAction}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select Actions', 'bit-integrations')}</option>
         {buddyBossConf?.allActions &&
           buddyBossConf.allActions.map(({ key, label }) => (
@@ -133,16 +134,15 @@ export default function BuddyBossIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Fetch All Groups', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
         </>
       )}
 
-      {['3', '4', '7', '8', '9', '10', '12', '14', '15', '16'].includes(
-        buddyBossConf?.mainAction
-      ) && (
+      {['3', '4', '7', '8', '9', '10', '12', '14', '15', '16'].includes(buddyBossConf?.mainAction) && (
         <>
           <br />
           <div className="flx mt-4">
@@ -170,7 +170,8 @@ export default function BuddyBossIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Fetch All User', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -196,13 +197,12 @@ export default function BuddyBossIntegLayout({
               singleSelect={buddyBossConf?.mainAction !== '13'}
             />
             <button
-              onClick={() =>
-                getAllForum(buddyBossConf, setBuddyBossConf, setIsLoading, setSnackbar)
-              }
+              onClick={() => getAllForum(buddyBossConf, setBuddyBossConf, setIsLoading, setSnackbar)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Fetch All Forum', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -227,13 +227,12 @@ export default function BuddyBossIntegLayout({
               singleSelect
             />
             <button
-              onClick={() =>
-                getAllTopic(buddyBossConf, setBuddyBossConf, setIsLoading, setSnackbar)
-              }
+              onClick={() => getAllTopic(buddyBossConf, setBuddyBossConf, setIsLoading, setSnackbar)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Fetch All Topic', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -309,7 +308,8 @@ export default function BuddyBossIntegLayout({
                   addFieldMap(buddyBossConf.field_map.length, buddyBossConf, setBuddyBossConf)
                 }
                 className="icn-btn sh-sm"
-                type="button">
+                type="button"
+              >
                 +
               </button>
             </div>
@@ -332,9 +332,7 @@ export default function BuddyBossIntegLayout({
         )}
       </>
       <br />
-      <Note
-        note={__('Some integrations will only work for logged-in users.', 'bit-integrations')}
-      />
+      <Note note={__('Some integrations will only work for logged-in users.', 'bit-integrations')} />
     </>
   )
 }

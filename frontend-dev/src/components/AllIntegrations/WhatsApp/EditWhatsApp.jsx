@@ -45,9 +45,7 @@ function EditWhatsApp({ allIntegURL }) {
       <WhatsAppIntegLayout
         formID={formID}
         formFields={formFields}
-        handleInput={(e) =>
-          handleInput(e, whatsAppConf, setWhatsAppConf, setIsLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, whatsAppConf, setWhatsAppConf, setIsLoading, setSnackbar)}
         whatsAppConf={whatsAppConf}
         setWhatsAppConf={setWhatsAppConf}
         isLoading={isLoading}

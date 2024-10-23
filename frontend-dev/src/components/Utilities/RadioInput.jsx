@@ -1,10 +1,13 @@
-import React from 'react';
+import React from 'react'
 
 const RadioInput = ({ name, options, selectedAuthType, handleChange }) => {
   return (
-    <div className='user-radio-input'>
+    <div className="user-radio-input">
       {options.map((option, index) => (
-        <label key={index} className={`btn ml-2 ${selectedAuthType === option ? 'btcd-btn-purple-active' : 'btcd-btn-o-purple'}`}>
+        <label
+          key={index}
+          className={`btn ml-2 ${selectedAuthType === option ? 'btcd-btn-purple-active' : 'btcd-btn-o-purple'}`}
+        >
           <input
             type="radio"
             name={name}
@@ -17,7 +20,7 @@ const RadioInput = ({ name, options, selectedAuthType, handleChange }) => {
         </label>
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default RadioInput;
+export default RadioInput

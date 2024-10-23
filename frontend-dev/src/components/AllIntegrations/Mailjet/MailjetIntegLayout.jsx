@@ -51,7 +51,8 @@ export default function MailjetIntegLayout({
           }
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Refresh Groups', 'bit-integrations')}'` }}
-          type="button">
+          type="button"
+        >
           &#x21BB;
         </button>
       </div>
@@ -76,7 +77,8 @@ export default function MailjetIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh custom fields', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.customFields}>
+              disabled={loading.customFields}
+            >
               &#x21BB;
             </button>
           </b>
@@ -112,7 +114,8 @@ export default function MailjetIntegLayout({
                   addFieldMap(mailjetConf.field_map.length, mailjetConf, setMailjetConf, false)
                 }
                 className="icn-btn sh-sm"
-                type="button">
+                type="button"
+              >
                 +
               </button>
             </div>

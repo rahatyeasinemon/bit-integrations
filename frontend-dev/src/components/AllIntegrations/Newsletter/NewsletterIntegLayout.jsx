@@ -59,15 +59,11 @@ export default function NewsletterIntegLayout({
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
               onClick={() =>
-                addFieldMap(
-                  newsletterConf.field_map.length,
-                  newsletterConf,
-                  setNewsletterConf,
-                  false
-                )
+                addFieldMap(newsletterConf.field_map.length, newsletterConf, setNewsletterConf, false)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>
@@ -77,10 +73,7 @@ export default function NewsletterIntegLayout({
             <b className="wdt-100">{__('Utilities', 'bit-integrations')}</b>
           </div>
           <div className="btcd-hr mt-1" />
-          <NewsletterActions
-            newsletterConf={newsletterConf}
-            setNewsletterConf={setNewsletterConf}
-          />
+          <NewsletterActions newsletterConf={newsletterConf} setNewsletterConf={setNewsletterConf} />
         </div>
       </div>
     </>

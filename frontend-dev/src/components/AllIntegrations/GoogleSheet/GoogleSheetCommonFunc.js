@@ -5,7 +5,6 @@ import { handleAuthData } from '../GlobalIntegrationHelper'
 import { $redirectURI } from '../../../GlobalStates'
 import { getRecoil } from 'recoil-nexus'
 
-
 export const handleInput = (
   e,
   sheetConf,
@@ -46,8 +45,7 @@ export const spreadSheetChange = (sheetConf, formID, setSheetConf, setIsLoading,
   if (!newConf?.default?.worksheets?.[sheetConf.spreadsheetId]) {
     refreshWorksheets(formID, newConf, setSheetConf, setIsLoading, setSnackbar)
   } else if (Object.keys(newConf?.default?.worksheets?.[sheetConf.spreadsheetId]).length === 1) {
-    newConf.worksheetName =
-      newConf?.default?.worksheets?.[sheetConf.spreadsheetId][0].properties.title
+    newConf.worksheetName = newConf?.default?.worksheets?.[sheetConf.spreadsheetId][0].properties.title
 
     if (!newConf?.default?.worksheets?.headers?.[newConf.worksheetName]) {
       refreshWorksheetHeaders(formID, newConf, setSheetConf, setIsLoading, setSnackbar)
@@ -73,8 +71,14 @@ export const refreshSpreadsheets = (formID, sheetConf, setSheetConf, setIsLoadin
   const refreshModulesRequestParams = {
     formID,
     id: sheetConf.id,
-    clientId: sheetConf.selectedAuthType === 'Custom Authorization' ? sheetConf.clientId : sheetConf.oneClickAuth.clientId,
-    clientSecret: sheetConf.selectedAuthType === 'Custom Authorization' ? sheetConf.clientSecret : sheetConf.oneClickAuth.clientSecret,
+    clientId:
+      sheetConf.selectedAuthType === 'Custom Authorization'
+        ? sheetConf.clientId
+        : sheetConf.oneClickAuth.clientId,
+    clientSecret:
+      sheetConf.selectedAuthType === 'Custom Authorization'
+        ? sheetConf.clientSecret
+        : sheetConf.oneClickAuth.clientSecret,
     tokenDetails: sheetConf.tokenDetails,
     ownerEmail: sheetConf.ownerEmail
   }
@@ -154,13 +158,7 @@ export const refreshWorksheets = (formID, sheetConf, setSheetConf, setIsLoading,
     .catch(() => setIsLoading(false))
 }
 
-export const refreshWorksheetHeaders = (
-  formID,
-  sheetConf,
-  setSheetConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const refreshWorksheetHeaders = (formID, sheetConf, setSheetConf, setIsLoading, setSnackbar) => {
   const { spreadsheetId, worksheetName, header, headerRow } = sheetConf
   if (!spreadsheetId && !worksheetName && !header && !headerRow) {
     return
@@ -173,8 +171,14 @@ export const refreshWorksheetHeaders = (
     worksheetName,
     header,
     headerRow,
-    clientId: sheetConf.selectedAuthType === 'Custom Authorization' ? sheetConf.clientId : sheetConf.oneClickAuth.clientId,
-    clientSecret: sheetConf.selectedAuthType === 'Custom Authorization' ? sheetConf.clientSecret : sheetConf.oneClickAuth.clientSecret,
+    clientId:
+      sheetConf.selectedAuthType === 'Custom Authorization'
+        ? sheetConf.clientId
+        : sheetConf.oneClickAuth.clientId,
+    clientSecret:
+      sheetConf.selectedAuthType === 'Custom Authorization'
+        ? sheetConf.clientSecret
+        : sheetConf.oneClickAuth.clientSecret,
     tokenDetails: sheetConf.tokenDetails
   }
   bitsFetch(refreshWorksheetHeadersRequestParams, 'gsheet_refresh_worksheet_headers')
@@ -223,8 +227,7 @@ export const refreshWorksheetHeaders = (
 }
 
 export const handleAuthorize = (confTmp, selectedAuthType, setError, setIsLoading) => {
-
-  let clientId = '';
+  let clientId = ''
   if (selectedAuthType === 'One Click Authorization') {
     clientId = confTmp.oneClickAuth.clientId
   } else if (selectedAuthType === 'Custom Authorization') {
@@ -242,8 +245,9 @@ export const handleAuthorize = (confTmp, selectedAuthType, setError, setIsLoadin
 
   const scopes = 'https://www.googleapis.com/auth/drive'
   // eslint-disable-next-line no-undef
-  const redirectURI = getRecoil($redirectURI);
-  const finalRedirectUri = selectedAuthType === 'One Click Authorization' ? redirectURI : `${btcbi.api.base}/redirect`
+  const redirectURI = getRecoil($redirectURI)
+  const finalRedirectUri =
+    selectedAuthType === 'One Click Authorization' ? redirectURI : `${btcbi.api.base}/redirect`
 
   const { href, hash } = window.location
   const stateUrl = hash ? href.replace(hash, '#/auth-response/') : `${href}#/auth-response/`
@@ -258,33 +262,48 @@ export const handleAuthorize = (confTmp, selectedAuthType, setError, setIsLoadin
       }
     }, 500)
   }
-
 }
 
-export const tokenHelper = async (grantToken, confTmp, setConf, selectedAuthType, authData, setAuthData, setIsLoading, setSnackbar) => {
+export const tokenHelper = async (
+  grantToken,
+  confTmp,
+  setConf,
+  selectedAuthType,
+  authData,
+  setAuthData,
+  setIsLoading,
+  setSnackbar
+) => {
   if (!selectedAuthType) {
     return
   }
   const tokenRequestParams = {}
   tokenRequestParams.code = grantToken
-  tokenRequestParams.clientId = selectedAuthType === 'One Click Authorization' ? confTmp.oneClickAuth.clientId : confTmp.clientId
-  tokenRequestParams.clientSecret = selectedAuthType === 'One Click Authorization' ? confTmp.oneClickAuth.clientSecret : confTmp.clientSecret
+  tokenRequestParams.clientId =
+    selectedAuthType === 'One Click Authorization' ? confTmp.oneClickAuth.clientId : confTmp.clientId
+  tokenRequestParams.clientSecret =
+    selectedAuthType === 'One Click Authorization'
+      ? confTmp.oneClickAuth.clientSecret
+      : confTmp.clientSecret
   // eslint-disable-next-line no-undef
-  const redirectURI = getRecoil($redirectURI);
-  tokenRequestParams.redirectURI = selectedAuthType === 'One Click Authorization' ? redirectURI : `${btcbi.api.base}/redirect`
+  const redirectURI = getRecoil($redirectURI)
+  tokenRequestParams.redirectURI =
+    selectedAuthType === 'One Click Authorization' ? redirectURI : `${btcbi.api.base}/redirect`
 
   setIsLoading(true)
   await bitsFetch(tokenRequestParams, 'gsheet_generate_token')
-    .then(result => result)
-    .then(async result => {
+    .then((result) => result)
+    .then(async (result) => {
       if (result && result.success) {
         const userInfo = await fetchUserInfo(result.data)
-        const isUserMatched = authData.some(item => item.userInfo.user.emailAddress === userInfo.user.emailAddress);
+        const isUserMatched = authData.some(
+          (item) => item.userInfo.user.emailAddress === userInfo.user.emailAddress
+        )
 
         if (userInfo && !isUserMatched) {
           const newConf = { ...confTmp }
-          await handleAuthData(newConf.type, result.data, userInfo, setAuthData);
-          newConf.authData = [...authData, { tokenDetails: result.data, userInfo: userInfo }];
+          await handleAuthData(newConf.type, result.data, userInfo, setAuthData)
+          newConf.authData = [...authData, { tokenDetails: result.data, userInfo: userInfo }]
           newConf.setisAuthorized = true
           setConf(newConf)
           setSnackbar({ show: true, msg: __('Authorized Successfully', 'bit-integrations') })
@@ -294,8 +313,14 @@ export const tokenHelper = async (grantToken, confTmp, setConf, selectedAuthType
             msg: __('This account is already on the list.', 'bit-integrations')
           })
         }
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `${__('Authorization failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}` })
+      } else if (
+        (result && result.data && result.data.data) ||
+        (!result.success && typeof result.data === 'string')
+      ) {
+        setSnackbar({
+          show: true,
+          msg: `${__('Authorization failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}`
+        })
       } else {
         setSnackbar({
           show: true,
@@ -317,18 +342,17 @@ export const checkMappedFields = (sheetconf) => {
 }
 
 async function fetchUserInfo(tokenResponse) {
-  const accessToken = tokenResponse.access_token;
+  const accessToken = tokenResponse.access_token
 
   try {
     const userInfoResponse = await fetch('https://www.googleapis.com/drive/v3/about?fields=user', {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-    const userInfo = await userInfoResponse.json();
-    return userInfo;
+        Authorization: `Bearer ${accessToken}`
+      }
+    })
+    const userInfo = await userInfoResponse.json()
+    return userInfo
   } catch (error) {
-    console.error('Error fetching user info:', error);
+    console.error('Error fetching user info:', error)
   }
 }
-

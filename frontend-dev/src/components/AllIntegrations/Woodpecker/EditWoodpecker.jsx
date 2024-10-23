@@ -72,9 +72,7 @@ function EditWoodpecker({ allIntegURL }) {
       <WoodpeckerIntegLayout
         formID={flow.triggered_entity_id}
         formFields={formField}
-        handleInput={(e) =>
-          handleInput(e, woodpeckerConf, setWoodpeckerConf, setLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, woodpeckerConf, setWoodpeckerConf, setLoading, setSnackbar)}
         woodpeckerConf={woodpeckerConf}
         setWoodpeckerConf={setWoodpeckerConf}
         loading={loading}

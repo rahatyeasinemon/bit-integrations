@@ -126,16 +126,15 @@ export default function SelectTrigger() {
               onClick={removeTrigger}
               className="icn-btn btcd-mdl-close"
               aria-label="modal-close"
-              type="button">
+              type="button"
+            >
               <CloseIcn size={16} stroke={3} />
             </button>
           </div>
           <div className="flx">
             {newFlow.triggerDetail?.type === 'form' && flowStep === 1 && <FormPlugin />}
             {newFlow.triggerDetail?.type === 'webhook' && flowStep === 1 && <Webhook />}
-            {newFlow.triggerDetail?.type === 'custom_trigger' && flowStep === 1 && (
-              <CustomTrigger />
-            )}
+            {newFlow.triggerDetail?.type === 'custom_trigger' && flowStep === 1 && <CustomTrigger />}
             {newFlow.triggerDetail?.type === 'action_hook' && flowStep === 1 && <ActionHook />}
             {newFlow.triggerDetail?.type === 'spectra' && flowStep === 1 && <SpectraHelper />}
             {newFlow.triggerDetail?.type === 'essentialBlocks' && flowStep === 1 && (
@@ -176,14 +175,16 @@ export default function SelectTrigger() {
                     }
                     role="button"
                     tabIndex="0"
-                    className={`btcd-inte-card inte-sm mr-4 mt-3 ${inte.disable && (isPro || !allTriggers?.data[inte]?.isPro) && 'btcd-inte-dis'} ${allTriggers?.data[inte]?.isPro && !isPro && 'btcd-inte-pro'}`}>
+                    className={`btcd-inte-card inte-sm mr-4 mt-3 ${inte.disable && (isPro || !allTriggers?.data[inte]?.isPro) && 'btcd-inte-dis'} ${allTriggers?.data[inte]?.isPro && !isPro && 'btcd-inte-pro'}`}
+                  >
                     {allTriggers?.data[inte]?.isPro && !isPro && (
                       <>
                         <div className="pro-filter">
                           <button
                             className="btn txt-pro"
                             type="button"
-                            onClick={() => showPModal(allTriggers?.data[inte]?.name)}>
+                            onClick={() => showPModal(allTriggers?.data[inte]?.name)}
+                          >
                             {__('Pro', 'bit-integrations')}
                           </button>
                         </div>

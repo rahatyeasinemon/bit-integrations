@@ -105,9 +105,7 @@ function EditSalesforce({ allIntegURL }) {
 
       <SelesforceIntegLayout
         formFields={formField}
-        handleInput={(e) =>
-          handleInput(e, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar)}
         salesforceConf={salesforceConf}
         setSalesforceConf={setSalesforceConf}
         isLoading={isLoading}

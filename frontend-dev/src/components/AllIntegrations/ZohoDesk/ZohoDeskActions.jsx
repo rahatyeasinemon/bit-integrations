@@ -8,13 +8,7 @@ import TableCheckBox from '../../Utilities/TableCheckBox'
 import Loader from '../../Loaders/Loader'
 import { refreshOwners, refreshProducts } from './ZohoDeskCommonFunc'
 
-export default function ZohoDeskActions({
-  deskConf,
-  setDeskConf,
-  formID,
-  formFields,
-  setSnackbar
-}) {
+export default function ZohoDeskActions({ deskConf, setDeskConf, formID, formFields, setSnackbar }) {
   const [isLoading, setIsLoading] = useState(false)
   const [actionMdl, setActionMdl] = useState({ show: false })
 
@@ -108,7 +102,8 @@ export default function ZohoDeskActions({
         show={actionMdl.show === 'ticket_owner'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Ticket Owner', 'bit-integrations')}>
+        title={__('Ticket Owner', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2" />
         {isLoading ? (
           <Loader
@@ -125,7 +120,8 @@ export default function ZohoDeskActions({
             <select
               value={deskConf.actions.ticket_owner}
               className="btcd-paper-inp"
-              onChange={(e) => actionHandler(e.target.value, 'ticket_owner')}>
+              onChange={(e) => actionHandler(e.target.value, 'ticket_owner')}
+            >
               <option value="">{__('Select Owner', 'bit-integrations')}</option>
               {deskConf.default?.owners?.[deskConf.orgId]?.map((owner) => (
                 <option key={owner.ownerId} value={owner.ownerId}>
@@ -134,13 +130,12 @@ export default function ZohoDeskActions({
               ))}
             </select>
             <button
-              onClick={() =>
-                refreshOwners(formID, deskConf, setDeskConf, setIsLoading, setSnackbar)
-              }
+              onClick={() => refreshOwners(formID, deskConf, setDeskConf, setIsLoading, setSnackbar)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': '"Refresh Ticket Owners"' }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -155,7 +150,8 @@ export default function ZohoDeskActions({
         show={actionMdl.show === 'product'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Product Name', 'bit-integrations')}>
+        title={__('Product Name', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2" />
         {isLoading ? (
           <Loader
@@ -172,7 +168,8 @@ export default function ZohoDeskActions({
             <select
               value={deskConf.actions.product}
               className="btcd-paper-inp"
-              onChange={(e) => actionHandler(e.target.value, 'product')}>
+              onChange={(e) => actionHandler(e.target.value, 'product')}
+            >
               <option value="">{__('Select Product', 'bit-integrations')}</option>
               {deskConf.default?.products?.[deskConf.department]?.map((product) => (
                 <option key={product.productId} value={product.productId}>
@@ -181,13 +178,12 @@ export default function ZohoDeskActions({
               ))}
             </select>
             <button
-              onClick={() =>
-                refreshProducts(formID, deskConf, setDeskConf, setIsLoading, setSnackbar)
-              }
+              onClick={() => refreshProducts(formID, deskConf, setDeskConf, setIsLoading, setSnackbar)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': '"Refresh Products"' }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -202,7 +198,8 @@ export default function ZohoDeskActions({
         show={actionMdl.show === 'attachments'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Select Attachment', 'bit-integrations')}>
+        title={__('Select Attachment', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2" />
         <div className="mt-2">{__('Select File Upload Fields', 'bit-integrations')}</div>
         <MultiSelect

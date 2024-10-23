@@ -12,15 +12,7 @@ import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
 import { __ } from '../../../Utils/i18nwrap'
 
-function NotionAuthorization({
-  notionConf,
-  setNotionConf,
-  step,
-  setStep,
-  isInfo,
-  loading,
-  setLoading
-}) {
+function NotionAuthorization({ notionConf, setNotionConf, step, setStep, isInfo, loading, setLoading }) {
   const btcbi = useRecoilValue($btcbi)
   const [authorized, setAuthorized] = useState(false)
   const [error, setError] = useState({ clientId: '', clientSecret: '' })

@@ -56,13 +56,12 @@ export default function WPCoursewareAuthorization({
     <>
       <div
         className="btcd-stp-page"
-        style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+        style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+      >
         {wpCourseware?.youTubeLink && (
           <TutorialLink title="WP Courseware" youTubeLink={wpCourseware?.youTubeLink} />
         )}
-        {wpCourseware?.docLink && (
-          <TutorialLink title="WP Courseware" docLink={wpCourseware?.docLink} />
-        )}
+        {wpCourseware?.docLink && <TutorialLink title="WP Courseware" docLink={wpCourseware?.docLink} />}
 
         <div className="mt-3">
           <b>{__('Integration Name:', 'bit-integrations')}</b>
@@ -94,7 +93,8 @@ export default function WPCoursewareAuthorization({
               onClick={handleAuthorize}
               className="btn btcd-btn-lg purple sh-sm flx"
               type="button"
-              disabled={isAuthorized || isLoading}>
+              disabled={isAuthorized || isLoading}
+            >
               {isAuthorized
                 ? __('Connected ✔', 'bit-integrations')
                 : __('Connect to WP Courseware', 'bit-integrations')}
@@ -105,7 +105,8 @@ export default function WPCoursewareAuthorization({
               onClick={() => nextPage(2)}
               className="btn f-right btcd-btn-lg purple sh-sm flx"
               type="button"
-              disabled={!isAuthorized}>
+              disabled={!isAuthorized}
+            >
               {__('Next', 'bit-integrations')}
               <BackIcn className="ml-1 rev-icn" />
             </button>

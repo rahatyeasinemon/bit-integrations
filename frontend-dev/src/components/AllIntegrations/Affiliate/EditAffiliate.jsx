@@ -45,9 +45,7 @@ function EditAffiliate({ allIntegURL }) {
       <AffiliateIntegLayout
         formID={formID}
         formFields={formFields}
-        handleInput={(e) =>
-          handleInput(e, affiliateConf, setAffiliateConf, setIsLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, affiliateConf, setAffiliateConf, setIsLoading, setSnackbar)}
         affiliateConf={affiliateConf}
         setAffiliateConf={setAffiliateConf}
         isLoading={isLoading}

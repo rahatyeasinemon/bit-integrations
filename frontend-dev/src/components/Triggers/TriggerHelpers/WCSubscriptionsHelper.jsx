@@ -19,22 +19,21 @@ const WCSubscriptionsHelper = ({ flow, setFlowData, edit = false }) => {
 
   return (
     <div>
-      {id &&
-        !['user_subscribes_to_product', 'user_purchases_variable_subscription'].includes(id) && (
-          <div className={edit ? 'flx mt-3' : ''}>
-            <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>
-              {__('Select Subscription:', 'bit-integrations')}
-            </b>
-            <MultiSelect
-              className="msl-wrp-options"
-              defaultValue={triggerData?.selectedSubscription}
-              options={triggerData?.allSubscriptions}
-              onChange={(val) => setFlowData(val, 'selectedSubscription')}
-              singleSelect
-              style={{ width: '100%', minWidth: 300, maxWidth: 400 }}
-            />
-          </div>
-        )}
+      {id && !['user_subscribes_to_product', 'user_purchases_variable_subscription'].includes(id) && (
+        <div className={edit ? 'flx mt-3' : ''}>
+          <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>
+            {__('Select Subscription:', 'bit-integrations')}
+          </b>
+          <MultiSelect
+            className="msl-wrp-options"
+            defaultValue={triggerData?.selectedSubscription}
+            options={triggerData?.allSubscriptions}
+            onChange={(val) => setFlowData(val, 'selectedSubscription')}
+            singleSelect
+            style={{ width: '100%', minWidth: 300, maxWidth: 400 }}
+          />
+        </div>
+      )}
 
       {id && (
         <div className={edit ? 'flx mt-3' : ''}>

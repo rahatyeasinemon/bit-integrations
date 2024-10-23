@@ -22,12 +22,7 @@ export const handleInput = (
   setMemberpressConf({ ...newConf })
 }
 
-export const getAllMemberShip = (
-  memberpressConf,
-  setMemberpressConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const getAllMemberShip = (memberpressConf, setMemberpressConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
   bitsFetch(null, 'fetch_all_membership')
     .then((result) => {
@@ -86,9 +81,7 @@ export const generateMappedField = (memberpressConf) => {
 
 export const checkMappedFields = (memberpressConf) => {
   const mappedFleld = memberpressConf.field_map
-    ? memberpressConf.field_map.filter(
-        (mapped) => !mapped.formField && !mapped.memberpressFormField
-      )
+    ? memberpressConf.field_map.filter((mapped) => !mapped.formField && !mapped.memberpressFormField)
     : []
   if (mappedFleld.length > 0) {
     return false

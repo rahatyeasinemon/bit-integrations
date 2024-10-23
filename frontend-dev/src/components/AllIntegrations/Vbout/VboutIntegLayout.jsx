@@ -56,7 +56,8 @@ export default function VboutIntegLayout({
         name="list_id"
         value={vboutConf.list_id}
         className="btcd-paper-inp w-5"
-        onChange={handleList}>
+        onChange={handleList}
+      >
         <option value="">{__('Select List', 'bit-integrations')}</option>
         {vboutConf?.default?.lists &&
           vboutConf.default.lists.map((list) => (
@@ -70,7 +71,8 @@ export default function VboutIntegLayout({
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': '"Refresh list"' }}
         type="button"
-        disabled={loading.list}>
+        disabled={loading.list}
+      >
         &#x21BB;
       </button>
       <br />
@@ -93,7 +95,8 @@ export default function VboutIntegLayout({
             onChange={(e) => handleInput(e, vboutConf, setVboutConf)}
             name="contact_status"
             value={vboutConf.contact_status}
-            className="btcd-paper-inp w-5">
+            className="btcd-paper-inp w-5"
+          >
             <option value="">{__('Select Status', 'bit-integrations')}</option>
             {ContactStatus.map((status) => (
               <option key={status.value} value={status.value}>
@@ -125,7 +128,8 @@ export default function VboutIntegLayout({
                 className="icn-btn sh-sm ml-2 mr-2 tooltip"
                 style={{ '--tooltip-txt': '"Refresh Fields"' }}
                 type="button"
-                disabled={loading.field}>
+                disabled={loading.field}
+              >
                 &#x21BB;
               </button>
             </b>
@@ -154,11 +158,10 @@ export default function VboutIntegLayout({
           ))}
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
-              onClick={() =>
-                addFieldMap(vboutConf.field_map.length, vboutConf, setVboutConf, false)
-              }
+              onClick={() => addFieldMap(vboutConf.field_map.length, vboutConf, setVboutConf, false)}
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

@@ -27,20 +27,17 @@ export const getFluentFluentBookingFields = (setFlowData, value, edit, setFormFi
 }
 
 export const getFluentBookingEvents = (data, setFlow) => {
-  const loadEvents = bitsFetch(
-    { id: 'fluentbooking' },
-    'fluentbooking/get/form',
-    null,
-    'POST'
-  ).then((result) => {
-    if (result && result.success) {
-      const tmpFlow = { ...data }
-      tmpFlow.flow_details.events = result.data.events
-      setFlow({ ...tmpFlow })
-      return __('Fetched Events successfully', 'bit-integrations')
+  const loadEvents = bitsFetch({ id: 'fluentbooking' }, 'fluentbooking/get/form', null, 'POST').then(
+    (result) => {
+      if (result && result.success) {
+        const tmpFlow = { ...data }
+        tmpFlow.flow_details.events = result.data.events
+        setFlow({ ...tmpFlow })
+        return __('Fetched Events successfully', 'bit-integrations')
+      }
+      return __('Events fetching failed. please try again', 'bit-integrations')
     }
-    return __('Events fetching failed. please try again', 'bit-integrations')
-  })
+  )
   toast.promise(loadEvents, {
     success: (data) => data,
     error: __('Error Occurred', 'bit-integrations'),

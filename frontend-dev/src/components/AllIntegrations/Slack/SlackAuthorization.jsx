@@ -51,7 +51,8 @@ export default function SlackAuthorization({
       style={{
         ...{ width: step === 1 && 900 },
         ...{ height: step === 1 && 'auto' }
-      }}>
+      }}
+    >
       {slack?.youTubeLink && <TutorialLink title="Slack" youTubeLink={slack?.youTubeLink} />}
       {slack?.docLink && <TutorialLink title="Slack" docLink={slack?.docLink} />}
 
@@ -74,7 +75,8 @@ export default function SlackAuthorization({
           className="btcd-link"
           href="https://api.slack.com/apps?new_app=1/"
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {__('Slack Console', 'bit-integrations')}
         </a>
       </small>
@@ -108,7 +110,8 @@ export default function SlackAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -119,7 +122,8 @@ export default function SlackAuthorization({
             onClick={nextPage}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

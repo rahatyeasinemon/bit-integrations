@@ -76,7 +76,8 @@ export default function ConvertKitAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
       {convertKit?.youTubeLink && (
         <TutorialLink title="ConvertKit" youTubeLink={convertKit?.youTubeLink} />
       )}
@@ -117,7 +118,8 @@ export default function ConvertKitAuthorization({
           className="btcd-link"
           href="https://app.convertkit.com/account_settings/advanced_settings"
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {sprintf(__('%s API Token', 'bit-integrations'), 'Kit(ConvertKit)')}
         </a>
       </small>
@@ -145,7 +147,8 @@ export default function ConvertKitAuthorization({
             onClick={handleAuthorize}
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -156,7 +159,8 @@ export default function ConvertKitAuthorization({
             onClick={() => nextPage(2)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <BackIcn className="ml-1 rev-icn" />
           </button>

@@ -26,7 +26,8 @@ export default function GiveWpIntegLayout({
         onChange={handleInput}
         name="mainAction"
         value={giveWpConf?.mainAction}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select Actions', 'bit-integrations')}</option>
         {giveWpConf?.allActions &&
           giveWpConf.allActions.map(({ key, label }) => (
@@ -78,7 +79,8 @@ export default function GiveWpIntegLayout({
               <button
                 onClick={() => addFieldMap(giveWpConf.field_map.length, giveWpConf, setGiveWpConf)}
                 className="icn-btn sh-sm"
-                type="button">
+                type="button"
+              >
                 +
               </button>
             </div>

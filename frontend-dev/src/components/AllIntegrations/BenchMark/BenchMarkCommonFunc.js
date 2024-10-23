@@ -8,12 +8,7 @@ export const handleInput = (e, benchMarkConf, setBenchMarkConf) => {
   setBenchMarkConf({ ...newConf })
 }
 // refreshMappedLists
-export const refreshBenchMarkList = (
-  benchMarkConf,
-  setBenchMarkConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const refreshBenchMarkList = (benchMarkConf, setBenchMarkConf, setIsLoading, setSnackbar) => {
   const refreshListsRequestParams = {
     api_secret: benchMarkConf.api_secret
   }
@@ -52,12 +47,7 @@ export const refreshBenchMarkList = (
     .catch(() => setIsLoading(false))
 }
 // refreshMappedFields
-export const refreshBenchMarkHeader = (
-  benchMarkConf,
-  setBenchMarkConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const refreshBenchMarkHeader = (benchMarkConf, setBenchMarkConf, setIsLoading, setSnackbar) => {
   const refreshListsRequestParams = {
     api_secret: benchMarkConf.api_secret,
     list_id: benchMarkConf.listId
@@ -108,8 +98,7 @@ export const refreshBenchMarkHeader = (
 export const checkMappedFields = (benchMarkConf) => {
   const mappedFields = benchMarkConf?.field_map
     ? benchMarkConf.field_map.filter(
-        (mappedField) =>
-          !mappedField.formField && mappedField.benchMarkField && mappedField.required
+        (mappedField) => !mappedField.formField && mappedField.benchMarkField && mappedField.required
       )
     : []
   if (mappedFields.length > 0) {

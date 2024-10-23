@@ -46,7 +46,8 @@ export default function ClinchPadIntegLayout({
         onChange={handleActionInput}
         name="actionName"
         value={clinchPadConf.actionName}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select an action', 'bit-integrations')}</option>
         <option value="organization">{__('Create Organization', 'bit-integrations')}</option>
         <option value="contact">{__('Create Contact', 'bit-integrations')}</option>
@@ -106,7 +107,8 @@ export default function ClinchPadIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh fields', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.CRMPipelines}>
+              disabled={loading.CRMPipelines}
+            >
               &#x21BB;
             </button>
           </div>
@@ -139,7 +141,8 @@ export default function ClinchPadIntegLayout({
                 addFieldMap(clinchPadConf.field_map.length, clinchPadConf, setClinchPadConf, false)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

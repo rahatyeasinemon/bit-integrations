@@ -26,7 +26,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: "Outfit", sans-serif;
+  font-family: 'Outfit', sans-serif;
   background-image: url(../img/cashback.jpg);
   background-repeat: no-repeat;
   background-position: left;
@@ -104,12 +104,11 @@
   display: flex;
   align-items: center;
   --active: 0.15;
-    box-shadow: 0 0 calc(var(--active) * 8em) calc(var(--active) * 1em) hsl(260 97% 61% / 0.75),
-      0 0.05em 0 0 hsl(260 calc(var(--active) * 97%) calc((var(--active) * 50%) + 30%)) inset,
-      0 -0.05em 0 0 hsl(260 calc(var(--active) * 97%) calc(var(--active) * 60%)) inset !important;
+  box-shadow:
+    0 0 calc(var(--active) * 8em) calc(var(--active) * 1em) hsl(260 97% 61% / 0.75),
+    0 0.05em 0 0 hsl(260 calc(var(--active) * 97%) calc((var(--active) * 50%) + 30%)) inset,
+    0 -0.05em 0 0 hsl(260 calc(var(--active) * 97%) calc(var(--active) * 60%)) inset !important;
 }
-
-
 
 .announcement-btn:hover {
   background-color: rgb(138, 79, 240);
@@ -120,7 +119,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: "Outfit", sans-serif;
+  font-family: 'Outfit', sans-serif;
   background-image: url(../img/bit-social-promo.png);
   background-repeat: no-repeat;
   background-position: left;

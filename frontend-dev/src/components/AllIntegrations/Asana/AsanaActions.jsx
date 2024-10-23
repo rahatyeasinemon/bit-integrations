@@ -134,7 +134,8 @@ export default function AsanaActions({ asanaConf, setAsanaConf, loading, setLoad
         show={actionMdl.show === 'task'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Tasks', 'bit-integrations')}>
+        title={__('Tasks', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Task', 'bit-integrations')}</div>
         {loading.tasks ? (
@@ -160,7 +161,8 @@ export default function AsanaActions({ asanaConf, setAsanaConf, loading, setLoad
               onClick={() => getAllTasks(asanaConf, setAsanaConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Tasks', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -175,7 +177,8 @@ export default function AsanaActions({ asanaConf, setAsanaConf, loading, setLoad
         show={actionMdl.show === 'parentOrganization'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('ParentOrganizations', 'bit-integrations')}>
+        title={__('ParentOrganizations', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select ParentOrganization', 'bit-integrations')}</div>
         {loading.parentOrganizations ? (
@@ -206,7 +209,8 @@ export default function AsanaActions({ asanaConf, setAsanaConf, loading, setLoad
               style={{
                 '--tooltip-txt': `${__('Refresh ParentOrganizations', 'bit-integrations')}'`
               }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -221,7 +225,8 @@ export default function AsanaActions({ asanaConf, setAsanaConf, loading, setLoad
         show={actionMdl.show === 'team'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Teams', 'bit-integrations')}>
+        title={__('Teams', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Team', 'bit-integrations')}</div>
         {loading.teams ? (
@@ -247,7 +252,8 @@ export default function AsanaActions({ asanaConf, setAsanaConf, loading, setLoad
               onClick={() => getAllTeams(asanaConf, setAsanaConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Teams', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -262,7 +268,8 @@ export default function AsanaActions({ asanaConf, setAsanaConf, loading, setLoad
         show={actionMdl.show === 'currency'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Currencies', 'bit-integrations')}>
+        title={__('Currencies', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Currency', 'bit-integrations')}</div>
         {loading.currencies ? (
@@ -291,7 +298,8 @@ export default function AsanaActions({ asanaConf, setAsanaConf, loading, setLoad
               onClick={() => getAllCurrencies(asanaConf, setAsanaConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Currencies', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -305,7 +313,8 @@ export default function AsanaActions({ asanaConf, setAsanaConf, loading, setLoad
         show={actionMdl.show === 'stage'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Stages', 'bit-integrations')}>
+        title={__('Stages', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Stage', 'bit-integrations')}</div>
         {loading.stages ? (
@@ -331,7 +340,8 @@ export default function AsanaActions({ asanaConf, setAsanaConf, loading, setLoad
               onClick={() => getAllStages(asanaConf, setAsanaConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Stages', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -386,7 +396,8 @@ export default function AsanaActions({ asanaConf, setAsanaConf, loading, setLoad
         show={actionMdl.show === 'followUp'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Follow Up', 'bit-integrations')}>
+        title={__('Follow Up', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="flx flx-center mt-2">
           <MultiSelect
@@ -410,7 +421,8 @@ export default function AsanaActions({ asanaConf, setAsanaConf, loading, setLoad
         show={actionMdl.show === 'taskType'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Task types', 'bit-integrations')}>
+        title={__('Task types', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="flx flx-center mt-2">
           <MultiSelect

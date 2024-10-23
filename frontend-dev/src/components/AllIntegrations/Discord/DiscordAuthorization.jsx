@@ -55,7 +55,8 @@ export default function DiscordAuthorization({
       style={{
         ...{ width: step === 1 && 900 },
         ...{ height: step === 1 && 'auto' }
-      }}>
+      }}
+    >
       {discord?.youTubeLink && <TutorialLink title="Discord" youTubeLink={discord?.youTubeLink} />}
       {discord?.docLink && <TutorialLink title="Discord" docLink={discord?.docLink} />}
 
@@ -78,7 +79,8 @@ export default function DiscordAuthorization({
           className="btcd-link"
           href="https://discord.com/developers/applications"
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {__('Discord Console', 'bit-integrations')}
         </a>
       </small>
@@ -112,7 +114,8 @@ export default function DiscordAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -123,7 +126,8 @@ export default function DiscordAuthorization({
             onClick={nextPage}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

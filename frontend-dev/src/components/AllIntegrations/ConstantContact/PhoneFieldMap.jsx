@@ -25,7 +25,8 @@ export default function PhoneFieldMap({
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handlePhone(ev, i, constantContactConf, setConstantContactConf)}>
+            onChange={(ev) => handlePhone(ev, i, constantContactConf, setConstantContactConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {formFields.map(
               (f) =>
@@ -39,9 +40,7 @@ export default function PhoneFieldMap({
           </select>
           {field.formField === 'custom' && (
             <MtInput
-              onChange={(e) =>
-                handlePhoneCustomValue(e, i, constantContactConf, setConstantContactConf)
-              }
+              onChange={(e) => handlePhoneCustomValue(e, i, constantContactConf, setConstantContactConf)}
               label={__('Custom Value', 'bit-integrations')}
               className="mr-2"
               type="text"
@@ -56,7 +55,8 @@ export default function PhoneFieldMap({
             onChange={(ev) =>
               handlePhone(ev, i, constantContactConf, setConstantContactConf, phoneField)
             }
-            disabled={isRequired}>
+            disabled={isRequired}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {isRequired
               ? Object.values(phoneField).map((listField, indx) => (
@@ -77,7 +77,8 @@ export default function PhoneFieldMap({
           onClick={() => delPhoneFieldMap(i, constantContactConf, setConstantContactConf)}
           className="icn-btn sh-sm ml-1"
           type="button"
-          aria-label="btn">
+          aria-label="btn"
+        >
           <TrashIcn />
         </button>
       )}

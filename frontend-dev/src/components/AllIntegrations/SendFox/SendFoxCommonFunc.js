@@ -65,9 +65,7 @@ export const handleAuthorize = (
 ) => {
   if (!confTmp.access_token) {
     setError({
-      access_token: !confTmp.access_token
-        ? __("Access Token can't be empty", 'bit-integrations')
-        : ''
+      access_token: !confTmp.access_token ? __("Access Token can't be empty", 'bit-integrations') : ''
     })
     return
   }
@@ -172,7 +170,5 @@ export const isDisabled = (sendFoxConf) =>
   sendFoxConf.mainAction === '1'
     ? !checkMappedListFields(sendFoxConf)
     : sendFoxConf.mainAction === '2'
-      ? !checkMappedFields(sendFoxConf) ||
-        sendFoxConf.listId === undefined ||
-        sendFoxConf.listId === ''
+      ? !checkMappedFields(sendFoxConf) || sendFoxConf.listId === undefined || sendFoxConf.listId === ''
       : !checkMappedSubscribeFields(sendFoxConf)

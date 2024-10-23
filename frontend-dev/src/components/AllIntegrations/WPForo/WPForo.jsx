@@ -49,16 +49,7 @@ function WPForo({ formFields, setFlow, flow, allIntegURL }) {
 
   const saveConfig = () => {
     setIsLoading(true)
-    const resp = saveIntegConfig(
-      flow,
-      setFlow,
-      allIntegURL,
-      wpforoConf,
-      navigate,
-      '',
-      '',
-      setIsLoading
-    )
+    const resp = saveIntegConfig(flow, setFlow, allIntegURL, wpforoConf, navigate, '', '', setIsLoading)
     resp.then((res) => {
       if (res.success) {
         toast.success(res.data?.msg)
@@ -79,18 +70,12 @@ function WPForo({ formFields, setFlow, flow, allIntegURL }) {
       return
     }
 
-    if (
-      wpforoConf.selectedTask !== TASK_LIST_VALUES.DELETE_TOPIC &&
-      !checkMappedFields(wpforoConf)
-    ) {
+    if (wpforoConf.selectedTask !== TASK_LIST_VALUES.DELETE_TOPIC && !checkMappedFields(wpforoConf)) {
       toast.error(__('Please map mandatory fields!', 'bit-integrations'))
       return
     }
 
-    if (
-      wpforoConf.selectedTask === TASK_LIST_VALUES.USER_REPUTATION &&
-      !wpforoConf.selectedReputation
-    ) {
+    if (wpforoConf.selectedTask === TASK_LIST_VALUES.USER_REPUTATION && !wpforoConf.selectedReputation) {
       toast.error(__('Please select a reputation!', 'bit-integrations'))
       return
     }
@@ -100,10 +85,7 @@ function WPForo({ formFields, setFlow, flow, allIntegURL }) {
       return
     }
 
-    if (
-      wpforoConf.selectedTask === TASK_LIST_VALUES.REMOVE_FROM_GROUP &&
-      !wpforoConf.selectedGroup
-    ) {
+    if (wpforoConf.selectedTask === TASK_LIST_VALUES.REMOVE_FROM_GROUP && !wpforoConf.selectedGroup) {
       toast.error(__('Please select a group!', 'bit-integrations'))
       return
     }
@@ -146,7 +128,8 @@ function WPForo({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}
+      >
         <WPForoIntegLayout
           formFields={formFields}
           wpforoConf={wpforoConf}
@@ -158,11 +141,11 @@ function WPForo({ formFields, setFlow, flow, allIntegURL }) {
         <button
           onClick={() => nextPage(3)}
           disabled={
-            wpforoConf?.selectedTask !== TASK_LIST_VALUES.DELETE_TOPIC &&
-            !checkMappedFields(wpforoConf)
+            wpforoConf?.selectedTask !== TASK_LIST_VALUES.DELETE_TOPIC && !checkMappedFields(wpforoConf)
           }
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')} &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>

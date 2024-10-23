@@ -62,13 +62,12 @@ export default function SendinBlueAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
       {sendinBlue?.youTubeLink && (
         <TutorialLink title="Brevo (Sendinblue)" youTubeLink={sendinBlue?.youTubeLink} />
       )}
-      {sendinBlue?.docLink && (
-        <TutorialLink title="Brevo (Sendinblue)" docLink={sendinBlue?.docLink} />
-      )}
+      {sendinBlue?.docLink && <TutorialLink title="Brevo (Sendinblue)" docLink={sendinBlue?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
@@ -102,7 +101,8 @@ export default function SendinBlueAuthorization({
           className="btcd-link"
           href="https://account.sendinblue.com/advanced/api"
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {__('Brevo(Sendinblue) API Console', 'bit-integrations')}
         </a>
       </small>
@@ -127,7 +127,8 @@ export default function SendinBlueAuthorization({
             onClick={handleAuthorize}
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -138,7 +139,8 @@ export default function SendinBlueAuthorization({
             onClick={() => nextPage(2)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <BackIcn className="ml-1 rev-icn" />
           </button>

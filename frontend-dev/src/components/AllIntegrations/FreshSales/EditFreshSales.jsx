@@ -86,9 +86,7 @@ function EditFreshSales({ allIntegURL }) {
       <FreshSalesIntegLayout
         formID={flow.triggered_entity_id}
         formFields={formFields}
-        handleInput={(e) =>
-          handleInput(e, freshSalesConf, setFreshSalesConf, setIsLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, freshSalesConf, setFreshSalesConf, setIsLoading, setSnackbar)}
         freshSalesConf={freshSalesConf}
         setFreshSalesConf={setFreshSalesConf}
         isLoading={isLoading}

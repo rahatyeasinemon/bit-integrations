@@ -29,9 +29,7 @@ export default function DirectIqAuthorization({
     if (!newConf.name || !newConf.client_secret) {
       setError({
         name: !newConf.name ? __("Integration name can't be empty", 'bit-integrations') : '',
-        client_id: !newConf.client_id
-          ? __("Access Client Id can't be empty", 'bit-integrations')
-          : '',
+        client_id: !newConf.client_id ? __("Access Client Id can't be empty", 'bit-integrations') : '',
         client_secret: !newConf.client_secret
           ? __("Access Client Secret Key can't be empty", 'bit-integrations')
           : ''
@@ -80,10 +78,9 @@ export default function DirectIqAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {directIq?.youTubeLink && (
-        <TutorialLink title="DirectIQ" youTubeLink={directIq?.youTubeLink} />
-      )}
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
+      {directIq?.youTubeLink && <TutorialLink title="DirectIQ" youTubeLink={directIq?.youTubeLink} />}
       {directIq?.docLink && <TutorialLink title="DirectIQ" docLink={directIq?.docLink} />}
 
       <div className="mt-3 wdt-200">
@@ -135,7 +132,8 @@ export default function DirectIqAuthorization({
           className="btcd-link"
           href="https://app.directiq.com/integrations/apikeys"
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {__('DirectIQ API Token', 'bit-integrations')}
         </a>
       </small>
@@ -162,7 +160,8 @@ export default function DirectIqAuthorization({
             onClick={handleAuthorize}
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -173,7 +172,8 @@ export default function DirectIqAuthorization({
             onClick={() => nextPage(2)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <BackIcn className="ml-1 rev-icn" />
           </button>

@@ -50,10 +50,9 @@ export default function PipeDriveAuthorization({
       style={{
         ...{ width: step === 1 && 900 },
         ...{ height: step === 1 && 'auto' }
-      }}>
-      {pipeDrive?.youTubeLink && (
-        <TutorialLink title="Pipedrive" youTubeLink={pipeDrive?.youTubeLink} />
-      )}
+      }}
+    >
+      {pipeDrive?.youTubeLink && <TutorialLink title="Pipedrive" youTubeLink={pipeDrive?.youTubeLink} />}
       {pipeDrive?.docLink && <TutorialLink title="Pipedrive" docLink={pipeDrive?.docLink} />}
 
       <div className="mt-3">
@@ -90,7 +89,8 @@ export default function PipeDriveAuthorization({
           className="btcd-link"
           href="https://app.pipedrive.com/settings/api"
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {__('PipeDrive API Token', 'bit-integrations')}
         </a>
       </small>
@@ -103,7 +103,8 @@ export default function PipeDriveAuthorization({
             onClick={() => handleAuthorize(pipeDriveConf, setError, setisAuthorized, setIsLoading)}
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -114,7 +115,8 @@ export default function PipeDriveAuthorization({
             onClick={nextPage}
             className="btn ml-auto btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

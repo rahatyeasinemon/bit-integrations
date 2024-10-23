@@ -69,7 +69,8 @@ export default function MailMintIntegLayout({
         onChange={handleInput}
         name="mainAction"
         value={mailMintConf?.mainAction}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select Actions', 'bit-integrations')}</option>
         {mailMintConf?.allActions &&
           mailMintConf.allActions.map(({ key, label }) => (
@@ -98,7 +99,8 @@ export default function MailMintIntegLayout({
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Fetch All List', 'bit-integrations')}'` }}
           type="button"
-          disabled={isLoading}>
+          disabled={isLoading}
+        >
           &#x21BB;
         </button>
       </div>
@@ -121,7 +123,8 @@ export default function MailMintIntegLayout({
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Fetch All Tags', 'bit-integrations')}'` }}
           type="button"
-          disabled={isLoading}>
+          disabled={isLoading}
+        >
           &#x21BB;
         </button>
       </div>
@@ -158,7 +161,8 @@ export default function MailMintIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': '"Refresh Fields"' }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -183,11 +187,10 @@ export default function MailMintIntegLayout({
           ))}
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
-              onClick={() =>
-                addFieldMap(mailMintConf.field_map.length, mailMintConf, setMailMintConf)
-              }
+              onClick={() => addFieldMap(mailMintConf.field_map.length, mailMintConf, setMailMintConf)}
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

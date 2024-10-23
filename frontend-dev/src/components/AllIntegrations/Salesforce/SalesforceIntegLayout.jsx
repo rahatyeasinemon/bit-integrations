@@ -54,14 +54,7 @@ export default function SalesforceIntegLayout({
           setSnackbar
         )
       } else if (actName === 'lead-create') {
-        getAllCustomFields(
-          formID,
-          'lead-create',
-          newConf,
-          setSalesforceConf,
-          setIsLoading,
-          setSnackbar
-        )
+        getAllCustomFields(formID, 'lead-create', newConf, setSalesforceConf, setIsLoading, setSnackbar)
       } else if (actName === 'account-create') {
         getAllCustomFields(
           formID,
@@ -99,23 +92,9 @@ export default function SalesforceIntegLayout({
           setSnackbar
         )
       } else if (actName === 'event-create') {
-        getAllCustomFields(
-          formID,
-          'event-create',
-          newConf,
-          setSalesforceConf,
-          setIsLoading,
-          setSnackbar
-        )
+        getAllCustomFields(formID, 'event-create', newConf, setSalesforceConf, setIsLoading, setSnackbar)
       } else if (actName === 'case-create') {
-        getAllCustomFields(
-          formID,
-          'case-create',
-          newConf,
-          setSalesforceConf,
-          setIsLoading,
-          setSnackbar
-        )
+        getAllCustomFields(formID, 'case-create', newConf, setSalesforceConf, setIsLoading, setSnackbar)
       } else {
         getAllCustomFields(formID, actName, newConf, setSalesforceConf, setIsLoading, setSnackbar)
       }
@@ -138,7 +117,8 @@ export default function SalesforceIntegLayout({
           onChange={handleInputP}
           name="actionName"
           value={salesforceConf?.actionName}
-          className="btcd-paper-inp w-5">
+          className="btcd-paper-inp w-5"
+        >
           <option value="">{__('Select Action', 'bit-integrations')}</option>
           {salesforceConf?.selesforceActionModules?.map(({ label, value }) => (
             <option key={label} value={value}>
@@ -153,7 +133,8 @@ export default function SalesforceIntegLayout({
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Refresh Custom Action', 'bit-integrations')}'` }}
           type="button"
-          disabled={isLoading}>
+          disabled={isLoading}
+        >
           &#x21BB;
         </button>
       </div>
@@ -181,18 +162,13 @@ export default function SalesforceIntegLayout({
             />
             <button
               onClick={() =>
-                getAllCampaignList(
-                  formID,
-                  salesforceConf,
-                  setSalesforceConf,
-                  setIsLoading,
-                  setSnackbar
-                )
+                getAllCampaignList(formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar)
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Fetch Campaign lists', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -223,7 +199,8 @@ export default function SalesforceIntegLayout({
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Fetch Lead lists', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
         </div>
@@ -248,18 +225,13 @@ export default function SalesforceIntegLayout({
           />
           <button
             onClick={() =>
-              getAllContactList(
-                formID,
-                salesforceConf,
-                setSalesforceConf,
-                setIsLoading,
-                setSnackbar
-              )
+              getAllContactList(formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar)
             }
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Fetch Contact lists', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
         </div>
@@ -284,18 +256,13 @@ export default function SalesforceIntegLayout({
           />
           <button
             onClick={() =>
-              getAllAccountList(
-                formID,
-                salesforceConf,
-                setSalesforceConf,
-                setIsLoading,
-                setSnackbar
-              )
+              getAllAccountList(formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar)
             }
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Fetch Account lists', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
         </div>
@@ -384,7 +351,8 @@ export default function SalesforceIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh custom fields', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -416,15 +384,11 @@ export default function SalesforceIntegLayout({
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
               onClick={() =>
-                addFieldMap(
-                  salesforceConf.field_map.length,
-                  salesforceConf,
-                  setSalesforceConf,
-                  false
-                )
+                addFieldMap(salesforceConf.field_map.length, salesforceConf, setSalesforceConf, false)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

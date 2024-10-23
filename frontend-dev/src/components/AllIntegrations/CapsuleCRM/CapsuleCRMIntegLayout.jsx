@@ -52,7 +52,8 @@ export default function CapsuleCRMIntegLayout({
         onChange={handleActionInput}
         name="actionName"
         value={capsulecrmConf.actionName}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select an action', 'bit-integrations')}</option>
         <option value="organisation">{__('Create Organisation', 'bit-integrations')}</option>
         <option value="person">{__('Create Person', 'bit-integrations')}</option>
@@ -92,7 +93,8 @@ export default function CapsuleCRMIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh parties', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.CRMParties}>
+              disabled={loading.CRMParties}
+            >
               &#x21BB;
             </button>
           </div>
@@ -120,7 +122,8 @@ export default function CapsuleCRMIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh Milestones', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.CRMMilestones}>
+              disabled={loading.CRMMilestones}
+            >
               &#x21BB;
             </button>
           </div>
@@ -147,7 +150,8 @@ export default function CapsuleCRMIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh fields', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.CRMMilestones}>
+              disabled={loading.CRMMilestones}
+            >
               &#x21BB;
             </button>
           </div>
@@ -177,15 +181,11 @@ export default function CapsuleCRMIntegLayout({
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
               onClick={() =>
-                addFieldMap(
-                  capsulecrmConf.field_map.length,
-                  capsulecrmConf,
-                  setCapsuleCRMConf,
-                  false
-                )
+                addFieldMap(capsulecrmConf.field_map.length, capsulecrmConf, setCapsuleCRMConf, false)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

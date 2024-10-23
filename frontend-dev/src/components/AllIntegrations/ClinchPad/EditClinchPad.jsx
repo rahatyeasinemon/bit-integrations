@@ -71,9 +71,7 @@ function EditClinchPad({ allIntegURL }) {
       <ClinchPadIntegLayout
         formID={flow.triggered_entity_id}
         formFields={formField}
-        handleInput={(e) =>
-          handleInput(e, clinchPadConf, setClinchPadConf, setLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, clinchPadConf, setClinchPadConf, setLoading, setSnackbar)}
         clinchPadConf={clinchPadConf}
         setClinchPadConf={setClinchPadConf}
         loading={loading}

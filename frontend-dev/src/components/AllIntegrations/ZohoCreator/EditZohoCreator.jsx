@@ -56,9 +56,7 @@ function EditZohoCreator({ allIntegURL, formFields, flow, setFlow }) {
       <IntegrationStepThree
         edit
         saveConfig={saveConfig}
-        disabled={
-          !creatorConf.applicationId || !creatorConf.formId || creatorConf.field_map.length < 1
-        }
+        disabled={!creatorConf.applicationId || !creatorConf.formId || creatorConf.field_map.length < 1}
       />
     </div>
   )

@@ -61,7 +61,8 @@ function LogicBlock({
         label={__('Form Fields', 'bit-integrations')}
         value={fieldVal || ''}
         style={{ width: 620 }}
-        onChange={(e) => changeFormField(e.target.value, lgcInd, subLgcInd, subSubLgcInd)}>
+        onChange={(e) => changeFormField(e.target.value, lgcInd, subLgcInd, subSubLgcInd)}
+      >
         <option value="">{__('Select Form Field', 'bit-integrations')}</option>
         {formFields?.map(
           (itm) =>
@@ -81,7 +82,8 @@ function LogicBlock({
         label={__('Logic', 'bit-integrations')}
         value={logicValue || ''}
         onChange={(e) => changeLogic(e.target.value, lgcInd, subLgcInd, subSubLgcInd)}
-        className="w-5">
+        className="w-5"
+      >
         <option value="">{__('Select One', 'bit-integrations')}</option>
         <option value="equal">{__('Equal', 'bit-integrations')}</option>
         <option value="not_equal">{__('Not Equal', 'bit-integrations')}</option>
@@ -95,9 +97,7 @@ function LogicBlock({
         <option value="greater_or_equal">
           {__('Greater Than or Equal (Number)', 'bit-integrations')}
         </option>
-        <option value="less_or_equal">
-          {__('Less Than or Equal (Number)', 'bit-integrations')}
-        </option>
+        <option value="less_or_equal">{__('Less Than or Equal (Number)', 'bit-integrations')}</option>
         <option value="start_with">{__('Start With', 'bit-integrations')}</option>
         <option value="end_with">{__('End With', 'bit-integrations')}</option>
       </MtSelect>
@@ -129,7 +129,8 @@ function LogicBlock({
         <Button
           onClick={() => delLogic(lgcInd, subLgcInd, subSubLgcInd)}
           icn
-          className="ml-2 white mr-2 sh-sm">
+          className="ml-2 white mr-2 sh-sm"
+        >
           <TrashIcn size="16" />
         </Button>
         <MultiSelect

@@ -155,7 +155,8 @@ function EditCustomFormSubmissionInteg({ setSnackbar }) {
             <button
               onClick={handleFetch}
               className={`btn btcd-btn-lg sh-sm flx ml-1 ${isLoading ? 'red' : 'purple'}`}
-              type="button">
+              type="button"
+            >
               {isLoading
                 ? __('Stop', 'bit-integrations')
                 : flow.flow_details.fields

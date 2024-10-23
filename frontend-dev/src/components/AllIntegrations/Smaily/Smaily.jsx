@@ -30,8 +30,7 @@ function Smaily({ formFields, setFlow, flow, allIntegURL }) {
     type: 'Smaily',
     subdomain: process.env.NODE_ENV === 'development' ? 'b5bmlbqw' : '',
     api_user_name: process.env.NODE_ENV === 'development' ? 'iyl32h' : '',
-    api_user_password:
-      process.env.NODE_ENV === 'development' ? '6jlqbV3OnLTTy1iiHjGcOsi01sP2iJKQ' : '',
+    api_user_password: process.env.NODE_ENV === 'development' ? '6jlqbV3OnLTTy1iiHjGcOsi01sP2iJKQ' : '',
     field_map: [{ formField: '', smailyFormField: '' }],
     staticFields,
     actions: {}
@@ -39,16 +38,7 @@ function Smaily({ formFields, setFlow, flow, allIntegURL }) {
 
   const saveConfig = () => {
     setIsLoading(true)
-    const resp = saveIntegConfig(
-      flow,
-      setFlow,
-      allIntegURL,
-      smailyConf,
-      navigate,
-      '',
-      '',
-      setIsLoading
-    )
+    const resp = saveIntegConfig(flow, setFlow, allIntegURL, smailyConf, navigate, '', '', setIsLoading)
     resp.then((res) => {
       if (res.success) {
         toast.success(res.data?.msg)
@@ -92,7 +82,8 @@ function Smaily({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}
+      >
         <SmailyIntegLayout
           formFields={formFields}
           handleInput={(e) => handleInput(e, smailyConf, setSmailyConf, setLoading, setSnackbar)}
@@ -106,7 +97,8 @@ function Smaily({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => nextPage(3)}
           disabled={!checkMappedFields(smailyConf)}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')} &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>

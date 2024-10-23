@@ -112,7 +112,8 @@ export default function InsightlyActions({ insightlyConf, setInsightlyConf, load
         show={actionMdl.show === 'organisation'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Organisations', 'bit-integrations')}>
+        title={__('Organisations', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Organisation', 'bit-integrations')}</div>
         {loading.organisations ? (
@@ -141,7 +142,8 @@ export default function InsightlyActions({ insightlyConf, setInsightlyConf, load
               onClick={() => getAllOrganisations(insightlyConf, setInsightlyConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Organisations', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -156,7 +158,8 @@ export default function InsightlyActions({ insightlyConf, setInsightlyConf, load
         show={actionMdl.show === 'category'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Categories', 'bit-integrations')}>
+        title={__('Categories', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Category', 'bit-integrations')}</div>
         {loading.categories ? (
@@ -185,7 +188,8 @@ export default function InsightlyActions({ insightlyConf, setInsightlyConf, load
               onClick={() => getAllCategories(insightlyConf, setInsightlyConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Categories', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -200,7 +204,8 @@ export default function InsightlyActions({ insightlyConf, setInsightlyConf, load
         show={actionMdl.show === 'status'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Status', 'bit-integrations')}>
+        title={__('Status', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Status', 'bit-integrations')}</div>
         {loading.statuses ? (
@@ -229,7 +234,8 @@ export default function InsightlyActions({ insightlyConf, setInsightlyConf, load
               onClick={() => getAllStatuses(insightlyConf, setInsightlyConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh statuses', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -244,7 +250,8 @@ export default function InsightlyActions({ insightlyConf, setInsightlyConf, load
         show={actionMdl.show === 'followUp'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Follow Up', 'bit-integrations')}>
+        title={__('Follow Up', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="flx flx-center mt-2">
           <MultiSelect
@@ -268,7 +275,8 @@ export default function InsightlyActions({ insightlyConf, setInsightlyConf, load
         show={actionMdl.show === 'opportunityType'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Opportunity types', 'bit-integrations')}>
+        title={__('Opportunity types', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="flx flx-center mt-2">
           <MultiSelect

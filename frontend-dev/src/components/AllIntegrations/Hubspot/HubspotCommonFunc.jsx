@@ -181,14 +181,7 @@ export const getAllIndustry = (confTmp, setConf, setLoading) => {
   })
 }
 
-export const getFields = (
-  confTmp,
-  setConf,
-  setLoading,
-  type,
-  loading,
-  refreshCustomFields = false
-) => {
+export const getFields = (confTmp, setConf, setLoading, type, loading, refreshCustomFields = false) => {
   if (refreshCustomFields) {
     setLoading({ ...loading, customFieldsRefresh: true })
   } else {

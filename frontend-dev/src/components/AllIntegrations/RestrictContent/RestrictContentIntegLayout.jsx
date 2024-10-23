@@ -34,7 +34,8 @@ export default function RestrictContentIntegLayout({
         onChange={handleInputAction}
         name="actionName"
         value={restrictConf?.actionName}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select Action', 'bit-integrations')}</option>
         {restrictConf?.actionLists &&
           restrictConf.actionLists.map(({ key, label }) => (
@@ -52,7 +53,8 @@ export default function RestrictContentIntegLayout({
             onChange={handleInput}
             name="level_id"
             value={restrictConf.level_id}
-            className="btcd-paper-inp w-5">
+            className="btcd-paper-inp w-5"
+          >
             <option value="">{__('Select Level', 'bit-integrations')}</option>
             {restrictConf.actionName === 'remove-member-level' && (
               <option value="all">{__('All memberships', 'bit-integrations')}</option>
@@ -69,7 +71,8 @@ export default function RestrictContentIntegLayout({
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Fetch All Level', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
         </>

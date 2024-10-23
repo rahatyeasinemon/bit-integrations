@@ -6,13 +6,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import CustomField from './CustomField'
 import { addFieldMap, delFieldMap, handleFieldMapping } from './IntegrationHelpers'
 
-export default function SuiteDashFieldMap({
-  i,
-  formFields,
-  field,
-  suiteDashConf,
-  setSuiteDashConf
-}) {
+export default function SuiteDashFieldMap({ i, formFields, field, suiteDashConf, setSuiteDashConf }) {
   const nonDisplayFields = [
     'owner',
     'pipeline',
@@ -52,7 +46,8 @@ export default function SuiteDashFieldMap({
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, suiteDashConf, setSuiteDashConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, suiteDashConf, setSuiteDashConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -66,7 +61,8 @@ export default function SuiteDashFieldMap({
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -93,11 +89,10 @@ export default function SuiteDashFieldMap({
             disabled={i < requiredFields.length}
             name="suiteDashFormField"
             value={
-              i < requiredFields.length
-                ? requiredFields[i].key || ''
-                : field.suiteDashFormField || ''
+              i < requiredFields.length ? requiredFields[i].key || '' : field.suiteDashFormField || ''
             }
-            onChange={(ev) => handleFieldMapping(ev, i, suiteDashConf, setSuiteDashConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, suiteDashConf, setSuiteDashConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFields.length ? (
               <option key={requiredFields[i].key} value={requiredFields[i].key}>
@@ -117,14 +112,16 @@ export default function SuiteDashFieldMap({
             <button
               onClick={() => addFieldMap(i, suiteDashConf, setSuiteDashConf)}
               className="icn-btn sh-sm ml-2 mr-1"
-              type="button">
+              type="button"
+            >
               +
             </button>
             <button
               onClick={() => delFieldMap(i, suiteDashConf, setSuiteDashConf)}
               className="icn-btn sh-sm ml-1"
               type="button"
-              aria-label="btn">
+              aria-label="btn"
+            >
               <span className="btcd-icn icn-trash-2" />
             </button>
           </>

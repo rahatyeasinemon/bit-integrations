@@ -53,7 +53,8 @@ export default function AutonamiIntegLayout({
             '--tooltip-txt': `'${__('Refresh Autonami Lists And Tags', 'bit-integrations')}'`
           }}
           type="button"
-          disabled={isLoading}>
+          disabled={isLoading}
+        >
           &#x21BB;
         </button>
       </div>
@@ -92,7 +93,8 @@ export default function AutonamiIntegLayout({
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Refresh Autonami Fields', 'bit-integrations')}'` }}
           type="button"
-          disabled={isLoading}>
+          disabled={isLoading}
+        >
           &#x21BB;
         </button>
       </div>
@@ -120,7 +122,8 @@ export default function AutonamiIntegLayout({
         <button
           onClick={() => addFieldMap(autonamiConf.field_map.length, autonamiConf, setAutonamiConf)}
           className="icn-btn sh-sm"
-          type="button">
+          type="button"
+        >
           +
         </button>
       </div>

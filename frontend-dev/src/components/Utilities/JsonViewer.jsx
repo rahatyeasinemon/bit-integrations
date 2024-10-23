@@ -1,13 +1,13 @@
-import ReactJson from "@microlink/react-json-view"
+import ReactJson from '@microlink/react-json-view'
 
 export default function JsonViewer({
   data = {},
-  theme = "monokai",
-  indentWidth = "4",
+  theme = 'monokai',
+  indentWidth = '4',
   enableClipboard = false,
   collapsed = false,
   displayDataTypes = true,
-  onChange,
+  onChange
 }) {
   return (
     <div className="bg-white max-h-96 rounded border my-3 table-webhook-div">
@@ -19,7 +19,7 @@ export default function JsonViewer({
         enableClipboard={enableClipboard}
         collapsed={collapsed}
         displayDataTypes={displayDataTypes}
-        style={{ padding: "15px" }}
+        style={{ padding: '15px' }}
       />
     </div>
   )

@@ -15,23 +15,22 @@ root.render(
       <RecoilNexus />
       <HashRouter>
         <Suspense
-          fallback={(
+          fallback={
             <Loader
               style={{
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                height: '82vh',
+                height: '82vh'
               }}
             />
-          )}
+          }
         >
           <App />
         </Suspense>
       </HashRouter>
     </RecoilRoot>
-
-  </AllFormContextProvider>,
+  </AllFormContextProvider>
 )
 
 // serviceWorker.register();

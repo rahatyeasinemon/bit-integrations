@@ -45,9 +45,7 @@ function EditMailMint({ allIntegURL }) {
       <MailMintIntegLayout
         formID={formID}
         formFields={formFields}
-        handleInput={(e) =>
-          handleInput(e, mailMintConf, setMailMintConf, setIsLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, mailMintConf, setMailMintConf, setIsLoading, setSnackbar)}
         mailMintConf={mailMintConf}
         setMailMintConf={setMailMintConf}
         isLoading={isLoading}

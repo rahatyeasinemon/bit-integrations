@@ -55,7 +55,8 @@ export default function FluentCrmAuthorization({
     <>
       <div
         className="btcd-stp-page"
-        style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+        style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+      >
         {fluentCrm?.youTubeLink && (
           <TutorialLink title="FluentCRM" youTubeLink={fluentCrm?.youTubeLink} />
         )}
@@ -92,7 +93,8 @@ export default function FluentCrmAuthorization({
           onClick={handleAuthorize}
           className="btn btcd-btn-lg purple sh-sm flx"
           type="button"
-          disabled={isAuthorized || isLoading}>
+          disabled={isAuthorized || isLoading}
+        >
           {isAuthorized
             ? __('Connected ✔', 'bit-integrations')
             : __('Connect to Fluent CRM', 'bit-integrations')}
@@ -103,7 +105,8 @@ export default function FluentCrmAuthorization({
           onClick={() => nextPage(2)}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
           type="button"
-          disabled={!isAuthorized}>
+          disabled={!isAuthorized}
+        >
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>

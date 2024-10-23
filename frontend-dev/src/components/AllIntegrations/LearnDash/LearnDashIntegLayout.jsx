@@ -70,7 +70,8 @@ export default function LearnDeshIntegLayout({
         onChange={handleInput}
         name="mainAction"
         value={learnDashConf.mainAction}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select Actions', 'bit-integrations')}</option>
         {learnDashConf.allActions &&
           learnDashConf.allActions.map(({ key, label }) => (
@@ -88,7 +89,8 @@ export default function LearnDeshIntegLayout({
             onChange={handleInput}
             name="userRole"
             value={learnDashConf.userRole}
-            className="btcd-paper-inp w-5">
+            className="btcd-paper-inp w-5"
+          >
             <option value="">{__('Select User Role', 'bit-integrations')}</option>
             {learnDashConf?.groupUserRole &&
               learnDashConf.groupUserRole.map((item) => (
@@ -114,13 +116,12 @@ export default function LearnDeshIntegLayout({
               onChange={(val) => changeHandler(val, 'courseId')}
             />
             <button
-              onClick={() =>
-                fetchAllCourse(learnDashConf, setLearnDashConf, setIsLoading, setSnackbar)
-              }
+              onClick={() => fetchAllCourse(learnDashConf, setLearnDashConf, setIsLoading, setSnackbar)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Fetch Course List', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -143,13 +144,12 @@ export default function LearnDeshIntegLayout({
             onChange={(val) => changeHandler(val, 'groupId')}
           />
           <button
-            onClick={() =>
-              fetchAllGroup(learnDashConf, setLearnDashConf, setIsLoading, setSnackbar)
-            }
+            onClick={() => fetchAllGroup(learnDashConf, setLearnDashConf, setIsLoading, setSnackbar)}
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Fetch Group List', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
         </div>
@@ -172,13 +172,12 @@ export default function LearnDeshIntegLayout({
             singleSelect
           />
           <button
-            onClick={() =>
-              fetchAllCourse(learnDashConf, setLearnDashConf, setIsLoading, setSnackbar)
-            }
+            onClick={() => fetchAllCourse(learnDashConf, setLearnDashConf, setIsLoading, setSnackbar)}
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Fetch Subscriber List', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
         </div>
@@ -191,7 +190,8 @@ export default function LearnDeshIntegLayout({
             onChange={handleInput}
             name="leaderOfGroup"
             value={learnDashConf.leaderOfGroup}
-            className="btcd-paper-inp w-5">
+            className="btcd-paper-inp w-5"
+          >
             <option value="">{__('Select group', 'bit-integrations')}</option>
             {learnDashConf?.default?.allGroup &&
               learnDashConf.default.allGroup.map((item) => (
@@ -201,13 +201,12 @@ export default function LearnDeshIntegLayout({
               ))}
           </select>
           <button
-            onClick={() =>
-              fetchAllGroup(learnDashConf, setLearnDashConf, setIsLoading, setSnackbar)
-            }
+            onClick={() => fetchAllGroup(learnDashConf, setLearnDashConf, setIsLoading, setSnackbar)}
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Fetch Group List', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
           <br />
@@ -217,7 +216,8 @@ export default function LearnDeshIntegLayout({
             onChange={handleInput}
             name="leaderRole"
             value={learnDashConf.leaderRole}
-            className="btcd-paper-inp w-5">
+            className="btcd-paper-inp w-5"
+          >
             <option value="">{__('Select Leader Role', 'bit-integrations')}</option>
             {learnDashConf?.groupOfLeader4 &&
               learnDashConf.groupOfLeader4.map((item) => (
@@ -245,13 +245,12 @@ export default function LearnDeshIntegLayout({
             singleSelect
           />
           <button
-            onClick={() =>
-              fetchAllCourse(learnDashConf, setLearnDashConf, setIsLoading, setSnackbar)
-            }
+            onClick={() => fetchAllCourse(learnDashConf, setLearnDashConf, setIsLoading, setSnackbar)}
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Fetch Course List', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
         </div>
@@ -274,13 +273,12 @@ export default function LearnDeshIntegLayout({
               singleSelect
             />
             <button
-              onClick={() =>
-                fetchAllCourse(learnDashConf, setLearnDashConf, setIsLoading, setSnackbar)
-              }
+              onClick={() => fetchAllCourse(learnDashConf, setLearnDashConf, setIsLoading, setSnackbar)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Fetch Course List', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -308,7 +306,8 @@ export default function LearnDeshIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Fetch Lesson List', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -333,13 +332,12 @@ export default function LearnDeshIntegLayout({
               singleSelect
             />
             <button
-              onClick={() =>
-                fetchAllCourse(learnDashConf, setLearnDashConf, setIsLoading, setSnackbar)
-              }
+              onClick={() => fetchAllCourse(learnDashConf, setLearnDashConf, setIsLoading, setSnackbar)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Fetch Course List', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -367,7 +365,8 @@ export default function LearnDeshIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Fetch Lesson List', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -392,13 +391,12 @@ export default function LearnDeshIntegLayout({
               singleSelect
             />
             <button
-              onClick={() =>
-                fetchAllCourse(learnDashConf, setLearnDashConf, setIsLoading, setSnackbar)
-              }
+              onClick={() => fetchAllCourse(learnDashConf, setLearnDashConf, setIsLoading, setSnackbar)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Fetch Course List', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -426,7 +424,8 @@ export default function LearnDeshIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Fetch Lesson List', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -454,7 +453,8 @@ export default function LearnDeshIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Fetch Lesson List', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -480,13 +480,12 @@ export default function LearnDeshIntegLayout({
               singleSelect
             />
             <button
-              onClick={() =>
-                fetchAllCourse(learnDashConf, setLearnDashConf, setIsLoading, setSnackbar)
-              }
+              onClick={() => fetchAllCourse(learnDashConf, setLearnDashConf, setIsLoading, setSnackbar)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Fetch Course List', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -514,7 +513,8 @@ export default function LearnDeshIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Fetch Lesson List', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -542,7 +542,8 @@ export default function LearnDeshIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Fetch Lesson List', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -556,7 +557,8 @@ export default function LearnDeshIntegLayout({
             onChange={handleInput}
             name="groupId10"
             value={learnDashConf.groupId10}
-            className="btcd-paper-inp w-5">
+            className="btcd-paper-inp w-5"
+          >
             <option value="">{__('Select group', 'bit-integrations')}</option>
             {learnDashConf?.default?.allGroup &&
               learnDashConf.default.allGroup.map((item) => (
@@ -566,13 +568,12 @@ export default function LearnDeshIntegLayout({
               ))}
           </select>
           <button
-            onClick={() =>
-              fetchAllGroup(learnDashConf, setLearnDashConf, setIsLoading, setSnackbar)
-            }
+            onClick={() => fetchAllGroup(learnDashConf, setLearnDashConf, setIsLoading, setSnackbar)}
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Fetch Group List', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
           <br />
@@ -586,7 +587,8 @@ export default function LearnDeshIntegLayout({
             onChange={handleInput}
             name="groupId11"
             value={learnDashConf.groupId11}
-            className="btcd-paper-inp w-5">
+            className="btcd-paper-inp w-5"
+          >
             <option value="">{__('Select group', 'bit-integrations')}</option>
             {learnDashConf?.default?.allGroup &&
               learnDashConf.default.allGroup.map((item) => (
@@ -596,13 +598,12 @@ export default function LearnDeshIntegLayout({
               ))}
           </select>
           <button
-            onClick={() =>
-              fetchAllGroup(learnDashConf, setLearnDashConf, setIsLoading, setSnackbar)
-            }
+            onClick={() => fetchAllGroup(learnDashConf, setLearnDashConf, setIsLoading, setSnackbar)}
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Fetch Group List', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
           <br />
@@ -616,7 +617,8 @@ export default function LearnDeshIntegLayout({
             onChange={handleInput}
             name="groupId12"
             value={learnDashConf.groupId12}
-            className="btcd-paper-inp w-5">
+            className="btcd-paper-inp w-5"
+          >
             <option value="">{__('Select group', 'bit-integrations')}</option>
             {learnDashConf?.default?.allGroup &&
               learnDashConf.default.allGroup.map((item) => (
@@ -626,13 +628,12 @@ export default function LearnDeshIntegLayout({
               ))}
           </select>
           <button
-            onClick={() =>
-              fetchAllGroup(learnDashConf, setLearnDashConf, setIsLoading, setSnackbar)
-            }
+            onClick={() => fetchAllGroup(learnDashConf, setLearnDashConf, setIsLoading, setSnackbar)}
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Fetch Group List', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
           <br />
@@ -661,7 +662,8 @@ export default function LearnDeshIntegLayout({
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Fetch Lesson List', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
         </div>
@@ -683,13 +685,12 @@ export default function LearnDeshIntegLayout({
             singleSelect
           />
           <button
-            onClick={() =>
-              fetchAllCourse(learnDashConf, setLearnDashConf, setIsLoading, setSnackbar)
-            }
+            onClick={() => fetchAllCourse(learnDashConf, setLearnDashConf, setIsLoading, setSnackbar)}
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Fetch Course List', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
         </div>
@@ -731,7 +732,8 @@ export default function LearnDeshIntegLayout({
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Fetch course List', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
         </div>
@@ -782,7 +784,8 @@ export default function LearnDeshIntegLayout({
                 addFieldMap(learnDashConf.field_map.length, learnDashConf, setLearnDashConf)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>
@@ -792,9 +795,7 @@ export default function LearnDeshIntegLayout({
         </>
       )}
       <br />
-      <Note
-        note={__('Some integrations will only work for logged-in users.', 'bit-integrations')}
-      />
+      <Note note={__('Some integrations will only work for logged-in users.', 'bit-integrations')} />
     </>
   )
 }

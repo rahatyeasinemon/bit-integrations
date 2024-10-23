@@ -4,7 +4,12 @@ import LoaderSm from '../Loaders/LoaderSm'
 export default function AuthorizeButton({ onclick, nextPage, auth, loading }) {
   return (
     <div className="w-6 d-flx flx-between ">
-      <button onClick={onclick} className="btn btcd-btn-lg purple sh-sm" type="button" disabled={auth || loading}>
+      <button
+        onClick={onclick}
+        className="btn btcd-btn-lg purple sh-sm"
+        type="button"
+        disabled={auth || loading}
+      >
         {auth ? __('Authorized ✔') : __('Authorize')}
         {loading && <LoaderSm size="20" clr="#022217" className="ml-2" />}
       </button>

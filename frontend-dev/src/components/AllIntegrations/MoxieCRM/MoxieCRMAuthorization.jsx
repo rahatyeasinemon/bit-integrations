@@ -51,10 +51,9 @@ export default function MoxieCRMAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {moxiecrm?.youTubeLink && (
-        <TutorialLink title="MoxieCRM" youTubeLink={moxiecrm?.youTubeLink} />
-      )}
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
+      {moxiecrm?.youTubeLink && <TutorialLink title="MoxieCRM" youTubeLink={moxiecrm?.youTubeLink} />}
       {moxiecrm?.docLink && <TutorialLink title="MoxieCRM" docLink={moxiecrm?.docLink} />}
 
       <div className="mt-3">
@@ -83,9 +82,7 @@ export default function MoxieCRMAuthorization({
         disabled={isInfo}
       />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.api_url}</div>
-      <small className="d-blk mt-3">
-        {__('Example: {name}.withmoxie.com', 'bit-integrations')}
-      </small>
+      <small className="d-blk mt-3">{__('Example: {name}.withmoxie.com', 'bit-integrations')}</small>
       <div className="mt-3">
         <b>{__('API Key:', 'bit-integrations')}</b>
       </div>
@@ -118,7 +115,8 @@ export default function MoxieCRMAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || loading.auth}>
+            disabled={isAuthorized || loading.auth}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -129,7 +127,8 @@ export default function MoxieCRMAuthorization({
             onClick={nextPage}
             className="btn ml-auto btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

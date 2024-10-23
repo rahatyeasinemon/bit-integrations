@@ -62,7 +62,8 @@ export default function ZohoSheetIntegLayout({
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Refresh  workbooks', 'bit-integrations')}'` }}
           type="button"
-          disabled={loading.workbooks}>
+          disabled={loading.workbooks}
+        >
           &#x21BB;
         </button>
       </div>
@@ -86,7 +87,8 @@ export default function ZohoSheetIntegLayout({
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Refresh  worksheets', 'bit-integrations')}'` }}
           type="button"
-          disabled={loading.worksheets || loading.workbooks || !zohoSheetConf.selectedWorkbook}>
+          disabled={loading.worksheets || loading.workbooks || !zohoSheetConf.selectedWorkbook}
+        >
           &#x21BB;
         </button>
       </div>
@@ -120,7 +122,8 @@ export default function ZohoSheetIntegLayout({
             !zohoSheetConf.selectedWorkbook ||
             !zohoSheetConf.selectedWorksheet ||
             loading.header
-          }>
+          }
+        >
           &#x21BB;
         </button>
       </div>
@@ -180,15 +183,11 @@ export default function ZohoSheetIntegLayout({
             <div className="txt-center btcbi-field-map-button mt-2">
               <button
                 onClick={() =>
-                  addFieldMap(
-                    zohoSheetConf.field_map.length,
-                    zohoSheetConf,
-                    setZohoSheetConf,
-                    false
-                  )
+                  addFieldMap(zohoSheetConf.field_map.length, zohoSheetConf, setZohoSheetConf, false)
                 }
                 className="icn-btn sh-sm"
-                type="button">
+                type="button"
+              >
                 +
               </button>
             </div>

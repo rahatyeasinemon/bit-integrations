@@ -36,7 +36,8 @@ export default function PaidMembershipProIntegLayout({
         onChange={handleInput}
         name="mainAction"
         value={paidMembershipProConf?.mainAction}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select Actions', 'bit-integrations')}</option>
         {paidMembershipProConf?.allActions &&
           paidMembershipProConf.allActions.map(({ key, label }) => (
@@ -76,7 +77,8 @@ export default function PaidMembershipProIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Fetch All Membership', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>

@@ -21,7 +21,8 @@ export default function ZohoCampaignsIntegLayout({
         onChange={(event) => handleInput(event)}
         name="list"
         value={campaignsConf.list}
-        className="btcd-paper-inp w-7">
+        className="btcd-paper-inp w-7"
+      >
         <option value="">{__('Select List', 'bit-integrations')}</option>
         {campaignsConf?.default?.lists &&
           Object.values(campaignsConf.default.lists).map((listApiName) => (
@@ -31,13 +32,12 @@ export default function ZohoCampaignsIntegLayout({
           ))}
       </select>
       <button
-        onClick={() =>
-          refreshLists(formID, campaignsConf, setCampaignsConf, setIsLoading, setSnackbar)
-        }
+        onClick={() => refreshLists(formID, campaignsConf, setCampaignsConf, setIsLoading, setSnackbar)}
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': `'${__('Refresh Campaigns Lists', 'bit-integrations')}'` }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -60,20 +60,15 @@ export default function ZohoCampaignsIntegLayout({
             <b className="wdt-100">{__('Map Fields', 'bit-integrations')}</b>
             <button
               onClick={() =>
-                refreshContactFields(
-                  formID,
-                  campaignsConf,
-                  setCampaignsConf,
-                  setIsLoading,
-                  setSnackbar
-                )
+                refreshContactFields(formID, campaignsConf, setCampaignsConf, setIsLoading, setSnackbar)
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{
                 '--tooltip-txt': `'${__('Refresh Campaigns Contact Fields', 'bit-integrations')}'`
               }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -105,7 +100,8 @@ export default function ZohoCampaignsIntegLayout({
                     addFieldMap(campaignsConf.field_map.length, campaignsConf, setCampaignsConf)
                   }
                   className="icn-btn sh-sm"
-                  type="button">
+                  type="button"
+                >
                   +
                 </button>
               </div>

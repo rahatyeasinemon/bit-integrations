@@ -58,7 +58,8 @@ export default function GamiPressIntegLayout({
         onChange={handleInput}
         name="mainAction"
         value={gamiPressConf.mainAction}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select Actions', 'bit-integrations')}</option>
         {gamiPressConf.allActions &&
           gamiPressConf.allActions.map(({ key, label }) => (
@@ -93,7 +94,8 @@ export default function GamiPressIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Fetch Rank Type List', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -121,7 +123,8 @@ export default function GamiPressIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Fetch Rank', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -154,7 +157,8 @@ export default function GamiPressIntegLayout({
                 '--tooltip-txt': `'${__('Fetch achievement type list', 'bit-integrations')}'`
               }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -177,17 +181,13 @@ export default function GamiPressIntegLayout({
             />
             <button
               onClick={() =>
-                fetchAllAchievementByType(
-                  gamiPressConf,
-                  setGamiPressConf,
-                  setIsLoading,
-                  setSnackbar
-                )
+                fetchAllAchievementByType(gamiPressConf, setGamiPressConf, setIsLoading, setSnackbar)
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Fetch Achievement', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -210,13 +210,12 @@ export default function GamiPressIntegLayout({
             onChange={(val) => changeHandler(val, 'selectedPointType')}
           />
           <button
-            onClick={() =>
-              fetchAllPointType(gamiPressConf, setGamiPressConf, setIsLoading, setSnackbar)
-            }
+            onClick={() => fetchAllPointType(gamiPressConf, setGamiPressConf, setIsLoading, setSnackbar)}
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Fetch point type', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
         </div>
@@ -267,7 +266,8 @@ export default function GamiPressIntegLayout({
                 addFieldMap(gamiPressConf.field_map.length, gamiPressConf, setGamiPressConf)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>
@@ -277,9 +277,7 @@ export default function GamiPressIntegLayout({
         </>
       )}
       <br />
-      <Note
-        note={__('Some integrations will only work for logged-in users.', 'bit-integrations')}
-      />
+      <Note note={__('Some integrations will only work for logged-in users.', 'bit-integrations')} />
     </>
   )
 }

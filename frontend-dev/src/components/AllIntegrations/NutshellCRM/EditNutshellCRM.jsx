@@ -64,9 +64,7 @@ function EditNutshellCRM({ allIntegURL }) {
       <NutshellCRMIntegLayout
         formID={flow.triggered_entity_id}
         formFields={formField}
-        handleInput={(e) =>
-          handleInput(e, nutshellCRMConf, setNutshellCRMConf, setLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, nutshellCRMConf, setNutshellCRMConf, setLoading, setSnackbar)}
         nutshellCRMConf={nutshellCRMConf}
         setNutshellCRMConf={setNutshellCRMConf}
         loading={loading}

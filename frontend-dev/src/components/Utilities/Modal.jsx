@@ -31,10 +31,12 @@ export default function Modal({
         onKeyPress={handleClickOutside}
         onClick={handleClickOutside}
         className="btcd-modal-wrp flx"
-        style={{ overflow: 'auto' }}>
+        style={{ overflow: 'auto' }}
+      >
         <div
           className={`btcd-modal ${sm ? 'btcd-m-sm' : ''} ${lg ? 'btcd-m-lg' : ''} ${className}`}
-          style={style}>
+          style={style}
+        >
           <div className={`btcd-modal-content ${noPadding ? 'no-padding' : ''}  `}>
             {hdrActn}
             {!closeIcon ? (
@@ -44,7 +46,8 @@ export default function Modal({
                 onClick={() => setModal(false)}
                 className="icn-btn btcd-mdl-close"
                 aria-label="modal-close"
-                type="button">
+                type="button"
+              >
                 <CloseIcn size={16} stroke={3} />
               </button>
             )}

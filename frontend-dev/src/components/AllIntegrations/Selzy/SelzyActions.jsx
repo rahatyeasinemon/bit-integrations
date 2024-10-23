@@ -59,7 +59,8 @@ function SelzyActions({ selzyConf, setSelzyConf }) {
           show={actionModel.show === 'option'}
           close={closeModel}
           action={closeModel}
-          title={__('Subscribe Option')}>
+          title={__('Subscribe Option')}
+        >
           <div className="btcd-hr mt-2 mb-2" />
           <div className="p-1">
             <div className="my-2 w-100 ">{__('Customize your subscription')}</div>
@@ -67,7 +68,8 @@ function SelzyActions({ selzyConf, setSelzyConf }) {
               name="option"
               value={selzyConf.option}
               onChange={handleOption}
-              className="btcd-paper-inp w-100 mx-0">
+              className="btcd-paper-inp w-100 mx-0"
+            >
               <option value="">{__('Select Option')}</option>
               {selzyConf?.doubleOption &&
                 selzyConf?.doubleOption.map((option) => (
@@ -97,7 +99,8 @@ function SelzyActions({ selzyConf, setSelzyConf }) {
           show={actionModel.show === 'overwrite'}
           close={closeModel}
           action={closeModel}
-          title={__('Subscribe overwrite')}>
+          title={__('Subscribe overwrite')}
+        >
           <div className="btcd-hr mt-2 mb-2" />
           <div className="p-1">
             <div className="my-2 w-100 ">{__('Field and tag rewriting mode')}</div>
@@ -105,7 +108,8 @@ function SelzyActions({ selzyConf, setSelzyConf }) {
               name="overwrite"
               value={selzyConf.overwrite}
               onChange={handleOption}
-              className="btcd-paper-inp w-100 mx-0">
+              className="btcd-paper-inp w-100 mx-0"
+            >
               <option value="">{__('Select Option')}</option>
               {selzyConf?.overwriteOption &&
                 selzyConf?.overwriteOption.map((option) => (

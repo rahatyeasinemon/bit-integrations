@@ -34,13 +34,7 @@ export const checkMappedFields = (jetEngineConf) => {
   return true
 }
 
-export const jetEngineAuthentication = (
-  confTmp,
-  setError,
-  setIsAuthorized,
-  loading,
-  setLoading
-) => {
+export const jetEngineAuthentication = (confTmp, setError, setIsAuthorized, loading, setLoading) => {
   if (!confTmp.name) {
     setError({ name: !confTmp.name ? __("Name can't be empty", 'bit-integrations') : '' })
     return
@@ -55,9 +49,7 @@ export const jetEngineAuthentication = (
       return
     }
     setLoading({ ...loading, auth: false })
-    toast.error(
-      __('Connection failed: install and active JetEngine plugin first!', 'bit-integrations')
-    )
+    toast.error(__('Connection failed: install and active JetEngine plugin first!', 'bit-integrations'))
   })
 }
 

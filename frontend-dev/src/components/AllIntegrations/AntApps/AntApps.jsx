@@ -35,13 +35,12 @@ function AntApps({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 1 */}
       <div
         className="btcd-stp-page"
-        style={{ ...{ width: step === 1 && 1100 }, ...{ height: step === 1 && 'auto' } }}>
+        style={{ ...{ width: step === 1 && 1100 }, ...{ height: step === 1 && 'auto' } }}
+      >
         {antsAndApps?.youTubeLink && (
           <TutorialLink title="Ants and Apps" youTubeLink={antsAndApps?.youTubeLink} />
         )}
-        {antsAndApps?.docLink && (
-          <TutorialLink title="Ants and Apps" docLink={antsAndApps?.docLink} />
-        )}
+        {antsAndApps?.docLink && <TutorialLink title="Ants and Apps" docLink={antsAndApps?.docLink} />}
 
         <WebHooksIntegration
           formID={formID}
@@ -56,9 +55,7 @@ function AntApps({ formFields, setFlow, flow, allIntegURL }) {
       </div>
 
       {/* STEP 2 */}
-      <div
-        className="btcd-stp-page"
-        style={{ width: step === 2 && 900, height: step === 2 && 'auto' }}>
+      <div className="btcd-stp-page" style={{ width: step === 2 && 900, height: step === 2 && 'auto' }}>
         <WebHooksStepTwo
           step={step}
           saveConfig={() =>

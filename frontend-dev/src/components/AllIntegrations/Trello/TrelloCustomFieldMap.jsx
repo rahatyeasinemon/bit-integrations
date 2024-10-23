@@ -59,13 +59,12 @@ export default function TrelloCustomFieldMap({
         </b>
         {mapKey !== 'field_map' && (
           <button
-            onClick={() =>
-              fetchAllCustomFields(trelloConf, setTrelloConf, setIsLoading, setSnackbar)
-            }
+            onClick={() => fetchAllCustomFields(trelloConf, setTrelloConf, setIsLoading, setSnackbar)}
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Refresh Custom Fields', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
         )}

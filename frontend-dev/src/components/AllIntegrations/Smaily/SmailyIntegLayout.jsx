@@ -49,11 +49,10 @@ export default function SmailyIntegLayout({
         ))}
         <div className="txt-center btcbi-field-map-button mt-2">
           <button
-            onClick={() =>
-              addFieldMap(smailyConf.field_map.length, smailyConf, setSmailyConf, false)
-            }
+            onClick={() => addFieldMap(smailyConf.field_map.length, smailyConf, setSmailyConf, false)}
             className="icn-btn sh-sm"
-            type="button">
+            type="button"
+          >
             +
           </button>
         </div>
@@ -63,11 +62,7 @@ export default function SmailyIntegLayout({
           <b className="wdt-100">{__('Utilities', 'bit-integrations')}</b>
         </div>
         <div className="btcd-hr mt-1" />
-        <SmailyActions
-          smailyConf={smailyConf}
-          setSmailyConf={setSmailyConf}
-          formFields={formFields}
-        />
+        <SmailyActions smailyConf={smailyConf} setSmailyConf={setSmailyConf} formFields={formFields} />
       </div>
     </>
   )

@@ -23,9 +23,7 @@ export const dripAuthentication = (
   if (!newConf.name || !newConf.api_token) {
     setError({
       name: !newConf.name ? __("Integration name can't be empty", 'bit-integrations') : '',
-      api_token: !newConf.api_token
-        ? __("Access Api Token Key can't be empty", 'bit-integrations')
-        : ''
+      api_token: !newConf.api_token ? __("Access Api Token Key can't be empty", 'bit-integrations') : ''
     })
     return
   }

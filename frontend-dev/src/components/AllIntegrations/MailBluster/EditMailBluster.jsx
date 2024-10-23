@@ -66,9 +66,7 @@ function EditMailBluster({ allIntegURL }) {
       <MailBlusterIntegLayout
         formID={flow.triggered_entity_id}
         formFields={formField}
-        handleInput={(e) =>
-          handleInput(e, mailBlusterConf, setMailBlusterConf, setLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, mailBlusterConf, setMailBlusterConf, setLoading, setSnackbar)}
         mailBlusterConf={mailBlusterConf}
         setMailBlusterConf={setMailBlusterConf}
         loading={loading}

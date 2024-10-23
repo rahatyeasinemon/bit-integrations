@@ -34,18 +34,12 @@ function EditWPForo({ allIntegURL }) {
       return
     }
 
-    if (
-      wpforoConf.selectedTask !== TASK_LIST_VALUES.DELETE_TOPIC &&
-      !checkMappedFields(wpforoConf)
-    ) {
+    if (wpforoConf.selectedTask !== TASK_LIST_VALUES.DELETE_TOPIC && !checkMappedFields(wpforoConf)) {
       toast.error(__('Please map mandatory fields!', 'bit-integrations'))
       return
     }
 
-    if (
-      wpforoConf.selectedTask === TASK_LIST_VALUES.USER_REPUTATION &&
-      !wpforoConf.selectedReputation
-    ) {
+    if (wpforoConf.selectedTask === TASK_LIST_VALUES.USER_REPUTATION && !wpforoConf.selectedReputation) {
       toast.error(__('Please select a reputation!', 'bit-integrations'))
       return
     }
@@ -55,10 +49,7 @@ function EditWPForo({ allIntegURL }) {
       return
     }
 
-    if (
-      wpforoConf.selectedTask === TASK_LIST_VALUES.REMOVE_FROM_GROUP &&
-      !wpforoConf.selectedGroup
-    ) {
+    if (wpforoConf.selectedTask === TASK_LIST_VALUES.REMOVE_FROM_GROUP && !wpforoConf.selectedGroup) {
       toast.error(__('Please select a group!', 'bit-integrations'))
       return
     }

@@ -217,7 +217,8 @@ export default function SalesmateActions({ salesmateConf, setSalesmateConf, load
         show={actionMdl.show === 'tag'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Tags', 'bit-integrations')}>
+        title={__('Tags', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select tag', 'bit-integrations')}</div>
         {loading.tags ? (
@@ -242,7 +243,8 @@ export default function SalesmateActions({ salesmateConf, setSalesmateConf, load
               onClick={() => getAllTags(salesmateConf, setSalesmateConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Tags', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -257,7 +259,8 @@ export default function SalesmateActions({ salesmateConf, setSalesmateConf, load
         show={actionMdl.show === 'type'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Tags', 'bit-integrations')}>
+        title={__('Tags', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select type', 'bit-integrations')}</div>
         {loading.CRMType ? (
@@ -283,7 +286,8 @@ export default function SalesmateActions({ salesmateConf, setSalesmateConf, load
               onClick={() => getAllCRMTypes(setSalesmateConf)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Types', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -298,7 +302,8 @@ export default function SalesmateActions({ salesmateConf, setSalesmateConf, load
         show={actionMdl.show === 'lostReason'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Currency-integrations')}>
+        title={__('Currency-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Lost Reason', 'bit-integrations')}</div>
         {loading.CRMLostReason ? (
@@ -327,7 +332,8 @@ export default function SalesmateActions({ salesmateConf, setSalesmateConf, load
               onClick={() => getAllCRMLostReasons(setSalesmateConf)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh LostReasons', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -342,7 +348,8 @@ export default function SalesmateActions({ salesmateConf, setSalesmateConf, load
         show={actionMdl.show === 'source'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Source', 'bit-integrations')}>
+        title={__('Source', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Source', 'bit-integrations')}</div>
         {loading.CRMSource ? (
@@ -368,7 +375,8 @@ export default function SalesmateActions({ salesmateConf, setSalesmateConf, load
               onClick={() => getAllCRMSources(setSalesmateConf)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Source', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -383,7 +391,8 @@ export default function SalesmateActions({ salesmateConf, setSalesmateConf, load
         show={actionMdl.show === 'status'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Status', 'bit-integrations')}>
+        title={__('Status', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Status', 'bit-integrations')}</div>
         {loading.CRMStatus ? (
@@ -409,7 +418,8 @@ export default function SalesmateActions({ salesmateConf, setSalesmateConf, load
               onClick={() => getAllCRMStatus(setSalesmateConf)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Status', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -424,7 +434,8 @@ export default function SalesmateActions({ salesmateConf, setSalesmateConf, load
         show={actionMdl.show === 'priority'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Priority', 'bit-integrations')}>
+        title={__('Priority', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Priority', 'bit-integrations')}</div>
         {loading.CRMPriority ? (
@@ -453,7 +464,8 @@ export default function SalesmateActions({ salesmateConf, setSalesmateConf, load
               onClick={() => getAllCRMPriority(setSalesmateConf)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Priority', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -468,7 +480,8 @@ export default function SalesmateActions({ salesmateConf, setSalesmateConf, load
         show={actionMdl.show === 'currency'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Currency', 'bit-integrations')}>
+        title={__('Currency', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Currency', 'bit-integrations')}</div>
         {loading.CRMCurrency ? (
@@ -497,7 +510,8 @@ export default function SalesmateActions({ salesmateConf, setSalesmateConf, load
               onClick={() => getAllCRMCurrency(salesmateConf, setSalesmateConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Currency', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -512,7 +526,8 @@ export default function SalesmateActions({ salesmateConf, setSalesmateConf, load
         show={actionMdl.show === 'isActive'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Active For Sale', 'bit-integrations')}>
+        title={__('Active For Sale', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select isActive', 'bit-integrations')}</div>
         {loading.isActive ? (
@@ -549,7 +564,8 @@ export default function SalesmateActions({ salesmateConf, setSalesmateConf, load
         show={actionMdl.show === 'company'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Company', 'bit-integrations')}>
+        title={__('Company', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Company', 'bit-integrations')}</div>
         {loading.CRMCompany ? (
@@ -578,7 +594,8 @@ export default function SalesmateActions({ salesmateConf, setSalesmateConf, load
               onClick={() => getAllCRMCompany(salesmateConf, setSalesmateConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Company', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>

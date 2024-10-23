@@ -72,7 +72,8 @@ export default function AcademyLmsIntegLayout({
           onChange={handleAction}
           name="actionName"
           value={academyLmsConf?.actionName}
-          className="btcd-paper-inp w-5">
+          className="btcd-paper-inp w-5"
+        >
           <option value="">{__('Select Action', 'bit-integrations')}</option>
           {action.map(({ label, value }) => (
             <option key={label} value={value}>
@@ -109,17 +110,13 @@ export default function AcademyLmsIntegLayout({
           />
           <button
             onClick={() =>
-              getAllCourses(
-                academyLmsConf,
-                setAcademyLmsConf,
-                setIsLoading,
-                academyLmsConf?.actionName
-              )
+              getAllCourses(academyLmsConf, setAcademyLmsConf, setIsLoading, academyLmsConf?.actionName)
             }
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `${__('Refresh Courses', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
         </div>
@@ -146,7 +143,8 @@ export default function AcademyLmsIntegLayout({
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `${__('Refresh Courses', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
         </div>

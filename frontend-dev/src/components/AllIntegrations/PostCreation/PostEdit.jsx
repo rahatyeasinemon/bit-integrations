@@ -120,16 +120,7 @@ function Post({ allIntegURL }) {
       return
     }
     setIsLoading(true)
-    const resp = saveIntegConfig(
-      flow,
-      setFlow,
-      allIntegURL,
-      postConf,
-      navigate,
-      id,
-      1,
-      setIsLoading
-    )
+    const resp = saveIntegConfig(flow, setFlow, allIntegURL, postConf, navigate, id, 1, setIsLoading)
     resp.then((res) => {
       if (res.success) {
         setSnackbar({ show: true, msg: res.data })
@@ -176,7 +167,8 @@ function Post({ allIntegURL }) {
             name="post_type"
             value={postConf?.post_type}
             onChange={(e) => getCustomFields(e.target.name, e.target.value)}
-            className="btcd-paper-inp w-5 mt-1">
+            className="btcd-paper-inp w-5 mt-1"
+          >
             <option disabled selected>
               {__('Select Post Type', 'bit-integrations')}
             </option>
@@ -190,7 +182,8 @@ function Post({ allIntegURL }) {
             onClick={() => refreshPostTypes(postTypes, setPostTypes)}
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Refresh Post Types', 'bit-integrations')}'` }}
-            type="button">
+            type="button"
+          >
             &#x21BB;
           </button>
         </div>
@@ -211,7 +204,8 @@ function Post({ allIntegURL }) {
           name="post_status"
           value={postConf?.post_status}
           onChange={(e) => handleInput(e.target.name, e.target.value)}
-          className="btcd-paper-inp w-5 mt-2">
+          className="btcd-paper-inp w-5 mt-2"
+        >
           <option disabled selected>
             {__('Select Status', 'bit-integrations')}
           </option>
@@ -236,7 +230,8 @@ function Post({ allIntegURL }) {
             name="post_author"
             value={postConf?.post_author}
             onChange={(e) => handleInput(e.target.name, e.target.value)}
-            className="btcd-paper-inp w-5 mt-2">
+            className="btcd-paper-inp w-5 mt-2"
+          >
             <option disabled selected>
               {__('Select Author', 'bit-integrations')}
             </option>
@@ -255,7 +250,8 @@ function Post({ allIntegURL }) {
           name="comment_status"
           value={postConf?.comment_status}
           onChange={(e) => handleInput(e.target.name, e.target.value)}
-          className="btcd-paper-inp w-5 mt-2">
+          className="btcd-paper-inp w-5 mt-2"
+        >
           <option disabled selected>
             {__('Select Status', 'bit-integrations')}
           </option>
@@ -295,7 +291,8 @@ function Post({ allIntegURL }) {
           <button
             onClick={() => addFieldMap('post_map', postConf.post_map.length, postConf, setPostConf)}
             className="icn-btn sh-sm"
-            type="button">
+            type="button"
+          >
             +
           </button>
         </div>
@@ -304,9 +301,7 @@ function Post({ allIntegURL }) {
         <CustomField
           formID={formID}
           formFields={formFields}
-          handleInput={(e) =>
-            handleInput(e, postConf, setPostConf, formID, setIsLoading, setSnackbar)
-          }
+          handleInput={(e) => handleInput(e, postConf, setPostConf, formID, setIsLoading, setSnackbar)}
           postConf={postConf}
           setPostConf={setPostConf}
           isLoading={isLoading}

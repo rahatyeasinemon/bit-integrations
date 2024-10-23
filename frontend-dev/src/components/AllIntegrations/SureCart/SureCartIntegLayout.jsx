@@ -61,7 +61,8 @@ export default function SureCartIntegLayout({
           onChange={inputHandler}
           name="mainAction"
           value={sureCartConf?.mainAction}
-          className="btcd-paper-inp w-5">
+          className="btcd-paper-inp w-5"
+        >
           <option value="">{__('Select Actions', 'bit-integrations')}</option>
           {sureCartConf?.allActions &&
             sureCartConf.allActions.map(({ key, label }) => (
@@ -97,11 +98,10 @@ export default function SureCartIntegLayout({
         <br />
         <div className="txt-center btcbi-field-map-button mt-2">
           <button
-            onClick={() =>
-              addFieldMap(sureCartConf.field_map.length, sureCartConf, setSureCartConf)
-            }
+            onClick={() => addFieldMap(sureCartConf.field_map.length, sureCartConf, setSureCartConf)}
             className="icn-btn sh-sm"
-            type="button">
+            type="button"
+          >
             +
           </button>
         </div>

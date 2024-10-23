@@ -3,12 +3,7 @@ import { $btcbi } from '../../../GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import TagifyInput from '../../Utilities/TagifyInput'
-import {
-  addFieldMap,
-  delFieldMap,
-  handleCustomValue,
-  handleFieldMapping
-} from './WhatsAppCommonFunc'
+import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from './WhatsAppCommonFunc'
 
 export default function WhatsAppFieldMap({
   key,
@@ -35,7 +30,8 @@ export default function WhatsAppFieldMap({
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, whatsAppConf, setWhatsAppConf, mapKey)}>
+            onChange={(ev) => handleFieldMapping(ev, i, whatsAppConf, setWhatsAppConf, mapKey)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -49,7 +45,8 @@ export default function WhatsAppFieldMap({
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -61,9 +58,7 @@ export default function WhatsAppFieldMap({
 
           {field.formField === 'custom' && (
             <TagifyInput
-              onChange={(e) =>
-                handleCustomValue(e, i, whatsAppConf, setWhatsAppConf, false, mapKey)
-              }
+              onChange={(e) => handleCustomValue(e, i, whatsAppConf, setWhatsAppConf, false, mapKey)}
               label={__('Custom Value', 'bit-integrations')}
               className="mr-2"
               type="text"
@@ -77,10 +72,9 @@ export default function WhatsAppFieldMap({
             className="btcd-paper-inp"
             disabled={i < requiredFlds.length}
             name="whatsAppFormField"
-            value={
-              i < requiredFlds.length ? requiredFlds[i].key || '' : field.whatsAppFormField || ''
-            }
-            onChange={(ev) => handleFieldMapping(ev, i, whatsAppConf, setWhatsAppConf, mapKey)}>
+            value={i < requiredFlds.length ? requiredFlds[i].key || '' : field.whatsAppFormField || ''}
+            onChange={(ev) => handleFieldMapping(ev, i, whatsAppConf, setWhatsAppConf, mapKey)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFlds.length ? (
               <option key={requiredFlds[i].key} value={requiredFlds[i].key}>
@@ -101,14 +95,16 @@ export default function WhatsAppFieldMap({
             <button
               onClick={() => addFieldMap(i, whatsAppConf, setWhatsAppConf, mapKey)}
               className="icn-btn sh-sm ml-2 mr-1"
-              type="button">
+              type="button"
+            >
               +
             </button>
             <button
               onClick={() => delFieldMap(i, whatsAppConf, setWhatsAppConf, mapKey)}
               className="icn-btn sh-sm ml-1"
               type="button"
-              aria-label="btn">
+              aria-label="btn"
+            >
               <span className="btcd-icn icn-trash-2" />
             </button>
           </>

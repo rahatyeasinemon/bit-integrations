@@ -33,25 +33,26 @@ export default function SendPulseIntegLayout({
         name="listId"
         id=""
         className="btcd-paper-inp w-5"
-        onChange={handleInput}>
+        onChange={handleInput}
+      >
         <option value="">{__('Select List', 'bit-integrations')}</option>
         {sendPulseConf?.default?.sendPulseLists &&
           Object.keys(sendPulseConf.default.sendPulseLists).map((listName) => (
             <option
               key={`${listName + 1}`}
-              value={sendPulseConf.default.sendPulseLists[listName].listId}>
+              value={sendPulseConf.default.sendPulseLists[listName].listId}
+            >
               {sendPulseConf.default.sendPulseLists[listName].listName}
             </option>
           ))}
       </select>
       <button
-        onClick={() =>
-          refreshSendPulseList(sendPulseConf, setSendPulseConf, setIsLoading, setSnackbar)
-        }
+        onClick={() => refreshSendPulseList(sendPulseConf, setSendPulseConf, setIsLoading, setSnackbar)}
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': '"Refresh SendPulse list"' }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -78,7 +79,8 @@ export default function SendPulseIntegLayout({
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Refresh SendPulse Field', 'bit-integrations')}'` }}
           type="button"
-          disabled={isLoading}>
+          disabled={isLoading}
+        >
           &#x21BB;
         </button>
       </div>
@@ -110,7 +112,8 @@ export default function SendPulseIntegLayout({
                 addFieldMap(sendPulseConf.field_map.length, sendPulseConf, setSendPulseConf)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

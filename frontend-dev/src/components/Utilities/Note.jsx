@@ -8,10 +8,7 @@ export default function Note({ note, isInstruction = false, isHeadingNull = fals
           {isInstruction ? __('Instruction', 'bit-integrations') : __('Note', 'bit-integrations')}
         </h4>
       )}
-      <div
-        className="note-text"
-        dangerouslySetInnerHTML={{ __html: __(note, 'bit-integrations') }}
-      />
+      <div className="note-text" dangerouslySetInnerHTML={{ __html: __(note, 'bit-integrations') }} />
     </div>
   )
 }

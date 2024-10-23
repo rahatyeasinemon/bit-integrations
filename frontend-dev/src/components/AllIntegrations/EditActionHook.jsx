@@ -144,9 +144,7 @@ function EditActionHook() {
   const removeSelectedField = (index) => {
     setFormFields((prevFields) =>
       create(prevFields, (draftFields) => {
-        index = draftFields.findIndex(
-          (field) => field.name === flow.flow_details.fields[index].name
-        )
+        index = draftFields.findIndex((field) => field.name === flow.flow_details.fields[index].name)
         draftFields.splice(index, 1)
       })
     )
@@ -235,7 +233,8 @@ function EditActionHook() {
         <button
           onClick={handleFetch}
           className={`btn btcd-btn-lg sh-sm flx ml-1 ${isLoading ? 'red' : 'purple'}`}
-          type="button">
+          type="button"
+        >
           {isLoading
             ? __('Stop', 'bit-integrations')
             : flow.flow_details.fields
@@ -252,7 +251,8 @@ function EditActionHook() {
             </div>
             <button
               onClick={() => setShowSelectedFields((prev) => !prev)}
-              className="btn btcd-btn-md sh-sm flx">
+              className="btn btcd-btn-md sh-sm flx"
+            >
               <span className="txt-actionHook-resbtn font-inter-500">
                 {showSelectedFields ? 'Hide Selected Fields' : 'View Selected Fields'}
               </span>
@@ -266,7 +266,8 @@ function EditActionHook() {
           {showSelectedFields && (
             <div
               className="bg-white rounded border my-1 table-webhook-div p-2"
-              style={{ minHeight: '40px', maxHeight: '14rem' }}>
+              style={{ minHeight: '40px', maxHeight: '14rem' }}
+            >
               {flow.flow_details?.fields.map((field, index) => (
                 <div key={index} style={{ position: 'relative' }}>
                   <input
@@ -286,7 +287,8 @@ function EditActionHook() {
                       right: -5,
                       color: '#ff4646',
                       padding: '2px'
-                    }}>
+                    }}
+                  >
                     <CloseIcn size={12} />
                   </button>
                 </div>
@@ -303,7 +305,8 @@ function EditActionHook() {
             </div>
             <button
               onClick={() => setShowResponse((prev) => !prev)}
-              className="btn btcd-btn-md sh-sm flx">
+              className="btn btcd-btn-md sh-sm flx"
+            >
               <span className="txt-actionHook-resbtn font-inter-500">
                 {showResponse
                   ? __('Hide Response', 'bit-integrations')

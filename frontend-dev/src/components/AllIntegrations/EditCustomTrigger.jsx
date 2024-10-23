@@ -73,9 +73,7 @@ function EditCustomTrigger() {
   const removeSelectedField = (index) => {
     setFormFields((prevFields) =>
       create(prevFields, (draftFields) => {
-        index = draftFields.findIndex(
-          (field) => field.name === flow.flow_details.fields[index].name
-        )
+        index = draftFields.findIndex((field) => field.name === flow.flow_details.fields[index].name)
         draftFields.splice(index, 1)
       })
     )
@@ -201,7 +199,8 @@ function EditCustomTrigger() {
           onClick={handleFetch}
           className={`btn btcd-btn-lg sh-sm flx ${isLoading ? 'red' : 'purple'}`}
           type="button"
-          disabled={isLoading}>
+          disabled={isLoading}
+        >
           {isLoading
             ? __('Stop', 'bit-integrations')
             : flow.flow_details?.rawData
@@ -226,7 +225,8 @@ function EditCustomTrigger() {
           )}
           <button
             onClick={() => setShowSelectedFields((prev) => !prev)}
-            className="btn btcd-btn-md sh-sm flx gray">
+            className="btn btcd-btn-md sh-sm flx gray"
+          >
             <span className="txt-actionHook-resbtn font-inter-500">
               {showSelectedFields ? 'Hide Selected Fields' : 'View Selected Fields'}
             </span>

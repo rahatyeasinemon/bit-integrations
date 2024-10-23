@@ -42,13 +42,12 @@ export default function ZohoBiginNewRecord({
           <div className="mt-4">
             <b className="wdt-100">{__('Map Fields', 'bit-integrations')}</b>
             <button
-              onClick={() =>
-                getFields(tab, formID, biginConf, setBiginConf, setIsLoading, setSnackbar)
-              }
+              onClick={() => getFields(tab, formID, biginConf, setBiginConf, setIsLoading, setSnackbar)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh Bigin Fields', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -80,14 +79,15 @@ export default function ZohoBiginNewRecord({
                 addFieldMap(biginConf.field_map.length, biginConf, setBiginConf, false, tab)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>
           <br />
           <br />
-          {Object.keys(biginConf.default?.moduleData?.[biginConf.module]?.fileUploadFields)
-            .length !== 0 && (
+          {Object.keys(biginConf.default?.moduleData?.[biginConf.module]?.fileUploadFields).length !==
+            0 && (
             <>
               <div className="mt-4">
                 <b className="wdt-100">{__('Map Attachments', 'bit-integrations')}</b>
@@ -118,16 +118,11 @@ export default function ZohoBiginNewRecord({
               <div className="txt-center btcbi-field-map-button mt-2">
                 <button
                   onClick={() =>
-                    addFieldMap(
-                      biginConf.upload_field_map.length,
-                      biginConf,
-                      setBiginConf,
-                      true,
-                      tab
-                    )
+                    addFieldMap(biginConf.upload_field_map.length, biginConf, setBiginConf, true, tab)
                   }
                   className="icn-btn sh-sm"
-                  type="button">
+                  type="button"
+                >
                   +
                 </button>
               </div>

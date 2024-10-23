@@ -40,13 +40,7 @@ export const checkMappedFields = (newsletterConf) => {
   return true
 }
 
-export const newsletterAuthentication = (
-  confTmp,
-  setError,
-  setIsAuthorized,
-  loading,
-  setLoading
-) => {
+export const newsletterAuthentication = (confTmp, setError, setIsAuthorized, loading, setLoading) => {
   if (!confTmp.name) {
     setError({ name: !confTmp.name ? __("Name can't be empty", 'bit-integrations') : '' })
     return
@@ -61,9 +55,7 @@ export const newsletterAuthentication = (
       return
     }
     setLoading({ ...loading, auth: false })
-    toast.error(
-      __('Connection failed: install and active Newsletter plugin first!', 'bit-integrations')
-    )
+    toast.error(__('Connection failed: install and active Newsletter plugin first!', 'bit-integrations'))
   })
 }
 

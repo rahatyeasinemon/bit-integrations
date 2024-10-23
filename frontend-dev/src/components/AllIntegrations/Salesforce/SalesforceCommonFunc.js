@@ -74,30 +74,28 @@ export const getAllCampaignList = (
     clientSecret: salesforceConf.clientSecret,
     tokenDetails: salesforceConf.tokenDetails
   }
-  const loadPostTypes = bitsFetch(campaignRequestParams, 'selesforce_campaign_list').then(
-    (result) => {
-      if (result && result.success) {
-        setSalesforceConf((oldConf) => {
-          const newConf = { ...oldConf }
-          if (!newConf.default) newConf.default = {}
-          if (!newConf.default?.campaignLists) {
-            newConf.default.campaignLists = {}
-          }
-          if (result.data.allCampaignLists) {
-            newConf.default.campaignLists = result.data.allCampaignLists
-          }
-          if (result.data.tokenDetails) {
-            newConf.tokenDetails = result.data.tokenDetails
-          }
-          return newConf
-        })
-        setIsLoading(false)
-        return __('Campaign list refreshed', 'bit-integrations')
-      }
+  const loadPostTypes = bitsFetch(campaignRequestParams, 'selesforce_campaign_list').then((result) => {
+    if (result && result.success) {
+      setSalesforceConf((oldConf) => {
+        const newConf = { ...oldConf }
+        if (!newConf.default) newConf.default = {}
+        if (!newConf.default?.campaignLists) {
+          newConf.default.campaignLists = {}
+        }
+        if (result.data.allCampaignLists) {
+          newConf.default.campaignLists = result.data.allCampaignLists
+        }
+        if (result.data.tokenDetails) {
+          newConf.tokenDetails = result.data.tokenDetails
+        }
+        return newConf
+      })
       setIsLoading(false)
-      return __('Campaign list refresh failed. please try again', 'bit-integrations')
+      return __('Campaign list refreshed', 'bit-integrations')
     }
-  )
+    setIsLoading(false)
+    return __('Campaign list refresh failed. please try again', 'bit-integrations')
+  })
   toast.promise(loadPostTypes, {
     success: (data) => data,
     error: __('Error Occurred', 'bit-integrations'),
@@ -105,13 +103,7 @@ export const getAllCampaignList = (
   })
 }
 
-export const getAllOrigin = (
-  formID,
-  salesforceConf,
-  setSalesforceConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const getAllOrigin = (formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
   const campaignRequestParams = {
     formID,
@@ -119,21 +111,19 @@ export const getAllOrigin = (
     clientSecret: salesforceConf.clientSecret,
     tokenDetails: salesforceConf.tokenDetails
   }
-  const loadPostTypes = bitsFetch(campaignRequestParams, 'selesforce_case_origin').then(
-    (result) => {
-      if (result && result.success) {
-        setSalesforceConf((prevConf) =>
-          create(prevConf, (draftConf) => {
-            draftConf['caseOrigins'] = result.data
-          })
-        )
-        setIsLoading(false)
-        return __('Case Origin refreshed', 'bit-integrations')
-      }
+  const loadPostTypes = bitsFetch(campaignRequestParams, 'selesforce_case_origin').then((result) => {
+    if (result && result.success) {
+      setSalesforceConf((prevConf) =>
+        create(prevConf, (draftConf) => {
+          draftConf['caseOrigins'] = result.data
+        })
+      )
       setIsLoading(false)
-      return __('Case Origin refresh failed. please try again', 'bit-integrations')
+      return __('Case Origin refreshed', 'bit-integrations')
     }
-  )
+    setIsLoading(false)
+    return __('Case Origin refresh failed. please try again', 'bit-integrations')
+  })
   toast.promise(loadPostTypes, {
     success: (data) => data,
     error: __('Error Occurred', 'bit-integrations'),
@@ -141,13 +131,7 @@ export const getAllOrigin = (
   })
 }
 
-export const getAllType = (
-  formID,
-  salesforceConf,
-  setSalesforceConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const getAllType = (formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
   const campaignRequestParams = {
     formID,
@@ -175,13 +159,7 @@ export const getAllType = (
   })
 }
 
-export const getAllReason = (
-  formID,
-  salesforceConf,
-  setSalesforceConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const getAllReason = (formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
   const campaignRequestParams = {
     formID,
@@ -189,21 +167,19 @@ export const getAllReason = (
     clientSecret: salesforceConf.clientSecret,
     tokenDetails: salesforceConf.tokenDetails
   }
-  const loadPostReasons = bitsFetch(campaignRequestParams, 'selesforce_case_reason').then(
-    (result) => {
-      if (result && result.success) {
-        setSalesforceConf((prevConf) =>
-          create(prevConf, (draftConf) => {
-            draftConf['caseReasons'] = result.data
-          })
-        )
-        setIsLoading(false)
-        return __('Reason refreshed', 'bit-integrations')
-      }
+  const loadPostReasons = bitsFetch(campaignRequestParams, 'selesforce_case_reason').then((result) => {
+    if (result && result.success) {
+      setSalesforceConf((prevConf) =>
+        create(prevConf, (draftConf) => {
+          draftConf['caseReasons'] = result.data
+        })
+      )
       setIsLoading(false)
-      return __('Reason refresh failed. please try again', 'bit-integrations')
+      return __('Reason refreshed', 'bit-integrations')
     }
-  )
+    setIsLoading(false)
+    return __('Reason refresh failed. please try again', 'bit-integrations')
+  })
   toast.promise(loadPostReasons, {
     success: (data) => data,
     error: __('Error Occurred', 'bit-integrations'),
@@ -211,13 +187,7 @@ export const getAllReason = (
   })
 }
 
-export const getAllStatus = (
-  formID,
-  salesforceConf,
-  setSalesforceConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const getAllStatus = (formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
   const campaignRequestParams = {
     formID,
@@ -225,21 +195,19 @@ export const getAllStatus = (
     clientSecret: salesforceConf.clientSecret,
     tokenDetails: salesforceConf.tokenDetails
   }
-  const loadPostReasons = bitsFetch(campaignRequestParams, 'selesforce_case_status').then(
-    (result) => {
-      if (result && result.success) {
-        setSalesforceConf((prevConf) =>
-          create(prevConf, (draftConf) => {
-            draftConf['caseStatus'] = result.data
-          })
-        )
-        setIsLoading(false)
-        return __('Status refreshed', 'bit-integrations')
-      }
+  const loadPostReasons = bitsFetch(campaignRequestParams, 'selesforce_case_status').then((result) => {
+    if (result && result.success) {
+      setSalesforceConf((prevConf) =>
+        create(prevConf, (draftConf) => {
+          draftConf['caseStatus'] = result.data
+        })
+      )
       setIsLoading(false)
-      return __('Status refresh failed. please try again', 'bit-integrations')
+      return __('Status refreshed', 'bit-integrations')
     }
-  )
+    setIsLoading(false)
+    return __('Status refresh failed. please try again', 'bit-integrations')
+  })
   toast.promise(loadPostReasons, {
     success: (data) => data,
     error: __('Error Occurred', 'bit-integrations'),
@@ -247,13 +215,7 @@ export const getAllStatus = (
   })
 }
 
-export const getAllPriority = (
-  formID,
-  salesforceConf,
-  setSalesforceConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const getAllPriority = (formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
   const campaignRequestParams = {
     formID,
@@ -261,21 +223,19 @@ export const getAllPriority = (
     clientSecret: salesforceConf.clientSecret,
     tokenDetails: salesforceConf.tokenDetails
   }
-  const loadPostReasons = bitsFetch(campaignRequestParams, 'selesforce_case_priority').then(
-    (result) => {
-      if (result && result.success) {
-        setSalesforceConf((prevConf) =>
-          create(prevConf, (draftConf) => {
-            draftConf['casePriority'] = result.data
-          })
-        )
-        setIsLoading(false)
-        return __('Priority refreshed', 'bit-integrations')
-      }
+  const loadPostReasons = bitsFetch(campaignRequestParams, 'selesforce_case_priority').then((result) => {
+    if (result && result.success) {
+      setSalesforceConf((prevConf) =>
+        create(prevConf, (draftConf) => {
+          draftConf['casePriority'] = result.data
+        })
+      )
       setIsLoading(false)
-      return __('Priority refresh failed. please try again', 'bit-integrations')
+      return __('Priority refreshed', 'bit-integrations')
     }
-  )
+    setIsLoading(false)
+    return __('Priority refresh failed. please try again', 'bit-integrations')
+  })
   toast.promise(loadPostReasons, {
     success: (data) => data,
     error: __('Error Occurred', 'bit-integrations'),
@@ -297,22 +257,21 @@ export const getAllPotentialLiability = (
     clientSecret: salesforceConf.clientSecret,
     tokenDetails: salesforceConf.tokenDetails
   }
-  const loadPostReasons = bitsFetch(
-    campaignRequestParams,
-    'selesforce_case_potential_liability'
-  ).then((result) => {
-    if (result && result.success) {
-      setSalesforceConf((prevConf) =>
-        create(prevConf, (draftConf) => {
-          draftConf['casePotentialLiability'] = result.data
-        })
-      )
+  const loadPostReasons = bitsFetch(campaignRequestParams, 'selesforce_case_potential_liability').then(
+    (result) => {
+      if (result && result.success) {
+        setSalesforceConf((prevConf) =>
+          create(prevConf, (draftConf) => {
+            draftConf['casePotentialLiability'] = result.data
+          })
+        )
+        setIsLoading(false)
+        return __('Potential Liability refreshed', 'bit-integrations')
+      }
       setIsLoading(false)
-      return __('Potential Liability refreshed', 'bit-integrations')
+      return __('Potential Liability refresh failed. please try again', 'bit-integrations')
     }
-    setIsLoading(false)
-    return __('Potential Liability refresh failed. please try again', 'bit-integrations')
-  })
+  )
   toast.promise(loadPostReasons, {
     success: (data) => data,
     error: __('Error Occurred', 'bit-integrations'),
@@ -425,13 +384,7 @@ export const getAllSLAViolation = (
 //   })
 // }
 
-export const getAllLeadList = (
-  formID,
-  salesforceConf,
-  setSalesforceConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const getAllLeadList = (formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
   const campaignRequestParams = {
     formID,
@@ -479,30 +432,28 @@ export const getAllContactList = (
     clientSecret: salesforceConf.clientSecret,
     tokenDetails: salesforceConf.tokenDetails
   }
-  const loadPostTypes = bitsFetch(campaignRequestParams, 'selesforce_contact_list').then(
-    (result) => {
-      if (result && result.success) {
-        setSalesforceConf((oldConf) => {
-          const newConf = { ...oldConf }
-          if (!newConf.default) newConf.default = {}
-          if (!newConf.default?.contactLists) {
-            newConf.default.contactLists = {}
-          }
-          if (result.data.contactLists) {
-            newConf.default.contactLists = result.data.contactLists
-          }
-          if (result.data.tokenDetails) {
-            newConf.tokenDetails = result.data.tokenDetails
-          }
-          return newConf
-        })
-        setIsLoading(false)
-        return __('Contact list refresh successfully.', 'bit-integrations')
-      }
+  const loadPostTypes = bitsFetch(campaignRequestParams, 'selesforce_contact_list').then((result) => {
+    if (result && result.success) {
+      setSalesforceConf((oldConf) => {
+        const newConf = { ...oldConf }
+        if (!newConf.default) newConf.default = {}
+        if (!newConf.default?.contactLists) {
+          newConf.default.contactLists = {}
+        }
+        if (result.data.contactLists) {
+          newConf.default.contactLists = result.data.contactLists
+        }
+        if (result.data.tokenDetails) {
+          newConf.tokenDetails = result.data.tokenDetails
+        }
+        return newConf
+      })
       setIsLoading(false)
-      return __('Contact list refresh failed. please try again', 'bit-integrations')
+      return __('Contact list refresh successfully.', 'bit-integrations')
     }
-  )
+    setIsLoading(false)
+    return __('Contact list refresh failed. please try again', 'bit-integrations')
+  })
   toast.promise(loadPostTypes, {
     success: (data) => data,
     error: __('Error Occurred', 'bit-integrations'),
@@ -526,47 +477,45 @@ export const getAllCustomFields = (
     clientSecret: salesforceConf.clientSecret,
     tokenDetails: salesforceConf.tokenDetails
   }
-  const loadPostTypes = bitsFetch(customFieldRequestParams, 'selesforce_custom_field').then(
-    (result) => {
-      const customFields = result && result.success ? result?.data : []
-      const returnMsg =
-        result && result.success
-          ? 'Custom field refresh successfully.'
-          : result?.data[0]?.message
-            ? 'Custom field: ' + result?.data[0]?.message
-            : 'Custom field refresh failed. please try again'
+  const loadPostTypes = bitsFetch(customFieldRequestParams, 'selesforce_custom_field').then((result) => {
+    const customFields = result && result.success ? result?.data : []
+    const returnMsg =
+      result && result.success
+        ? 'Custom field refresh successfully.'
+        : result?.data[0]?.message
+          ? 'Custom field: ' + result?.data[0]?.message
+          : 'Custom field refresh failed. please try again'
 
-      setSalesforceConf((prevConf) => {
-        const draftConf = prevConf
-        draftConf.field_map = [{ formField: '', salesmateFormField: '' }]
-        if (result?.data) {
-          if (actionName === 'contact-create') {
-            draftConf['selesforceFields'] = [...draftConf.contactFields, ...customFields]
-          } else if (actionName === 'lead-create') {
-            draftConf['selesforceFields'] = [...draftConf.leadFields, ...customFields]
-          } else if (actionName === 'account-create') {
-            draftConf['selesforceFields'] = [...draftConf.accountFields, ...customFields]
-          } else if (actionName === 'campaign-create') {
-            draftConf['selesforceFields'] = [...draftConf.campaignFields, ...customFields]
-          } else if (actionName === 'add-campaign-member') {
-            draftConf['selesforceFields'] = [...draftConf.campaignMemberStatus, ...customFields]
-          } else if (actionName === 'opportunity-create') {
-            draftConf['selesforceFields'] = [...draftConf.opportunityFields, ...customFields]
-          } else if (actionName === 'event-create') {
-            draftConf['selesforceFields'] = [...draftConf.eventFields, ...customFields]
-          } else if (actionName === 'case-create') {
-            draftConf['selesforceFields'] = [...draftConf.caseFields, ...customFields]
-          } else {
-            draftConf['selesforceFields'] = customFields
-          }
+    setSalesforceConf((prevConf) => {
+      const draftConf = prevConf
+      draftConf.field_map = [{ formField: '', salesmateFormField: '' }]
+      if (result?.data) {
+        if (actionName === 'contact-create') {
+          draftConf['selesforceFields'] = [...draftConf.contactFields, ...customFields]
+        } else if (actionName === 'lead-create') {
+          draftConf['selesforceFields'] = [...draftConf.leadFields, ...customFields]
+        } else if (actionName === 'account-create') {
+          draftConf['selesforceFields'] = [...draftConf.accountFields, ...customFields]
+        } else if (actionName === 'campaign-create') {
+          draftConf['selesforceFields'] = [...draftConf.campaignFields, ...customFields]
+        } else if (actionName === 'add-campaign-member') {
+          draftConf['selesforceFields'] = [...draftConf.campaignMemberStatus, ...customFields]
+        } else if (actionName === 'opportunity-create') {
+          draftConf['selesforceFields'] = [...draftConf.opportunityFields, ...customFields]
+        } else if (actionName === 'event-create') {
+          draftConf['selesforceFields'] = [...draftConf.eventFields, ...customFields]
+        } else if (actionName === 'case-create') {
+          draftConf['selesforceFields'] = [...draftConf.caseFields, ...customFields]
+        } else {
+          draftConf['selesforceFields'] = customFields
         }
-        draftConf.field_map = generateMappedField(draftConf)
-        return draftConf
-      })
-      setIsLoading(false)
-      return returnMsg
-    }
-  )
+      }
+      draftConf.field_map = generateMappedField(draftConf)
+      return draftConf
+    })
+    setIsLoading(false)
+    return returnMsg
+  })
   toast.promise(loadPostTypes, {
     success: (data) => data,
     error: __('Error Occurred', 'bit-integrations'),
@@ -656,30 +605,28 @@ export const getAllAccountList = (
     clientSecret: salesforceConf.clientSecret,
     tokenDetails: salesforceConf.tokenDetails
   }
-  const loadPostTypes = bitsFetch(campaignRequestParams, 'selesforce_account_list').then(
-    (result) => {
-      if (result && result.success) {
-        setSalesforceConf((oldConf) => {
-          const newConf = { ...oldConf }
-          if (!newConf.default) newConf.default = {}
-          if (!newConf.default?.accountLists) {
-            newConf.default.accountLists = {}
-          }
-          if (result.data.accountLists) {
-            newConf.default.accountLists = result.data.accountLists
-          }
-          if (result.data.tokenDetails) {
-            newConf.tokenDetails = result.data.tokenDetails
-          }
-          return newConf
-        })
-        setIsLoading(false)
-        return __('Account list refreshed', 'bit-integrations')
-      }
+  const loadPostTypes = bitsFetch(campaignRequestParams, 'selesforce_account_list').then((result) => {
+    if (result && result.success) {
+      setSalesforceConf((oldConf) => {
+        const newConf = { ...oldConf }
+        if (!newConf.default) newConf.default = {}
+        if (!newConf.default?.accountLists) {
+          newConf.default.accountLists = {}
+        }
+        if (result.data.accountLists) {
+          newConf.default.accountLists = result.data.accountLists
+        }
+        if (result.data.tokenDetails) {
+          newConf.tokenDetails = result.data.tokenDetails
+        }
+        return newConf
+      })
       setIsLoading(false)
-      return __('Account list refresh failed. please try again', 'bit-integrations')
+      return __('Account list refreshed', 'bit-integrations')
     }
-  )
+    setIsLoading(false)
+    return __('Account list refresh failed. please try again', 'bit-integrations')
+  })
   toast.promise(loadPostTypes, {
     success: (data) => data,
     error: __('Error Occurred', 'bit-integrations'),
@@ -776,14 +723,7 @@ export const handleAuthorize = (
       } else {
         const newConf = { ...confTmp }
         newConf.accountServer = grantTokenResponse['accounts-server']
-        tokenHelper(
-          grantTokenResponse,
-          newConf,
-          setConf,
-          setisAuthorized,
-          setIsLoading,
-          setSnackbar
-        )
+        tokenHelper(grantTokenResponse, newConf, setConf, setisAuthorized, setIsLoading, setSnackbar)
       }
     }
   }, 500)

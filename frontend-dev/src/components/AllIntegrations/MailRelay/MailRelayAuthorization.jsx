@@ -41,10 +41,9 @@ export default function MailRelayAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {mailRelay?.youTubeLink && (
-        <TutorialLink title="MailRelay" youTubeLink={mailRelay?.youTubeLink} />
-      )}
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
+      {mailRelay?.youTubeLink && <TutorialLink title="MailRelay" youTubeLink={mailRelay?.youTubeLink} />}
       {mailRelay?.docLink && <TutorialLink title="MailRelay" docLink={mailRelay?.docLink} />}
 
       <div className="mt-3">
@@ -73,9 +72,7 @@ export default function MailRelayAuthorization({
         disabled={isInfo}
       />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.domain}</div>
-      <small className="d-blk mt-3">
-        {__('Example: bitapps.ipzmarketing.com', 'bit-integrations')}
-      </small>
+      <small className="d-blk mt-3">{__('Example: bitapps.ipzmarketing.com', 'bit-integrations')}</small>
       <div className="mt-3">
         <b>{__('API Token:', 'bit-integrations')}</b>
       </div>
@@ -97,7 +94,8 @@ export default function MailRelayAuthorization({
             className="btcd-link"
             href={`https://${mailRelayConf.domain}.ipzmarketing.com/admin/api_keys`}
             target="_blank"
-            rel="noreferrer">
+            rel="noreferrer"
+          >
             {__('MailRelay API Token', 'bit-integrations')}
           </a>
         </small>
@@ -121,7 +119,8 @@ export default function MailRelayAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || loading.auth}>
+            disabled={isAuthorized || loading.auth}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -132,7 +131,8 @@ export default function MailRelayAuthorization({
             onClick={nextPage}
             className="btn ml-auto btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

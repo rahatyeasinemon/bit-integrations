@@ -3,14 +3,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
 import { sprintf, __ } from '../../../Utils/i18nwrap'
 
-export const handleInput = (
-  e,
-  learnDashConf,
-  setLearnDashConf,
-  setIsLoading,
-  setSnackbar,
-  formID
-) => {
+export const handleInput = (e, learnDashConf, setLearnDashConf, setIsLoading, setSnackbar, formID) => {
   const newConf = { ...learnDashConf }
   const { name } = e.target
   if (e.target.value !== '') {
@@ -72,12 +65,7 @@ export const fetchAllGroup = (learnDashConf, setLearnDashConf, setIsLoading, set
 
     .catch(() => setIsLoading(false))
 }
-export const fetchAllCourseOfLesson = (
-  learnDashConf,
-  setLearnDashConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const fetchAllCourseOfLesson = (learnDashConf, setLearnDashConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
   const requestParams = { courseId: learnDashConf.courseId }
   bitsFetch(requestParams, 'learDash_fetch_all_course_of_lesson')
@@ -102,12 +90,7 @@ export const fetchAllCourseOfLesson = (
     .catch(() => setIsLoading(false))
 }
 
-export const fetchAllTopicOfLesson = (
-  learnDashConf,
-  setLearnDashConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const fetchAllTopicOfLesson = (learnDashConf, setLearnDashConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
   const requestParams = { courseId: learnDashConf.courseId, lessonId: learnDashConf.lessonId }
   bitsFetch(requestParams, 'learDash_fetch_all_topic_of_lesson')
@@ -156,12 +139,7 @@ export const fetchAllQuiz = (learnDashConf, setLearnDashConf, setIsLoading, setS
 
     .catch(() => setIsLoading(false))
 }
-export const fetchAllCourseUnenroll = (
-  learnDashConf,
-  setLearnDashConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const fetchAllCourseUnenroll = (learnDashConf, setLearnDashConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
   const requestParams = { domainName: learnDashConf.domainName }
   bitsFetch(requestParams, 'learDash_fetch_all_course_unenroll')

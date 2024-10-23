@@ -51,10 +51,9 @@ export default function OmniSendAuthorization({
       style={{
         ...{ width: step === 1 && 900 },
         ...{ height: step === 1 && 'auto' }
-      }}>
-      {omniSend?.youTubeLink && (
-        <TutorialLink title="Omnisend" youTubeLink={omniSend?.youTubeLink} />
-      )}
+      }}
+    >
+      {omniSend?.youTubeLink && <TutorialLink title="Omnisend" youTubeLink={omniSend?.youTubeLink} />}
       {omniSend?.docLink && <TutorialLink title="Omnisend" docLink={omniSend?.docLink} />}
 
       <div className="mt-3">
@@ -91,7 +90,8 @@ export default function OmniSendAuthorization({
           className="btcd-link"
           href="https://app.omnisend.com/o/my-account/integrations/api-keys"
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {__('OmniSend API Token', 'bit-integrations')}
         </a>
       </small>
@@ -113,7 +113,8 @@ export default function OmniSendAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || loading.auth}>
+            disabled={isAuthorized || loading.auth}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -124,7 +125,8 @@ export default function OmniSendAuthorization({
             onClick={nextPage}
             className="btn ml-auto btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

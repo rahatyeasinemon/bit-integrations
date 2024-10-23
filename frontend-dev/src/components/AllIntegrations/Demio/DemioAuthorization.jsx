@@ -53,7 +53,8 @@ export default function DemioAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
       {demio?.youTubeLink && <TutorialLink title="Demio" youTubeLink={demio?.youTubeLink} />}
       {demio?.docLink && <TutorialLink title="Demio" docLink={demio?.docLink} />}
 
@@ -101,10 +102,7 @@ export default function DemioAuthorization({
       <small className="d-blk mt-3">
         {__('To Get API Key & API Secret, Please Visit', 'bit-integrations')}
         &nbsp;
-        <a
-          className="btcd-link"
-          href="https://my.demio.com/manage/settings/api-details"
-          target="_blank">
+        <a className="btcd-link" href="https://my.demio.com/manage/settings/api-details" target="_blank">
           {__('Demio API Key & Secret', 'bit-integrations')}
         </a>
       </small>
@@ -126,7 +124,8 @@ export default function DemioAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || loading.auth}>
+            disabled={isAuthorized || loading.auth}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -137,7 +136,8 @@ export default function DemioAuthorization({
             onClick={nextPage}
             className="btn ml-auto btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

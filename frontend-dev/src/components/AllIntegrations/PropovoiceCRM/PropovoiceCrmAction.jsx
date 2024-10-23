@@ -83,7 +83,8 @@ export default function PropovoiceCrmActions({
         show={actionMdl.show === 'tags'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Tags', 'bit-integrations')}>
+        title={__('Tags', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select tag', 'bit-integrations')}</div>
         {loading?.tags ? (
@@ -117,7 +118,8 @@ export default function PropovoiceCrmActions({
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Tags', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>
@@ -133,7 +135,8 @@ export default function PropovoiceCrmActions({
         show={actionMdl.show === 'label'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Label', 'bit-integrations')}>
+        title={__('Label', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select label', 'bit-integrations')}</div>
         {loading?.label ? (
@@ -168,7 +171,8 @@ export default function PropovoiceCrmActions({
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Label', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>

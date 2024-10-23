@@ -40,11 +40,7 @@ export default function ZohoCRMNewRecord({
       <br />
       <br />
       <b className="wdt-200 d-in-b">{__('Layout:', 'bit-integrations')}</b>
-      <select
-        onChange={handleInput}
-        name="layout"
-        value={crmConf.layout}
-        className="btcd-paper-inp w-5">
+      <select onChange={handleInput} name="layout" value={crmConf.layout} className="btcd-paper-inp w-5">
         <option value="">{__('Select Layout', 'bit-integrations')}</option>
         {crmConf?.default?.layouts?.[crmConf.module] &&
           Object.keys(crmConf.default.layouts[crmConf.module]).map((layoutApiName) => (
@@ -58,7 +54,8 @@ export default function ZohoCRMNewRecord({
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': `'${__('Refresh CRM Layouts', 'bit-integrations')}'` }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -95,7 +92,8 @@ export default function ZohoCRMNewRecord({
             <button
               onClick={() => addFieldMap(crmConf.field_map.length, crmConf, setCrmConf, false, tab)}
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>
@@ -137,7 +135,8 @@ export default function ZohoCRMNewRecord({
                     addFieldMap(crmConf.upload_field_map.length, crmConf, setCrmConf, true, tab)
                   }
                   className="icn-btn sh-sm"
-                  type="button">
+                  type="button"
+                >
                   +
                 </button>
               </div>

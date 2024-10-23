@@ -23,8 +23,7 @@ function Mailup({ formFields, setFlow, flow, allIntegURL }) {
     name: 'Mailup',
     type: 'Mailup',
     clientId: process.env.NODE_ENV === 'development' ? '85e59098-8c70-46c6-b2a2-a95bf9c0a356' : '',
-    clientSecret:
-      process.env.NODE_ENV === 'development' ? '4e8c54cf-3c07-4c18-8d9c-47e0aa8ed6c1' : '',
+    clientSecret: process.env.NODE_ENV === 'development' ? '4e8c54cf-3c07-4c18-8d9c-47e0aa8ed6c1' : '',
     allList: [],
     allGroup: [],
     listId: '',
@@ -74,7 +73,8 @@ function Mailup({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}
+      >
         <MailupIntegLayout
           formFields={formFields}
           handleInput={(e) => handleInput(e, mailupConf, setMailupConf, setIsLoading, setSnackbar)}
@@ -90,7 +90,8 @@ function Mailup({ formFields, setFlow, flow, allIntegURL }) {
             onClick={() => nextPage(3)}
             disabled={!mailupConf?.listId || !checkMappedFields(mailupConf)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
-            type="button">
+            type="button"
+          >
             {__('Next', 'bit-integrations')} &nbsp;
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

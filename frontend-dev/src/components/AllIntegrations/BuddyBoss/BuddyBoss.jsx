@@ -213,7 +213,8 @@ function BuddyBoss({ formFields, setFlow, flow, allIntegURL, isInfo, edit }) {
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}
+      >
         <BuddyBossIntegLayout
           formFields={formFields}
           handleInput={(e) =>
@@ -233,7 +234,8 @@ function BuddyBoss({ formFields, setFlow, flow, allIntegURL, isInfo, edit }) {
           onClick={() => nextPage(3)}
           disabled={!buddyBossConf.mainAction || isLoading || isDisabled()}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')}
           &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />

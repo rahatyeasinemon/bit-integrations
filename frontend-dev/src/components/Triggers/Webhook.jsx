@@ -138,7 +138,8 @@ const Webhook = () => {
           onClick={handleFetch}
           className="btn btcd-btn-lg purple sh-sm flx"
           type="button"
-          disabled={!hookID}>
+          disabled={!hookID}
+        >
           {newFlow.triggerDetail?.data
             ? __('Fetched ✔', 'bit-integrations')
             : __('Fetch', 'bit-integrations')}
@@ -166,7 +167,8 @@ const Webhook = () => {
         onClick={setTriggerData}
         className="btn btcd-btn-lg purple sh-sm flx"
         type="button"
-        disabled={!newFlow.triggerDetail?.data}>
+        disabled={!newFlow.triggerDetail?.data}
+      >
         {__('Set Action', 'bit-integrations')}
       </button>
       <Note note={info} />

@@ -68,9 +68,7 @@ export const livestormAuthentication = (
       return
     }
     setLoading({ ...loading, auth: false })
-    toast.error(
-      __(result?.data || 'Authorized failed, Please enter valid API Key', 'bit-integrations')
-    )
+    toast.error(__(result?.data || 'Authorized failed, Please enter valid API Key', 'bit-integrations'))
   })
 }
 

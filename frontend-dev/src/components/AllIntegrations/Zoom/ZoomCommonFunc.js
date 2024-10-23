@@ -165,14 +165,7 @@ export const handleAuthorize = (
       } else {
         const newConf = { ...confTmp }
         newConf.accountServer = grantTokenResponse['accounts-server']
-        tokenHelper(
-          grantTokenResponse,
-          newConf,
-          setConf,
-          setisAuthorized,
-          setIsLoading,
-          setSnackbar
-        )
+        tokenHelper(grantTokenResponse, newConf, setConf, setisAuthorized, setIsLoading, setSnackbar)
       }
     }
   }, 500)

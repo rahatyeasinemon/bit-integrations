@@ -56,9 +56,7 @@ export const agiledAuthentication = (
 ) => {
   if (!confTmp.brand || !confTmp.auth_token) {
     setError({
-      brand: !confTmp.brand
-        ? __("Brand Name (Account URL) can't be empty", 'bit-integrations')
-        : '',
+      brand: !confTmp.brand ? __("Brand Name (Account URL) can't be empty", 'bit-integrations') : '',
       auth_token: !confTmp.auth_token ? __("Api Key can't be empty", 'bit-integrations') : ''
     })
     return
@@ -77,9 +75,7 @@ export const agiledAuthentication = (
       return
     }
     setLoading({ ...loading, auth: false })
-    toast.error(
-      __('Authorized failed, Please enter valid brand name & API key', 'bit-integrations')
-    )
+    toast.error(__('Authorized failed, Please enter valid brand name & API key', 'bit-integrations'))
   })
 }
 

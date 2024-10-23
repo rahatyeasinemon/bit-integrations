@@ -8,12 +8,7 @@ export const handleInput = (e, convertKitConf, setConvertKitConf) => {
   setConvertKitConf({ ...newConf })
 }
 
-export const refreshConvertKitForm = (
-  convertKitConf,
-  setConvertKitConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const refreshConvertKitForm = (convertKitConf, setConvertKitConf, setIsLoading, setSnackbar) => {
   const refreshFormsRequestParams = {
     api_secret: convertKitConf.api_secret
   }
@@ -55,12 +50,7 @@ export const refreshConvertKitForm = (
     .catch(() => setIsLoading(false))
 }
 // refreshConvertKitTags
-export const refreshConvertKitTags = (
-  convertKitConf,
-  setConvertKitConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const refreshConvertKitTags = (convertKitConf, setConvertKitConf, setIsLoading, setSnackbar) => {
   const refreshFormsRequestParams = {
     api_secret: convertKitConf.api_secret
   }
@@ -166,8 +156,7 @@ export const refreshConvertKitHeader = (
 export const checkMappedFields = (convertKitConf) => {
   const mappedFields = convertKitConf?.field_map
     ? convertKitConf.field_map.filter(
-        (mappedField) =>
-          !mappedField.formField && mappedField.convertKitField && mappedField.required
+        (mappedField) => !mappedField.formField && mappedField.convertKitField && mappedField.required
       )
     : []
   if (mappedFields.length > 0) {

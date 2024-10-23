@@ -54,10 +54,9 @@ export default function SystemeIOAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {systemeIO?.youTubeLink && (
-        <TutorialLink title="SystemeIO" youTubeLink={systemeIO?.youTubeLink} />
-      )}
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
+      {systemeIO?.youTubeLink && <TutorialLink title="SystemeIO" youTubeLink={systemeIO?.youTubeLink} />}
       {systemeIO?.docLink && <TutorialLink title="SystemeIO" docLink={systemeIO?.docLink} />}
 
       <div className="mt-3">
@@ -93,7 +92,8 @@ export default function SystemeIOAuthorization({
         <a
           className="btcd-link"
           href="https://systeme.io/dashboard/profile/public-api-settings"
-          target="_blank">
+          target="_blank"
+        >
           {__('SystemeIO API Key & Secret', 'bit-integrations')}
         </a>
       </small>
@@ -115,7 +115,8 @@ export default function SystemeIOAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || loading.auth}>
+            disabled={isAuthorized || loading.auth}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -126,7 +127,8 @@ export default function SystemeIOAuthorization({
             onClick={nextPage}
             className="btn ml-auto btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

@@ -5,14 +5,16 @@ export default function ProBadgeIcn({ size }) {
       enableBackground="new 0 0 511.843 511.843"
       height={size}
       viewBox="0 0 511.843 511.843"
-      width={size}>
+      width={size}
+    >
       <linearGradient
         id="SVGID_1_"
         gradientUnits="userSpaceOnUse"
         x1="255.921"
         x2="255.921"
         y1="429.843"
-        y2="0">
+        y2="0"
+      >
         <stop offset="0" stopColor="#fd5900" />
         <stop offset="1" stopColor="#ffde00" />
       </linearGradient>
@@ -22,7 +24,8 @@ export default function ProBadgeIcn({ size }) {
         x1="255.682"
         x2="255.682"
         y1="511.843"
-        y2="74.843">
+        y2="74.843"
+      >
         <stop offset="0" stopColor="#ffe59a" />
         <stop offset="1" stopColor="#ffffd5" />
       </linearGradient>

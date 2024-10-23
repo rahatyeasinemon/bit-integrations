@@ -44,10 +44,9 @@ export default function MailPoetAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {mailPoet?.youTubeLink && (
-        <TutorialLink title="MailPoet" youTubeLink={mailPoet?.youTubeLink} />
-      )}
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
+      {mailPoet?.youTubeLink && <TutorialLink title="MailPoet" youTubeLink={mailPoet?.youTubeLink} />}
       {mailPoet?.docLink && <TutorialLink title="MailPoet" docLink={mailPoet?.docLink} />}
 
       <div className="mt-3">
@@ -81,10 +80,9 @@ export default function MailPoetAuthorization({
         onClick={handleAuthorize}
         className="btn btcd-btn-lg purple sh-sm flx"
         type="button"
-        disabled={isAuthorized || isLoading}>
-        {isAuthorized
-          ? __('Authorized ✔', 'bit-integrations')
-          : __('Authorize', 'bit-integrations')}
+        disabled={isAuthorized || isLoading}
+      >
+        {isAuthorized ? __('Authorized ✔', 'bit-integrations') : __('Authorize', 'bit-integrations')}
         {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
       </button>
       <br />
@@ -92,7 +90,8 @@ export default function MailPoetAuthorization({
         onClick={() => nextPage(2)}
         className="btn f-right btcd-btn-lg purple sh-sm flx"
         type="button"
-        disabled={!isAuthorized}>
+        disabled={!isAuthorized}
+      >
         {__('Next', 'bit-integrations')}
         <BackIcn className="ml-1 rev-icn" />
       </button>

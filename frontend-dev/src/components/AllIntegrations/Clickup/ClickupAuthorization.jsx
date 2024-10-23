@@ -52,7 +52,8 @@ export default function ClickupAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
       {clickup?.youTubeLink && <TutorialLink title="ClickUp" youTubeLink={clickup?.youTubeLink} />}
       {clickup?.docLink && <TutorialLink title="ClickUp" docLink={clickup?.docLink} />}
 
@@ -90,7 +91,8 @@ export default function ClickupAuthorization({
           className="btcd-link"
           href={`https://app.clickup.com/0/my-apps`}
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {__('Clickup API Token', 'bit-integrations')}
         </a>
       </small>
@@ -112,7 +114,8 @@ export default function ClickupAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || loading.auth}>
+            disabled={isAuthorized || loading.auth}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -123,7 +126,8 @@ export default function ClickupAuthorization({
             onClick={nextPage}
             className="btn ml-auto btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

@@ -142,7 +142,8 @@ function Pods({ formFields, setFlow, flow, allIntegURL }) {
       <select
         name="post_type"
         onChange={(e) => getPodsField(e.target.name, e.target.value)}
-        className="btcd-paper-inp w-5 mt-1">
+        className="btcd-paper-inp w-5 mt-1"
+      >
         <option disabled selected>
           Select type
         </option>
@@ -159,7 +160,8 @@ function Pods({ formFields, setFlow, flow, allIntegURL }) {
       <select
         name="post_status"
         onChange={(e) => handleInput(e.target.name, e.target.value)}
-        className="btcd-paper-inp w-5 mt-1">
+        className="btcd-paper-inp w-5 mt-1"
+      >
         <option disabled selected>
           {__('Select Status', 'bit-integrations')}
         </option>
@@ -177,7 +179,8 @@ function Pods({ formFields, setFlow, flow, allIntegURL }) {
       <select
         name="comment_status"
         onChange={(e) => handleInput(e.target.name, e.target.value)}
-        className="btcd-paper-inp w-5 mt-1">
+        className="btcd-paper-inp w-5 mt-1"
+      >
         <option disabled selected>
           {__('Select Status', 'bit-integrations')}
         </option>
@@ -191,7 +194,8 @@ function Pods({ formFields, setFlow, flow, allIntegURL }) {
       <select
         name="post_author"
         onChange={(e) => handleInput(e.target.name, e.target.value)}
-        className="btcd-paper-inp w-5 mt-1">
+        className="btcd-paper-inp w-5 mt-1"
+      >
         <option disabled selected>
           {__('Select Author', 'bit-integrations')}
         </option>
@@ -236,7 +240,8 @@ function Pods({ formFields, setFlow, flow, allIntegURL }) {
           <button
             onClick={() => addFieldMap('post_map', podsConf.post_map.length, podsConf, setPodsConf)}
             className="icn-btn sh-sm"
-            type="button">
+            type="button"
+          >
             +
           </button>
         </div>
@@ -274,7 +279,8 @@ function Pods({ formFields, setFlow, flow, allIntegURL }) {
               addFieldMap('pod_field_map', podsConf.pod_field_map.length, podsConf, setPodsConf)
             }
             className="icn-btn sh-sm"
-            type="button">
+            type="button"
+          >
             +
           </button>
         </div>
@@ -312,7 +318,8 @@ function Pods({ formFields, setFlow, flow, allIntegURL }) {
               addFieldMap('pod_file_map', podsConf.pod_file_map.length, podsConf, setPodsConf)
             }
             className="icn-btn sh-sm"
-            type="button">
+            type="button"
+          >
             +
           </button>
         </div>
@@ -331,11 +338,7 @@ function Pods({ formFields, setFlow, flow, allIntegURL }) {
           </div>
           <br />
           {podsConf?.condition?.action_behavior === 'cond' && (
-            <ConditionalLogic
-              formFields={formFields}
-              dataConf={podsConf}
-              setDataConf={setPodsConf}
-            />
+            <ConditionalLogic formFields={formFields} dataConf={podsConf} setDataConf={setPodsConf} />
           )}
         </>
       )}
@@ -343,7 +346,8 @@ function Pods({ formFields, setFlow, flow, allIntegURL }) {
       <button
         className="btn f-left btcd-btn-lg purple sh-sm flx"
         type="button"
-        onClick={() => saveConfig()}>
+        onClick={() => saveConfig()}
+      >
         {__('Save', 'bit-integrations')}{' '}
         {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
       </button>

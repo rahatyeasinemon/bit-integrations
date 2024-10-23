@@ -60,9 +60,7 @@ function EditNewsletter({ allIntegURL }) {
       <NewsletterIntegLayout
         formID={flow.triggered_entity_id}
         formFields={formField}
-        handleInput={(e) =>
-          handleInput(e, newsletterConf, setNewsletterConf, setLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, newsletterConf, setNewsletterConf, setLoading, setSnackbar)}
         newsletterConf={newsletterConf}
         setNewsletterConf={setNewsletterConf}
         loading={loading}

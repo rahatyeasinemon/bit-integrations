@@ -18,7 +18,8 @@ export default function BitFormFieldMap({ i, field, formFields, bitFormConf, set
           className="btcd-paper-inp mr-2"
           name="formField"
           value={field.formField || ''}
-          onChange={(ev) => handleFieldMapping(ev, i, bitFormConf, setBitFormConf)}>
+          onChange={(ev) => handleFieldMapping(ev, i, bitFormConf, setBitFormConf)}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           <optgroup label={__('Form Fields', 'bit-integrations')}>
             {formFields.map(
@@ -32,7 +33,8 @@ export default function BitFormFieldMap({ i, field, formFields, bitFormConf, set
           </optgroup>
           <option value="custom">{__('Custom...', 'bit-integrations')}</option>
           <optgroup
-            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}>
+            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}
+          >
             {isPro &&
               SmartTagField?.map((f) => (
                 <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -58,7 +60,8 @@ export default function BitFormFieldMap({ i, field, formFields, bitFormConf, set
           className="btcd-paper-inp"
           name="BitFormMapField"
           value={field.BitFormMapField || ''}
-          onChange={(ev) => handleFieldMapping(ev, i, bitFormConf, setBitFormConf)}>
+          onChange={(ev) => handleFieldMapping(ev, i, bitFormConf, setBitFormConf)}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           {bitFormConf?.default?.fields &&
             Object.entries(bitFormConf.default.fields).map(
@@ -74,14 +77,16 @@ export default function BitFormFieldMap({ i, field, formFields, bitFormConf, set
       <button
         onClick={() => addFieldMap(i, bitFormConf, setBitFormConf)}
         className="icn-btn sh-sm ml-2 mr-1"
-        type="button">
+        type="button"
+      >
         +
       </button>
       <button
         onClick={() => delFieldMap(i, bitFormConf, setBitFormConf)}
         className="icn-btn sh-sm ml-1"
         type="button"
-        aria-label="btn">
+        aria-label="btn"
+      >
         <TrashIcn />
       </button>
     </div>

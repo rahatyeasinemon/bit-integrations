@@ -29,7 +29,8 @@ export default function TrelloIntegLayout({
         onChange={handleInput}
         name="boardId"
         value={trelloConf.boardId}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select Board', 'bit-integrations')}</option>
         {trelloConf?.default?.allBoardlist &&
           trelloConf.default.allBoardlist.map(({ boardId, boardName }) => (
@@ -43,7 +44,8 @@ export default function TrelloIntegLayout({
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': `'${__('Fetch All Recipients', 'bit-integrations')}'` }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -55,7 +57,8 @@ export default function TrelloIntegLayout({
             onChange={handleInput}
             name="listId"
             value={trelloConf.listId}
-            className="btcd-paper-inp w-5">
+            className="btcd-paper-inp w-5"
+          >
             <option value="">{__('Select List', 'bit-integrations')}</option>
             {trelloConf?.default?.alllists &&
               trelloConf.default.alllists.map(({ listId, listName }) => (
@@ -69,7 +72,8 @@ export default function TrelloIntegLayout({
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
             style={{ '--tooltip-txt': `'${__('Fetch All Recipients', 'bit-integrations')}'` }}
             type="button"
-            disabled={isLoading}>
+            disabled={isLoading}
+          >
             &#x21BB;
           </button>
           <br />
@@ -105,7 +109,8 @@ export default function TrelloIntegLayout({
                 className="btn p-0 m-0"
                 type="button"
                 onClick={() => setShowProModal(true)}
-                style={{ color: '#344054', background: 'transparent' }}>
+                style={{ color: '#344054', background: 'transparent' }}
+              >
                 {__('Custom Fields', 'bit-integrations')} {__('Available On', 'bit-integrations')}
                 &nbsp;
                 <span className="txt-pro"> ({__('Pro', 'bit-integrations')})</span>
@@ -135,11 +140,7 @@ export default function TrelloIntegLayout({
         <b className="wdt-100">{__('Utilities', 'bit-integrations')}</b>
       </div>
       <div className="btcd-hr mt-1" />
-      <TrelloActions
-        trelloConf={trelloConf}
-        setTrelloConf={setTrelloConf}
-        formFields={formFields}
-      />
+      <TrelloActions trelloConf={trelloConf} setTrelloConf={setTrelloConf} formFields={formFields} />
     </>
   )
 }

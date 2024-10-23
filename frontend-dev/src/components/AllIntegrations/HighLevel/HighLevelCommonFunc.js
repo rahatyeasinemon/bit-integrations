@@ -11,16 +11,21 @@ export const handleInput = (e, highLevelConf, setHighLevelConf) => {
   setHighLevelConf({ ...newConf })
 }
 
-export const highLevelAuthentication = (highLevelConf, setHighLevelConf, setError, setisAuthorized, loading, setLoading,) => {
+export const highLevelAuthentication = (
+  highLevelConf,
+  setHighLevelConf,
+  setError,
+  setisAuthorized,
+  loading,
+  setLoading
+) => {
   setLoading({ ...loading, auth: true })
   const newConf = { ...highLevelConf }
 
   if (!newConf.name || !newConf.api_key) {
     setError({
       name: !newConf.name ? __("Integration name can't be empty", 'bit-integrations') : '',
-      api_key: !newConf.api_key
-        ? __("Access Api Token Key can't be empty", 'bit-integrations')
-        : ''
+      api_key: !newConf.api_key ? __("Access Api Token Key can't be empty", 'bit-integrations') : ''
     })
     return
   }
@@ -40,11 +45,11 @@ export const highLevelAuthentication = (highLevelConf, setHighLevelConf, setErro
 export const checkMappedFields = (highLevelConf) => {
   const mappedFields = highLevelConf?.field_map
     ? highLevelConf.field_map.filter(
-      (mappedField) =>
-        !mappedField.formField ||
-        !mappedField.highLevelField ||
-        (!mappedField.formField === 'custom' && !mappedField.customValue)
-    )
+        (mappedField) =>
+          !mappedField.formField ||
+          !mappedField.highLevelField ||
+          (!mappedField.formField === 'custom' && !mappedField.customValue)
+      )
     : []
   if (mappedFields.length > 0) {
     return false
@@ -90,8 +95,11 @@ export const getContacts = (confTmp, setConf, loading, setLoading) => {
       if (newConf.selectedTask === TASK_LIST_VALUES.UPDATE_CONTACT) {
         getCustomFields(newConf, setConf, loading, setLoading)
       }
-      if (newConf.selectedTask === TASK_LIST_VALUES.CREATE_TASK || newConf.selectedTask === TASK_LIST_VALUES.UPDATE_TASK
-        || newConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY) {
+      if (
+        newConf.selectedTask === TASK_LIST_VALUES.CREATE_TASK ||
+        newConf.selectedTask === TASK_LIST_VALUES.UPDATE_TASK ||
+        newConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY
+      ) {
         getUsers(newConf, setConf, loading, setLoading)
       }
       return
@@ -121,7 +129,10 @@ export const getUsers = (confTmp, setConf, loading, setLoading) => {
 export const getHLTasks = (confTmp, setConf, loading, setLoading) => {
   setLoading({ ...loading, hlTasks: true })
 
-  bitsFetch({ api_key: confTmp.api_key, contact_id: confTmp.selectedContact }, 'get_highLevel_tasks').then((result) => {
+  bitsFetch(
+    { api_key: confTmp.api_key, contact_id: confTmp.selectedContact },
+    'get_highLevel_tasks'
+  ).then((result) => {
     if (result.success && result.data) {
       const newConf = { ...confTmp }
       newConf.hlTasks = result.data
@@ -146,7 +157,10 @@ export const getPipelines = (confTmp, setConf, loading, setLoading) => {
       setConf(newConf)
       setLoading({ ...loading, pipelines: false })
       toast.success(__('Pipelines fetched successfully', 'bit-integrations'))
-      if (newConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY || newConf.selectedTask === TASK_LIST_VALUES.UPDATE_OPPORTUNITY) {
+      if (
+        newConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY ||
+        newConf.selectedTask === TASK_LIST_VALUES.UPDATE_OPPORTUNITY
+      ) {
         getContacts(newConf, setConf, loading, setLoading)
       }
       return
@@ -159,7 +173,10 @@ export const getPipelines = (confTmp, setConf, loading, setLoading) => {
 export const getOpportunities = (confTmp, setConf, loading, setLoading) => {
   setLoading({ ...loading, opportunities: true })
 
-  bitsFetch({ api_key: confTmp.api_key, pipeline_id: confTmp.selectedPipeline }, 'get_highLevel_opportunities').then((result) => {
+  bitsFetch(
+    { api_key: confTmp.api_key, pipeline_id: confTmp.selectedPipeline },
+    'get_highLevel_opportunities'
+  ).then((result) => {
     if (result.success && result.data) {
       const newConf = { ...confTmp }
       newConf.opportunities = result.data
@@ -173,31 +190,43 @@ export const getOpportunities = (confTmp, setConf, loading, setLoading) => {
   })
 }
 
-export const getHighLevelOptions = (route, confTmp, utilityOptions, setUtilityOptions, type, loading, setLoading, name = '') => {
+export const getHighLevelOptions = (
+  route,
+  confTmp,
+  utilityOptions,
+  setUtilityOptions,
+  type,
+  loading,
+  setLoading,
+  name = ''
+) => {
   if (!route) {
     return
   }
 
   setLoading({ ...loading, options: true })
 
-  bitsFetch({ api_key: confTmp.api_key }, route)
-    .then(result => {
-      if (result.success && result.data) {
-        const tmpOptions = { ...utilityOptions }
-        tmpOptions[type] = result.data
-        setUtilityOptions(tmpOptions)
-        setLoading({ ...loading, options: false })
-        toast.success(__(`${name} fetched successfully`, 'bit-integrations'))
-        return
-      }
+  bitsFetch({ api_key: confTmp.api_key }, route).then((result) => {
+    if (result.success && result.data) {
+      const tmpOptions = { ...utilityOptions }
+      tmpOptions[type] = result.data
+      setUtilityOptions(tmpOptions)
       setLoading({ ...loading, options: false })
-      toast.error(result?.data ? result.data : __('Something went wrong!', 'bit-integrations'))
-    })
+      toast.success(__(`${name} fetched successfully`, 'bit-integrations'))
+      return
+    }
+    setLoading({ ...loading, options: false })
+    toast.error(result?.data ? result.data : __('Something went wrong!', 'bit-integrations'))
+  })
 }
 
 export const contactStaticFields = (selectedTask) => {
   const fields = [
-    { key: 'email', label: 'Email', required: selectedTask === TASK_LIST_VALUES.CREATE_CONTACT ? true : false },
+    {
+      key: 'email',
+      label: 'Email',
+      required: selectedTask === TASK_LIST_VALUES.CREATE_CONTACT ? true : false
+    },
     { key: 'firstName', label: 'First Name', required: false },
     { key: 'lastName', label: 'Last Name', required: false },
     { key: 'name', label: 'Full Name', required: false },
@@ -209,7 +238,7 @@ export const contactStaticFields = (selectedTask) => {
     { key: 'country', label: 'Country', required: false },
     { key: 'postalCode', label: 'postalCode (Zip)', required: false },
     { key: 'companyName', label: 'Company Name', required: false },
-    { key: 'website', label: 'Website', required: false },
+    { key: 'website', label: 'Website', required: false }
   ]
 
   if (selectedTask === TASK_LIST_VALUES.UPDATE_CONTACT) {
@@ -236,9 +265,12 @@ export const highLevelStaticFields = (selectedTask) => {
         { key: 'title', label: 'Title', required: true },
         { key: 'dueDate', label: 'Due Date', required: true },
         { key: 'description', label: 'Description', required: false },
-        { key: 'contactId', label: 'Contact ID', required: false },
+        { key: 'contactId', label: 'Contact ID', required: false }
       ],
-      fieldMap: [{ formField: '', highLevelField: 'title' }, { formField: '', highLevelField: 'dueDate' }]
+      fieldMap: [
+        { formField: '', highLevelField: 'title' },
+        { formField: '', highLevelField: 'dueDate' }
+      ]
     }
   } else if (selectedTask === TASK_LIST_VALUES.UPDATE_TASK) {
     return {
@@ -247,9 +279,12 @@ export const highLevelStaticFields = (selectedTask) => {
         { key: 'dueDate', label: 'Due Date', required: true },
         { key: 'taskId', label: 'Task ID', required: false },
         { key: 'description', label: 'Description', required: false },
-        { key: 'contactId', label: 'Contact ID', required: false },
+        { key: 'contactId', label: 'Contact ID', required: false }
       ],
-      fieldMap: [{ formField: '', highLevelField: 'title' }, { formField: '', highLevelField: 'dueDate' }]
+      fieldMap: [
+        { formField: '', highLevelField: 'title' },
+        { formField: '', highLevelField: 'dueDate' }
+      ]
     }
   } else if (selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY) {
     return {
@@ -260,7 +295,7 @@ export const highLevelStaticFields = (selectedTask) => {
         { key: 'phone', label: 'Phone Number', required: false },
         { key: 'companyName', label: 'Company Name', required: false },
         { key: 'monetaryValue', label: 'Monetary Value', required: false },
-        { key: 'contactId', label: 'Contact ID', required: false },
+        { key: 'contactId', label: 'Contact ID', required: false }
       ],
       fieldMap: [{ formField: '', highLevelField: 'title' }]
     }
@@ -274,7 +309,7 @@ export const highLevelStaticFields = (selectedTask) => {
         { key: 'companyName', label: 'Company Name', required: false },
         { key: 'monetaryValue', label: 'Monetary Value', required: false },
         { key: 'opportunityId', label: 'Opportunity ID', required: false },
-        { key: 'contactId', label: 'Contact ID', required: false },
+        { key: 'contactId', label: 'Contact ID', required: false }
       ],
       fieldMap: [{ formField: '', highLevelField: 'title' }]
     }

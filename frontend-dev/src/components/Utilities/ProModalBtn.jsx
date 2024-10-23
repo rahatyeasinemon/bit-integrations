@@ -10,10 +10,7 @@ export default function ProModalBtn({ title, sub, className, children, warning }
   return (
     <>
       <nav className="top-nav" style={{ marginRight: '15px' }}>
-        <button
-          type="button"
-          onClick={() => setShow(true)}
-          className="btn purple btn-md py-2 purple-sh">
+        <button type="button" onClick={() => setShow(true)} className="btn purple btn-md py-2 purple-sh">
           {__('Try Pro', 'bit-integrations')}
         </button>
       </nav>
@@ -25,7 +22,8 @@ export default function ProModalBtn({ title, sub, className, children, warning }
         setModal={() => setShow(false)}
         className={className}
         title={title || 'Upgrade to Pro'}
-        warning={warning || false}>
+        warning={warning || false}
+      >
         <div className={`txt-center atn-btns flx flx-center ${className || 'flx-col'}`}>
           <div className={`content p-4 ${!className && 'confirm-content'}`}>
             <ProBadgeIcn size="50" />
@@ -42,14 +40,16 @@ export default function ProModalBtn({ title, sub, className, children, warning }
                 href="https://towp.io"
                 target="_blank"
                 className="btn btcd-btn-o-gray gray gray-sh w-4 mr-2 br-50 btn-lg "
-                rel="noreferrer">
+                rel="noreferrer"
+              >
                 {__('Try Pro', 'bit-integrations')}
               </a>
               <a
                 href="https://bitapps.pro/bit-integrations/#pricing"
                 target="_blank"
                 className="btn btcd-btn-o-white purple w-4 mr-2 br-50 btn-lg"
-                rel="noreferrer">
+                rel="noreferrer"
+              >
                 {__('Upgrade to Pro', 'bit-integrations')}
               </a>
             </div>

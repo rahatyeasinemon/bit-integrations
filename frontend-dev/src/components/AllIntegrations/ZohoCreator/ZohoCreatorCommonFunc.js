@@ -67,14 +67,7 @@ export const handleAuthorize = (
       } else {
         const newConf = { ...confTmp }
         newConf.accountServer = grantTokenResponse['accounts-server']
-        tokenHelper(
-          grantTokenResponse,
-          newConf,
-          setConf,
-          setisAuthorized,
-          setIsLoading,
-          setSnackbar
-        )
+        tokenHelper(grantTokenResponse, newConf, setConf, setisAuthorized, setIsLoading, setSnackbar)
       }
     }
   }, 500)
@@ -145,13 +138,7 @@ export const handleInput = (
   setCreatorConf({ ...newConf })
 }
 
-export const applicationChange = (
-  creatorConf,
-  formID,
-  setCreatorConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const applicationChange = (creatorConf, formID, setCreatorConf, setIsLoading, setSnackbar) => {
   const newConf = { ...creatorConf }
   newConf.department = ''
   newConf.field_map = [{ formField: '', zohoFormField: '' }]
@@ -183,13 +170,7 @@ export const formChange = (creatorConf, formID, setCreatorConf, setIsLoading, se
   return newConf
 }
 
-export const refreshApplications = (
-  formID,
-  creatorConf,
-  setCreatorConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const refreshApplications = (formID, creatorConf, setCreatorConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
   const refreshApplicationsRequestParams = {
     formID,

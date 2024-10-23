@@ -62,7 +62,8 @@ export default function SuiteDashActions({ suiteDashConf, setSuiteDashConf, load
         show={actionMdl.show === 'company'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Company', 'bit-integrations')}>
+        title={__('Company', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select Company', 'bit-integrations')}</div>
         {loading.companies ? (
@@ -91,7 +92,8 @@ export default function SuiteDashActions({ suiteDashConf, setSuiteDashConf, load
               onClick={() => getAllCompanies(suiteDashConf, setSuiteDashConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `${__('Refresh Companies', 'bit-integrations')}'` }}
-              type="button">
+              type="button"
+            >
               &#x21BB;
             </button>
           </div>

@@ -68,9 +68,7 @@ function ConvertKit({ formFields, setFlow, flow, allIntegURL }) {
         setSnackbar={setSnackbar}
       />
       {/* STEP 2 */}
-      <div
-        className="btcd-stp-page"
-        style={{ width: step === 2 && 900, height: step === 2 && 'auto' }}>
+      <div className="btcd-stp-page" style={{ width: step === 2 && 900, height: step === 2 && 'auto' }}>
         <ConvertKitIntegLayout
           formID={formID}
           formFields={formFields}
@@ -84,7 +82,8 @@ function ConvertKit({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => nextPage(3)}
           disabled={!convertKitConf?.formId || convertKitConf.field_map.length < 1}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')} &nbsp;
           <BackIcn className="ml-1 rev-icn" />
         </button>
@@ -94,16 +93,7 @@ function ConvertKit({ formFields, setFlow, flow, allIntegURL }) {
       <IntegrationStepThree
         step={step}
         saveConfig={() =>
-          saveIntegConfig(
-            flow,
-            setFlow,
-            allIntegURL,
-            convertKitConf,
-            navigate,
-            '',
-            '',
-            setIsLoading
-          )
+          saveIntegConfig(flow, setFlow, allIntegURL, convertKitConf, navigate, '', '', setIsLoading)
         }
         isLoading={isLoading}
         dataConf={convertKitConf}

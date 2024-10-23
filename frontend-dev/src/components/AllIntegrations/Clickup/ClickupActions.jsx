@@ -48,7 +48,8 @@ export default function ClickupActions({
         show={actionMdl.show === 'attachment'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Select file upload field', 'bit-integrations')}>
+        title={__('Select file upload field', 'bit-integrations')}
+      >
         <div className="btcd-hr mt-2" />
         <div className="mt-2">{__('Select file upload field', 'bit-integrations')}</div>
         <MultiSelect

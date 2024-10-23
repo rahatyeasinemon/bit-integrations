@@ -48,7 +48,8 @@ export default function WcLineItemsFieldMap({ i, formFields, field, wcConf, setW
           className="btcd-paper-inp mr-2"
           name="formField"
           value={field.formField || ''}
-          onChange={(ev) => handleFieldMapping(ev, i)}>
+          onChange={(ev) => handleFieldMapping(ev, i)}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           {formFields.map(
             (f) =>
@@ -77,7 +78,8 @@ export default function WcLineItemsFieldMap({ i, formFields, field, wcConf, setW
           name="wcField"
           value={field.wcField || ''}
           onChange={(ev) => handleFieldMapping(ev, i)}
-          disabled={isRequired}>
+          disabled={isRequired}
+        >
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           {Object.values(wcConf.default.fields.line_item.fields).map((fld) => {
             if (isRequired) {
@@ -107,7 +109,8 @@ export default function WcLineItemsFieldMap({ i, formFields, field, wcConf, setW
             onClick={() => delFieldMap(i)}
             className="icn-btn sh-sm ml-2"
             type="button"
-            aria-label="btn">
+            aria-label="btn"
+          >
             <TrashIcn />
           </button>
         </>

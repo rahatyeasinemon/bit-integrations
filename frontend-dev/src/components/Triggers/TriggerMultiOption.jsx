@@ -30,9 +30,7 @@ import EventsCalendarHelper from './TriggerHelpers/EventsCalendarHelper'
 
 const TriggerMultiOption = ({ flow, setFlowData, edit = false }) => (
   <div>
-    {flow?.triggered_entity === 'TutorLms' && (
-      <TutorLmsHelper flow={flow} setFlowData={setFlowData} />
-    )}
+    {flow?.triggered_entity === 'TutorLms' && <TutorLmsHelper flow={flow} setFlowData={setFlowData} />}
     {flow?.triggered_entity === 'WC' && (
       <WooCommerceHelper flow={flow} setFlowData={setFlowData} edit={edit} />
     )}
@@ -84,9 +82,7 @@ const TriggerMultiOption = ({ flow, setFlowData, edit = false }) => (
     {flow?.triggered_entity === 'LifterLms' && (
       <LifterLmsHelper flow={flow} setFlowData={setFlowData} edit={edit} />
     )}
-    {flow?.triggered_entity === 'EDD' && (
-      <EDDHelper flow={flow} setFlowData={setFlowData} edit={edit} />
-    )}
+    {flow?.triggered_entity === 'EDD' && <EDDHelper flow={flow} setFlowData={setFlowData} edit={edit} />}
     {flow?.triggered_entity === 'MasterStudyLms' && (
       <MasterStudyLmsHelper flow={flow} setFlowData={setFlowData} edit={edit} />
     )}

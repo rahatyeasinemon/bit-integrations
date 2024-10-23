@@ -64,7 +64,8 @@ export default function KirimEmailIntegLayout({
           onChange={inputHandler}
           name="mainAction"
           value={kirimEmailConf?.mainAction}
-          className="btcd-paper-inp w-5">
+          className="btcd-paper-inp w-5"
+        >
           <option value="">{__('Select Actions', 'bit-integrations')}</option>
           {kirimEmailConf?.allActions &&
             kirimEmailConf.allActions.map(({ key, label }) => (
@@ -92,13 +93,12 @@ export default function KirimEmailIntegLayout({
               singleSelect
             />
             <button
-              onClick={() =>
-                getAllList(kirimEmailConf, setKirimEmailConf, setIsLoading, setSnackbar)
-              }
+              onClick={() => getAllList(kirimEmailConf, setKirimEmailConf, setIsLoading, setSnackbar)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Fetch All lists', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -136,7 +136,8 @@ export default function KirimEmailIntegLayout({
               addFieldMap(kirimEmailConf.field_map.length, kirimEmailConf, setKirimEmailConf)
             }
             className="icn-btn sh-sm"
-            type="button">
+            type="button"
+          >
             +
           </button>
         </div>

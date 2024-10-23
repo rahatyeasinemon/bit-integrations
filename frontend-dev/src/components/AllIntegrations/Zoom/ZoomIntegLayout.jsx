@@ -33,7 +33,8 @@ export default function ZoomIntegLayout({
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
         style={{ '--tooltip-txt': `'${__('Fetch All Meeting', 'bit-integrations')}'` }}
         type="button"
-        disabled={isLoading}>
+        disabled={isLoading}
+      >
         &#x21BB;
       </button>
       <br />
@@ -43,7 +44,8 @@ export default function ZoomIntegLayout({
         onChange={handleInput}
         name="selectedActions"
         value={zoomConf.selectedActions}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select Action', 'bit-integrations')}</option>
         {zoomConf?.allActions &&
           zoomConf.allActions.map(({ key, value }) => (
@@ -72,7 +74,8 @@ export default function ZoomIntegLayout({
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh fields', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -101,7 +104,8 @@ export default function ZoomIntegLayout({
             <button
               onClick={() => addFieldMap(zoomConf.field_map.length, zoomConf, setZoomConf, false)}
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

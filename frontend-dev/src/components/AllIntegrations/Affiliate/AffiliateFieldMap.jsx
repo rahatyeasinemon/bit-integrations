@@ -1,24 +1,13 @@
 import { useRecoilValue } from 'recoil'
 import { __ } from '../../../Utils/i18nwrap'
 import MtInput from '../../Utilities/MtInput'
-import {
-  addFieldMap,
-  delFieldMap,
-  handleCustomValue,
-  handleFieldMapping
-} from './IntegrationHelpers'
+import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from './IntegrationHelpers'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import { $btcbi } from '../../../GlobalStates'
 import { generateMappedField } from './AffiliateCommonFunc'
 import TagifyInput from '../../Utilities/TagifyInput'
 
-export default function AffiliateFieldMap({
-  i,
-  formFields,
-  field,
-  affiliateConf,
-  setAffiliateConf
-}) {
+export default function AffiliateFieldMap({ i, formFields, field, affiliateConf, setAffiliateConf }) {
   if (affiliateConf?.field_map?.length === 1 && field.affiliateFormField === '') {
     const newConf = { ...affiliateConf }
     const tmp = generateMappedField(newConf)
@@ -26,8 +15,7 @@ export default function AffiliateFieldMap({
     setAffiliateConf(newConf)
   }
 
-  const requiredFlds =
-    affiliateConf?.createAffiliateFields.filter((fld) => fld.required === true) || []
+  const requiredFlds = affiliateConf?.createAffiliateFields.filter((fld) => fld.required === true) || []
   const nonRequiredFlds =
     affiliateConf?.createAffiliateFields.filter((fld) => fld.required === false) || []
 
@@ -42,7 +30,8 @@ export default function AffiliateFieldMap({
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, affiliateConf, setAffiliateConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, affiliateConf, setAffiliateConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -56,7 +45,8 @@ export default function AffiliateFieldMap({
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -82,10 +72,9 @@ export default function AffiliateFieldMap({
             className="btcd-paper-inp"
             disabled={i < requiredFlds.length}
             name="affiliateFormField"
-            value={
-              i < requiredFlds.length ? requiredFlds[i].key || '' : field.affiliateFormField || ''
-            }
-            onChange={(ev) => handleFieldMapping(ev, i, affiliateConf, setAffiliateConf)}>
+            value={i < requiredFlds.length ? requiredFlds[i].key || '' : field.affiliateFormField || ''}
+            onChange={(ev) => handleFieldMapping(ev, i, affiliateConf, setAffiliateConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFlds.length ? (
               <option key={requiredFlds[i].key} value={requiredFlds[i].key}>
@@ -105,14 +94,16 @@ export default function AffiliateFieldMap({
             <button
               onClick={() => addFieldMap(i, affiliateConf, setAffiliateConf)}
               className="icn-btn sh-sm ml-2 mr-1"
-              type="button">
+              type="button"
+            >
               +
             </button>
             <button
               onClick={() => delFieldMap(i, affiliateConf, setAffiliateConf)}
               className="icn-btn sh-sm ml-1"
               type="button"
-              aria-label="btn">
+              aria-label="btn"
+            >
               <span className="btcd-icn icn-trash-2" />
             </button>
           </>

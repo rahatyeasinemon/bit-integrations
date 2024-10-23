@@ -75,12 +75,11 @@ function TutorLms({ formFields, setFlow, flow, allIntegURL }) {
             minHeight: step === 2 && `${260}px`,
             overflow: 'visible'
           })
-        }}>
+        }}
+      >
         <TutorLmsIntegLayout
           formFields={formFields}
-          handleInput={(e) =>
-            handleInput(e, tutorlmsConf, setTutorlmsConf, setIsLoading, setSnackbar)
-          }
+          handleInput={(e) => handleInput(e, tutorlmsConf, setTutorlmsConf, setIsLoading, setSnackbar)}
           tutorlmsConf={tutorlmsConf}
           setTutorlmsConf={setTutorlmsConf}
           isLoading={isLoading}
@@ -92,7 +91,8 @@ function TutorLms({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => nextPage(3)}
           // disabled={!tutorlmsConf?.recipient_id}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')} &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>

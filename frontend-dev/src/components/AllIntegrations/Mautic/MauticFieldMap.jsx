@@ -13,12 +13,10 @@ import { handleCustomValue } from '../IntegrationHelpers/IntegrationHelpers'
 
 export default function MauticFieldMap({ i, formFields, field, mauticConf, setMauticConf }) {
   const requiredFields =
-    (mauticConf?.default?.fields &&
-      mauticConf.default.fields.filter((fld) => fld.required === true)) ||
+    (mauticConf?.default?.fields && mauticConf.default.fields.filter((fld) => fld.required === true)) ||
     []
   const allNonRequiredFields =
-    (mauticConf?.default?.fields &&
-      mauticConf.default.fields.filter((fld) => fld.required === false)) ||
+    (mauticConf?.default?.fields && mauticConf.default.fields.filter((fld) => fld.required === false)) ||
     []
 
   const btcbi = useRecoilValue($btcbi)
@@ -31,7 +29,8 @@ export default function MauticFieldMap({ i, formFields, field, mauticConf, setMa
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, mauticConf, setMauticConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, mauticConf, setMauticConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map(
@@ -48,7 +47,8 @@ export default function MauticFieldMap({ i, formFields, field, mauticConf, setMa
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -75,11 +75,10 @@ export default function MauticFieldMap({ i, formFields, field, mauticConf, setMa
             disabled={i < requiredFields.length}
             name="mauticField"
             value={
-              i < requiredFields.length
-                ? requiredFields[i].fieldAlias || ''
-                : field.mauticField || ''
+              i < requiredFields.length ? requiredFields[i].fieldAlias || '' : field.mauticField || ''
             }
-            onChange={(ev) => handleFieldMapping(ev, i, mauticConf, setMauticConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, mauticConf, setMauticConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
 
             {i < requiredFields.length ? (
@@ -98,14 +97,16 @@ export default function MauticFieldMap({ i, formFields, field, mauticConf, setMa
         <button
           onClick={() => addFieldMap(i, mauticConf, setMauticConf)}
           className="icn-btn sh-sm ml-2 mr-1"
-          type="button">
+          type="button"
+        >
           +
         </button>
         <button
           onClick={() => delFieldMap(i, mauticConf, setMauticConf)}
           className="icn-btn sh-sm ml-1"
           type="button"
-          aria-label="btn">
+          aria-label="btn"
+        >
           <span className="btcd-icn icn-trash-2" />
         </button>
       </div>

@@ -28,7 +28,14 @@ function EditZoomWebinar({ allIntegURL }) {
 
       <div className="flx mt-3">
         <b className="wdt-200 d-in-b">{__('Integration Name:', 'bit-integrations')}</b>
-        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, zoomWebinarConf, setZoomWebinarConf)} name="name" value={zoomWebinarConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
+        <input
+          className="btcd-paper-inp w-5"
+          onChange={(e) => handleInput(e, zoomWebinarConf, setZoomWebinarConf)}
+          name="name"
+          value={zoomWebinarConf.name}
+          type="text"
+          placeholder={__('Integration Name...', 'bit-integrations')}
+        />
       </div>
       <br />
       <br />
@@ -38,7 +45,9 @@ function EditZoomWebinar({ allIntegURL }) {
       <ZoomWebinarIntegLayout
         formID={formID}
         formFields={formFields}
-        handleInput={(e) => handleInput(e, zoomWebinarConf, setZoomWebinarConf, setIsLoading, setSnackbar)}
+        handleInput={(e) =>
+          handleInput(e, zoomWebinarConf, setZoomWebinarConf, setIsLoading, setSnackbar)
+        }
         zoomWebinarConf={zoomWebinarConf}
         setZoomWebinarConf={setZoomWebinarConf}
         isLoading={isLoading}
@@ -48,8 +57,24 @@ function EditZoomWebinar({ allIntegURL }) {
 
       <IntegrationStepThree
         edit
-        saveConfig={() => saveActionConf({ flow, allIntegURL, conf: zoomWebinarConf, navigate, edit: 1, setIsLoading, setSnackbar })}
-        disabled={zoomWebinarConf.field_map.length < 2 || isLoading || !zoomWebinarConf.id || !checkMappedFields(zoomWebinarConf) || zoomWebinarConf.selectedActions == null}
+        saveConfig={() =>
+          saveActionConf({
+            flow,
+            allIntegURL,
+            conf: zoomWebinarConf,
+            navigate,
+            edit: 1,
+            setIsLoading,
+            setSnackbar
+          })
+        }
+        disabled={
+          zoomWebinarConf.field_map.length < 2 ||
+          isLoading ||
+          !zoomWebinarConf.id ||
+          !checkMappedFields(zoomWebinarConf) ||
+          zoomWebinarConf.selectedActions == null
+        }
         isLoading={isLoading}
         dataConf={zoomWebinarConf}
         setDataConf={setZoomWebinarConf}

@@ -38,7 +38,8 @@ export default function ClickupFieldMap({ i, formFields, field, clickupConf, set
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, clickupConf, setClickupConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, clickupConf, setClickupConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -52,7 +53,8 @@ export default function ClickupFieldMap({ i, formFields, field, clickupConf, set
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
                 isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-              )}>
+              )}
+            >
               {isPro &&
                 SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -78,10 +80,9 @@ export default function ClickupFieldMap({ i, formFields, field, clickupConf, set
             className="btcd-paper-inp"
             disabled={i < requiredFields.length}
             name="clickupFormField"
-            value={
-              i < requiredFields ? requiredFields[i].label || '' : field.clickupFormField || ''
-            }
-            onChange={(ev) => handleFieldMapping(ev, i, clickupConf, setClickupConf)}>
+            value={i < requiredFields ? requiredFields[i].label || '' : field.clickupFormField || ''}
+            onChange={(ev) => handleFieldMapping(ev, i, clickupConf, setClickupConf)}
+          >
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFields.length ? (
               <option key={requiredFields[i].key} value={requiredFields[i].key}>
@@ -115,14 +116,16 @@ export default function ClickupFieldMap({ i, formFields, field, clickupConf, set
             <button
               onClick={() => addFieldMap(i, clickupConf, setClickupConf)}
               className="icn-btn sh-sm ml-2 mr-1"
-              type="button">
+              type="button"
+            >
               +
             </button>
             <button
               onClick={() => delFieldMap(i, clickupConf, setClickupConf)}
               className="icn-btn sh-sm ml-1"
               type="button"
-              aria-label="btn">
+              aria-label="btn"
+            >
               <span className="btcd-icn icn-trash-2" />
             </button>
           </>

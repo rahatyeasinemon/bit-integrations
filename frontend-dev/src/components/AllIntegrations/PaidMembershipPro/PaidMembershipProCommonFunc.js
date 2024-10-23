@@ -50,9 +50,7 @@ export const getAllPaidMemberShipProLevel = (
         return
       }
       setIsLoading(false)
-      toast.error(
-        __('Paid Membership pro level fetch failed. please try again', 'bit-integrations')
-      )
+      toast.error(__('Paid Membership pro level fetch failed. please try again', 'bit-integrations'))
     })
     .catch(() => setIsLoading(false))
 }

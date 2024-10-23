@@ -70,7 +70,8 @@ export default function Autonami({ formFields, setFlow, flow, allIntegURL }) {
           width: step === 2 && 900,
           height: step === 2 && 'auto',
           minHeight: step === 2 && `${200}px`
-        }}>
+        }}
+      >
         <AutonamiIntegLayout
           formID={formID}
           formFields={formFields}
@@ -86,7 +87,8 @@ export default function Autonami({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => nextPage(3)}
           disabled={autonamiConf.field_map.length < 1}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>

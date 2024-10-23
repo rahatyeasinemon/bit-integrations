@@ -11,7 +11,7 @@ export const refreshLists = (sendinBlueConf, setSendinBlueConf, setIsLoading, se
   setIsLoading(true)
   const refreshListsRequestParams = { api_key: sendinBlueConf.api_key }
   bitsFetch(refreshListsRequestParams, 'sblue_refresh_lists')
-    .then(result => {
+    .then((result) => {
       if (result && result.success) {
         const newConf = { ...sendinBlueConf }
         if (!newConf.default) {
@@ -22,8 +22,17 @@ export const refreshLists = (sendinBlueConf, setSendinBlueConf, setIsLoading, se
         }
         setSnackbar({ show: true, msg: __('List refreshed', 'bit-integrations') })
         setSendinBlueConf({ ...newConf })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: sprintf(__('List refresh failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
+      } else if (
+        (result && result.data && result.data.data) ||
+        (!result.success && typeof result.data === 'string')
+      ) {
+        setSnackbar({
+          show: true,
+          msg: sprintf(
+            __('List refresh failed Cause: %s. please try again', 'bit-integrations'),
+            result.data.data || result.data
+          )
+        })
       } else {
         setSnackbar({ show: true, msg: __('List failed. please try again', 'bit-integrations') })
       }
@@ -35,54 +44,82 @@ export const refreshLists = (sendinBlueConf, setSendinBlueConf, setIsLoading, se
 export const refreshTemplate = (sendinBlueConf, setSendinBlueConf, setSnackbar) => {
   // setIsLoading(true)
   const refreshListsRequestParams = { api_key: sendinBlueConf.api_key }
-  bitsFetch(refreshListsRequestParams, 'sblue_refresh_template')
-    .then(result => {
-      if (result && result.success) {
-        const newConf = { ...sendinBlueConf }
-        if (!newConf.default) {
-          newConf.default = {}
-        }
-        if (result.data.sblueTemplates) {
-          newConf.default.sblueTemplates = result.data.sblueTemplates
-        }
-        setSnackbar({ show: true, msg: __('Templates refreshed', 'bit-integrations') })
-        setSendinBlueConf({ ...newConf })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: sprintf(__('Templates refresh failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
-      } else {
-        setSnackbar({ show: true, msg: __('Templates failed. please try again', 'bit-integrations') })
+  bitsFetch(refreshListsRequestParams, 'sblue_refresh_template').then((result) => {
+    if (result && result.success) {
+      const newConf = { ...sendinBlueConf }
+      if (!newConf.default) {
+        newConf.default = {}
       }
-      // setIsLoading(false)
-    })
+      if (result.data.sblueTemplates) {
+        newConf.default.sblueTemplates = result.data.sblueTemplates
+      }
+      setSnackbar({ show: true, msg: __('Templates refreshed', 'bit-integrations') })
+      setSendinBlueConf({ ...newConf })
+    } else if (
+      (result && result.data && result.data.data) ||
+      (!result.success && typeof result.data === 'string')
+    ) {
+      setSnackbar({
+        show: true,
+        msg: sprintf(
+          __('Templates refresh failed Cause: %s. please try again', 'bit-integrations'),
+          result.data.data || result.data
+        )
+      })
+    } else {
+      setSnackbar({ show: true, msg: __('Templates failed. please try again', 'bit-integrations') })
+    }
+    // setIsLoading(false)
+  })
   // .catch(() => setIsLoading(false))
 }
 
-export const refreshSendinBlueHeader = (sendinBlueConf, setSendinBlueConf, setIsLoading, setSnackbar) => {
+export const refreshSendinBlueHeader = (
+  sendinBlueConf,
+  setSendinBlueConf,
+  setIsLoading,
+  setSnackbar
+) => {
   const refreshListsRequestParams = { api_key: sendinBlueConf.api_key }
   bitsFetch(refreshListsRequestParams, 'sblue_headers')
-    .then(result => {
+    .then((result) => {
       if (result && result.success) {
         const newConf = { ...sendinBlueConf }
         if (result.data.sendinBlueField) {
           newConf.default.fields = result.data.sendinBlueField
           const { fields } = newConf.default
-          newConf.field_map = Object.values(fields).filter(f => f.required).map(f => ({ formField: '', sendinBlueField: f.fieldId, required: true }))
+          newConf.field_map = Object.values(fields)
+            .filter((f) => f.required)
+            .map((f) => ({ formField: '', sendinBlueField: f.fieldId, required: true }))
           setSnackbar({ show: true, msg: __('Sendinblue fields refreshed', 'bit-integrations') })
         } else {
-          setSnackbar({ show: true, msg: __('No Sendinblue fields found. Try changing the header row number or try again', 'bit-integrations') })
+          setSnackbar({
+            show: true,
+            msg: __(
+              'No Sendinblue fields found. Try changing the header row number or try again',
+              'bit-integrations'
+            )
+          })
         }
 
         setSendinBlueConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: __('Sendinblue fields refresh failed. please try again', 'bit-integrations') })
+        setSnackbar({
+          show: true,
+          msg: __('Sendinblue fields refresh failed. please try again', 'bit-integrations')
+        })
       }
       setIsLoading(false)
     })
     .catch(() => setIsLoading(false))
 }
 
-export const checkMappedFields = sendinBlueConf => {
-  const mappedFields = sendinBlueConf?.field_map ? sendinBlueConf.field_map.filter(mappedField => (!mappedField.formField && mappedField.sendinBlueField && mappedField.required)) : []
+export const checkMappedFields = (sendinBlueConf) => {
+  const mappedFields = sendinBlueConf?.field_map
+    ? sendinBlueConf.field_map.filter(
+        (mappedField) => !mappedField.formField && mappedField.sendinBlueField && mappedField.required
+      )
+    : []
   if (sendinBlueConf.lists && sendinBlueConf.lists?.length === undefined) return false
   if (mappedFields.length > 0) return false
   return true

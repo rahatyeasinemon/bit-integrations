@@ -78,9 +78,7 @@ function ZohoMarketingHub({ formFields, setFlow, flow, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div
-        className="btcd-stp-page"
-        style={{ width: step === 2 && 900, height: step === 2 && 'auto' }}>
+      <div className="btcd-stp-page" style={{ width: step === 2 && 900, height: step === 2 && 'auto' }}>
         <ZohoMarketingHubIntegLayout
           formID={formID}
           formFields={formFields}
@@ -102,7 +100,8 @@ function ZohoMarketingHub({ formFields, setFlow, flow, allIntegURL }) {
             marketingHubConf.field_map.length < 1
           }
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>
@@ -112,16 +111,7 @@ function ZohoMarketingHub({ formFields, setFlow, flow, allIntegURL }) {
       <IntegrationStepThree
         step={step}
         saveConfig={() =>
-          saveIntegConfig(
-            flow,
-            setFlow,
-            allIntegURL,
-            marketingHubConf,
-            navigate,
-            '',
-            '',
-            setIsLoading
-          )
+          saveIntegConfig(flow, setFlow, allIntegURL, marketingHubConf, navigate, '', '', setIsLoading)
         }
         isLoading={isLoading}
       />

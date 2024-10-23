@@ -39,9 +39,7 @@ export const handleAuthorize = (
   }
   if (!checkValidEmail(confTmp.ownerEmail)) {
     setError({
-      ownerEmail: !checkValidEmail(confTmp.ownerEmail)
-        ? __('Email is invalid', 'bit-integrations')
-        : ''
+      ownerEmail: !checkValidEmail(confTmp.ownerEmail) ? __('Email is invalid', 'bit-integrations') : ''
     })
     return
   }
@@ -76,14 +74,7 @@ export const handleAuthorize = (
       } else {
         const newConf = { ...confTmp }
         newConf.accountServer = grantTokenResponse['accounts-server']
-        tokenHelper(
-          grantTokenResponse,
-          newConf,
-          setConf,
-          setisAuthorized,
-          setIsLoading,
-          setSnackbar
-        )
+        tokenHelper(grantTokenResponse, newConf, setConf, setisAuthorized, setIsLoading, setSnackbar)
       }
     }
   }, 500)
@@ -122,14 +113,7 @@ const tokenHelper = (grantToken, confTmp, setConf, setisAuthorized, setIsLoading
     })
 }
 
-export const handleInput = (
-  e,
-  analyticsConf,
-  setAnalyticsConf,
-  formID,
-  setIsLoading,
-  setSnackbar
-) => {
+export const handleInput = (e, analyticsConf, setAnalyticsConf, formID, setIsLoading, setSnackbar) => {
   let newConf = { ...analyticsConf }
   const { name, value } = e.target
   newConf[name] = value
@@ -147,13 +131,7 @@ export const handleInput = (
   setAnalyticsConf({ ...newConf })
 }
 
-export const workspaceChange = (
-  analyticsConf,
-  formID,
-  setAnalyticsConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const workspaceChange = (analyticsConf, formID, setAnalyticsConf, setIsLoading, setSnackbar) => {
   const newConf = { ...analyticsConf }
   newConf.table = ''
   newConf.field_map = [{ formField: '', zohoFormField: '' }]
@@ -237,13 +215,7 @@ export const refreshWorkspaces = (
     .catch(() => setIsLoading(false))
 }
 
-export const refreshUsers = (
-  formID,
-  analyticsConf,
-  setAnalyticsConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const refreshUsers = (formID, analyticsConf, setAnalyticsConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
   const refreshUsersRequestParams = {
     formID,
@@ -288,13 +260,7 @@ export const refreshUsers = (
     .catch(() => setIsLoading(false))
 }
 
-export const refreshTables = (
-  formID,
-  analyticsConf,
-  setAnalyticsConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const refreshTables = (formID, analyticsConf, setAnalyticsConf, setIsLoading, setSnackbar) => {
   const { workspace } = analyticsConf
   if (!workspace) {
     return

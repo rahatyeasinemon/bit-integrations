@@ -70,7 +70,8 @@ export default function NutshellCRMIntegLayout({
         onChange={handleActionInput}
         name="actionName"
         value={nutshellCRMConf.actionName}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select an action', 'bit-integrations')}</option>
         <option value="company" data-action_name="company">
           {__('Create Company', 'bit-integrations')}
@@ -127,15 +128,11 @@ export default function NutshellCRMIntegLayout({
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
               onClick={() =>
-                addFieldMap(
-                  nutshellCRMConf.field_map.length,
-                  nutshellCRMConf,
-                  setNutshellCRMConf,
-                  false
-                )
+                addFieldMap(nutshellCRMConf.field_map.length, nutshellCRMConf, setNutshellCRMConf, false)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

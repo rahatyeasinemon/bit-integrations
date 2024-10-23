@@ -48,7 +48,8 @@ function EditCustomAction({ allIntegURL }) {
       <div className="mt-3">
         <div
           className="btcd-stp-page"
-          style={{ ...(step === 1 && { width: '91%', height: 'auto', overflow: 'visible' }) }}>
+          style={{ ...(step === 1 && { width: '91%', height: 'auto', overflow: 'visible' }) }}
+        >
           <h1>custom action</h1>
           <CustomFuncEditor
             customActionConf={customActionConf}
@@ -61,7 +62,8 @@ function EditCustomAction({ allIntegURL }) {
             }
             disabled={!customActionConf.value || loading?.validate}
             className="btn f-left btcd-btn-lg purple sh-sm flx mt-5"
-            type="button">
+            type="button"
+          >
             {customActionConf?.isValid && !loading?.validate
               ? __('Validated ✔', 'bit-integrations')
               : __('Validated', 'bit-integrations')}

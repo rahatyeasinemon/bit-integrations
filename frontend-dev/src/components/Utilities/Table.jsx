@@ -63,7 +63,8 @@ function GlobalFilter({
         aria-label="icon-btn"
         onClick={() => {
           setSearch(globalFilter || undefined)
-        }}>
+        }}
+      >
         <span className="btcd-icn icn-search" />
       </button>
       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
@@ -86,7 +87,8 @@ function ColumnHide({ cols, setCols, tableCol, tableAllCols }) {
           {tableCol.map((column, i) => (
             <div
               key={tableAllCols[i + 1].id}
-              className={`btcd-pane ${(column.Header === 'Actions' || typeof column.Header === 'object') && 'd-non'}`}>
+              className={`btcd-pane ${(column.Header === 'Actions' || typeof column.Header === 'object') && 'd-non'}`}
+            >
               <TableCheckBox
                 cls="scl-7"
                 id={tableAllCols[i + 1].id}
@@ -269,7 +271,8 @@ function Table(props) {
                   className="icn-btn btcd-icn-lg tooltip"
                   style={{ '--tooltip-txt': `'${__('Status', 'bit-integrations')}'` }}
                   aria-label="icon-btn"
-                  type="button">
+                  type="button"
+                >
                   <span className="btcd-icn icn-toggle_off" />
                 </button>
               )}
@@ -279,7 +282,8 @@ function Table(props) {
                   className="icn-btn btcd-icn-lg tooltip"
                   style={{ '--tooltip-txt': `'${__('Clone', 'bit-integrations')}'` }}
                   aria-label="icon-btn"
-                  type="button">
+                  type="button"
+                >
                   <span className="btcd-icn icn-file_copy" style={{ fontSize: 16 }} />
                 </button>
               )}
@@ -288,7 +292,8 @@ function Table(props) {
                 className="icn-btn btcd-icn-lg tooltip"
                 style={{ '--tooltip-txt': `'${__('Delete', 'bit-integrations')}'` }}
                 aria-label="icon-btn"
-                type="button">
+                type="button"
+              >
                 <span className="btcd-icn icn-trash-fill" style={{ fontSize: 16 }} />
               </button>
               <small className="btcd-pill">
@@ -316,7 +321,8 @@ function Table(props) {
           <Scrollbars className="btcd-scroll" style={{ height: props.height }}>
             <div
               {...getTableProps()}
-              className={`${props.className} ${props.rowClickable && 'rowClickable'}`}>
+              className={`${props.className} ${props.rowClickable && 'rowClickable'}`}
+            >
               <div className="thead">
                 {headerGroups.map((headerGroup, i) => (
                   <div key={`t-th-${i + 8}`} className="tr" {...headerGroup.getHeaderGroupProps()}>
@@ -362,7 +368,8 @@ function Table(props) {
                       <div
                         key={`t-r-${row.index}`}
                         className={`tr ${row.isSelected ? 'btcd-row-selected' : ''}`}
-                        {...row.getRowProps()}>
+                        {...row.getRowProps()}
+                      >
                         {row.cells.map((cell) => (
                           <div
                             key={`t-d-${cell.row.index}`}
@@ -386,7 +393,8 @@ function Table(props) {
                             }
                             role="button"
                             tabIndex={0}
-                            aria-label="cell">
+                            aria-label="cell"
+                          >
                             {cell.render('Cell')}
                           </div>
                         ))}
@@ -412,7 +420,8 @@ function Table(props) {
             className="icn-btn"
             type="button"
             onClick={() => gotoPage(0)}
-            disabled={!canPreviousPage}>
+            disabled={!canPreviousPage}
+          >
             &laquo;
           </button>{' '}
           <button
@@ -420,7 +429,8 @@ function Table(props) {
             className="icn-btn"
             type="button"
             onClick={() => previousPage()}
-            disabled={!canPreviousPage}>
+            disabled={!canPreviousPage}
+          >
             &lsaquo;
           </button>{' '}
           <button
@@ -428,7 +438,8 @@ function Table(props) {
             className="icn-btn"
             type="button"
             onClick={() => nextPage()}
-            disabled={!canNextPage}>
+            disabled={!canNextPage}
+          >
             &rsaquo;
           </button>{' '}
           <button
@@ -436,7 +447,8 @@ function Table(props) {
             className="icn-btn"
             type="button"
             onClick={() => gotoPage(pageCount - 1)}
-            disabled={!canNextPage}>
+            disabled={!canNextPage}
+          >
             &raquo;
           </button>{' '}
           <small>
@@ -456,7 +468,8 @@ function Table(props) {
                 if (props.getPageSize) {
                   props.getPageSize(e.target.value, pageIndex)
                 }
-              }}>
+              }}
+            >
               {[10, 20, 30, 40, 50].map((pageSiz) => (
                 <option key={pageSiz} value={pageSiz}>
                   {__('Show', 'bit-integrations')} {pageSiz}

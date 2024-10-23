@@ -43,7 +43,8 @@ export default function SendFoxAuthorization({
   return (
     <div
       className="btcd-stp-page"
-      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}
+    >
       {sendFox?.youTubeLink && <TutorialLink title="SendFox" youTubeLink={sendFox?.youTubeLink} />}
       {sendFox?.docLink && <TutorialLink title="SendFox" docLink={sendFox?.docLink} />}
 
@@ -91,7 +92,8 @@ export default function SendFoxAuthorization({
           className="btcd-link"
           href="https://sendfox.com/account/oauth"
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {__('SendFox Access Token', 'bit-integrations')}
         </a>
       </small>
@@ -111,7 +113,8 @@ export default function SendFoxAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}>
+            disabled={isAuthorized || isLoading}
+          >
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -122,7 +125,8 @@ export default function SendFoxAuthorization({
             onClick={nextPage}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}>
+            disabled={!isAuthorized}
+          >
             {__('Next', 'bit-integrations')}
             <BackIcn className="ml-1 rev-icn" />
           </button>

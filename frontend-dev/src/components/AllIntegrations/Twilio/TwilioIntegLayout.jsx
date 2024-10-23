@@ -60,13 +60,7 @@ export default function TwilioIntegLayout({
 
       <div className="flx mt-4">
         <b className="wdt-200 d-in-b">{__('Messages:', 'bit-integrations')}</b>
-        <textarea
-          className="w-7"
-          onChange={handleInputt}
-          name="body"
-          rows="5"
-          value={twilioConf.body}
-        />
+        <textarea className="w-7" onChange={handleInputt} name="body" rows="5" value={twilioConf.body} />
         <MultiSelect
           options={formFields
             .filter((f) => f.type !== 'file')

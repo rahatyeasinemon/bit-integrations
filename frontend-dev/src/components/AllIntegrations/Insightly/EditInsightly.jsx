@@ -75,9 +75,7 @@ function EditInsightly({ allIntegURL }) {
       <InsightlyIntegLayout
         formID={flow.triggered_entity_id}
         formFields={formField}
-        handleInput={(e) =>
-          handleInput(e, insightlyConf, setInsightlyConf, setLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, insightlyConf, setInsightlyConf, setLoading, setSnackbar)}
         insightlyConf={insightlyConf}
         setInsightlyConf={setInsightlyConf}
         loading={loading}

@@ -21,9 +21,7 @@ export default function Telegram({ formFields, setFlow, flow, allIntegURL }) {
     type: 'Telegram',
     parse_mode: 'HTML',
     bot_api_key:
-      process.env.NODE_ENV === 'development'
-        ? '1748780148:AAGrngQBKkEhKx5qyo3smqllw2gNc2YWnO4'
-        : '',
+      process.env.NODE_ENV === 'development' ? '1748780148:AAGrngQBKkEhKx5qyo3smqllw2gNc2YWnO4' : '',
     chat_id: '',
     body: '',
     actions: {}
@@ -66,7 +64,8 @@ export default function Telegram({ formFields, setFlow, flow, allIntegURL }) {
           width: step === 2 && 900,
           height: step === 2 && 'auto',
           minHeight: step === 2 && `${200}px`
-        }}>
+        }}
+      >
         <TelegramIntegLayout
           formID={formID}
           formFields={formFields}
@@ -82,7 +81,8 @@ export default function Telegram({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => nextPage(3)}
           disabled={telegramConf.chat_id === ''}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button">
+          type="button"
+        >
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>
@@ -92,16 +92,7 @@ export default function Telegram({ formFields, setFlow, flow, allIntegURL }) {
       <IntegrationStepThree
         step={step}
         saveConfig={() =>
-          saveIntegConfig(
-            flow,
-            setFlow,
-            allIntegURL,
-            telegramConf,
-            navigate,
-            0,
-            false,
-            setIsLoading
-          )
+          saveIntegConfig(flow, setFlow, allIntegURL, telegramConf, navigate, 0, false, setIsLoading)
         }
         isLoading={isLoading}
         dataConf={telegramConf}

@@ -121,7 +121,8 @@ function EditPod({ allIntegURL }) {
         name="post_type"
         onChange={(e) => getPodsField(e.target.name, e.target.value)}
         value={data?.post_type}
-        className="btcd-paper-inp w-5 mt-1">
+        className="btcd-paper-inp w-5 mt-1"
+      >
         <option disabled selected>
           Select type
         </option>
@@ -139,7 +140,8 @@ function EditPod({ allIntegURL }) {
         name="post_status"
         onChange={(e) => handleInput(e.target.name, e.target.value)}
         value={data?.post_status}
-        className="btcd-paper-inp w-5 mt-1">
+        className="btcd-paper-inp w-5 mt-1"
+      >
         <option disabled selected>
           {__('Select Status', 'bit-integrations')}
         </option>
@@ -158,7 +160,8 @@ function EditPod({ allIntegURL }) {
         name="comment_status"
         onChange={(e) => handleInput(e.target.name, e.target.value)}
         value={data?.comment_status}
-        className="btcd-paper-inp w-5 mt-1">
+        className="btcd-paper-inp w-5 mt-1"
+      >
         <option disabled selected>
           {__('Select Status', 'bit-integrations')}
         </option>
@@ -173,7 +176,8 @@ function EditPod({ allIntegURL }) {
         name="post_author"
         onChange={(e) => handleInput(e.target.name, e.target.value)}
         value={data?.post_author}
-        className="btcd-paper-inp w-5 mt-1">
+        className="btcd-paper-inp w-5 mt-1"
+      >
         <option disabled selected>
           {__('Select Author', 'bit-integrations')}
         </option>
@@ -219,7 +223,8 @@ function EditPod({ allIntegURL }) {
           <button
             onClick={() => addFieldMap('post_map', data.post_map.length, data, setData)}
             className="icn-btn sh-sm"
-            type="button">
+            type="button"
+          >
             +
           </button>
         </div>
@@ -255,7 +260,8 @@ function EditPod({ allIntegURL }) {
           <button
             onClick={() => addFieldMap('pod_field_map', data.pod_field_map.length, data, setData)}
             className="icn-btn sh-sm"
-            type="button">
+            type="button"
+          >
             +
           </button>
         </div>
@@ -291,7 +297,8 @@ function EditPod({ allIntegURL }) {
           <button
             onClick={() => addFieldMap('pod_file_map', data.pod_file_map.length, data, setData)}
             className="icn-btn sh-sm"
-            type="button">
+            type="button"
+          >
             +
           </button>
         </div>

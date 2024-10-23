@@ -69,7 +69,8 @@ export default function FluentCrmIntegLayout({
           onChange={handleAction}
           name="actionName"
           value={fluentCrmConf?.actionName}
-          className="btcd-paper-inp w-5">
+          className="btcd-paper-inp w-5"
+        >
           <option value="">{__('Select Action', 'bit-integrations')}</option>
           {action.map(({ label, value }) => (
             <option key={label} value={value}>
@@ -99,34 +100,30 @@ export default function FluentCrmIntegLayout({
               onChange={(e) => inputHendler(e)}
               name="list_id"
               value={fluentCrmConf.list_id}
-              className="btcd-paper-inp w-5">
+              className="btcd-paper-inp w-5"
+            >
               <option value="">{__('Select Fluent CRM list', 'bit-integrations')}</option>
               {fluentCrmConf?.fluentCrmList &&
                 Object.keys(fluentCrmConf.fluentCrmList).map((fluentCrmListName) => (
                   <option
                     key={fluentCrmListName}
-                    value={fluentCrmConf.fluentCrmList[fluentCrmListName].id}>
+                    value={fluentCrmConf.fluentCrmList[fluentCrmListName].id}
+                  >
                     {fluentCrmConf.fluentCrmList[fluentCrmListName].title}
                   </option>
                 ))}
             </select>
             <button
               onClick={() =>
-                refreshCrmList(
-                  formID,
-                  fluentCrmConf,
-                  setFluentCrmConf,
-                  loading,
-                  setLoading,
-                  setSnackbar
-                )
+                refreshCrmList(formID, fluentCrmConf, setFluentCrmConf, loading, setLoading, setSnackbar)
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{
                 '--tooltip-txt': `'${__('Refresh List, Tag & Field', 'bit-integrations')}'`
               }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -151,19 +148,13 @@ export default function FluentCrmIntegLayout({
             />
             <button
               onClick={() =>
-                refreshCrmTag(
-                  formID,
-                  fluentCrmConf,
-                  setFluentCrmConf,
-                  loading,
-                  setLoading,
-                  setSnackbar
-                )
+                refreshCrmTag(formID, fluentCrmConf, setFluentCrmConf, loading, setLoading, setSnackbar)
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh Tag & Field', 'bit-integrations')}'` }}
               type="button"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               &#x21BB;
             </button>
           </div>
@@ -210,7 +201,8 @@ export default function FluentCrmIntegLayout({
                 addFieldMap(fluentCrmConf.field_map.length, fluentCrmConf, setFluentCrmConf)
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>

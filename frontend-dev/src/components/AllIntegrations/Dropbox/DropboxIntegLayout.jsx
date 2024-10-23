@@ -13,7 +13,8 @@ export default function DropboxIntegLayout({ flowID, formFields, dropboxConf, se
           onClick={() => getAllDropboxFolders(flowID, dropboxConf, setDropboxConf)}
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           style={{ '--tooltip-txt': `'${__('Fetch All Dropbox Folders', 'bit-integrations')}'` }}
-          type="button">
+          type="button"
+        >
           &#x21BB;
         </button>
       </div>
@@ -39,11 +40,10 @@ export default function DropboxIntegLayout({ flowID, formFields, dropboxConf, se
       ))}
       <div className="txt-center btcbi-field-map-button mt-2">
         <button
-          onClick={() =>
-            addFieldMap(dropboxConf.field_map.length, dropboxConf, setDropboxConf, false)
-          }
+          onClick={() => addFieldMap(dropboxConf.field_map.length, dropboxConf, setDropboxConf, false)}
           className="icn-btn sh-sm"
-          type="button">
+          type="button"
+        >
           +
         </button>
       </div>

@@ -1,8 +1,5 @@
 import { __ } from '../../../Utils/i18nwrap'
-import {
-  addAddressFieldMap,
-  addFieldMap
-} from '../IntegrationHelpers/ConstantContactIntegrationHelpers'
+import { addAddressFieldMap, addFieldMap } from '../IntegrationHelpers/ConstantContactIntegrationHelpers'
 import AddressFieldMap from './AddressFieldMap'
 import PhoneFieldMap from './PhoneFieldMap'
 import ConstantContactFieldMap from './ConstantContactFieldMap'
@@ -26,9 +23,7 @@ export default function ConstantContactIntegLayout({
     { tag: 'country', name: __('Country', 'bit-integrations'), required: false }
   ]
 
-  const phone = [
-    { tag: 'phone_number', name: __('Phone Number', 'bit-integrations'), required: true }
-  ]
+  const phone = [{ tag: 'phone_number', name: __('Phone Number', 'bit-integrations'), required: true }]
   return (
     <>
       <br />
@@ -37,7 +32,8 @@ export default function ConstantContactIntegLayout({
         onChange={handleInput}
         name="source_type"
         value={constantContactConf.source_type}
-        className="btcd-paper-inp w-5">
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select Source', 'bit-integrations')}</option>
         <option value="Contact">{__('Contact', 'bit-integrations')}</option>
         <option value="Account">{__('Account', 'bit-integrations')}</option>
@@ -78,7 +74,8 @@ export default function ConstantContactIntegLayout({
                 )
               }
               className="icn-btn sh-sm"
-              type="button">
+              type="button"
+            >
               +
             </button>
           </div>
@@ -124,7 +121,8 @@ export default function ConstantContactIntegLayout({
                     )
                   }
                   className="icn-btn sh-sm"
-                  type="button">
+                  type="button"
+                >
                   +
                 </button>
               </div>
