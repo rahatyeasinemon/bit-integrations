@@ -160,8 +160,8 @@ function Body({ formFields, webHooks, setWebHooks, isInfo, setTab }) {
                         onChange={(ev) => setFromField(ev.target.value, childindx)}>
                         <option value="">{__('Select Field', 'bit-integrations')}</option>
                         <optgroup label={__('Form Fields', 'bit-integrations')}>
-                          {formFields?.map((f) => (
-                            <option key={`ff-rm-${f.name}`} value={`\${${f.name}}`}>
+                          {formFields?.map((f, index) => (
+                            <option key={`ff-rm-${index}`} value={`\${${f.name}}`}>
                               {f.label}
                             </option>
                           ))}
@@ -172,8 +172,8 @@ function Body({ formFields, webHooks, setWebHooks, isInfo, setTab }) {
                             isPro ? '' : `(${__('Pro', 'bit-integrations')})`
                           )}>
                           {isPro &&
-                            SmartTagField?.map((f) => (
-                              <option key={`ff-rm-${f.name}`} value={`\${${f.name}}`}>
+                            SmartTagField?.map((f, index) => (
+                              <option key={`ff-rm-${index}`} value={`\${${f.name}}`}>
                                 {f.label}
                               </option>
                             ))}
