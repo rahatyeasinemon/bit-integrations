@@ -6,6 +6,7 @@ import TrashIcn from '../../../Icons/TrashIcn'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import MtInput from '../../Utilities/MtInput'
 import { generateMappedField } from './CampaignMonitorCommonFunc'
+import TagifyInput from '../../Utilities/TagifyInput'
 
 export default function CampaignMonitorFieldMap({
   i,
@@ -88,13 +89,14 @@ export default function CampaignMonitorFieldMap({
         </select>
 
         {field.formField === 'custom' && (
-          <MtInput
+          <TagifyInput
             onChange={(e) => handleCustomValue(e, i)}
             label={__('Custom Value', 'bit-integrations')}
             className="mr-2"
             type="text"
             value={field.customValue}
             placeholder={__('Custom Value', 'bit-integrations')}
+            formFields={formFields}
           />
         )}
 

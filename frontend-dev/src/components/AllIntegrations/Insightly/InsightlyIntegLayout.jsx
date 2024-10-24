@@ -61,7 +61,7 @@ export default function InsightlyIntegLayout({
         value={insightlyConf.actionName}
         className="btcd-paper-inp w-5">
         <option value="">{__('Select an action', 'bit-integrations')}</option>
-        <option value="organisation">{__('Create Organisation', 'bit-integrations')}</option>
+        <option value="organisation">{__('Create Organization', 'bit-integrations')}</option>
         <option value="contact">{__('Create Contact', 'bit-integrations')}</option>
         <option value="opportunity">{__('Create Opportunity', 'bit-integrations')}</option>
         {/* <option value="project">{__('Create Project', 'bit-integrations')}</option> */}

@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Mautic;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for MailChimp integration
@@ -104,6 +104,7 @@ class MauticController
                 ];
             }
         }
+
         wp_send_json_success($response);
     }
 
@@ -137,6 +138,41 @@ class MauticController
                 ];
             }
         }
+        wp_send_json_success($response);
+    }
+
+    public static function getAllUsers($queryParams)
+    {
+        if (empty($queryParams->tokenDetails)) {
+            wp_send_json_error(
+                __(
+                    'Requested parameter is empty',
+                    'bit-integrations'
+                ),
+                400
+            );
+        }
+
+        $response = [];
+
+        if ((\intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
+            $response['tokenDetails'] = static::_refreshAccessToken($queryParams);
+        }
+
+        $apiEndpoint = "{$queryParams->baseUrl}/api/users";
+        $tokenDetails = empty($response['tokenDetails']) ? $queryParams->tokenDetails : $response['tokenDetails'];
+        $authorizationHeader['Authorization'] = "Bearer {$tokenDetails->access_token}";
+        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+
+        if (!is_wp_error($apiResponse) && isset($apiResponse->users)) {
+            foreach ($apiResponse->users as $user) {
+                $response['allUsers'][] = (object) [
+                    'id'    => $user->id,
+                    'label' => "{$user->firstName} {$user->lastName}"
+                ];
+            }
+        }
+
         wp_send_json_success($response);
     }
 

@@ -8,6 +8,7 @@ import StepPage from '../../Utilities/StepPage'
 import { getAllTags, handleAuthorize, handleInput } from './SelzyCommonFunc'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
+import { __ } from '../../../Utils/i18nwrap'
 
 function SelzyAuthorization({
   selzyConf,

@@ -82,7 +82,7 @@ export default function MauticAuthorization({
         {__('To get Client ID and SECRET , Please Visit', 'bit-integrations')}{' '}
         <a
           className="btcd-link"
-          href={`https://${mauticConf.baseUrl}/s/credentials/s/credentials`}
+          href={`${mauticConf.baseUrl}/s/credentials/s/credentials`}
           target="_blank"
           rel="noreferrer">
           {__('Mautic API Console', 'bit-integrations')}

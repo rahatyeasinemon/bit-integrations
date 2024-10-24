@@ -14,6 +14,8 @@ class RecordApiHelper
 
     private $_integrationID;
 
+    private $_baseUrl;
+
     public function __construct($tokenDetails, $integId, $baseUrl)
     {
         $this->_defaultHeader['Authorization'] = "Bearer {$tokenDetails->access_token}";
@@ -50,13 +52,15 @@ class RecordApiHelper
 
     public function execute($integrationDetails, $defaultConf, $fieldValues, $fieldMap, $actions)
     {
-        $tags = [];
+        $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
+
         if (property_exists($integrationDetails, 'tag')) {
-            $tags = $integrationDetails->tag;
+            $finalData['tags'] = $integrationDetails->tag;
+        }
+        if (property_exists($integrationDetails, 'owner')) {
+            $finalData['owner'] = $integrationDetails->owner;
         }
 
-        $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        $finalData['tags'] = $tags;
         $apiResponse = $this->insertRecord($finalData);
 
         if (isset($apiResponse->errors)) {

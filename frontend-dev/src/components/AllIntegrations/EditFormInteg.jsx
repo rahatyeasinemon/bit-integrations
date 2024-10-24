@@ -87,6 +87,7 @@ import {
   getWCSubscriptionsAllSubscriptionProducts,
   getWCSubscriptionsAllSubscriptions
 } from '../Triggers/TriggerHelpers/WCSubscriptions/WCSubscriptionsCommonFunction.js'
+import { getEventsCalendarEvents } from '../Triggers/TriggerHelpers/EventsCalendar/EventsCalendarCommonFunction.js'
 
 function EditFormInteg({ setSnackbar, className = '' }) {
   const [forms, setForms] = useState([])
@@ -369,6 +370,17 @@ function EditFormInteg({ setSnackbar, className = '' }) {
       } else {
         getWCSubscriptionsAllSubscriptions(data, setFlow)
         getWCSubscriptionsAllSubscriptionProducts(data, setFlow)
+      }
+    }
+
+    if (trigger === 'EventsCalendar') {
+      if (
+        data.triggered_entity_id === 'events_calendar-1' ||
+        data.triggered_entity_id === 'events_calendar-2' ||
+        data.triggered_entity_id === 'events_calendar-3' ||
+        data.triggered_entity_id === 'events_calendar-4'
+      ) {
+        getEventsCalendarEvents(data, setFlow)
       }
     }
   }
