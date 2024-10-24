@@ -2,12 +2,12 @@
 
 namespace BitCode\FI\Triggers\WC;
 
-use BitCode\FI\Core\Util\Helper;
-use BitCode\FI\Flow\Flow;
 use WC_Booking;
 use WC_Checkout;
 use WC_Product_Simple;
+use BitCode\FI\Flow\Flow;
 use WC_Subscriptions_Product;
+use BitCode\FI\Core\Util\Helper;
 
 final class WCController
 {
@@ -828,7 +828,6 @@ final class WCController
             'payment_method_title'        => $order->get_payment_method_title(),
             'status'                      => $order->get_status(),
             'checkout_order_received_url' => $order->get_checkout_order_received_url(),
-            'customer_note'               => $order->get_customer_note()
         ];
         if (\defined('WC_VERSION') && version_compare(WC_VERSION, '8.5.1', '>=')) {
             $data += [
