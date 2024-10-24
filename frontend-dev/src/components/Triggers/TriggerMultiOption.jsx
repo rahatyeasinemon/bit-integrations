@@ -115,11 +115,11 @@ const TriggerMultiOption = ({ flow, setFlowData, edit = false }) => (
     {flow?.triggered_entity === 'WCSubscriptions' && (
       <WCSubscriptionsHelper flow={flow} setFlowData={setFlowData} edit={edit} />
     )}
-    {flow?.triggered_entity === 'WCBookings' && (
-      <WCBookingsHelper flow={flow} setFlowData={setFlowData} edit={edit} />
-    )}
     {flow?.triggered_entity === 'EventsCalendar' && (
       <EventsCalendarHelper flow={flow} setFlowData={setFlowData} edit={edit} />
+    )}
+    {flow?.triggered_entity === 'WCBookings' && (
+      <WCBookingsHelper flow={flow} setFlowData={setFlowData} edit={edit} />
     )}
   </div>
 )
