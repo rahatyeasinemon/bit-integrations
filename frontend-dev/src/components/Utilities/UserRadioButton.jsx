@@ -1,20 +1,27 @@
 import React, { useState, useEffect, useRef } from 'react';
 import bitsFetch from '../../Utils/bitsFetch';
 
-const UserRadioButton = ({ authData, setAuthData, selectedUser, setSelectedUser, handleAuthUser, isInfo }) => {
+const UserRadioButton = ({ authData, setAuthData, selectedUser, setSelectedUser, handleAuthUser, isInfo, setIsLoading }) => {
   const [showConfirm, setShowConfirm] = useState(null);
   const popoverRef = useRef(null); // Ref to the popover container
 
   const handleDelete = (id) => {
+    const index = authData.findIndex(item => item.id === id.toString());
     const newAuthData = authData.filter(item => item.id !== id);
-    
+    setIsLoading(true)
     bitsFetch(id, 'auth/account/delete').then((res) => {
       if (res.success) {
         setAuthData(newAuthData);
-        setSelectedUser(null);
+
+        if (selectedUser === index) {
+          setSelectedUser((authData.length - 2));
+        } else if (selectedUser !== index && index <= selectedUser) {
+          setSelectedUser(selectedUser - 1)
+        }
+        setIsLoading(false)
       }
     });
-    
+
     setShowConfirm(null);
   };
 
@@ -42,10 +49,12 @@ const UserRadioButton = ({ authData, setAuthData, selectedUser, setSelectedUser,
   }, []);
 
   useEffect(() => {
-    if (authData.length > 0 && selectedUser === null) {
+    if (authData.length === 1) {
+      setSelectedUser(0);
+    } else if (selectedUser === null) {
       setSelectedUser(authData.length - 1);
     }
-  }, [authData, selectedUser, setSelectedUser]);
+  }, [authData]);
 
   return (
     <div className='user-radio-input'>

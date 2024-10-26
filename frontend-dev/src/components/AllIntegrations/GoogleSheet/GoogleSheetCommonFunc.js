@@ -73,8 +73,8 @@ export const refreshSpreadsheets = (formID, sheetConf, setSheetConf, setIsLoadin
   const refreshModulesRequestParams = {
     formID,
     id: sheetConf.id,
-    clientId: sheetConf.selectedAuthType === 'Custom Authorization' ? sheetConf.clientId : sheetConf.oneClickAuth.clientId,
-    clientSecret: sheetConf.selectedAuthType === 'Custom Authorization' ? sheetConf.clientSecret : sheetConf.oneClickAuth.clientSecret,
+    clientId: sheetConf.tokenDetails.selectedAuthType === 'Custom Authorization' ? sheetConf.clientId : sheetConf.oneClickAuth.clientId,
+    clientSecret: sheetConf.tokenDetails.selectedAuthType === 'Custom Authorization' ? sheetConf.clientSecret : sheetConf.oneClickAuth.clientSecret,
     tokenDetails: sheetConf.tokenDetails,
     ownerEmail: sheetConf.ownerEmail
   }
@@ -173,8 +173,8 @@ export const refreshWorksheetHeaders = (
     worksheetName,
     header,
     headerRow,
-    clientId: sheetConf.selectedAuthType === 'Custom Authorization' ? sheetConf.clientId : sheetConf.oneClickAuth.clientId,
-    clientSecret: sheetConf.selectedAuthType === 'Custom Authorization' ? sheetConf.clientSecret : sheetConf.oneClickAuth.clientSecret,
+    clientId: sheetConf.tokenDetails.selectedAuthType === 'Custom Authorization' ? sheetConf.clientId : sheetConf.oneClickAuth.clientId,
+    clientSecret: sheetConf.tokenDetails.selectedAuthType === 'Custom Authorization' ? sheetConf.clientSecret : sheetConf.oneClickAuth.clientSecret,
     tokenDetails: sheetConf.tokenDetails
   }
   bitsFetch(refreshWorksheetHeadersRequestParams, 'gsheet_refresh_worksheet_headers')
@@ -283,6 +283,7 @@ export const tokenHelper = async (grantToken, confTmp, setConf, selectedAuthType
 
         if (userInfo && !isUserMatched) {
           const newConf = { ...confTmp }
+          result.data.selectedAuthType = selectedAuthType
           await handleAuthData(newConf.type, result.data, userInfo, setAuthData);
           newConf.authData = [...authData, { tokenDetails: result.data, userInfo: userInfo }];
           newConf.setisAuthorized = true

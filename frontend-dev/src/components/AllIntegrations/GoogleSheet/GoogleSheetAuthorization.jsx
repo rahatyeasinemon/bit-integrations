@@ -42,7 +42,7 @@ export default function GoogleSheetAuthorization({
   };
 
   const handleChange = (option) => {
-    const confTmp = {...sheetConf}
+    const confTmp = { ...sheetConf }
     confTmp.selectedAuthType = option
     setSheetConf(confTmp)
     setSelectedAuthType(option);
@@ -50,7 +50,7 @@ export default function GoogleSheetAuthorization({
     if (option === "One Click Authorization") {
       if (process.env.NODE_ENV !== 'development') {
         confTmp.clientId = ''
-        confTmp.clientSecret = '' 
+        confTmp.clientSecret = ''
       }
       setSheetConf(confTmp)
       manageAuth(option);
@@ -59,43 +59,43 @@ export default function GoogleSheetAuthorization({
   };
 
   const manageAuth = (option) => {
-      handleAuthorize(sheetConf, option, setError, setIsLoading);
+    handleAuthorize(sheetConf, option, setError, setIsLoading);
   }
 
   useEffect(() => {
     setIsLoading(true)
     bitsFetch(sheetConf.type, 'auth/get').then((res) => {
-        if (res.success && res.data.data.length > 0) {
-          setAuthData(res.data.data);
-          setIsLoading(false)
-        }else{
-          setIsLoading(false)
-        }
+      if (res.success && res.data.data.length > 0) {
+        setAuthData(res.data.data);
+        setIsLoading(false)
+      } else {
+        setIsLoading(false)
+      }
     })
   }, []);
 
   const handleGrantToken = async (grantToken) => {
     await tokenHelper(grantToken, sheetConf, setSheetConf, selectedAuthType, authData, setAuthData, setIsLoading, setSnackbar);
-    
+
     setGrantToken(undefined)
   }
 
   useEffect(() => {
     if (!grantToken) return;
-    
-    handleGrantToken(grantToken);
-  }, [grantToken]);  
 
-  
+    handleGrantToken(grantToken);
+  }, [grantToken]);
+
+
   const handleInput = (e) => {
     const newConf = { ...sheetConf }
-      const rmError = { ...error }
-      rmError[e.target.name] = ''
-      newConf[e.target.name] = e.target.value
-      setError(rmError)
-      setSheetConf(newConf)
+    const rmError = { ...error }
+    rmError[e.target.name] = ''
+    newConf[e.target.name] = e.target.value
+    setError(rmError)
+    setSheetConf(newConf)
   }
-  
+
   const nextPage = () => {
     const newConf = { ...sheetConf }
     newConf.tokenDetails = authData[selectedUser] ? authData[selectedUser].tokenDetails : '';
@@ -132,37 +132,37 @@ export default function GoogleSheetAuthorization({
         />
       </div>
 
-      {selectedAuthType === "Custom Authorization" &&        
+      {selectedAuthType === "Custom Authorization" &&
         <div>
           <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
           <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={sheetConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
-  
+
           <div className="mt-3"><b>{__('Homepage URL:', 'bit-integrations')}</b></div>
           <CopyText value={`${window.location.origin}`} className="field-key-cpy w-6 ml-0" setSnackbar={setSnackbar} />
-  
+
           <div className="mt-3"><b>{__('Authorized Redirect URIs:', 'bit-integrations')}</b></div>
           <CopyText value={redirectLocation || `${btcbi.api.base}/redirect`} className="field-key-cpy w-6 ml-0" setSnackbar={setSnackbar} />
-  
+
           <small className="d-blk mt-5">
             {__('To get Client ID and SECRET , Please Visit', 'bit-integrations')}
             {' '}
             <a className="btcd-link" href="https://console.developers.google.com/apis/credentials" target="_blank" rel="noreferrer">{__('Google API Console', 'bit-integrations')}</a>
           </small>
-  
+
           <div className="mt-3"><b>{__('Client id:', 'bit-integrations')}</b></div>
           <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="clientId" value={sheetConf.clientId} type="text" placeholder={__('Client id...', 'bit-integrations')} disabled={isInfo} />
           <div style={{ color: 'red', fontSize: '15px' }}>{error.clientId}</div>
-  
+
           <div className="mt-3"><b>{__('Client secret:', 'bit-integrations')}</b></div>
           <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="clientSecret" value={sheetConf.clientSecret} type="text" placeholder={__('Client secret...', 'bit-integrations')} disabled={isInfo} />
           <div style={{ color: 'red', fontSize: '15px' }}>{error.clientSecret}</div>
-          
-          <button onClick={() =>  manageAuth(selectedAuthType)} className="btn btcd-btn-lg purple sh-sm flx" type="button" disabled={ isLoading}>
+
+          <button onClick={() => manageAuth(selectedAuthType)} className="btn btcd-btn-lg purple sh-sm flx" type="button" disabled={isLoading}>
             {isAuthorized ? __('Authorized ✔', 'bit-integrations') : __('Authorize', 'bit-integrations')}
             {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
           </button>
           <br />
-              
+
         </div>
       }
       {isLoading && selectedAuthType !== 'Custom Authorization' && (
@@ -181,21 +181,22 @@ export default function GoogleSheetAuthorization({
           <h2>Choose your connected account</h2>
           <UserRadioButton
             authData={authData}
-            setAuthData = {setAuthData}
+            setAuthData={setAuthData}
             selectedUser={selectedUser}
             setSelectedUser={setSelectedUser}
             handleAuthUser={handleAuthUser}
+            setIsLoading={setIsLoading}
           />
         </>
       }
-      {(isAuthorized &&  selectedAuthType === "One Click Authorization")&&
-        (<button onClick={() =>  manageAuth()} className="btn btcd-btn-lg purple sh-sm flx" type="button" disabled={isLoading}>
+      {(isAuthorized && selectedAuthType === "One Click Authorization") &&
+        (<button onClick={() => manageAuth()} className="btn btcd-btn-lg purple sh-sm flx" type="button" disabled={isLoading}>
           {isAuthorized ? __('Authorized ✔', 'bit-integrations') : __('Authorize', 'bit-integrations')}
           {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
         </button>
-      )}
+        )}
       <br />
-      <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg purple sh-sm flx" type="button" disabled={ selectedUser == null || authData.length === 0}>
+      <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg purple sh-sm flx" type="button" disabled={selectedUser == null || authData.length === 0}>
         {__('Next', 'bit-integrations')}
         <BackIcn className="ml-1 rev-icn" />
       </button>
