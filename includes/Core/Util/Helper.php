@@ -67,10 +67,21 @@ final class Helper
     public static function uploadFeatureImg($filePath, $postID)
     {
         require_once ABSPATH . 'wp-load.php';
-        $file = \is_array($filePath) ? $filePath[0] : $filePath;
-        $imgFileName = basename($file);
 
-        if (file_exists($file)) {
+        $files = !\is_array($filePath) ? [$filePath] : $filePath;
+
+        foreach ($files as $file) {
+            if (\is_array($file)) {
+                static::uploadFeatureImg($file, $postID);
+
+                continue;
+            }
+            if (!file_exists($file)) {
+                continue;
+            }
+
+            $imgFileName = basename($file);
+
             // prepare upload image to WordPress Media Library
             $upload = wp_upload_bits($imgFileName, null, file_get_contents($file, FILE_USE_INCLUDE_PATH));
             // check and return file type
