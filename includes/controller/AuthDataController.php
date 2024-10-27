@@ -4,7 +4,7 @@ namespace BitCode\FI\controller;
 
 use BitCode\FI\Core\Database\AuthModel;
 
-final class StoreAuthDataController
+final class AuthDataController
 {
     public function saveAuthData($requestParams)
     {
