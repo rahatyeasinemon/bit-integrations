@@ -606,6 +606,7 @@ export const WCSubscriptionsStateIH = (tmpConf, flowData, triggered_entity_id) =
 
   tmpConf.selectedProduct = flowData.selectedProduct
   tmpConf.allSubscriptionProducts = flowData.allSubscriptionProducts
+  tmpConf.fields = flowData?.fields
 
   if (!['user_subscribes_to_product', 'user_purchases_variable_subscription'].includes(formId)) {
     tmpConf.selectedSubscription = flowData.selectedSubscription
@@ -628,6 +629,7 @@ export const WCSubscriptionsStateIH = (tmpConf, flowData, triggered_entity_id) =
 
 export const WCBookingsStateIH = (tmpConf, flowData, triggered_entity_id) => {
   const formId = flowData.formID ? flowData.formID : triggered_entity_id
+  tmpConf.fields = flowData?.fields
 
   if (formId === 'booking_status_changed') {
     tmpConf.selectedStatus = flowData.selectedStatus
