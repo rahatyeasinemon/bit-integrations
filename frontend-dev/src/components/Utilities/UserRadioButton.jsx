@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import bitsFetch from '../../Utils/bitsFetch';
 
-const UserRadioButton = ({ authData, setAuthData, selectedUserIndex, setSelectedUserIndex, handleConnectionSelection, isInfo, setIsLoading }) => {
+const UserRadioButton = ({ authData, setAuthData, selectedUserIndex, setSelectedUserIndex, isInfo, setIsLoading }) => {
   const [showConfirm, setShowConfirm] = useState(null);
   const popoverRef = useRef(null); // Ref to the popover container
 
@@ -23,6 +23,10 @@ const UserRadioButton = ({ authData, setAuthData, selectedUserIndex, setSelected
     });
 
     setShowConfirm(null);
+  };
+
+  const handleConnectionSelection = (index) => {
+    setSelectedUserIndex(index);
   };
 
   const handleShowConfirm = (index) => {

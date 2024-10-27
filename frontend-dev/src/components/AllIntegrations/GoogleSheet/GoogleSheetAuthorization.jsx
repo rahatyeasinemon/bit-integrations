@@ -37,9 +37,6 @@ export default function GoogleSheetAuthorization({
 
   const [selectedUserIndex, setSelectedUserIndex] = useState(null);
 
-  const handleConnectionSelection = (index) => {
-    setSelectedUserIndex(index);
-  };
 
   const handleChange = (option) => {
     const confTmp = { ...sheetConf }
@@ -183,7 +180,6 @@ export default function GoogleSheetAuthorization({
             setAuthData={setAuthData}
             selectedUserIndex={selectedUserIndex}
             setSelectedUserIndex={setSelectedUserIndex}
-            handleConnectionSelection={handleConnectionSelection}
             setIsLoading={setIsLoading}
           />
         </>
