@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import bitsFetch from '../../Utils/bitsFetch';
+import TrashIcn from '../../Icons/TrashIcn';
 
 const UserRadioButton = ({ authData, setAuthData, selectedUserIndex, setSelectedUserIndex, isInfo, setIsLoading }) => {
   const [showConfirm, setShowConfirm] = useState(null);
@@ -92,7 +93,7 @@ const UserRadioButton = ({ authData, setAuthData, selectedUserIndex, setSelected
                   </div>
                 ) : (
                   <button className="delete-button" onClick={() => handleShowConfirm(index)}>
-                    🗑
+                    <TrashIcn />
                   </button>
                 )}
               </div>
