@@ -25,7 +25,7 @@ final class WCController
             'slug'           => $plugin_path,
             'pro'            => 'woocommerce/woocommerce.php',
             'type'           => 'form',
-            'is_active'      => is_plugin_active('woocommerce/woocommerce.php'),
+            'is_active'      => static::isActivate(),
             'activation_url' => wp_nonce_url(self_admin_url('plugins.php?action=activate&amp;plugin=' . $plugin_path . '&amp;plugin_status=all&amp;paged=1&amp;s'), 'activate-plugin_' . $plugin_path),
             'install_url'    => wp_nonce_url(self_admin_url('update.php?action=install-plugin&plugin=' . $plugin_path), 'install-plugin_' . $plugin_path),
             'list'           => [
@@ -43,9 +43,7 @@ final class WCController
 
     public function getAll()
     {
-        if (!class_exists('WooCommerce')) {
-            wp_send_json_error(wp_sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'WooCommerce'));
-        }
+        static::isPluginActivated();
 
         /**
          * Deprecated Subscriptions Events
@@ -80,9 +78,8 @@ final class WCController
 
     public function get_trigger_field($data)
     {
-        if (!class_exists('WooCommerce')) {
-            wp_send_json_error(wp_sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'WooCommerce'));
-        }
+        static::isPluginActivated();
+
         if (empty($data->id)) {
             wp_send_json_error(__('Doesn\'t exists', 'bit-integrations'));
         }
@@ -580,9 +577,14 @@ final class WCController
 
     public static function handle_customer_create($customer_id, $importType)
     {
+        if (!static::isActivate()) {
+            return false;
+        }
+
         if (isset($importType['role']) && $importType['role'] !== 'customer') {
             return false;
         }
+
         $customer_data = (array) get_userdata($customer_id)->data;
         $customer_metadata = self::formatUserMetaData(get_user_meta($customer_id));
         $customer_values = array_merge_recursive($customer_data, $customer_metadata);
@@ -594,6 +596,10 @@ final class WCController
 
     public static function handle_customer_update($customer_id, $oldData, $newData)
     {
+        if (!static::isActivate()) {
+            return false;
+        }
+
         if (isset($importType['role']) && $newData['role'] !== 'customer') {
             return false;
         }
@@ -614,6 +620,10 @@ final class WCController
 
     public static function handle_customer_delete($customer_id)
     {
+        if (!static::isActivate() || empty($customer_id)) {
+            return false;
+        }
+
         $user_meta = get_userdata($customer_id);
         $user_roles = $user_meta->roles;
         if (isset($importType['role']) && \in_array('customer', $user_roles)) {
@@ -627,9 +637,10 @@ final class WCController
 
     public static function handle_product_action($new_status, $old_status, $post)
     {
-        if (!class_exists('WooCommerce')) {
+        if (!static::isActivate()) {
             return false;
         }
+
         if ($old_status === 'new') {
             return false;
         }
@@ -661,6 +672,10 @@ final class WCController
 
     public static function handle_product_save_post($post_id, $post, $update)
     {
+        if (!static::isActivate()) {
+            return false;
+        }
+
         if (wc_get_product($post_id) == false || $post->post_type != 'product' || $post->post_status != 'publish') {
             return false;
         }
@@ -893,7 +908,7 @@ final class WCController
 
     public static function handle_order_create($order_id, $fields)
     {
-        if (!is_plugin_active('woocommerce/woocommerce.php')) {
+        if (!static::isActivate()) {
             return false;
         }
 
@@ -989,7 +1004,7 @@ final class WCController
 
     public static function handle_order_update($order_id, $post, $update)
     {
-        if (!class_exists('WooCommerce')) {
+        if (!static::isActivate()) {
             return false;
         }
 
@@ -1037,6 +1052,10 @@ final class WCController
 
     public static function handle_order_delete($order_id)
     {
+        if (!static::isActivate() || empty($order_id)) {
+            return false;
+        }
+
         $post_type = get_post_type($order_id);
         if ($post_type !== 'shop_order') {
             return false;
@@ -1049,7 +1068,7 @@ final class WCController
 
     public static function handle_order_status_change($order_id, $from_status, $to_status, $this_order)
     {
-        if (!class_exists('WooCommerce')) {
+        if (!static::isActivate()) {
             return false;
         }
 
@@ -1108,6 +1127,10 @@ final class WCController
 
     public static function handle_subscription_create($subscription)
     {
+        if (!static::isActivate()) {
+            return false;
+        }
+
         $flows = Flow::exists('WC', 12);
 
         if (empty($flows)) {
@@ -1150,6 +1173,10 @@ final class WCController
 
     public static function handle_subscription_cancel($subscription)
     {
+        if (!static::isActivate()) {
+            return false;
+        }
+
         $flows = Flow::exists('WC', 13);
         $flowsDetailData = $flows[0]->flow_details;
         $flowsDetail = json_decode($flowsDetailData);
@@ -1187,6 +1214,10 @@ final class WCController
 
     public static function handle_subscription_expired($subscription)
     {
+        if (!static::isActivate()) {
+            return false;
+        }
+
         $flows = Flow::exists('WC', 14);
         $flowsDetailData = $flows[0]->flow_details;
         $flowsDetail = json_decode($flowsDetailData);
@@ -1224,6 +1255,10 @@ final class WCController
 
     public static function handle_subscription_status_change($subscription, $new_status, $old_status)
     {
+        if (!static::isActivate()) {
+            return false;
+        }
+
         $flows = Flow::exists('WC', 15);
         $flowsDetailData = $flows[0]->flow_details;
         $flowsDetail = json_decode($flowsDetailData);
@@ -1277,9 +1312,10 @@ final class WCController
 
     public static function handle_subscription_trial_period_end($subscription_id)
     {
-        if (!\function_exists('wcs_get_subscription')) {
+        if (!static::isActivate() || !\function_exists('wcs_get_subscription')) {
             return;
         }
+
         $subscription = wcs_get_subscription($subscription_id);
         $flows = Flow::exists('WC', 16);
         $flowsDetailData = $flows[0]->flow_details;
@@ -1318,7 +1354,7 @@ final class WCController
 
     public static function handle_booking_create($booking_id)
     {
-        if (!is_plugin_active('woocommerce-bookings/woocommerce-bookings.php')) {
+        if (!static::isActivate() || !is_plugin_active('woocommerce-bookings/woocommerce-bookings.php')) {
             return false;
         }
         $booking = new WC_Booking($booking_id);
@@ -1338,6 +1374,10 @@ final class WCController
 
     public static function handle_insert_comment($comment_id, $comment_approved, $commentdata)
     {
+        if (!static::isActivate() || empty($comment_id)) {
+            return false;
+        }
+
         $flows = Flow::exists('WC', 19);
         if (!$flows) {
             return;
@@ -1378,8 +1418,13 @@ final class WCController
 
     public static function handle_variable_product_order($order_id, $importType)
     {
+        if (!static::isActivate()) {
+            return false;
+        }
+
         $flows = Flow::exists('WC', 20);
-        if (!$flows || !is_plugin_active('woocommerce/woocommerce.php')) {
+
+        if (!$flows) {
             return false;
         }
 
@@ -1415,7 +1460,7 @@ final class WCController
 
     public static function handle_order_checkout($order)
     {
-        if (!is_plugin_active('woocommerce/woocommerce.php')) {
+        if (!static::isActivate()) {
             return false;
         }
 
@@ -1594,5 +1639,17 @@ final class WCController
     {
         $allVariation = WCHelper::getAllVariations($requestPrarams->product_id);
         wp_send_json_success($allVariation, 200);
+    }
+
+    private static function isPluginActivated()
+    {
+        if (!static::isActivate()) {
+            wp_send_json_error(\sprintf(__('%s is not installed or activated', 'bit-integrations-pro'), 'WooCommerce'));
+        }
+    }
+
+    private static function isActivate()
+    {
+        return class_exists('WooCommerce');
     }
 }
