@@ -52,12 +52,12 @@ export default function GoogleSheetAuthorization({
         confTmp.clientSecret = ''
       }
       setSheetConf(confTmp)
-      manageAuth(option);
+      processAuth(option);
       setIsLoading(false)
     }
   };
 
-  const manageAuth = (option) => {
+  const processAuth = (option) => {
     handleAuthorize(sheetConf, option, setError, setIsLoading);
   }
 
@@ -156,7 +156,7 @@ export default function GoogleSheetAuthorization({
           <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="clientSecret" value={sheetConf.clientSecret} type="text" placeholder={__('Client secret...', 'bit-integrations')} disabled={isInfo} />
           <div style={{ color: 'red', fontSize: '15px' }}>{error.clientSecret}</div>
 
-          <button onClick={() => manageAuth(selectedAuthType)} className="btn btcd-btn-lg purple sh-sm flx" type="button" disabled={isLoading}>
+          <button onClick={() => processAuth(selectedAuthType)} className="btn btcd-btn-lg purple sh-sm flx" type="button" disabled={isLoading}>
             {isAuthorized ? __('Authorized ✔', 'bit-integrations') : __('Authorize', 'bit-integrations')}
             {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
           </button>
@@ -189,7 +189,7 @@ export default function GoogleSheetAuthorization({
         </>
       }
       {(isAuthorized && selectedAuthType === "One Click Authorization") &&
-        (<button onClick={() => manageAuth()} className="btn btcd-btn-lg purple sh-sm flx" type="button" disabled={isLoading}>
+        (<button onClick={() => processAuth()} className="btn btcd-btn-lg purple sh-sm flx" type="button" disabled={isLoading}>
           {isAuthorized ? __('Authorized ✔', 'bit-integrations') : __('Authorize', 'bit-integrations')}
           {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
         </button>
