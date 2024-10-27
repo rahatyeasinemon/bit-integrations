@@ -35,10 +35,10 @@ export default function GoogleSheetAuthorization({
 
   const [selectedAuthType, setSelectedAuthType] = useState('');
 
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedUserIndex, setSelectedUserIndex] = useState(null);
 
   const handleAuthUser = (index) => {
-    setSelectedUser(index);
+    setSelectedUserIndex(index);
   };
 
   const handleChange = (option) => {
@@ -98,8 +98,8 @@ export default function GoogleSheetAuthorization({
 
   const nextPage = () => {
     const newConf = { ...sheetConf }
-    newConf.tokenDetails = authData[selectedUser] ? authData[selectedUser].tokenDetails : '';
-    newConf.authId = authData[selectedUser] ? authData[selectedUser].id : '';
+    newConf.tokenDetails = authData[selectedUserIndex] ? authData[selectedUserIndex].tokenDetails : '';
+    newConf.authId = authData[selectedUserIndex] ? authData[selectedUserIndex].id : '';
     setSheetConf(newConf)
 
     setTimeout(() => {
@@ -182,8 +182,8 @@ export default function GoogleSheetAuthorization({
           <UserRadioButton
             authData={authData}
             setAuthData={setAuthData}
-            selectedUser={selectedUser}
-            setSelectedUser={setSelectedUser}
+            selectedUserIndex={selectedUserIndex}
+            setSelectedUserIndex={setSelectedUserIndex}
             handleAuthUser={handleAuthUser}
             setIsLoading={setIsLoading}
           />
@@ -196,7 +196,7 @@ export default function GoogleSheetAuthorization({
         </button>
         )}
       <br />
-      <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg purple sh-sm flx" type="button" disabled={selectedUser == null || authData.length === 0}>
+      <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg purple sh-sm flx" type="button" disabled={selectedUserIndex == null || authData.length === 0}>
         {__('Next', 'bit-integrations')}
         <BackIcn className="ml-1 rev-icn" />
       </button>

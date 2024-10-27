@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import bitsFetch from '../../Utils/bitsFetch';
 
-const UserRadioButton = ({ authData, setAuthData, selectedUser, setSelectedUser, handleAuthUser, isInfo, setIsLoading }) => {
+const UserRadioButton = ({ authData, setAuthData, selectedUserIndex, setSelectedUserIndex, handleAuthUser, isInfo, setIsLoading }) => {
   const [showConfirm, setShowConfirm] = useState(null);
   const popoverRef = useRef(null); // Ref to the popover container
 
@@ -13,10 +13,10 @@ const UserRadioButton = ({ authData, setAuthData, selectedUser, setSelectedUser,
       if (res.success) {
         setAuthData(newAuthData);
 
-        if (selectedUser === index) {
-          setSelectedUser((authData.length - 2));
-        } else if (selectedUser !== index && index <= selectedUser) {
-          setSelectedUser(selectedUser - 1)
+        if (selectedUserIndex === index) {
+          setSelectedUserIndex((authData.length - 2));
+        } else if (selectedUserIndex !== index && index <= selectedUserIndex) {
+          setSelectedUserIndex(selectedUserIndex - 1)
         }
         setIsLoading(false)
       }
@@ -50,9 +50,9 @@ const UserRadioButton = ({ authData, setAuthData, selectedUser, setSelectedUser,
 
   useEffect(() => {
     if (authData.length === 1) {
-      setSelectedUser(0);
-    } else if (selectedUser === null) {
-      setSelectedUser(authData.length - 1);
+      setSelectedUserIndex(0);
+    } else if (selectedUserIndex === null) {
+      setSelectedUserIndex(authData.length - 1);
     }
   }, [authData]);
 
@@ -60,13 +60,13 @@ const UserRadioButton = ({ authData, setAuthData, selectedUser, setSelectedUser,
     <div className='user-radio-input'>
       <div className="auth-list">
         {authData.map((user, index) => (
-          <div key={index} className={`auth-item ${selectedUser === index ? 'active' : ''}`}>
+          <div key={index} className={`auth-item ${selectedUserIndex === index ? 'active' : ''}`}>
             <label className="auth-label">
               <input
                 type="radio"
                 name="auth"
                 value={index}
-                checked={selectedUser === index}
+                checked={selectedUserIndex === index}
                 onChange={() => handleAuthUser(index)}
                 className="radio-input"
               />
