@@ -2,9 +2,6 @@ import { __, sprintf } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
 import { handleAuthData } from '../GlobalIntegrationHelper'
-import { $redirectURI } from '../../../GlobalStates'
-import { getRecoil } from 'recoil-nexus'
-
 
 export const handleInput = (
   e,
@@ -242,7 +239,7 @@ export const handleAuthorize = (confTmp, selectedAuthType, setError, setIsLoadin
 
   const scopes = 'https://www.googleapis.com/auth/drive'
   // eslint-disable-next-line no-undef
-  const redirectURI = getRecoil($redirectURI);
+  const redirectURI = 'https://auth-apps.bitapps.pro/redirect/v2';
   const finalRedirectUri = selectedAuthType === 'One Click Authorization' ? redirectURI : `${btcbi.api.base}/redirect`
 
   const { href, hash } = window.location
@@ -270,7 +267,7 @@ export const tokenHelper = async (grantToken, confTmp, setConf, selectedAuthType
   tokenRequestParams.clientId = selectedAuthType === 'One Click Authorization' ? confTmp.oneClickAuth.clientId : confTmp.clientId
   tokenRequestParams.clientSecret = selectedAuthType === 'One Click Authorization' ? confTmp.oneClickAuth.clientSecret : confTmp.clientSecret
   // eslint-disable-next-line no-undef
-  const redirectURI = getRecoil($redirectURI);
+  const redirectURI = 'https://auth-apps.bitapps.pro/redirect/v2';
   tokenRequestParams.redirectURI = selectedAuthType === 'One Click Authorization' ? redirectURI : `${btcbi.api.base}/redirect`
 
   setIsLoading(true)
