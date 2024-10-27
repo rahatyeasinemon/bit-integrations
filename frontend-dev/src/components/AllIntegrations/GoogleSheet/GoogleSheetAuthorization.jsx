@@ -44,7 +44,6 @@ export default function GoogleSheetAuthorization({
   const handleChange = (option) => {
     const confTmp = { ...sheetConf }
     confTmp.selectedAuthType = option
-    setSheetConf(confTmp)
     setSelectedAuthType(option);
     setisAuthorized(false)
     if (option === "One Click Authorization") {
