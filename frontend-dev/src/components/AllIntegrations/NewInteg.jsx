@@ -166,7 +166,7 @@ export default function NewInteg({ allIntegURL }) {
   const [flow, setFlow] = useRecoilState($newFlow)
   const grantToken = getRecoil(grantTokenAtom);
   const navigate = useNavigate()
-  if (grantToken === null && !Object.keys(flow).length) {
+  if (!window.opener && !Object.keys(flow).length) {
     navigate('/flow/new')
   }
   const NewIntegs = () => {
