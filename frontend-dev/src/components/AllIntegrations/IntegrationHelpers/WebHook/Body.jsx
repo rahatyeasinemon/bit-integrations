@@ -1,19 +1,16 @@
+import { create } from 'mutative'
 import React, { useEffect, useMemo } from 'react'
-import MultiSelect from 'react-multiple-select-dropdown-lite'
+import { useRecoilValue } from 'recoil'
+import { $formFields } from '../../../../GlobalStates'
 import CloseIcn from '../../../../Icons/CloseIcn'
-import TrashIcn from '../../../../Icons/TrashIcn'
 import { __ } from '../../../../Utils/i18nwrap'
 import Button from '../../../Utilities/Button'
 import TableCheckBox from '../../../Utilities/TableCheckBox'
 import JsonEditor from '../../../Utilities/jsonEditor/JsonEditor'
-import { create } from 'mutative'
-import { useRecoilValue } from 'recoil'
-import { $btcbi, $flowFormFields } from '../../../../GlobalStates'
-import { SmartTagField } from '../../../../Utils/StaticData/SmartTagField'
 import PayLoadFieldMap from './PayLoadFieldMap'
 
 function Body({ webHooks, setWebHooks, isInfo, setTab }) {
-  const formFields = useRecoilValue($flowFormFields)
+  const formFields = useRecoilValue($formFields)
   const formattedFormFields = useMemo(
     () => formFields.map((field) => ({ key: field.name, value: `\${${field.name}}` })),
     [formFields]

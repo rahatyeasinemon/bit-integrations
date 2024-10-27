@@ -15,11 +15,3 @@ export const $formFields = atom({
   dangerouslyAllowMutability: true
 })
 export const $flowStep = atom({ key: '$flowStep', default: 1, dangerouslyAllowMutability: true })
-
-export const $flowFormFields = selector({
-  key: 'flow-form-fields',
-  get: ({ get }) => {
-    const flow = get($newFlow)
-    return flow?.triggerData?.fields || []
-  }
-})

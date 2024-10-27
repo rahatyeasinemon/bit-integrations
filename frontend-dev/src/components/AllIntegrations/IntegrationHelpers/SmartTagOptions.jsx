@@ -7,6 +7,7 @@ import { memo } from 'react'
 function SmartTagOptions() {
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi
+
   return (
     <optgroup
       label={sprintf(
