@@ -1,6 +1,6 @@
 import React from 'react';
 
-const RadioInput = ({ name, options, selectedAuthType, handleChange }) => {
+const SelectAuthTypRadioBtn = ({ name, options, selectedAuthType, handleChange }) => {
   return (
     <div className='user-radio-input'>
       {options.map((option, index) => (
@@ -20,4 +20,4 @@ const RadioInput = ({ name, options, selectedAuthType, handleChange }) => {
   );
 };
 
-export default RadioInput;
+export default SelectAuthTypRadioBtn;
