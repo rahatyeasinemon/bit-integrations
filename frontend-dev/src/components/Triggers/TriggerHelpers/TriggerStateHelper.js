@@ -61,6 +61,8 @@ export const FormPluginStateHelper = (val, tmpNewFlow, resp, setNewFlow) => {
     wpJobManagerStateFP(val, tmpNewFlow, resp, setNewFlow)
   } else if (tmpNewFlow?.triggered_entity === 'EventsCalendar') {
     eventsCalendarStateFP(val, tmpNewFlow, resp, setNewFlow)
+  } else if (tmpNewFlow?.triggered_entity === 'Voxel') {
+    voxelStateFP(val, tmpNewFlow, resp, setNewFlow)
   } else if (tmpNewFlow?.triggered_entity === 'WCSubscriptions') {
     WCSubscriptionsStateFP(val, tmpNewFlow, resp, setNewFlow)
   } else {
@@ -213,6 +215,18 @@ export const eventsCalendarStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
       ...tmpNewFlow.triggerData,
       events: resp.data.events,
       selectedEvent: 'any'
+    }
+  }
+
+  setNewFlow(tmpNewFlow)
+}
+
+export const voxelStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
+  if (val === 'voxel-7') {
+    tmpNewFlow.triggerData = {
+      ...tmpNewFlow.triggerData,
+      postTypes: resp.data.postTypes,
+      selectedPostType: ''
     }
   }
 
@@ -586,6 +600,17 @@ export const eventsCalendarIH = (tmpConf, flowData, triggered_entity_id) => {
   if (formId === 'events_calendar-1' || formId === 'events_calendar-2' || formId === 'events_calendar-3' || formId === 'events_calendar-4') {
     tmpConf.selectedEvent = flowData.selectedEvent
     tmpConf.events = flowData.events
+  }
+
+  return tmpConf
+}
+
+export const voxelIH = (tmpConf, flowData, triggered_entity_id) => {
+  const formId = flowData.formID ? flowData.formID : triggered_entity_id
+
+  if (formId === 'voxel-7') {
+    tmpConf.selectedPostType = flowData.selectedPostType
+    tmpConf.postTypes = flowData.postTypes
   }
 
   return tmpConf
