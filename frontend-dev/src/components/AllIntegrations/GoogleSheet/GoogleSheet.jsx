@@ -41,14 +41,14 @@ function GoogleSheet({ formFields, setFlow, flow, allIntegURL }) {
       const requestParams = {
         actionName: "googleSheet",
       }
-      bitsFetch(requestParams, 'get/credentials', '', 'Post').then((res) => {
-        const confTmp = {...sheetConf}
+      bitsFetch(null, 'get/credentials', requestParams, 'Get').then((res) => {
+        const confTmp = { ...sheetConf }
         confTmp.oneClickAuth = res.data
         setSheetConf(confTmp)
       })
     }
   }, [])
-  
+
 
   const nextPage = () => {
     setTimeout(() => {

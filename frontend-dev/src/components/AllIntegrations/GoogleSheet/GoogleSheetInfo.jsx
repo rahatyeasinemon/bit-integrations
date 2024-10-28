@@ -9,7 +9,10 @@ export default function GoogleSheetInfo({ sheetConf, isInfo }) {
   const [authData, setAuthData] = useState([])
 
   useEffect(() => {
-    bitsFetch(sheetConf.authId, 'auth/getbyId').then((res) => {
+    const queryParams = {
+      id: sheetConf.authId
+    }
+    bitsFetch(null, 'auth/getbyId', queryParams, 'GET').then((res) => {
       if (res.success) {
         if (res.data.data.length > 0) {
           setAuthData(res.data.data);

@@ -26,8 +26,9 @@ final class AuthDataController
         return $this->getAuthData($actionName);
     }
 
-    public function getAuthData($actionName)
+    public function getAuthData($request)
     {
+        $actionName = $request->actionName;
         if (empty($actionName)) {
             wp_send_json_error('Action name is not available');
             exit;
@@ -58,8 +59,9 @@ final class AuthDataController
         exit;
     }
 
-    public function getAuthDataById($id)
+    public function getAuthDataById($request)
     {
+        $id = $request->id;
         if (empty($id)) {
             wp_send_json_error('Action name is not available');
             exit;

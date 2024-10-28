@@ -5,10 +5,10 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+use BitCode\FI\controller\AuthDataController;
 use BitCode\FI\controller\BtcbiAnalyticsController;
 use BitCode\FI\controller\CredentialsController;
 use BitCode\FI\controller\PostController;
-use BitCode\FI\controller\AuthDataController;
 use BitCode\FI\controller\UserController;
 use BitCode\FI\Core\Util\Route;
 use BitCode\FI\Flow\Flow;
@@ -42,9 +42,8 @@ Route::post('analytics/optIn', [BtcbiAnalyticsController::class, 'analyticsOptIn
 Route::get('analytics/check', [BtcbiAnalyticsController::class, 'analyticsCheck']);
 
 Route::post('store/authData', [AuthDataController::class, 'saveAuthData']);
-Route::post('auth/get', [AuthDataController::class, 'getAuthData']);
-Route::post('auth/getbyId', [AuthDataController::class, 'getAuthDataById']);
+Route::get('auth/get', [AuthDataController::class, 'getAuthData']);
+Route::get('auth/getbyId', [AuthDataController::class, 'getAuthDataById']);
 Route::post('auth/account/delete', [AuthDataController::class, 'deleteAuthData']);
 
-
-Route::post('get/credentials', [CredentialsController::class, 'getCredentials']);
+Route::get('get/credentials', [CredentialsController::class, 'getCredentials']);
