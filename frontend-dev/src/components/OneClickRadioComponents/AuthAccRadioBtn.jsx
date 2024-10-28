@@ -14,9 +14,9 @@ const AuthAccRadioBtn = ({ authData, setAuthData, selectedUserIndex, setSelected
       if (res.success) {
         setAuthData(newAuthData);
 
-        if (selectedUserIndex === index) {
+        if (selectedUserIndex === index) { //if the selected account is deleted.
           setSelectedUserIndex((authData.length - 2));
-        } else if (selectedUserIndex !== index && index <= selectedUserIndex) {
+        } else if (selectedUserIndex !== index && index <= selectedUserIndex) { //if the deleted account index is less than selected account.
           setSelectedUserIndex(selectedUserIndex - 1)
         }
         setIsLoading(false)
@@ -54,9 +54,9 @@ const AuthAccRadioBtn = ({ authData, setAuthData, selectedUserIndex, setSelected
   }, []);
 
   useEffect(() => {
-    if (authData.length === 1) {
+    if (authData.length === 1) { //if their is only one authorized account.
       setSelectedUserIndex(0);
-    } else if (selectedUserIndex === null) {
+    } else if (selectedUserIndex === null) {  //if no account is selected. 
       setSelectedUserIndex(authData.length - 1);
     }
   }, [authData]);
