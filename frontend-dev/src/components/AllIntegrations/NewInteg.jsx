@@ -4,7 +4,7 @@
 import { lazy, Suspense } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
-import { $newFlow, grantTokenAtom } from '../../GlobalStates'
+import { $newFlow } from '../../GlobalStates'
 import { __ } from '../../Utils/i18nwrap'
 import Loader from '../Loaders/Loader'
 import { getRecoil } from 'recoil-nexus'
@@ -164,7 +164,6 @@ const HighLevel = lazy(() => import('./HighLevel/HighLevel'))
 export default function NewInteg({ allIntegURL }) {
   const { integUrlName } = useParams()
   const [flow, setFlow] = useRecoilState($newFlow)
-  const grantToken = getRecoil(grantTokenAtom);
   const navigate = useNavigate()
   if (!window.opener && !Object.keys(flow).length) {
     navigate('/flow/new')

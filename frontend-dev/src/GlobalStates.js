@@ -9,4 +9,4 @@ export const $actionConf = atom({ key: '$actionConf', default: {}, dangerouslyAl
 export const $formFields = atom({ key: '$formFields', default: {}, dangerouslyAllowMutability: true })
 export const $flowStep = atom({ key: '$flowStep', default: 1, dangerouslyAllowMutability: true })
 
-export const grantTokenAtom = atomWithBroadcast('grantToken', null);
+export const authInfoAtom = atomWithBroadcast('authInfo', {});

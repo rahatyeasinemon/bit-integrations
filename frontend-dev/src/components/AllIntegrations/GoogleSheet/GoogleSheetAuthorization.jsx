@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { $btcbi, grantTokenAtom } from '../../../GlobalStates'
+import { $btcbi, authInfoAtom } from '../../../GlobalStates'
 import BackIcn from '../../../Icons/BackIcn'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
@@ -31,7 +31,7 @@ export default function GoogleSheetAuthorization({
   const btcbi = useRecoilValue($btcbi)
   const { googleSheet } = tutorialLinks
   const [authData, setAuthData] = useState([])
-  const [grantToken, setGrantToken] = useRecoilState(grantTokenAtom);
+  const [authInfo, setAuthInfo] = useRecoilState(authInfoAtom);
 
   const [selectedAuthType, setSelectedAuthType] = useState('');
 
@@ -70,17 +70,17 @@ export default function GoogleSheetAuthorization({
     })
   }, []);
 
-  const handleGrantToken = async (grantToken) => {
-    await tokenHelper(grantToken, sheetConf, setSheetConf, selectedAuthType, authData, setAuthData, setIsLoading, setSnackbar);
+  const handleVerificationCode = async (authInfo) => {
+    await tokenHelper(authInfo, sheetConf, setSheetConf, selectedAuthType, authData, setAuthData, setIsLoading, setSnackbar);
 
-    setGrantToken(undefined)
+    setAuthInfo(undefined)
   }
 
   useEffect(() => {
-    if (!grantToken) return;
+    if (!authInfo) return;
 
-    handleGrantToken(grantToken);
-  }, [grantToken]);
+    handleVerificationCode(authInfo);
+  }, [authInfo]);
 
 
   const handleInput = (e) => {

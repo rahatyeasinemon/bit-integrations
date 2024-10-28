@@ -258,12 +258,12 @@ export const handleAuthorize = (confTmp, selectedAuthType, setError, setIsLoadin
 
 }
 
-export const tokenHelper = async (grantToken, confTmp, setConf, selectedAuthType, authData, setAuthData, setIsLoading, setSnackbar) => {
+export const tokenHelper = async (authInfo, confTmp, setConf, selectedAuthType, authData, setAuthData, setIsLoading, setSnackbar) => {
   if (!selectedAuthType) {
     return
   }
   const tokenRequestParams = {}
-  tokenRequestParams.code = grantToken
+  tokenRequestParams.code = authInfo
   tokenRequestParams.clientId = selectedAuthType === 'One Click Authorization' ? confTmp.oneClickAuth.clientId : confTmp.clientId
   tokenRequestParams.clientSecret = selectedAuthType === 'One Click Authorization' ? confTmp.oneClickAuth.clientSecret : confTmp.clientSecret
   // eslint-disable-next-line no-undef
