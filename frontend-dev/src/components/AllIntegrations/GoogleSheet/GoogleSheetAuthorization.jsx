@@ -37,21 +37,26 @@ export default function GoogleSheetAuthorization({
 
   const [selectedUserIndex, setSelectedUserIndex] = useState(null);
 
-
   const handleChange = (option) => {
-    const confTmp = { ...sheetConf }
-    confTmp.selectedAuthType = option
     setSelectedAuthType(option);
-    setisAuthorized(false)
+    setisAuthorized(false);
+
+    setSheetConf((prevConf) => {
+      return {
+        ...prevConf,
+        selectedAuthType: option,
+        ...(option === "One Click Authorization" && process.env.NODE_ENV !== 'development'
+          ? {
+            clientId: '',
+            clientSecret: '',
+          }
+          : {})
+      };
+    });
     if (option === "One Click Authorization") {
-      if (process.env.NODE_ENV !== 'development') {
-        confTmp.clientId = ''
-        confTmp.clientSecret = ''
-      }
-      setSheetConf(confTmp)
       processAuth(option);
-      setIsLoading(false)
     }
+    setIsLoading(false);
   };
 
   const processAuth = (option) => {
@@ -94,18 +99,25 @@ export default function GoogleSheetAuthorization({
   }
 
   const nextPage = () => {
-    const newConf = { ...sheetConf }
-    newConf.tokenDetails = authData[selectedUserIndex] ? authData[selectedUserIndex].tokenDetails : '';
-    newConf.authId = authData[selectedUserIndex] ? authData[selectedUserIndex].id : '';
-    setSheetConf(newConf)
+    setSheetConf((prevConf) => ({
+      ...prevConf,
+      tokenDetails: authData[selectedUserIndex] ? authData[selectedUserIndex].tokenDetails : '',
+      authId: authData[selectedUserIndex] ? authData[selectedUserIndex].id : '',
+    }));
 
     setTimeout(() => {
       document.getElementById('btcd-settings-wrp').scrollTop = 0;
     }, 300);
-    setstep(2);
 
-    refreshSpreadsheets(formID, newConf, setSheetConf, setIsLoading, setSnackbar);
+    setstep(2);
+    refreshSpreadsheets(formID, {
+      ...sheetConf,
+      tokenDetails: authData[selectedUserIndex] ? authData[selectedUserIndex].tokenDetails : '',
+      authId: authData[selectedUserIndex] ? authData[selectedUserIndex].id : '',
+    }, setSheetConf, setIsLoading, setSnackbar);
   };
+
+
 
   return (
     <div
