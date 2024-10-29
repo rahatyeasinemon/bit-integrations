@@ -6,14 +6,11 @@ const AuthAccRadioBtn = ({ authData, setAuthData, selectedUserIndex, setSelected
   const [showConfirm, setShowConfirm] = useState(null);
   const popoverRef = useRef(null); // Ref to the popover container
 
-  const handleDelete = (id) => {
-    const index = authData.findIndex(item => item.id === id.toString());
-    const newAuthData = authData.filter(item => item.id !== id);
+  const handleDelete = (id, index) => {
     setIsLoading(true)
     bitsFetch(id, 'auth/account/delete').then((res) => {
       if (res.success) {
-        setAuthData(newAuthData);
-
+        setAuthData((prevData => prevData.filter(item => item.id !== id)));
         if (selectedUserIndex === index) { //if the selected account is deleted.
           setSelectedUserIndex((authData.length - 2));
         } else if (selectedUserIndex !== index && index <= selectedUserIndex) { //if the deleted account index is less than selected account.
@@ -88,7 +85,7 @@ const AuthAccRadioBtn = ({ authData, setAuthData, selectedUserIndex, setSelected
                 {showConfirm === index ? (
                   <div className="confirmation-popover" ref={popoverRef}>
                     <p>Are you sure?</p>
-                    <button className="confirm-button" onClick={() => handleDelete(user.id)}>Yes</button>
+                    <button className="confirm-button" onClick={() => handleDelete(user.id, index)}>Yes</button>
                     <button className="cancel-button" onClick={handleCancel}>No</button>
                   </div>
                 ) : (
