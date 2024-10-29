@@ -8,8 +8,9 @@ final class CredentialsController
 {
     public function getCredentials($params)
     {
-        $apiEndpoint = 'https://auth-apps.bitapps.pro/apps/' . $params->actionName;
+        $actionName = sanitize_text_field($params->actionName);
+        $apiEndpoint = 'https://auth-apps.bitapps.pro/apps/' . $actionName;
 
-        return $response = HttpHelper::get($apiEndpoint, null, null);
+        return HttpHelper::get($apiEndpoint, null, null);
     }
 }
