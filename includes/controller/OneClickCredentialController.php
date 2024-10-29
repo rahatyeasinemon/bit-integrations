@@ -4,7 +4,7 @@ namespace BitCode\FI\controller;
 
 use BitCode\FI\Core\Util\HttpHelper;
 
-final class CredentialsController
+final class OneClickCredentialController
 {
     public function getCredentials($params)
     {

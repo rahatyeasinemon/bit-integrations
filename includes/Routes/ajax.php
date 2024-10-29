@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) {
 
 use BitCode\FI\controller\AuthDataController;
 use BitCode\FI\controller\BtcbiAnalyticsController;
-use BitCode\FI\controller\CredentialsController;
+use BitCode\FI\controller\OneClickCredentialController;
 use BitCode\FI\controller\PostController;
 use BitCode\FI\controller\UserController;
 use BitCode\FI\Core\Util\Route;
@@ -46,4 +46,4 @@ Route::get('auth/get', [AuthDataController::class, 'getAuthData']);
 Route::get('auth/getbyId', [AuthDataController::class, 'getAuthDataById']);
 Route::post('auth/account/delete', [AuthDataController::class, 'deleteAuthData']);
 
-Route::get('get/credentials', [CredentialsController::class, 'getCredentials']);
+Route::get('get/credentials', [OneClickCredentialController::class, 'getCredentials']);
