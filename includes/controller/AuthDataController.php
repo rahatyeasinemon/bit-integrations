@@ -51,7 +51,7 @@ final class AuthDataController
 
     public function getAuthData($request)
     {
-        $actionName = $request->actionName;
+        $actionName = sanitize_text_field($request->actionName);
         if (empty($actionName)) {
             wp_send_json_error('Action name is not available');
             exit;
