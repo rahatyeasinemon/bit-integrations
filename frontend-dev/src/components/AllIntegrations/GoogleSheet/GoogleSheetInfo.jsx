@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import AuthAccRadioBtn from "../../Utilities/AuthAccRadioBtn";
+import { useEffect, useState } from "react"
 import bitsFetch from "../../../Utils/bitsFetch";
 import { __ } from "../../../Utils/i18nwrap";
+import AuthAccRadioBtn from "../../OneClickRadioComponents/AuthAccRadioBtn";
 
 
 export default function GoogleSheetInfo({ sheetConf, isInfo }) {
