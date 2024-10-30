@@ -42,9 +42,9 @@ function GoogleSheet({ formFields, setFlow, flow, allIntegURL }) {
         actionName: "googleSheet",
       }
       bitsFetch(null, 'get/credentials', requestParams, 'Get').then((res) => {
-        const confTmp = { ...sheetConf }
-        confTmp.oneClickAuth = res.data
-        setSheetConf(confTmp)
+        setSheetConf((prevConf) => {
+          return { ...prevConf, oneClickAuth: res.data }
+        })
       })
     }
   }, [])
