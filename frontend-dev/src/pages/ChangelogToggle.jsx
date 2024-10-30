@@ -24,27 +24,26 @@ export default function ChangelogToggle() {
       label: __('Note', 'bit-integrations'),
       headClass: 'new-integration',
       itemClass: 'integration-list',
-      items: []
+      items: ['Deprecated Old WooCommerce Booking Triggers']
     },
     {
       label: __('New Actions', 'bit-integrations'),
       headClass: 'new-integration',
       itemClass: 'integration-list',
-      items: ['The Events Calendar']
+      items: []
     },
     {
       label: __('New Triggers', 'bit-integrations'),
       headClass: 'new-integration',
       itemClass: 'integration-list',
-      items: []
+      items: ['WooCommerce Bookings (Pro)']
     },
     {
       label: __('New Features', 'bit-integrations'),
       headClass: 'new-feature',
       itemClass: 'feature-list',
       items: [
-        'The Events Calendar: Added new task for attendee registration with WooCommerce (Pro).',
-        'Moosend: Added support for custom fields (Pro).'
+        'OneClick Authorization feature added in GoogleSheet Action.'
       ]
     },
     {
@@ -52,9 +51,7 @@ export default function ChangelogToggle() {
       headClass: 'new-integration',
       itemClass: 'integration-list',
       items: [
-        'Campaign Monitor: Added custom field value support.',
-        'Telegram: Enhanced Markdown and HTML message support.',
-        'Mautic: Added functionality for contact owner.'
+        'WP Post Creation: Enhanced the feature image upload process, now supporting improved handling of third-party public URLs.'
       ]
     }
   ]
@@ -137,7 +134,7 @@ export default function ChangelogToggle() {
               <div className="flx flx-col flx-center whats-new">
                 <h3>{sprintf(__("What's New in %s", 'bit-integrations'), btcbi.version)}?</h3>
                 <small className="date">
-                  {__('Updated at:', 'bit-integrations')} <b>23th October 2024</b>
+                  {__('Updated at:', 'bit-integrations')} <b>30th October 2024</b>
                 </small>
               </div>
               <div className="changelog-content">

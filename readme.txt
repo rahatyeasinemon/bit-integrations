@@ -4,7 +4,7 @@ Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
 Tested up to: 6.6.2
 Requires PHP: 7.0
-Stable tag: 2.3.1
+Stable tag: 2.3.2
 License: GPLv2 or later
 
 Automation Plugin for WordPress like Zapier. Integration of 80+ Triggers & 150+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -122,6 +122,7 @@ https://youtu.be/eFuficjF_F4
 * [**WooCommerce Subscriptions**](https://woocommerce.com/products/woocommerce-subscriptions/)
 * [**WP Courseware**](https://flyplugins.com/wp-courseware-wordpress-lms/)
 * [**WPForms**](https://wordpress.org/plugins/wpforms-lite/)
+* [**WooCommerce Bookings**](https://woocommerce.com/products/woocommerce-bookings/)
 * [**wpForo**](https://wordpress.org/plugins/wpforo/)
 * [**WPFunnels**](https://wordpress.org/plugins/wpfunnels/)
 * [**WS Form**](https://wordpress.org/plugins/ws-form/)
@@ -1006,6 +1007,21 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 2.3.2  =
+_Release Date -30th October 2024_
+
+- **New Trigger :**
+  - WooCommerce Bookings: Added support for WooCommerce Bookings trigger, allowing you to automate workflows based on new bookings and other related events. (Pro)
+
+- **New Features :**
+  - OneClick Authorization feature added in GoogleSheet Action.
+
+- **New Improvements :**
+  - WP Post Creation: Enhanced the feature image upload process, now supporting improved handling of third-party public URLs, ensuring more consistent and reliable image integration for WP posts.
+
+- **Note :**
+  - Deprecated Old WooCommerce Booking Triggers: Previous WooCommerce booking-based triggers have been deprecated and replaced with a new, comprehensive trigger system, including specific triggers such as "Booking-Created" to provide more effective and detailed management of WooCommerce bookings.
 
 = 2.3.1  =
 _Release Date -23th October 2024_

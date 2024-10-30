@@ -4,7 +4,7 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 
 import { lazy, Suspense, useEffect, useState } from 'react'
-import { Link, Navigate, NavLink, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import './resource/sass/app.scss'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Toaster } from 'react-hot-toast'
@@ -21,6 +21,7 @@ import { useRecoilValue } from 'recoil'
 import 'regenerator-runtime/runtime.js'
 import AnnouncementModal from './pages/AnnouncementModal'
 import ProModalBtn from './components/Utilities/ProModalBtn'
+const AuthResponse = lazy(() => import('./pages/AuthResponse'))
 const AllIntegrations = lazy(() => import('./pages/AllIntegrations'))
 const Integrations = lazy(() => import('./components/Integrations'))
 const Settings = lazy(() => import('./pages/Settings'))
@@ -143,6 +144,15 @@ function App() {
               element={
                 <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
                   <Integrations />
+                </Suspense>
+              }
+            />
+
+            <Route
+              path="/auth-response/*"
+              element={
+                <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
+                  <AuthResponse />
                 </Suspense>
               }
             />
