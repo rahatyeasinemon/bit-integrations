@@ -63,26 +63,31 @@ export default function GoogleSheetAuthorization({
     handleAuthorize(sheetConf, option, setError, setIsLoading);
   }
 
-  useEffect(() => {
-    if (step === 1) {
-      setIsLoading(true)
-      const queryParams = {
-        actionName: sheetConf.type
-      }
-      bitsFetch(null, 'auth/get', queryParams, 'GET').then((res) => {
-        if (res.success && res.data.data.length > 0) {
-          setAuthData(res.data.data);
-        }
-        setIsLoading(false)
-      })
+  const getAuthData = () => {
+    setIsLoading(true)
+
+    const queryParams = {
+      actionName: sheetConf.type
     }
 
-  }, [sheetConf]);
+    bitsFetch(null, 'auth/get', queryParams, 'GET').then((res) => {
+      if (res.success && res.data.data.length > 0) {
+        setAuthData(res.data.data);
+      }
+      setIsLoading(false)
+    })
+  }
+
+  useEffect(() => {
+    if (step === 1) {
+      getAuthData()
+    }
+  }, []);
 
   const handleVerificationCode = async (authInfo) => {
     await tokenHelper(authInfo, sheetConf, setSheetConf, selectedAuthType, authData, setAuthData, setIsLoading, setSnackbar);
-
     setAuthInfo(undefined)
+    getAuthData()
   }
 
   useEffect(() => {
