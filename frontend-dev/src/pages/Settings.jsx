@@ -57,7 +57,18 @@ function Settings() {
     })
   }
 
+  const updateAnalytic = (updatedOptin) => {
+    bitsFetch({ isChecked: updatedOptin }, 'analytics/optIn')
+      .then((res) => {
+        toast.success(__('Opt-in status updated', 'bit-integrations'))
+      })
+      .catch(() => {
+        toast.error(__('Failed to save', 'bit-integrations'))
+      })
+  }
+
   const debouncedUpdatePluginConfig = useAsyncDebounce(updatePluginConfig, 500)
+  const debouncedUpdateAnalytic = useAsyncDebounce(updateAnalytic, 500)
 
   const checkboxHandle = ({ target: { name, checked } }) => {
     const config = { ...appConf }
@@ -84,13 +95,7 @@ function Settings() {
   const analyticsHandle = () => {
     const updatedOptin = !showAnalyticsOptin
     setShowAnalyticsOptin(updatedOptin)
-    bitsFetch({ isChecked: updatedOptin }, 'analytics/optIn')
-      .then((res) => {
-        toast.success(__('Opt-in status updated', 'bit-integrations'))
-      })
-      .catch(() => {
-        toast.error(__('Failed to save', 'bit-integrations'))
-      })
+    debouncedUpdateAnalytic(updatedOptin)
   }
 
   return (

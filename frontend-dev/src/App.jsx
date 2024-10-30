@@ -9,13 +9,9 @@ import './resource/sass/app.scss'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Toaster } from 'react-hot-toast'
 import logo from '../logo.svg'
-import Integrations from './components/Integrations'
 import Loader from './components/Loaders/Loader'
 import TableLoader from './components/Loaders/TableLoader2'
 import useFetch from './hooks/useFetch'
-import DocSupport from './pages/DocSupport'
-import FlowBuilder from './pages/FlowBuilder'
-import Settings from './pages/Settings'
 import './resource/icons/style.css'
 import { __ } from './Utils/i18nwrap'
 import { $btcbi } from './GlobalStates'
@@ -27,6 +23,10 @@ import AnnouncementModal from './pages/AnnouncementModal'
 import ProModalBtn from './components/Utilities/ProModalBtn'
 const AuthResponse = lazy(() => import('./pages/AuthResponse'))
 const AllIntegrations = lazy(() => import('./pages/AllIntegrations'))
+const Integrations = lazy(() => import('./components/Integrations'))
+const Settings = lazy(() => import('./pages/Settings'))
+const DocSupport = lazy(() => import('./pages/DocSupport'))
+const FlowBuilder = lazy(() => import('./pages/FlowBuilder'))
 const Error404 = lazy(() => import('./pages/Error404'))
 
 function App() {
