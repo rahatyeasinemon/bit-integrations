@@ -110,7 +110,7 @@ final class Helper
             $attachmentId = wp_insert_attachment($attachment, $imageFile, $postID);
 
             if (!is_wp_error($attachmentId)) {
-                $attachmentData = wp_generate_attachment_metadata($attachmentId, $imageFile);
+                $attachmentData = @wp_generate_attachment_metadata($attachmentId, $imageFile);
                 wp_update_attachment_metadata($attachmentId, $attachmentData);
                 set_post_thumbnail($postID, $attachmentId);
             }
