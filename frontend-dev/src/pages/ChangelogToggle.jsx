@@ -24,27 +24,26 @@ export default function ChangelogToggle() {
       label: __('Note', 'bit-integrations'),
       headClass: 'new-integration',
       itemClass: 'integration-list',
-      items: []
+      items: ['Deprecated Old WooCommerce Booking Triggers']
     },
     {
       label: __('New Actions', 'bit-integrations'),
       headClass: 'new-integration',
       itemClass: 'integration-list',
-      items: ['The Events Calendar']
+      items: []
     },
     {
       label: __('New Triggers', 'bit-integrations'),
       headClass: 'new-integration',
       itemClass: 'integration-list',
-      items: []
+      items: ['WooCommerce Bookings']
     },
     {
       label: __('New Features', 'bit-integrations'),
       headClass: 'new-feature',
       itemClass: 'feature-list',
       items: [
-        'The Events Calendar: Added new task for attendee registration with WooCommerce (Pro).',
-        'Moosend: Added support for custom fields (Pro).'
+        'OneClick Authorization feature added in GoogleSheet Action.'
       ]
     },
     {
@@ -52,9 +51,7 @@ export default function ChangelogToggle() {
       headClass: 'new-integration',
       itemClass: 'integration-list',
       items: [
-        'Campaign Monitor: Added custom field value support.',
-        'Telegram: Enhanced Markdown and HTML message support.',
-        'Mautic: Added functionality for contact owner.'
+        'WP Post Creation: Enhanced the feature image upload process, now supporting improved handling of third-party public URLs.'
       ]
     }
   ]
