@@ -8,7 +8,7 @@ import CopyText from '../../Utilities/CopyText'
 import { handleAuthorize, refreshSpreadsheets, tokenHelper } from './GoogleSheetCommonFunc'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
-import SelectAuthTypRadioBtn from '../../OneClickRadioComponents/SelectAuthTypRadioBtn'
+import SelectAuthorizationType from '../../OneClickRadioComponents/SelectAuthorizationType'
 import AuthorizationAccountList from '../../OneClickRadioComponents/AuthorizationAccountList'
 import bitsFetch from '../../../Utils/bitsFetch'
 import Loader from '../../Loaders/Loader'
@@ -141,7 +141,7 @@ export default function GoogleSheetAuthorization({
 
       <div>
         <h2>Choose channel</h2>
-        <SelectAuthTypRadioBtn
+        <SelectAuthorizationType
           name="auth"
           options={['One Click Authorization', 'Custom Authorization']}
           selectedAuthType={selectedAuthType}
