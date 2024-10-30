@@ -27,7 +27,7 @@ const ZohoMarketingHubAuthorization = lazy(
   () => import('./ZohoMarketingHub/ZohoMarketingHubAuthorization')
 )
 const ZohoRecruitAuthorization = lazy(() => import('./ZohoRecruit/ZohoRecruitAuthorization'))
-const GoogleSheetAuthorization = lazy(() => import('./GoogleSheet/GoogleSheetAuthorization'))
+const GoogleSheetInfo = lazy(() => import('./GoogleSheet/GoogleSheetInfo'))
 const MailChimpAuthorization = lazy(() => import('./MailChimp/MailChimpAuthorization'))
 const MailPoetAuthorization = lazy(() => import('./MailPoet/MailPoetAuthorization'))
 const SendinblueAuthorization = lazy(() => import('./SendinBlue/SendinBlueAuthorization'))
@@ -296,10 +296,7 @@ export default function IntegInfo() {
         )
       case 'Google Sheet':
         return (
-          <GoogleSheetAuthorization
-            sheetConf={integrationConf}
-            step={1}
-            redirectLocation={location}
+          <GoogleSheetInfo sheetConf={integrationConf}
             isInfo
           />
         )
