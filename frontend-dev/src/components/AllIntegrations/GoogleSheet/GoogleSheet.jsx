@@ -37,13 +37,13 @@ function GoogleSheet({ formFields, setFlow, flow, allIntegURL }) {
   })
 
   useEffect(() => {
-    if (sheetConf.oneClickAuth === undefined) {
+    if (sheetConf.oneClickAuthCredentials === undefined) {
       const requestParams = {
         actionName: "googleSheet",
       }
       bitsFetch(null, 'get/credentials', requestParams, 'Get').then((res) => {
         setSheetConf((prevConf) => {
-          return { ...prevConf, oneClickAuth: res.data }
+          return { ...prevConf, oneClickAuthCredentials: res.data }
         })
       })
     }

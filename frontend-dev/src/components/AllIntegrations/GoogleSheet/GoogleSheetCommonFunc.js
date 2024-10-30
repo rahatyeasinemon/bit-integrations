@@ -70,8 +70,8 @@ export const refreshSpreadsheets = (formID, sheetConf, setSheetConf, setIsLoadin
   const refreshModulesRequestParams = {
     formID,
     id: sheetConf.id,
-    clientId: sheetConf.tokenDetails.selectedAuthType === 'Custom Authorization' ? sheetConf.clientId : sheetConf.oneClickAuth.clientId,
-    clientSecret: sheetConf.tokenDetails.selectedAuthType === 'Custom Authorization' ? sheetConf.clientSecret : sheetConf.oneClickAuth.clientSecret,
+    clientId: sheetConf.tokenDetails.selectedAuthType === 'Custom Authorization' ? sheetConf.clientId : sheetConf.oneClickAuthCredentials.clientId,
+    clientSecret: sheetConf.tokenDetails.selectedAuthType === 'Custom Authorization' ? sheetConf.clientSecret : sheetConf.oneClickAuthCredentials.clientSecret,
     tokenDetails: sheetConf.tokenDetails,
     ownerEmail: sheetConf.ownerEmail
   }
@@ -170,8 +170,8 @@ export const refreshWorksheetHeaders = (
     worksheetName,
     header,
     headerRow,
-    clientId: sheetConf.tokenDetails.selectedAuthType === 'Custom Authorization' ? sheetConf.clientId : sheetConf.oneClickAuth.clientId,
-    clientSecret: sheetConf.tokenDetails.selectedAuthType === 'Custom Authorization' ? sheetConf.clientSecret : sheetConf.oneClickAuth.clientSecret,
+    clientId: sheetConf.tokenDetails.selectedAuthType === 'Custom Authorization' ? sheetConf.clientId : sheetConf.oneClickAuthCredentials.clientId,
+    clientSecret: sheetConf.tokenDetails.selectedAuthType === 'Custom Authorization' ? sheetConf.clientSecret : sheetConf.oneClickAuthCredentials.clientSecret,
     tokenDetails: sheetConf.tokenDetails
   }
   bitsFetch(refreshWorksheetHeadersRequestParams, 'gsheet_refresh_worksheet_headers')
@@ -223,7 +223,7 @@ export const handleAuthorize = (confTmp, selectedAuthType, setError, setIsLoadin
 
   let clientId = '';
   if (selectedAuthType === 'One Click Authorization') {
-    clientId = confTmp.oneClickAuth.clientId
+    clientId = confTmp.oneClickAuthCredentials.clientId
   } else if (selectedAuthType === 'Custom Authorization') {
     if (!confTmp.clientId || !confTmp.clientSecret) {
       setError({
@@ -264,8 +264,8 @@ export const tokenHelper = async (authInfo, confTmp, setConf, selectedAuthType, 
   }
   const tokenRequestParams = {}
   tokenRequestParams.code = authInfo.code || '';
-  tokenRequestParams.clientId = selectedAuthType === 'One Click Authorization' ? confTmp.oneClickAuth.clientId : confTmp.clientId
-  tokenRequestParams.clientSecret = selectedAuthType === 'One Click Authorization' ? confTmp.oneClickAuth.clientSecret : confTmp.clientSecret
+  tokenRequestParams.clientId = selectedAuthType === 'One Click Authorization' ? confTmp.oneClickAuthCredentials.clientId : confTmp.clientId
+  tokenRequestParams.clientSecret = selectedAuthType === 'One Click Authorization' ? confTmp.oneClickAuthCredentials.clientSecret : confTmp.clientSecret
   // eslint-disable-next-line no-undef
   const redirectURI = 'https://auth-apps.bitapps.pro/redirect/v2';
   tokenRequestParams.redirectURI = selectedAuthType === 'One Click Authorization' ? redirectURI : `${btcbi.api.base}/redirect`
