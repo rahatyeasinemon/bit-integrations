@@ -11,7 +11,7 @@ export default function AuthResponse() {
     const code = urlParams.get('code')
 
     if (code) {
-      setAuthInfo(code)
+      setAuthInfo({ code: code });
 
       setTimeout(() => {
         window.close()

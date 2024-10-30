@@ -91,7 +91,7 @@ export default function GoogleSheetAuthorization({
   }
 
   useEffect(() => {
-    if (!authInfo) return;
+    if (!authInfo || Object.keys(authInfo).length === 0) return;
 
     handleVerificationCode(authInfo);
   }, [authInfo]);
