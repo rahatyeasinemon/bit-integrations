@@ -7,6 +7,7 @@ import { useRecoilState } from 'recoil'
 import { $newFlow } from '../../GlobalStates'
 import { __ } from '../../Utils/i18nwrap'
 import Loader from '../Loaders/Loader'
+import { getRecoil } from 'recoil-nexus'
 
 const CustomAction = lazy(() => import('./CustomAction/CustomAction'))
 const PaidMembershipPro = lazy(() => import('./PaidMembershipPro/PaidMembershipPro'))

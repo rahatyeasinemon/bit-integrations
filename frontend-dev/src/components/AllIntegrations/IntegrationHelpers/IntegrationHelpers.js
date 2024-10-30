@@ -21,6 +21,7 @@ import {
   ThriveApprenticeStateIH,
   UltimateMemberStateIH,
   WCSubscriptionsStateIH,
+  WCBookingsStateIH,
   actionHookStateIH,
   affiliateStateIH,
   buddybossStateIH,
@@ -170,6 +171,9 @@ export const saveIntegConfig = async (
   } else if (flow.triggered_entity === 'WCSubscriptions') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = WCSubscriptionsStateIH(tmpConf, dataFlow, flow.triggered_entity_id)
+  } else if (flow.triggered_entity === 'WCBookings') {
+    const dataFlow = edit ? flow?.flow_details : flow?.triggerData
+    tmpConf = WCBookingsStateIH(tmpConf, dataFlow, flow.triggered_entity_id)
   } else if (
     flow.triggered_entity === 'ActionHook' ||
     flow.triggered_entity === 'Spectra' ||
@@ -345,6 +349,9 @@ export const saveActionConf = async ({
   } else if (flow.triggered_entity === 'WCSubscriptions') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = WCSubscriptionsStateIH(tmpConf, dataFlow, flow.triggered_entity_id)
+  } else if (flow.triggered_entity === 'WCBookings') {
+    const dataFlow = edit ? flow?.flow_details : flow?.triggerData
+    tmpConf = WCBookingsStateIH(tmpConf, dataFlow, flow.triggered_entity_id)
   } else if (
     flow.triggered_entity === 'ActionHook' ||
     flow.triggered_entity === 'Spectra' ||
@@ -460,11 +467,13 @@ export const handleAuthorize = (
     return
   }
   setIsLoading(true)
-  const apiEndpoint = `https://accounts.zoho.${confTmp.dataCenter
-    }/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${confTmp.clientId
-    }&prompt=Consent&access_type=offline&state=${encodeURIComponent(
-      window.location.href
-    )}/redirect&redirect_uri=${encodeURIComponent(`${btcbi.api.base}`)}/redirect`
+  const apiEndpoint = `https://accounts.zoho.${
+    confTmp.dataCenter
+  }/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${
+    confTmp.clientId
+  }&prompt=Consent&access_type=offline&state=${encodeURIComponent(
+    window.location.href
+  )}/redirect&redirect_uri=${encodeURIComponent(`${btcbi.api.base}`)}/redirect`
   const authWindow = window.open(apiEndpoint, integ, 'width=400,height=609,toolbar=off')
   const popupURLCheckTimer = setInterval(() => {
     if (authWindow.closed) {
@@ -545,8 +554,9 @@ const tokenHelper = (
       ) {
         setSnackbar({
           show: true,
-          msg: `${__('Authorization failed Cause:', 'bit-integrations')}${result.data.data || result.data
-            }. ${__('please try again', 'bit-integrations')}`
+          msg: `${__('Authorization failed Cause:', 'bit-integrations')}${
+            result.data.data || result.data
+          }. ${__('please try again', 'bit-integrations')}`
         })
       } else {
         setSnackbar({
