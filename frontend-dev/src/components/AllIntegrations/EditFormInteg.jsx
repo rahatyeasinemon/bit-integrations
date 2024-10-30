@@ -386,7 +386,11 @@ function EditFormInteg({ setSnackbar, className = '' }) {
     }
 
     if (trigger === 'Voxel') {
-      if (data.triggered_entity_id === 'voxel-7' || data.triggered_entity_id === 'voxel-8') {
+      if (
+        data.triggered_entity_id === 'voxel-7' ||
+        data.triggered_entity_id === 'voxel-8' ||
+        data.triggered_entity_id === 'voxel-9'
+      ) {
         getVoxelPostTypes(data, setFlow)
       }
     }
