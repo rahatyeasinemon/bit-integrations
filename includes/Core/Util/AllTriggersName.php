@@ -81,6 +81,7 @@ final class AllTriggersName
             'Tripetto'          => ['name' => 'Tripetto',  'isPro' => true, 'is_active' => false],
             'TutorLms'          => ['name' => 'Tutor LMS',  'isPro' => true, 'is_active' => false],
             'UltimateMember'    => ['name' => 'UltimateMember',  'isPro' => true, 'is_active' => false],
+            'WCBookings'        => ['name' => 'WooCommerce Bookings',  'isPro' => true, 'is_active' => false],
             'WCSubscriptions'   => ['name' => 'WooCommerce Subscriptions',  'isPro' => true, 'is_active' => false],
             'Webhook'           => ['name' => 'Webhook',  'isPro' => true, 'is_active' => false],
             'WeForms'           => ['name' => 'WeForms',  'isPro' => true, 'is_active' => false],

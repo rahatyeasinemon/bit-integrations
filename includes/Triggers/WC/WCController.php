@@ -25,7 +25,7 @@ final class WCController
             'slug'           => $plugin_path,
             'pro'            => 'woocommerce/woocommerce.php',
             'type'           => 'form',
-            'is_active'      => is_plugin_active('woocommerce/woocommerce.php'),
+            'is_active'      => static::isActivate(),
             'activation_url' => wp_nonce_url(self_admin_url('plugins.php?action=activate&amp;plugin=' . $plugin_path . '&amp;plugin_status=all&amp;paged=1&amp;s'), 'activate-plugin_' . $plugin_path),
             'install_url'    => wp_nonce_url(self_admin_url('update.php?action=install-plugin&plugin=' . $plugin_path), 'install-plugin_' . $plugin_path),
             'list'           => [
@@ -43,17 +43,18 @@ final class WCController
 
     public function getAll()
     {
-        if (!class_exists('WooCommerce')) {
-            wp_send_json_error(wp_sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'WooCommerce'));
-        }
+        static::isPluginActivated();
 
         /**
-         * Deprecated SUbscriptions Events
+         * Deprecated Subscriptions Events
          * ['id' => 12, 'title' => __('User-Subscribes-Product', 'bit-integrations')],
          * ['id' => 13, 'title' => __('User-Cancel-Subscription-Product', 'bit-integrations')],
          * ['id' => 14, 'title' => __('Expired-Subscription-Product', 'bit-integrations')],
          * ['id' => 15, 'title' => __('Subscription-Product-Status-Change', 'bit-integrations')],
          * ['id' => 16, 'title' => __('Subscription-Trial-Period-End', 'bit-integrations')],
+         *
+         * Deprecated Bookings Events
+         * ['id' => 18, 'title' => __('Booking-Created', 'bit-integrations')]
          */
         $wc_action = [
             (object) ['id' => 1, 'title' => __('Customer-Create', 'bit-integrations')],
@@ -68,7 +69,6 @@ final class WCController
             (object) ['id' => 10, 'title' => __('Order-Specific-Product', 'bit-integrations'), 'note' => __('Flexible Checkout Fields are a feature available in the Pro version', 'bit-integrations')],
             (object) ['id' => 11, 'title' => __('Order-Status-Change-Specific-Status', 'bit-integrations'), 'note' => __('Flexible Checkout Fields are a feature available in the Pro version', 'bit-integrations')],
             (object) ['id' => 17, 'title' => __('Order-Specific-Category', 'bit-integrations'), 'note' => __('Flexible Checkout Fields are a feature available in the Pro version', 'bit-integrations')],
-            (object) ['id' => 18, 'title' => __('Booking-Created', 'bit-integrations')],
             (object) ['id' => 19, 'title' => __('User reviews a product', 'bit-integrations')],
             (object) ['id' => 20, 'title' => __('User purchases a variable product with selected variation', 'bit-integrations'), 'note' => __('Flexible Checkout Fields are a feature available in the Pro version', 'bit-integrations')],
         ];
@@ -78,9 +78,8 @@ final class WCController
 
     public function get_trigger_field($data)
     {
-        if (!class_exists('WooCommerce')) {
-            wp_send_json_error(wp_sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'WooCommerce'));
-        }
+        static::isPluginActivated();
+
         if (empty($data->id)) {
             wp_send_json_error(__('Doesn\'t exists', 'bit-integrations'));
         }
@@ -137,8 +136,6 @@ final class WCController
             $entity = 'product';
         } elseif ($id <= 11 || $id == 17 || $id == 20) {
             $entity = 'order';
-        } elseif ($id <= 18) {
-            $entity = 'booking';
         } elseif ($id <= 19) {
             $entity = 'review';
         }
@@ -488,114 +485,6 @@ final class WCController
             }
         } elseif ($entity === 'order') {
             $fields = WCStaticFields::getWCOrderFields($id);
-        } elseif ($entity === 'booking') {
-            $fields = [
-                'Product Id' => (object) [
-                    'fieldKey'  => 'product_id',
-                    'fieldName' => __('Product Id', 'bit-integrations')
-                ],
-                'Product Name' => (object) [
-                    'fieldKey'  => 'product_name',
-                    'fieldName' => __('Product Name', 'bit-integrations')
-                ],
-                'Product Slug' => (object) [
-                    'fieldKey'  => 'product_slug',
-                    'fieldName' => __('Product Slug', 'bit-integrations')
-                ],
-                'Product Type' => (object) [
-                    'fieldKey'  => 'product_type',
-                    'fieldName' => __('Product Type', 'bit-integrations')
-                ],
-                'Product status' => (object) [
-                    'fieldKey'  => 'product_status',
-                    'fieldName' => __('Product status', 'bit-integrations')
-                ],
-                'Product Featured' => (object) [
-                    'fieldKey'  => 'product_featured',
-                    'fieldName' => __('Product Featured', 'bit-integrations')
-                ],
-                'Product Description' => (object) [
-                    'fieldKey'  => 'product_description',
-                    'fieldName' => __('Product Description', 'bit-integrations')
-                ],
-                'Product Short Description' => (object) [
-                    'fieldKey'  => 'product_short_description',
-                    'fieldName' => __('Product Short Description', 'bit-integrations')
-                ],
-                'Product Price' => (object) [
-                    'fieldKey'  => 'product_price',
-                    'fieldName' => __('Product Price', 'bit-integrations')
-                ],
-                'Product Regular Price' => (object) [
-                    'fieldKey'  => 'product_regular_price',
-                    'fieldName' => __('Product Regular Price', 'bit-integrations')
-                ],
-                'Product Sale Price' => (object) [
-                    'fieldKey'  => 'product_sale_price',
-                    'fieldName' => __('Product Sale Price', 'bit-integrations')
-                ],
-                'total Sales' => (object) [
-                    'fieldKey'  => 'total_sales',
-                    'fieldName' => __('Total Sales', 'bit-integrations')
-                ],
-                'Product Quantity' => (object) [
-                    'fieldKey'  => 'product_quantity',
-                    'fieldName' => __('Product quantity', 'bit-integrations')
-                ],
-                'Product SKU' => (object) [
-                    'fieldKey'  => 'product_sku',
-                    'fieldName' => __('Product SKU', 'bit-integrations')
-                ],
-
-                'Product Categories Ids' => (object) [
-                    'fieldKey'  => 'product_categories_ids',
-                    'fieldName' => __('Product Categories Ids', 'bit-integrations')
-                ],
-                'Stock Status' => (object) [
-                    'fieldKey'  => 'stock_status',
-                    'fieldName' => __('Stock Status', 'bit-integrations')
-                ],
-                'Product Tags' => (object) [
-                    'fieldKey'  => 'product_tags',
-                    'fieldName' => __('Product Tags', 'bit-integrations')
-                ],
-                'Image Url' => (object) [
-                    'fieldKey'  => 'image_url',
-                    'fieldName' => __('Image Url', 'bit-integrations')
-                ],
-                'Cost' => (object) [
-                    'fieldKey'  => 'cost',
-                    'fieldName' => __('Cost', 'bit-integrations')
-                ],
-                'Display Cost' => (object) [
-                    'fieldKey'  => 'display_cost',
-                    'fieldName' => __('Display Cost', 'bit-integrations')
-                ],
-                'Qty' => (object) [
-                    'fieldKey'  => 'qty',
-                    'fieldName' => __('Qty', 'bit-integrations')
-                ],
-                'Customer Id' => (object) [
-                    'fieldKey'  => 'customer_id',
-                    'fieldName' => __('Customer Id', 'bit-integrations')
-                ],
-                'Customer First Name' => (object) [
-                    'fieldKey'  => 'customer_first_name',
-                    'fieldName' => __('Customer First Name', 'bit-integrations')
-                ],
-                'Customer Last Name' => (object) [
-                    'fieldKey'  => 'customer_last_name',
-                    'fieldName' => __('Customer Last Name', 'bit-integrations')
-                ],
-                'Customer Email' => (object) [
-                    'fieldKey'  => 'customer_email',
-                    'fieldName' => __('Customer Email', 'bit-integrations')
-                ],
-                'Customer Nickname' => (object) [
-                    'fieldKey'  => 'customer_nickname',
-                    'fieldName' => __('Customer Nickname', 'bit-integrations')
-                ],
-            ];
         } elseif ($entity == 'review') {
             $fields = WCHelper::getReviewFields();
         }
@@ -688,9 +577,14 @@ final class WCController
 
     public static function handle_customer_create($customer_id, $importType)
     {
+        if (!static::isActivate()) {
+            return false;
+        }
+
         if (isset($importType['role']) && $importType['role'] !== 'customer') {
             return false;
         }
+
         $customer_data = (array) get_userdata($customer_id)->data;
         $customer_metadata = self::formatUserMetaData(get_user_meta($customer_id));
         $customer_values = array_merge_recursive($customer_data, $customer_metadata);
@@ -702,6 +596,10 @@ final class WCController
 
     public static function handle_customer_update($customer_id, $oldData, $newData)
     {
+        if (!static::isActivate()) {
+            return false;
+        }
+
         if (isset($importType['role']) && $newData['role'] !== 'customer') {
             return false;
         }
@@ -722,6 +620,10 @@ final class WCController
 
     public static function handle_customer_delete($customer_id)
     {
+        if (!static::isActivate() || empty($customer_id)) {
+            return false;
+        }
+
         $user_meta = get_userdata($customer_id);
         $user_roles = $user_meta->roles;
         if (isset($importType['role']) && \in_array('customer', $user_roles)) {
@@ -735,9 +637,10 @@ final class WCController
 
     public static function handle_product_action($new_status, $old_status, $post)
     {
-        if (!class_exists('WooCommerce')) {
+        if (!static::isActivate()) {
             return false;
         }
+
         if ($old_status === 'new') {
             return false;
         }
@@ -769,6 +672,10 @@ final class WCController
 
     public static function handle_product_save_post($post_id, $post, $update)
     {
+        if (!static::isActivate()) {
+            return false;
+        }
+
         if (wc_get_product($post_id) == false || $post->post_type != 'product' || $post->post_status != 'publish') {
             return false;
         }
@@ -936,9 +843,8 @@ final class WCController
             'payment_method_title'        => $order->get_payment_method_title(),
             'status'                      => $order->get_status(),
             'checkout_order_received_url' => $order->get_checkout_order_received_url(),
-            'customer_note'               => $order->get_customer_note()
         ];
-        if (version_compare(WC_VERSION, '8.5.1', '>=')) {
+        if (\defined('WC_VERSION') && version_compare(WC_VERSION, '8.5.1', '>=')) {
             $data += [
                 '_wc_order_attribution_referrer'           => $order->get_meta('_wc_order_attribution_referrer'),
                 '_wc_order_attribution_user_agent'         => $order->get_meta('_wc_order_attribution_user_agent'),
@@ -1002,7 +908,7 @@ final class WCController
 
     public static function handle_order_create($order_id, $fields)
     {
-        if (!is_plugin_active('woocommerce/woocommerce.php')) {
+        if (!static::isActivate()) {
             return false;
         }
 
@@ -1098,7 +1004,7 @@ final class WCController
 
     public static function handle_order_update($order_id, $post, $update)
     {
-        if (!class_exists('WooCommerce')) {
+        if (!static::isActivate()) {
             return false;
         }
 
@@ -1146,6 +1052,10 @@ final class WCController
 
     public static function handle_order_delete($order_id)
     {
+        if (!static::isActivate() || empty($order_id)) {
+            return false;
+        }
+
         $post_type = get_post_type($order_id);
         if ($post_type !== 'shop_order') {
             return false;
@@ -1158,7 +1068,7 @@ final class WCController
 
     public static function handle_order_status_change($order_id, $from_status, $to_status, $this_order)
     {
-        if (!class_exists('WooCommerce')) {
+        if (!static::isActivate()) {
             return false;
         }
 
@@ -1217,6 +1127,10 @@ final class WCController
 
     public static function handle_subscription_create($subscription)
     {
+        if (!static::isActivate()) {
+            return false;
+        }
+
         $flows = Flow::exists('WC', 12);
 
         if (empty($flows)) {
@@ -1259,6 +1173,10 @@ final class WCController
 
     public static function handle_subscription_cancel($subscription)
     {
+        if (!static::isActivate()) {
+            return false;
+        }
+
         $flows = Flow::exists('WC', 13);
         $flowsDetailData = $flows[0]->flow_details;
         $flowsDetail = json_decode($flowsDetailData);
@@ -1296,6 +1214,10 @@ final class WCController
 
     public static function handle_subscription_expired($subscription)
     {
+        if (!static::isActivate()) {
+            return false;
+        }
+
         $flows = Flow::exists('WC', 14);
         $flowsDetailData = $flows[0]->flow_details;
         $flowsDetail = json_decode($flowsDetailData);
@@ -1333,6 +1255,10 @@ final class WCController
 
     public static function handle_subscription_status_change($subscription, $new_status, $old_status)
     {
+        if (!static::isActivate()) {
+            return false;
+        }
+
         $flows = Flow::exists('WC', 15);
         $flowsDetailData = $flows[0]->flow_details;
         $flowsDetail = json_decode($flowsDetailData);
@@ -1386,9 +1312,10 @@ final class WCController
 
     public static function handle_subscription_trial_period_end($subscription_id)
     {
-        if (!\function_exists('wcs_get_subscription')) {
+        if (!static::isActivate() || !\function_exists('wcs_get_subscription')) {
             return;
         }
+
         $subscription = wcs_get_subscription($subscription_id);
         $flows = Flow::exists('WC', 16);
         $flowsDetailData = $flows[0]->flow_details;
@@ -1427,7 +1354,7 @@ final class WCController
 
     public static function handle_booking_create($booking_id)
     {
-        if (!is_plugin_active('woocommerce-bookings/woocommerce-bookings.php')) {
+        if (!static::isActivate() || !is_plugin_active('woocommerce-bookings/woocommerce-bookings.php')) {
             return false;
         }
         $booking = new WC_Booking($booking_id);
@@ -1447,6 +1374,10 @@ final class WCController
 
     public static function handle_insert_comment($comment_id, $comment_approved, $commentdata)
     {
+        if (!static::isActivate() || empty($comment_id)) {
+            return false;
+        }
+
         $flows = Flow::exists('WC', 19);
         if (!$flows) {
             return;
@@ -1487,8 +1418,13 @@ final class WCController
 
     public static function handle_variable_product_order($order_id, $importType)
     {
+        if (!static::isActivate()) {
+            return false;
+        }
+
         $flows = Flow::exists('WC', 20);
-        if (!$flows || !is_plugin_active('woocommerce/woocommerce.php')) {
+
+        if (!$flows) {
             return false;
         }
 
@@ -1524,7 +1460,7 @@ final class WCController
 
     public static function handle_order_checkout($order)
     {
-        if (!is_plugin_active('woocommerce/woocommerce.php')) {
+        if (!static::isActivate()) {
             return false;
         }
 
@@ -1703,5 +1639,17 @@ final class WCController
     {
         $allVariation = WCHelper::getAllVariations($requestPrarams->product_id);
         wp_send_json_success($allVariation, 200);
+    }
+
+    private static function isPluginActivated()
+    {
+        if (!static::isActivate()) {
+            wp_send_json_error(\sprintf(__('%s is not installed or activated', 'bit-integrations-pro'), 'WooCommerce'));
+        }
+    }
+
+    private static function isActivate()
+    {
+        return class_exists('WooCommerce');
     }
 }

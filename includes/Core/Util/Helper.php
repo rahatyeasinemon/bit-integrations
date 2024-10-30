@@ -289,12 +289,12 @@ final class Helper
 
     public static function acfGetFieldGroups($type = [])
     {
-        if (class_exists('ACF')) {
-            return array_filter(acf_get_field_groups(), function ($group) use ($type) {
-                return $group['active'] && isset($group['location'][0][0]['value']) && \is_array($type) && \in_array($group['location'][0][0]['value'], $type);
-            });
-        } else {
+        if (!class_exists('ACF')) {
             return [];
         }
+
+        return array_filter(acf_get_field_groups(), function ($group) use ($type) {
+            return $group['active'] && isset($group['location'][0][0]['value']) && \is_array($type) && \in_array($group['location'][0][0]['value'], $type);
+        });
     }
 }
