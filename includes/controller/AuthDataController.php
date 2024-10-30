@@ -12,12 +12,12 @@ final class AuthDataController
         $tokenDetails = wp_json_encode($requestParams->tokenDetails);
         $userInfo = wp_json_encode($requestParams->userInfo);
 
-        if (empty($actionName) || empty($tokenDetails) || empty($userInfo)) {
-            return;
-        }
-
         $sanitizedTokenDetails = sanitize_text_field($tokenDetails);
         $sanitizedUserInfo = sanitize_text_field($userInfo);
+
+        if (empty($actionName) || empty($sanitizedTokenDetails) || empty($sanitizedUserInfo)) {
+            return;
+        }
 
         $authModel = new AuthModel();
         $authModel->insert(
