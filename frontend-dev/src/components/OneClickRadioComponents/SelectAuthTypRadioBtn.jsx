@@ -10,7 +10,7 @@ const SelectAuthTypRadioBtn = ({ name, options, selectedAuthType, handleChange }
             name={name}
             value={option}
             checked={selectedAuthType === option}
-            onClick={() => handleChange(option)}
+            onChange={() => handleChange(option)}
             className="radio-input"
           />
           {option}
