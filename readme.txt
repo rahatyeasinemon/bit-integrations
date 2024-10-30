@@ -1009,10 +1009,10 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 == Changelog ==
 
 = 2.3.2  =
-_Release Date -23th October 2024_
+_Release Date -30th October 2024_
 
 - **New Trigger :**
-  - WooCommerce Bookings: Added support for WooCommerce Bookings trigger, allowing you to automate workflows based on new bookings and other related events.
+  - WooCommerce Bookings: Added support for WooCommerce Bookings trigger, allowing you to automate workflows based on new bookings and other related events. (Pro)
 
 - **New Features :**
   - OneClick Authorization feature added in GoogleSheet Action.

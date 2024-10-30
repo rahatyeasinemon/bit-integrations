@@ -36,7 +36,7 @@ export default function ChangelogToggle() {
       label: __('New Triggers', 'bit-integrations'),
       headClass: 'new-integration',
       itemClass: 'integration-list',
-      items: ['WooCommerce Bookings']
+      items: ['WooCommerce Bookings (Pro)']
     },
     {
       label: __('New Features', 'bit-integrations'),
@@ -134,7 +134,7 @@ export default function ChangelogToggle() {
               <div className="flx flx-col flx-center whats-new">
                 <h3>{sprintf(__("What's New in %s", 'bit-integrations'), btcbi.version)}?</h3>
                 <small className="date">
-                  {__('Updated at:', 'bit-integrations')} <b>23th October 2024</b>
+                  {__('Updated at:', 'bit-integrations')} <b>30th October 2024</b>
                 </small>
               </div>
               <div className="changelog-content">
