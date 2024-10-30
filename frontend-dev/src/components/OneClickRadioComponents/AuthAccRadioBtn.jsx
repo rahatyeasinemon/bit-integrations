@@ -51,9 +51,9 @@ const AuthAccRadioBtn = ({ authData, setAuthData, selectedUserIndex, setSelected
   }, []);
 
   useEffect(() => {
-    if (authData.length === 1) { //if their is only one authorized account.
+    if (authData.length === 1 && !isInfo) { //if their is only one authorized account.
       setSelectedUserIndex(0);
-    } else if (selectedUserIndex === null) {  //if no account is selected. 
+    } else if (selectedUserIndex === null && !isInfo) {  //if no account is selected. 
       setSelectedUserIndex(authData.length - 1);
     }
   }, [authData]);
