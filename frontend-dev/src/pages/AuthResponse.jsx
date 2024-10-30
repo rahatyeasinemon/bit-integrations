@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
-import { useRecoilState } from 'recoil'
+import { useSetRecoilState } from 'recoil'
 import { authInfoAtom } from '../GlobalStates'
 
 // popup window: render when redirected from oauth to bit-integration with code
 export default function AuthResponse() {
-  const [, setAuthInfo] = useRecoilState(authInfoAtom)
+  const setAuthInfo = useSetRecoilState(authInfoAtom)
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.hash)
