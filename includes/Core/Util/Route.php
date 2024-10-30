@@ -64,6 +64,9 @@ final class Route
                     if (isset($_SERVER['CONTENT_TYPE']) && strpos(sanitize_text_field($_SERVER['CONTENT_TYPE']), 'form-data') === false && strpos(sanitize_text_field($_SERVER['CONTENT_TYPE']), 'x-www-form-urlencoded') === false) {
                         $inputJSON = file_get_contents('php://input');
                         $data = \is_string($inputJSON) ? json_decode($inputJSON) : $inputJSON;
+                    } elseif ($_POST['data']) {
+                        $data = \is_string($_POST['data']) ? json_decode(wp_unslash($_POST['data'])) : $_POST['data'];
+                        error_log(print_r([$_POST, $data], true));
                     } else {
                         $data = (object) $_POST;
                     }
