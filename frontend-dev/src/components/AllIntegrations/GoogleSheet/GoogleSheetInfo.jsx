@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import bitsFetch from "../../../Utils/bitsFetch";
 import { __ } from "../../../Utils/i18nwrap";
-import AuthAccRadioBtn from "../../OneClickRadioComponents/AuthAccRadioBtn";
+import AuthorizationAccountList from "../../OneClickRadioComponents/AuthorizationAccountList";
 
 
 export default function GoogleSheetInfo({ sheetConf, isInfo }) {
@@ -36,7 +36,7 @@ export default function GoogleSheetInfo({ sheetConf, isInfo }) {
       {(sheetConf.tokenDetails.selectedAuthType == 'One Click Authorization' && authData.length !== 0) && (
         <div>
           <h3>Account Details <small>(One Click Authorization)</small> </h3>
-          <AuthAccRadioBtn
+          <AuthorizationAccountList
             authData={authData}
             isInfo={isInfo}
           />

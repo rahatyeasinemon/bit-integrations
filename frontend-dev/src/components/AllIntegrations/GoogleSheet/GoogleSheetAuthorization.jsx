@@ -9,7 +9,7 @@ import { handleAuthorize, refreshSpreadsheets, tokenHelper } from './GoogleSheet
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
 import SelectAuthTypRadioBtn from '../../OneClickRadioComponents/SelectAuthTypRadioBtn'
-import AuthAccRadioBtn from '../../OneClickRadioComponents/AuthAccRadioBtn'
+import AuthorizationAccountList from '../../OneClickRadioComponents/AuthorizationAccountList'
 import bitsFetch from '../../../Utils/bitsFetch'
 import Loader from '../../Loaders/Loader'
 
@@ -196,7 +196,7 @@ export default function GoogleSheetAuthorization({
       {authData.length > 0 &&
         <>
           <h2>Choose your connected account</h2>
-          <AuthAccRadioBtn
+          <AuthorizationAccountList
             authData={authData}
             setAuthData={setAuthData}
             selectedUserIndex={selectedUserIndex}

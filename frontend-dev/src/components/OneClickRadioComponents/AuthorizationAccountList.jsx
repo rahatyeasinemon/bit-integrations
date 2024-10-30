@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import bitsFetch from '../../Utils/bitsFetch';
 import TrashIcn from '../../Icons/TrashIcn';
 
-const AuthAccRadioBtn = ({ authData, setAuthData, selectedUserIndex, setSelectedUserIndex, isInfo, setIsLoading }) => {
+const AuthorizationAccountList = ({ authData, setAuthData, selectedUserIndex, setSelectedUserIndex, isInfo, setIsLoading }) => {
   const [showConfirm, setShowConfirm] = useState(null);
   const popoverRef = useRef(null); // Ref to the popover container
 
@@ -102,4 +102,4 @@ const AuthAccRadioBtn = ({ authData, setAuthData, selectedUserIndex, setSelected
   );
 };
 
-export default AuthAccRadioBtn;
+export default AuthorizationAccountList;
