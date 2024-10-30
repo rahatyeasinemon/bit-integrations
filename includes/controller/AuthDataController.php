@@ -9,18 +9,18 @@ final class AuthDataController
     public function saveAuthData($requestParams)
     {
         $actionName = sanitize_text_field($requestParams->actionName);
-        $tokenDetails = $requestParams->tokenDetails;
-        $userInfo = $requestParams->userInfo;
+        $tokenDetails = wp_json_encode($requestParams->tokenDetails);
+        $userInfo = wp_json_encode($requestParams->userInfo);
 
         if (empty($actionName) || empty($tokenDetails) || empty($userInfo)) {
             return;
         }
 
-        $sanitizedTokenDetails = \is_string($tokenDetails) ? sanitize_text_field($tokenDetails) : wp_json_encode($tokenDetails);
-        $sanitizedUserInfo = \is_string($userInfo) ? sanitize_text_field($userInfo) : wp_json_encode($userInfo);
+        $sanitizedTokenDetails = sanitize_text_field($tokenDetails);
+        $sanitizedUserInfo = sanitize_text_field($userInfo);
 
         $authModel = new AuthModel();
-        $response = $authModel->insert(
+        $authModel->insert(
             [
                 'action_name'  => $actionName,
                 'tokenDetails' => $sanitizedTokenDetails,
