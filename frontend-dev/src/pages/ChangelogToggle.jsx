@@ -22,8 +22,8 @@ export default function ChangelogToggle() {
   const changeLog = [
     {
       label: __('Note', 'bit-integrations'),
-      headClass: 'new-integration',
-      itemClass: 'integration-list',
+      headClass: 'new-note',
+      itemClass: '',
       items: ['Deprecated Old WooCommerce Booking Triggers']
     },
     {
@@ -34,7 +34,7 @@ export default function ChangelogToggle() {
     },
     {
       label: __('New Triggers', 'bit-integrations'),
-      headClass: 'new-integration',
+      headClass: 'new-trigger',
       itemClass: 'integration-list',
       items: ['WooCommerce Bookings (Pro)']
     },
@@ -48,8 +48,8 @@ export default function ChangelogToggle() {
     },
     {
       label: __('New Improvements', 'bit-integrations'),
-      headClass: 'new-integration',
-      itemClass: 'integration-list',
+      headClass: 'new-improvement',
+      itemClass: 'feature-list',
       items: [
         'WP Post Creation: Enhanced the feature image upload process, now supporting improved handling of third-party public URLs.'
       ]
