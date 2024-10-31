@@ -4,9 +4,10 @@ import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
-import { demioAuthentication, getAllEvents } from './LMFWCCommonFunc'
+import { lmfwcAuthentication, getAllEvents } from './LMFWCCommonFunc'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
+import CopyText from '../../Utilities/CopyText'
 
 export default function LMFWCAuthorization({
   licenseManagerConf,
@@ -41,13 +42,16 @@ export default function LMFWCAuthorization({
   }
 
   const ActiveInstructions = `
-            <h4>${__('To Get API Key & API Secret', 'bit-integrations')}</h4>
+            <b>${__('Requirements', 'bit-integrations')}</b>
+            <p>${__('WordPress permalinks must be enabled at', 'bit-integrations')}: <b>${__('Settings', 'bit-integrations')}</b> > <b>${__('Permalinks', 'bit-integrations')}</b></p>
+            <h4>${__('To Get Consumer key & Consumer secret', 'bit-integrations')}</h4>
             <ul>
-                <li>${__('First go to your LMFWC dashboard.', 'bit-integrations')}</li>
-                <li>${__('Click go to "Settings" from Right Top corner', 'bit-integrations')}</li>
-                <li>${__('Then Click "API" from the "Settings Menu"', 'bit-integrations')}</li>
-                <li>${__('Then Click "Generate Api Secret"', 'bit-integrations')}</li>
-                <li>${__('Then copy "API Authorization Credentials"', 'bit-integrations')}</li>
+                <li>${__('First go to "WooCommerce"', 'bit-integrations')}</li>
+                <li>${__('Then go to "Settings" page', 'bit-integrations')}</li>
+                <li>${__('Click on "License Manager " from right top corner menu', 'bit-integrations')}</li>
+                <li>${__('Then click "REST API" from the top sub menu', 'bit-integrations')}</li>
+                <li>${__('Then click "Add key" button at the top of the page', 'bit-integrations')}</li>
+                <li>${__('FIll the form & click "Generate API Key"', 'bit-integrations')}</li>
             </ul>`
 
   return (
@@ -71,7 +75,20 @@ export default function LMFWCAuthorization({
       />
 
       <div className="mt-3">
-        <b>{__('API Key:', 'bit-integrations')}</b>
+        <b>{__('Homepage URL:', 'bit-integrations')}</b>
+      </div>
+      <input
+        className="btcd-paper-inp w-6 mt-1"
+        onChange={handleInput}
+        name="baseUrl"
+        value={licenseManagerConf.baseUrl}
+        type="text"
+        placeholder={__('Homepage URL...', 'bit-integrations')}
+        disabled={isInfo}
+      />
+
+      <div className="mt-3">
+        <b>{__('Consumer key:', 'bit-integrations')}</b>
       </div>
       <input
         className="btcd-paper-inp w-6 mt-1"
@@ -79,13 +96,13 @@ export default function LMFWCAuthorization({
         name="api_key"
         value={licenseManagerConf.api_key}
         type="text"
-        placeholder={__('API Key...', 'bit-integrations')}
+        placeholder={__('Consumer key...', 'bit-integrations')}
         disabled={isInfo}
       />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.api_key}</div>
 
       <div className="mt-3">
-        <b>{__('API Secret:', 'bit-integrations')}</b>
+        <b>{__('Consumer secret:', 'bit-integrations')}</b>
       </div>
       <input
         className="btcd-paper-inp w-6 mt-1"
@@ -93,29 +110,17 @@ export default function LMFWCAuthorization({
         name="api_secret"
         value={licenseManagerConf.api_secret}
         type="text"
-        placeholder={__('API Secret...', 'bit-integrations')}
+        placeholder={__('Consumer secret...', 'bit-integrations')}
         disabled={isInfo}
       />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.api_secret}</div>
-
-      <small className="d-blk mt-3">
-        {__('To Get API Key & API Secret, Please Visit', 'bit-integrations')}
-        &nbsp;
-        <a
-          className="btcd-link"
-          href="https://my.demio.com/manage/settings/api-details"
-          target="_blank">
-          {__('LMFWC API Key & Secret', 'bit-integrations')}
-        </a>
-      </small>
-      <br />
       <br />
 
       {!isInfo && (
         <div>
           <button
             onClick={() =>
-              demioAuthentication(
+              lmfwcAuthentication(
                 licenseManagerConf,
                 setLicenseManagerConf,
                 setError,
