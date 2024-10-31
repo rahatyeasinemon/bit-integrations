@@ -189,6 +189,9 @@ const HighLevelAuthorization = lazy(() => import('./HighLevel/HighLevelAuthoriza
 const TheEventsCalendarAuthorization = lazy(
   () => import('./TheEventsCalendar/TheEventsCalendarAuthorization')
 )
+const LMFWCAuthorization = lazy(
+  () => import('./LMFWC/LMFWCAuthorization')
+)
 
 export default function IntegInfo() {
   const { id, type } = useParams()
@@ -577,6 +580,10 @@ export default function IntegInfo() {
       case 'The Events Calendar':
         return (
           <TheEventsCalendarAuthorization theEventsCalendarConf={integrationConf} step={1} isInfo />
+        )
+      case 'License Manager For WooCommerce':
+        return (
+          <LMFWCAuthorization theEventsCalendarConf={integrationConf} step={1} isInfo />
         )
       default:
         return <></>
