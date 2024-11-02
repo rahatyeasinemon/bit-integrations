@@ -85,6 +85,23 @@ class RecordApiHelper
         return $response;
     }
 
+    public function activateLicense($finalData)
+    {
+        $this->type = 'Activate license';
+        $this->typeName = 'Activate license';
+
+        if (empty($finalData['license_key'])) {
+            return ['success' => false, 'message' => __('Required field license key is empty', 'bit-integrations'), 'code' => 400];
+        }
+
+        $response = apply_filters('btcbi_lmfwc_activate_licence', false, $this->apiUrl, $finalData['license_key'], $this->defaultHeader);
+        if (!$response) {
+            return (object) ['message' => wp_sprintf(__('%s plugin is not installed or activate', 'bit-integrations'), 'Bit Integration Pro')];
+        }
+
+        return $response;
+    }
+
     public function generateReqDataFromFieldMap($data, $fieldMap)
     {
         $dataFinal = [];
@@ -105,8 +122,10 @@ class RecordApiHelper
             $apiResponse = $this->createLicense($finalData);
         } elseif ($module === 'update_license') {
             $apiResponse = $this->updateLicense($finalData);
+        } elseif ($module === 'activate_license') {
+            $apiResponse = $this->activateLicense($finalData);
         }
-
+        error_log(print_r($apiResponse, true));
         if (isset($apiResponse->success) && $apiResponse->success) {
             $res = [$this->typeName . '  successfully'];
 
