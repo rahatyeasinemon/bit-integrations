@@ -67,7 +67,7 @@ export default function LMFWCIntegLayout({
           draftConf.field_map = generateMappedField(draftConf.lmfwcFields)
         } else if (name === 'module' && (val === 'create_generator' || val === 'update_generator')) {
           if (val === 'update_generator') {
-            draftConf.lmfwcFields = draftConf.generatorFields.filter(fields => {
+            draftConf.lmfwcFields = draftConf.generatorFields.map(fields => {
               return { ...fields, required: false }
             })
           } else {

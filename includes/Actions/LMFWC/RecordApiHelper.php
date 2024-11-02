@@ -98,10 +98,10 @@ class RecordApiHelper
         return $response;
     }
 
-    public function createGenerator($finalData)
+    public function updateGenerator($finalData)
     {
-        $this->type = 'Create generator';
-        $this->typeName = 'Create generator';
+        $this->type = 'Update generator';
+        $this->typeName = 'Update generator';
 
         if (empty($this->integrationDetails->selectedGenerator)) {
             return ['success' => false, 'message' => __('Required field Generator is empty', 'bit-integrations'), 'code' => 400];
@@ -115,7 +115,7 @@ class RecordApiHelper
         return $response;
     }
 
-    public function updateGenerator($finalData)
+    public function createGenerator($finalData)
     {
         $this->type = 'Create generator';
         $this->typeName = 'Create generator';
