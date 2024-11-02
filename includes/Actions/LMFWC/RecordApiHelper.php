@@ -53,6 +53,15 @@ class RecordApiHelper
         if (isset($this->integrationDetails->selectedStatus) || !empty($this->integrationDetails->selectedStatus)) {
             $finalData['status'] = $this->integrationDetails->selectedStatus;
         }
+        if (isset($this->integrationDetails->selectedCustomer) || !empty($this->integrationDetails->selectedCustomer)) {
+            $finalData['user_id'] = $this->integrationDetails->selectedCustomer;
+        }
+        if (isset($this->integrationDetails->selectedOrder) || !empty($this->integrationDetails->selectedOrder)) {
+            $finalData['order_id'] = $this->integrationDetails->selectedOrder;
+        }
+        if (isset($this->integrationDetails->selectedProduct) || !empty($this->integrationDetails->selectedProduct)) {
+            $finalData['product_id'] = $this->integrationDetails->selectedProduct;
+        }
 
         $apiEndpoint = $this->apiUrl . '/licenses';
 
