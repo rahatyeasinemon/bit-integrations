@@ -34,27 +34,19 @@ class LMFWCController
         wp_send_json_error(!empty($response->message) ? $response->message : __('Please enter valid Consumer key & Consumer secret', 'bit-integrations'), 400);
     }
 
-    public function getAllEvents($fieldsRequestParams)
+    public function getAllCustomers($fieldsRequestParams)
     {
         $this->checkValidation($fieldsRequestParams);
         $this->setHeaders($fieldsRequestParams->api_key, $fieldsRequestParams->api_secret);
-        $apiEndpoint = $this->_apiEndpoint . '/events';
-        $response = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
 
-        if (!isset($response->errors)) {
-            $events = [];
-            foreach ($response as $event) {
-                $events[]
-                = (object) [
-                    'id'   => $event->id,
-                    'name' => $event->name
-                ]
-                ;
-            }
-            wp_send_json_success($events, 200);
-        } else {
-            wp_send_json_error(__('Events fetching failed', 'bit-integrations'), 400);
-        }
+        $customers = get_users([
+            'role'   => 'customer',
+            'number' => -1,
+        ]);
+
+        wp_send_json_success(array_map(function ($customer) {
+            return ['id' => $customer->ID, 'name' => $customer->display_name];
+        }, $customers), 200);
     }
 
     public function getAllSessions($fieldsRequestParams)

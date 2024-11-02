@@ -83,32 +83,33 @@ export const lmfwcAuthentication = (
   })
 }
 
-export const getAllEvents = (confTmp, setConf, setLoading) => {
-  setLoading({ ...setLoading, event: true })
+export const getAllCustomer = (confTmp, setConf, setLoading) => {
+  setLoading({ ...setLoading, customer: true })
 
   const requestParams = {
+    base_url: confTmp.base_url,
     api_key: confTmp.api_key,
     api_secret: confTmp.api_secret
   }
 
-  bitsFetch(requestParams, 'lmfwc_fetch_all_events').then((result) => {
+  bitsFetch(requestParams, 'lmfwc_fetch_all_customer').then((result) => {
     if (result && result.success) {
       if (result.data) {
         setConf((prevConf) => {
-          prevConf.events = result.data
+          prevConf.customers = result.data
           return prevConf
         })
 
-        setLoading({ ...setLoading, event: false })
-        toast.success(__('Events fetched successfully', 'bit-integrations'))
+        setLoading({ ...setLoading, customer: false })
+        toast.success(__('Customers fetched successfully', 'bit-integrations'))
         return
       }
-      setLoading({ ...setLoading, event: false })
-      toast.error(__('Events Not Found!', 'bit-integrations'))
+      setLoading({ ...setLoading, customer: false })
+      toast.error(__('Customers Not Found!', 'bit-integrations'))
       return
     }
-    setLoading({ ...setLoading, event: false })
-    toast.error(__('Events fetching failed', 'bit-integrations'))
+    setLoading({ ...setLoading, customer: false })
+    toast.error(__('Customers fetching failed', 'bit-integrations'))
   })
 }
 

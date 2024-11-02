@@ -3,7 +3,7 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
-import { generateMappedField, getAllEvents, getAllSessions } from './LMFWCCommonFunc'
+import { generateMappedField, getAllCustomer } from './LMFWCCommonFunc'
 import LMFWCFieldMap from './LMFWCFieldMap'
 import { addFieldMap } from './IntegrationHelpers'
 import { useRecoilValue } from 'recoil'
@@ -30,9 +30,10 @@ export default function LMFWCIntegLayout({
       draftConf[name] = val
 
       if (name === 'module' && val === 'create_license') {
+        getAllCustomer(licenseManagerConf, setLicenseManagerConf, setLoading)
+
         draftConf.lmfwcFields = draftConf.licenseFields
         draftConf.field_map = generateMappedField(draftConf.licenseFields)
-
         draftConf.module_note = `<p><b>${__('Note', 'bit-integrations')}</b>: ${__('You can also use Valid for (the number of days) instead of Expires at', 'bit-integrations')}, <b>${__('please do not use both at a time', 'bit-integrations')}</b></p>`
       }
     }))
@@ -61,7 +62,7 @@ export default function LMFWCIntegLayout({
         />
       </div>
 
-      {(isLoading || loading.event || loading.session) && (
+      {(isLoading || loading.customer || loading.session) && (
         <Loader
           style={{
             display: 'flex',
@@ -73,7 +74,7 @@ export default function LMFWCIntegLayout({
         />
       )}
 
-      {licenseManagerConf?.module && licenseManagerConf.module === "create_license" && !loading.event && (
+      {licenseManagerConf?.module && licenseManagerConf.module === "create_license" && !isLoading && (
         <>
           <br />
           <br />
@@ -95,40 +96,34 @@ export default function LMFWCIntegLayout({
               closeOnSelect
             />
           </div>
-        </>
-      )}
-
-      {/* {licenseManagerConf.module && licenseManagerConf.selectedEvent && !loading.session && (
-        <>
-          <br />
           <br />
           <div className="flx">
-            <b className="wdt-200 d-in-b">{__('Select Session:', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select Customer:', 'bit-integrations')}</b>
             <MultiSelect
               options={
-                licenseManagerConf?.sessions &&
-                licenseManagerConf.sessions.map((session) => ({
-                  label: session.datetime,
-                  value: `${session.date_id}`
+                licenseManagerConf?.customers &&
+                licenseManagerConf.customers.map((session) => ({
+                  label: session.name,
+                  value: `${session.id}`
                 }))
               }
               className="msl-wrp-options dropdown-custom-width"
               defaultValue={licenseManagerConf?.selectedSession}
-              onChange={(val) => setChanges(val, 'selectedSession')}
+              onChange={(val) => setChanges(val, 'selectedCustomer')}
               singleSelect
               closeOnSelect
             />
             <button
-              onClick={() => getAllSessions(licenseManagerConf, setLicenseManagerConf, setLoading)}
+              onClick={() => getAllCustomer(licenseManagerConf, setLicenseManagerConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
-              style={{ '--tooltip-txt': `'${__('Refresh Sessions', 'bit-integrations')}'` }}
+              style={{ '--tooltip-txt': `'${__('Refresh Customers', 'bit-integrations')}'` }}
               type="button"
-              disabled={loading.event}>
+              disabled={loading.customer}>
               &#x21BB;
             </button>
           </div>
         </>
-      )} */}
+      )}
       {licenseManagerConf.module && !isLoading && (
         <div>
           <br />
