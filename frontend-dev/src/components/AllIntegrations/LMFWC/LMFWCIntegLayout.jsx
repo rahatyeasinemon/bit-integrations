@@ -3,7 +3,7 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
-import { generateMappedField, getAllCustomer, getAllOrder, getAllProduct } from './LMFWCCommonFunc'
+import { generateMappedField, getAllCustomer, getAllLicense, getAllOrder, getAllProduct } from './LMFWCCommonFunc'
 import LMFWCFieldMap from './LMFWCFieldMap'
 import { addFieldMap } from './IntegrationHelpers'
 import { useRecoilValue } from 'recoil'
@@ -29,12 +29,17 @@ export default function LMFWCIntegLayout({
     setLicenseManagerConf(prevConf => create(prevConf, draftConf => {
       draftConf[name] = val
 
-      if (name === 'module' && val === 'create_license') {
+      if (name === 'module' && (val === 'create_license' || val === 'update_license')) {
         getAllCustomer(licenseManagerConf, setLicenseManagerConf, setLoading)
         getAllProduct(licenseManagerConf, setLicenseManagerConf, setLoading)
         getAllOrder(licenseManagerConf, setLicenseManagerConf, setLoading)
 
-        draftConf.lmfwcFields = draftConf.licenseFields
+        if (val === 'update_license') {
+          getAllLicense(licenseManagerConf, setLicenseManagerConf, setLoading)
+          draftConf.licenseFields = [{ label: __('License key', 'bit-integrations'), key: 'license_key', required: false }]
+        }
+
+        draftConf.lmfwcFields = [...draftConf.licenseFields, ...draftConf.generalFields]
         draftConf.field_map = generateMappedField(draftConf.licenseFields)
         draftConf.module_note = `<p><b>${__('Note', 'bit-integrations')}</b>: ${__('You can also use Valid for (the number of days) instead of Expires at', 'bit-integrations')}, <b>${__('please do not use both at a time', 'bit-integrations')}</b></p>`
       }
@@ -64,7 +69,7 @@ export default function LMFWCIntegLayout({
         />
       </div>
 
-      {(isLoading || loading.customer || loading.product) && (
+      {(isLoading || loading.customer || loading.product || loading.license) && (
         <Loader
           style={{
             display: 'flex',
@@ -76,7 +81,34 @@ export default function LMFWCIntegLayout({
         />
       )}
 
-      {licenseManagerConf?.module && licenseManagerConf.module === "create_license" && !isLoading && (
+      {licenseManagerConf?.module && licenseManagerConf.module === 'update_license' && !isLoading && (
+        <>
+          <br />
+          <div className="flx">
+            <b className="wdt-200 d-in-b">{__('Select License:', 'bit-integrations')}</b>
+            <MultiSelect
+              options={licenseManagerConf?.licenses &&
+                licenseManagerConf.licenses.map((event) => ({ label: event, value: event }))
+              }
+              className="msl-wrp-options dropdown-custom-width"
+              defaultValue={licenseManagerConf?.selectedLicense}
+              onChange={(val) => setChanges(val, 'selectedLicense')}
+              singleSelect
+              closeOnSelect
+            />
+            <button
+              onClick={() => getAllLicense(licenseManagerConf, setLicenseManagerConf, setLoading)}
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': `'${__('Refresh License', 'bit-integrations')}'` }}
+              type="button"
+              disabled={loading.license}>
+              &#x21BB;
+            </button>
+          </div>
+        </>
+      )}
+
+      {licenseManagerConf?.module && (licenseManagerConf.module === "create_license" || licenseManagerConf.module === 'update_license') && !isLoading && (
         <>
           <br />
           <br />

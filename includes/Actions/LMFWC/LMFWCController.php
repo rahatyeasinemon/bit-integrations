@@ -78,6 +78,28 @@ class LMFWCController
         }, $orders), 200);
     }
 
+    public function getAllLicense($fieldsRequestParams)
+    {
+        if (!class_exists('WooCommerce')) {
+            wp_send_json_success([], 200);
+        }
+
+        $this->checkValidation($fieldsRequestParams);
+        $this->setHeaders($fieldsRequestParams->api_key, $fieldsRequestParams->api_secret);
+
+        $apiEndpoint = $fieldsRequestParams->base_url . '/wp-json/lmfwc/v2/licenses';
+        $response = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader, ['sslverify' => false]);
+
+        if (is_wp_error($response)) {
+            wp_send_json_error($response->get_error_message(), HttpHelper::$responseCode);
+        }
+        if (isset($response->success) && $response->success) {
+            wp_send_json_success(array_column($response->data, 'licenseKey'), 200);
+        }
+
+        wp_send_json_error(!empty($response->message) ? $response->message : wp_json_encode($response), 400);
+    }
+
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;

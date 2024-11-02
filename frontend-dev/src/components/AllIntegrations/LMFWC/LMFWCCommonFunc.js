@@ -172,3 +172,33 @@ export const getAllOrder = (confTmp, setConf, setLoading) => {
     toast.error(__('Order fetching failed', 'bit-integrations'))
   })
 }
+
+export const getAllLicense = (confTmp, setConf, setLoading) => {
+  setLoading({ ...setLoading, license: true })
+
+  const requestParams = {
+    base_url: confTmp.base_url,
+    api_key: confTmp.api_key,
+    api_secret: confTmp.api_secret
+  }
+
+  bitsFetch(requestParams, 'lmfwc_fetch_all_license').then((result) => {
+    if (result && result.success) {
+      if (result.data) {
+        setConf((prevConf) => {
+          prevConf.licenses = result.data
+          return prevConf
+        })
+
+        setLoading({ ...setLoading, license: false })
+        toast.success(__('Order fetched successfully', 'bit-integrations'))
+        return
+      }
+      setLoading({ ...setLoading, license: false })
+      toast.error(__('Order Not Found!', 'bit-integrations'))
+      return
+    }
+    setLoading({ ...setLoading, license: false })
+    toast.error(__('Order fetching failed', 'bit-integrations'))
+  })
+}

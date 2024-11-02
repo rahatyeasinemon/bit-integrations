@@ -23,6 +23,8 @@ function LMFWC({ formFields, setFlow, flow, allIntegURL }) {
 
   const licenseFields = [
     { label: __('License key', 'bit-integrations'), key: 'license_key', required: true },
+  ]
+  const generalFields = [
     { label: __('Valid for (days)', 'bit-integrations'), key: 'valid_for', required: false },
     { label: __('Expires at', 'bit-integrations'), key: 'expires_at', required: false },
     { label: __('Maximum activation count', 'bit-integrations'), key: 'times_activated_max', required: false },
@@ -48,6 +50,7 @@ function LMFWC({ formFields, setFlow, flow, allIntegURL }) {
     lmfwcFields: [],
     module: '',
     licenseFields,
+    generalFields,
     modules
   })
 
@@ -78,12 +81,17 @@ function LMFWC({ formFields, setFlow, flow, allIntegURL }) {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
 
-    if (!checkMappedFields(licenseManagerConf)) {
+    if (licenseManagerConf.module != 'update_license' && !checkMappedFields(licenseManagerConf)) {
       toast.error(__('Please map mandatory fields', 'bit-integrations'))
       return
     }
 
     if (licenseManagerConf.module === 'create_license' && !licenseManagerConf?.selectedStatus) {
+      toast.error(__('Please select Status', 'bit-integrations'))
+      return
+    }
+
+    if (licenseManagerConf.module === 'update_license' && !licenseManagerConf?.selectedLicense) {
       toast.error(__('Please select Status', 'bit-integrations'))
       return
     }
