@@ -34,6 +34,7 @@ function LMFWC({ formFields, setFlow, flow, allIntegURL }) {
     { name: 'create_license', label: __('Create a license', 'bit-integrations'), is_pro: false },
     { name: 'update_license', label: __('Update a license', 'bit-integrations'), is_pro: true },
     { name: 'activate_license', label: __('Activate a license', 'bit-integrations'), is_pro: true },
+    { name: 'deactivate_license', label: __('Deactivate a license', 'bit-integrations'), is_pro: true },
     { name: 'delete_license', label: __('Delete a License', 'bit-integrations'), is_pro: true },
     { name: 'reactivate_license', label: __('Reactivate a License', 'bit-integrations'), is_pro: true },
     { name: 'create_generator', label: __('Create a generator', 'bit-integrations'), is_pro: true },
