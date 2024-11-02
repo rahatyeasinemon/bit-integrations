@@ -50,7 +50,6 @@ function LMFWC({ formFields, setFlow, flow, allIntegURL }) {
     { name: 'reactivate_license', label: __('Reactivate a License', 'bit-integrations'), is_pro: true },
     { name: 'create_generator', label: __('Create a generator', 'bit-integrations'), is_pro: true },
     { name: 'update_generator', label: __('Update a Generator', 'bit-integrations'), is_pro: true },
-    { name: 'delete_generator', label: __('Delete a Generator', 'bit-integrations'), is_pro: true }
   ]
 
   const [licenseManagerConf, setLicenseManagerConf] = useState({
