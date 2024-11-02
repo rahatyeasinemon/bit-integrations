@@ -77,6 +77,19 @@ class RecordApiHelper
             return ['success' => false, 'message' => __('Required field license is empty', 'bit-integrations'), 'code' => 400];
         }
 
+        if (isset($this->integrationDetails->selectedStatus) || !empty($this->integrationDetails->selectedStatus)) {
+            $finalData['status'] = $this->integrationDetails->selectedStatus;
+        }
+        if (isset($this->integrationDetails->selectedCustomer) || !empty($this->integrationDetails->selectedCustomer)) {
+            $finalData['user_id'] = $this->integrationDetails->selectedCustomer;
+        }
+        if (isset($this->integrationDetails->selectedOrder) || !empty($this->integrationDetails->selectedOrder)) {
+            $finalData['order_id'] = $this->integrationDetails->selectedOrder;
+        }
+        if (isset($this->integrationDetails->selectedProduct) || !empty($this->integrationDetails->selectedProduct)) {
+            $finalData['product_id'] = $this->integrationDetails->selectedProduct;
+        }
+
         $response = apply_filters('btcbi_lmfwc_update_licence', false, $finalData, $this->apiUrl, $this->integrationDetails, $this->defaultHeader);
         if (!$response) {
             return (object) ['message' => wp_sprintf(__('%s plugin is not installed or activate', 'bit-integrations'), 'Bit Integration Pro')];
@@ -113,29 +126,28 @@ class RecordApiHelper
 
         switch ($action) {
             case 'activate':
-                $hook = 'btcbi_lmfwc_activate_licence';
+                $response = apply_filters('btcbi_lmfwc_activate_licence', false, $this->apiUrl, $finalData['license_key'], $this->defaultHeader);
 
                 break;
             case 'deactivate':
-                $hook = 'btcbi_lmfwc_deactivate_licence';
+                $response = apply_filters('btcbi_lmfwc_deactivate_licence', false, $this->apiUrl, $finalData['license_key'], $this->defaultHeader, $finalData['token']);
 
                 break;
             case 'reactivate':
-                $hook = 'btcbi_lmfwc_reactivate_licence';
+                $response = apply_filters('btcbi_lmfwc_reactivate_licence', false, $this->apiUrl, $finalData['license_key'], $this->defaultHeader, $finalData['token']);
 
                 break;
             case 'delete':
-                $hook = 'btcbi_lmfwc_delete_licence';
+                $response = apply_filters('btcbi_lmfwc_delete_licence', false, $this->apiUrl, $finalData['license_key'], $this->defaultHeader);
 
                 break;
 
             default:
-                $hook = null;
+                $response = false;
 
                 break;
         }
 
-        $response = apply_filters($hook, false, $this->apiUrl, $finalData['license_key'], $this->defaultHeader);
         if (!$response) {
             return (object) ['message' => wp_sprintf(__('%s plugin is not installed or activate', 'bit-integrations'), 'Bit Integration Pro')];
         }

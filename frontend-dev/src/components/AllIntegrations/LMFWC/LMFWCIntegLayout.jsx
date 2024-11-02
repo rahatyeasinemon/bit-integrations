@@ -55,9 +55,15 @@ export default function LMFWCIntegLayout({
           draftConf.module_note = `<p><b>${__('Note', 'bit-integrations')}</b>: ${__('You can also use Valid for (the number of days) instead of Expires at', 'bit-integrations')}, <b>${__('please do not use both at a time', 'bit-integrations')}</b></p>`
         } else if (
           name === 'module' &&
-          (['activate_license', 'delete_license', 'deactivate_license', 'reactivate_license'].includes(val))
+          (['activate_license', 'delete_license'].includes(val))
         ) {
           draftConf.lmfwcFields = draftConf.licenseFields
+          draftConf.field_map = generateMappedField(draftConf.lmfwcFields)
+        } else if (
+          name === 'module' &&
+          (['deactivate_license', 'reactivate_license'].includes(val))
+        ) {
+          draftConf.lmfwcFields = [...draftConf.licenseFields, { label: __('Activation Token', 'bit-integrations'), key: 'token', required: false }]
           draftConf.field_map = generateMappedField(draftConf.lmfwcFields)
         }
       })
@@ -257,7 +263,7 @@ export default function LMFWCIntegLayout({
             />
           ))}
 
-          {(!['activate_license', 'delete_license', 'deactivate_license', 'reactivate_license'].includes(licenseManagerConf.module)) && (
+          {(!['activate_license', 'delete_license'].includes(licenseManagerConf.module)) && (
             <div className="txt-center btcbi-field-map-button mt-2">
               <button
                 onClick={() =>
