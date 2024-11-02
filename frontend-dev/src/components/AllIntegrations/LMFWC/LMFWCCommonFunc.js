@@ -113,32 +113,32 @@ export const getAllCustomer = (confTmp, setConf, setLoading) => {
   })
 }
 
-export const getAllSessions = (confTmp, setConf, event_id, setLoading) => {
-  setLoading({ ...setLoading, session: true })
+export const getAllProduct = (confTmp, setConf, setLoading) => {
+  setLoading({ ...setLoading, product: true })
 
   const requestParams = {
+    base_url: confTmp.base_url,
     api_key: confTmp.api_key,
-    api_secret: confTmp.api_secret,
-    event_id: event_id
+    api_secret: confTmp.api_secret
   }
 
-  bitsFetch(requestParams, 'lmfwc_fetch_all_sessions').then((result) => {
+  bitsFetch(requestParams, 'lmfwc_fetch_all_product').then((result) => {
     if (result && result.success) {
       if (result.data) {
         setConf((prevConf) => {
-          prevConf.sessions = result.data
+          prevConf.products = result.data
           return prevConf
         })
 
-        setLoading({ ...setLoading, session: false })
-        toast.success(__('Sessions fetched successfully', 'bit-integrations'))
+        setLoading({ ...setLoading, product: false })
+        toast.success(__('Product fetched successfully', 'bit-integrations'))
         return
       }
-      setLoading({ ...setLoading, session: false })
-      toast.error(__('Sessions Not Found!', 'bit-integrations'))
+      setLoading({ ...setLoading, product: false })
+      toast.error(__('Product Not Found!', 'bit-integrations'))
       return
     }
-    setLoading({ ...setLoading, session: false })
-    toast.error(__('Sessions fetching failed', 'bit-integrations'))
+    setLoading({ ...setLoading, product: false })
+    toast.error(__('Product fetching failed', 'bit-integrations'))
   })
 }

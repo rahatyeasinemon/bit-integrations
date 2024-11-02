@@ -34,42 +34,32 @@ class LMFWCController
         wp_send_json_error(!empty($response->message) ? $response->message : __('Please enter valid Consumer key & Consumer secret', 'bit-integrations'), 400);
     }
 
-    public function getAllCustomers($fieldsRequestParams)
+    public function getAllCustomer($fieldsRequestParams)
     {
         $this->checkValidation($fieldsRequestParams);
         $this->setHeaders($fieldsRequestParams->api_key, $fieldsRequestParams->api_secret);
 
-        $customers = get_users([
-            'role'   => 'customer',
-            'number' => -1,
-        ]);
+        $customers = get_users(['role' => 'customer', 'number' => -1]);
 
         wp_send_json_success(array_map(function ($customer) {
             return ['id' => $customer->ID, 'name' => $customer->display_name];
         }, $customers), 200);
     }
 
-    public function getAllSessions($fieldsRequestParams)
+    public function getAllProduct($fieldsRequestParams)
     {
+        if (!class_exists('WooCommerce')) {
+            wp_send_json_success([], 200);
+        }
+
         $this->checkValidation($fieldsRequestParams);
         $this->setHeaders($fieldsRequestParams->api_key, $fieldsRequestParams->api_secret);
-        $apiEndpoint = $this->_apiEndpoint . "/event/{$fieldsRequestParams->event_id}";
-        $response = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
 
-        if (!isset($response->errors)) {
-            $sessions = [];
-            foreach ($response->dates as $session) {
-                $sessions[]
-                = (object) [
-                    'date_id'  => $session->date_id,
-                    'datetime' => $session->datetime
-                ]
-                ;
-            }
-            wp_send_json_success($sessions, 200);
-        } else {
-            wp_send_json_error(__('Events fetching failed', 'bit-integrations'), 400);
-        }
+        $products = wc_get_products(['status' => 'publish', 'limit' => -1]);
+
+        wp_send_json_success(array_map(function ($product) {
+            return ['id' => $product->get_id(), 'name' => $product->get_title()];
+        }, $products), 200);
     }
 
     public function execute($integrationData, $fieldValues)

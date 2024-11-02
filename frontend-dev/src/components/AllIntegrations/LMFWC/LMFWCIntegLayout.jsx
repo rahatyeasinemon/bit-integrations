@@ -3,7 +3,7 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
-import { generateMappedField, getAllCustomer } from './LMFWCCommonFunc'
+import { generateMappedField, getAllCustomer, getAllProduct } from './LMFWCCommonFunc'
 import LMFWCFieldMap from './LMFWCFieldMap'
 import { addFieldMap } from './IntegrationHelpers'
 import { useRecoilValue } from 'recoil'
@@ -31,6 +31,7 @@ export default function LMFWCIntegLayout({
 
       if (name === 'module' && val === 'create_license') {
         getAllCustomer(licenseManagerConf, setLicenseManagerConf, setLoading)
+        getAllProduct(licenseManagerConf, setLicenseManagerConf, setLoading)
 
         draftConf.lmfwcFields = draftConf.licenseFields
         draftConf.field_map = generateMappedField(draftConf.licenseFields)
@@ -62,7 +63,7 @@ export default function LMFWCIntegLayout({
         />
       </div>
 
-      {(isLoading || loading.customer || loading.session) && (
+      {(isLoading || loading.customer || loading.product) && (
         <Loader
           style={{
             display: 'flex',
@@ -108,7 +109,7 @@ export default function LMFWCIntegLayout({
                 }))
               }
               className="msl-wrp-options dropdown-custom-width"
-              defaultValue={licenseManagerConf?.selectedSession}
+              defaultValue={licenseManagerConf?.selectedCustomer}
               onChange={(val) => setChanges(val, 'selectedCustomer')}
               singleSelect
               closeOnSelect
@@ -119,6 +120,32 @@ export default function LMFWCIntegLayout({
               style={{ '--tooltip-txt': `'${__('Refresh Customers', 'bit-integrations')}'` }}
               type="button"
               disabled={loading.customer}>
+              &#x21BB;
+            </button>
+          </div>
+          <br />
+          <div className="flx">
+            <b className="wdt-200 d-in-b">{__('Select Product:', 'bit-integrations')}</b>
+            <MultiSelect
+              options={
+                licenseManagerConf?.products &&
+                licenseManagerConf.products.map((session) => ({
+                  label: session.name,
+                  value: `${session.id}`
+                }))
+              }
+              className="msl-wrp-options dropdown-custom-width"
+              defaultValue={licenseManagerConf?.selectedProduct}
+              onChange={(val) => setChanges(val, 'selectedProduct')}
+              singleSelect
+              closeOnSelect
+            />
+            <button
+              onClick={() => getAllProduct(licenseManagerConf, setLicenseManagerConf, setLoading)}
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': `'${__('Refresh Products', 'bit-integrations')}'` }}
+              type="button"
+              disabled={loading.product}>
               &#x21BB;
             </button>
           </div>
