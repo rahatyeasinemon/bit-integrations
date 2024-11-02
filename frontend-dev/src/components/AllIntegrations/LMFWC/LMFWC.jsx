@@ -36,6 +36,16 @@ function LMFWC({ formFields, setFlow, flow, allIntegURL }) {
     }
   ]
 
+  const actions = [
+    { name: 'create_license', label: __('Create a license', 'bit-integrations'), is_pro: false },
+    { name: 'update_license', label: __('Update a license', 'bit-integrations'), is_pro: true },
+    { name: 'activate_license', label: __('Activate a license', 'bit-integrations'), is_pro: true },
+    { name: 'delete_license', label: __('Delete a License', 'bit-integrations'), is_pro: true },
+    { name: 'reactivate_license', label: __('Reactivate a License', 'bit-integrations'), is_pro: true },
+    { name: 'create_generator', label: __('Create a generator', 'bit-integrations'), is_pro: true },
+    { name: 'update_generator', label: __('Delete a Generator', 'bit-integrations'), is_pro: true }
+  ]
+
   const [licenseManagerConf, setLicenseManagerConf] = useState({
     name: 'License Manager For WooCommerce',
     type: 'License Manager For WooCommerce',
@@ -44,8 +54,9 @@ function LMFWC({ formFields, setFlow, flow, allIntegURL }) {
     api_secret: process.env.NODE_ENV === 'development' ? 'cs_2f075d046a3cc5b698481aeed618841bf3e9ccb3' : '',
     field_map: generateMappedField(lmfwcFields),
     actionName: 'registerPeopletoWabinar',
+    action: '',
     lmfwcFields,
-    actions: {}
+    actions
   })
 
   const saveConfig = () => {

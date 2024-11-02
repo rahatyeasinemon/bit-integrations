@@ -6,6 +6,9 @@ import Loader from '../../Loaders/Loader'
 import { getAllEvents, getAllSessions } from './LMFWCCommonFunc'
 import LMFWCFieldMap from './LMFWCFieldMap'
 import { addFieldMap } from './IntegrationHelpers'
+import { useRecoilValue } from 'recoil'
+import { $btcbi } from '../../../GlobalStates'
+import { checkIsPro, getProLabel } from '../../Utilities/ProUtilHelpers'
 
 export default function LMFWCIntegLayout({
   formFields,
@@ -17,6 +20,9 @@ export default function LMFWCIntegLayout({
   setIsLoading,
   setSnackbar
 }) {
+  const btcbi = useRecoilValue($btcbi)
+  const { isPro } = btcbi
+
   const setChanges = (val, name) => {
     if (name === 'selectedEvent' && val !== '') {
       getAllSessions(licenseManagerConf, setLicenseManagerConf, val, setLoading)
@@ -36,6 +42,25 @@ export default function LMFWCIntegLayout({
 
   return (
     <>
+      <br />
+      <div className="flx">
+        <b className="wdt-200 d-in-b">{__('Select Action:', 'bit-integrations')}</b>
+        <MultiSelect
+          defaultValue={licenseManagerConf?.action}
+          className="mt-2 w-5"
+          onChange={(val) => setChanges(val, 'action')}
+          options={licenseManagerConf?.actions?.map((action) => ({
+            label: checkIsPro(isPro, action.is_pro)
+              ? action.label
+              : getProLabel(action.label),
+            value: action.name,
+            disabled: checkIsPro(isPro, action.is_pro) ? false : true
+          }))}
+          singleSelect
+          closeOnSelect
+        />
+      </div>
+
       {(isLoading || loading.event || loading.session) && (
         <Loader
           style={{
