@@ -36,12 +36,17 @@ export default function LMFWCIntegLayout({
 
         if (val === 'update_license') {
           getAllLicense(licenseManagerConf, setLicenseManagerConf, setLoading)
-          draftConf.licenseFields = [{ label: __('License key', 'bit-integrations'), key: 'license_key', required: false }]
+          // draftConf.licenseFields = [{ label: __('License key', 'bit-integrations'), key: 'license_key', required: false }]
+          draftConf.lmfwcFields = [{ label: __('License key', 'bit-integrations'), key: 'license_key', required: false }, ...draftConf.generalFields]
+        } else {
+          draftConf.lmfwcFields = [...draftConf.licenseFields, ...draftConf.generalFields]
         }
 
-        draftConf.lmfwcFields = [...draftConf.licenseFields, ...draftConf.generalFields]
-        draftConf.field_map = generateMappedField(draftConf.licenseFields)
+        draftConf.field_map = generateMappedField(draftConf.lmfwcFields)
         draftConf.module_note = `<p><b>${__('Note', 'bit-integrations')}</b>: ${__('You can also use Valid for (the number of days) instead of Expires at', 'bit-integrations')}, <b>${__('please do not use both at a time', 'bit-integrations')}</b></p>`
+      } else if (name === 'module' && val === 'activate_license') {
+        draftConf.lmfwcFields = draftConf.licenseFields
+        draftConf.field_map = generateMappedField(draftConf.lmfwcFields)
       }
     }))
   }
@@ -224,7 +229,7 @@ export default function LMFWCIntegLayout({
               <b>{__('Form Fields', 'bit-integrations')}</b>
             </div>
             <div className="txt-dp">
-              <b>{__('LMFWC Fields', 'bit-integrations')}</b>
+              <b>{__('License Manager Fields', 'bit-integrations')}</b>
             </div>
           </div>
 
@@ -239,16 +244,19 @@ export default function LMFWCIntegLayout({
               setSnackbar={setSnackbar}
             />
           ))}
-          <div className="txt-center btcbi-field-map-button mt-2">
-            <button
-              onClick={() =>
-                addFieldMap(licenseManagerConf.field_map.length, licenseManagerConf, setLicenseManagerConf, false)
-              }
-              className="icn-btn sh-sm"
-              type="button">
-              +
-            </button>
-          </div>
+
+          {licenseManagerConf.module !== 'activate_license' &&
+            <div className="txt-center btcbi-field-map-button mt-2">
+              <button
+                onClick={() =>
+                  addFieldMap(licenseManagerConf.field_map.length, licenseManagerConf, setLicenseManagerConf, false)
+                }
+                className="icn-btn sh-sm"
+                type="button">
+                +
+              </button>
+            </div>
+          }
           <br />
           <br />
           {licenseManagerConf?.module_note && <Note note={licenseManagerConf?.module_note} />}
