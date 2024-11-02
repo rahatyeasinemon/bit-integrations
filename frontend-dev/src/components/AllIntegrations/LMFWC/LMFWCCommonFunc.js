@@ -142,3 +142,33 @@ export const getAllProduct = (confTmp, setConf, setLoading) => {
     toast.error(__('Product fetching failed', 'bit-integrations'))
   })
 }
+
+export const getAllOrder = (confTmp, setConf, setLoading) => {
+  setLoading({ ...setLoading, order: true })
+
+  const requestParams = {
+    base_url: confTmp.base_url,
+    api_key: confTmp.api_key,
+    api_secret: confTmp.api_secret
+  }
+
+  bitsFetch(requestParams, 'lmfwc_fetch_all_order').then((result) => {
+    if (result && result.success) {
+      if (result.data) {
+        setConf((prevConf) => {
+          prevConf.orders = result.data
+          return prevConf
+        })
+
+        setLoading({ ...setLoading, order: false })
+        toast.success(__('Order fetched successfully', 'bit-integrations'))
+        return
+      }
+      setLoading({ ...setLoading, order: false })
+      toast.error(__('Order Not Found!', 'bit-integrations'))
+      return
+    }
+    setLoading({ ...setLoading, order: false })
+    toast.error(__('Order fetching failed', 'bit-integrations'))
+  })
+}

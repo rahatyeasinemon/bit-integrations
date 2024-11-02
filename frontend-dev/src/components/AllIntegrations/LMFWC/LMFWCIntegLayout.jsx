@@ -3,7 +3,7 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
-import { generateMappedField, getAllCustomer, getAllProduct } from './LMFWCCommonFunc'
+import { generateMappedField, getAllCustomer, getAllOrder, getAllProduct } from './LMFWCCommonFunc'
 import LMFWCFieldMap from './LMFWCFieldMap'
 import { addFieldMap } from './IntegrationHelpers'
 import { useRecoilValue } from 'recoil'
@@ -32,6 +32,7 @@ export default function LMFWCIntegLayout({
       if (name === 'module' && val === 'create_license') {
         getAllCustomer(licenseManagerConf, setLicenseManagerConf, setLoading)
         getAllProduct(licenseManagerConf, setLicenseManagerConf, setLoading)
+        getAllOrder(licenseManagerConf, setLicenseManagerConf, setLoading)
 
         draftConf.lmfwcFields = draftConf.licenseFields
         draftConf.field_map = generateMappedField(draftConf.licenseFields)
@@ -103,9 +104,9 @@ export default function LMFWCIntegLayout({
             <MultiSelect
               options={
                 licenseManagerConf?.customers &&
-                licenseManagerConf.customers.map((session) => ({
-                  label: session.name,
-                  value: `${session.id}`
+                licenseManagerConf.customers.map((customer) => ({
+                  label: customer.name,
+                  value: `${customer.id}`
                 }))
               }
               className="msl-wrp-options dropdown-custom-width"
@@ -129,9 +130,9 @@ export default function LMFWCIntegLayout({
             <MultiSelect
               options={
                 licenseManagerConf?.products &&
-                licenseManagerConf.products.map((session) => ({
-                  label: session.name,
-                  value: `${session.id}`
+                licenseManagerConf.products.map((product) => ({
+                  label: product.name,
+                  value: `${product.id}`
                 }))
               }
               className="msl-wrp-options dropdown-custom-width"
@@ -146,6 +147,32 @@ export default function LMFWCIntegLayout({
               style={{ '--tooltip-txt': `'${__('Refresh Products', 'bit-integrations')}'` }}
               type="button"
               disabled={loading.product}>
+              &#x21BB;
+            </button>
+          </div>
+          <br />
+          <div className="flx">
+            <b className="wdt-200 d-in-b">{__('Select Order:', 'bit-integrations')}</b>
+            <MultiSelect
+              options={
+                licenseManagerConf?.orders &&
+                licenseManagerConf.orders.map((order) => ({
+                  label: order.name,
+                  value: `${order.id}`
+                }))
+              }
+              className="msl-wrp-options dropdown-custom-width"
+              defaultValue={licenseManagerConf?.selectedOrder}
+              onChange={(val) => setChanges(val, 'selectedOrder')}
+              singleSelect
+              closeOnSelect
+            />
+            <button
+              onClick={() => getAllOrder(licenseManagerConf, setLicenseManagerConf, setLoading)}
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': `'${__('Refresh Orders', 'bit-integrations')}'` }}
+              type="button"
+              disabled={loading.order}>
               &#x21BB;
             </button>
           </div>

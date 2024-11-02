@@ -62,6 +62,22 @@ class LMFWCController
         }, $products), 200);
     }
 
+    public function getAllOrder($fieldsRequestParams)
+    {
+        if (!class_exists('WooCommerce')) {
+            wp_send_json_success([], 200);
+        }
+
+        $this->checkValidation($fieldsRequestParams);
+        $this->setHeaders($fieldsRequestParams->api_key, $fieldsRequestParams->api_secret);
+
+        $orders = wc_get_orders(['limit' => -1, 'orderby' => 'date', 'order' => 'DESC']);
+
+        wp_send_json_success(array_map(function ($order) {
+            return ['id' => $order->get_id(), 'name' => '#' . $order->get_id() . ' Order'];
+        }, $orders), 200);
+    }
+
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
