@@ -102,6 +102,47 @@ class RecordApiHelper
         return $response;
     }
 
+    public function licenseRelatedAction($finalData, $action)
+    {
+        $this->type = "{$action} license";
+        $this->typeName = "{$action} license";
+
+        if (empty($finalData['license_key'])) {
+            return ['success' => false, 'message' => __('Required field license key is empty', 'bit-integrations'), 'code' => 400];
+        }
+
+        switch ($action) {
+            case 'activate':
+                $hook = 'btcbi_lmfwc_activate_licence';
+
+                break;
+            case 'deactivate':
+                $hook = 'btcbi_lmfwc_deactivate_licence';
+
+                break;
+            case 'reactivate':
+                $hook = 'btcbi_lmfwc_reactivate_licence';
+
+                break;
+            case 'delete':
+                $hook = 'btcbi_lmfwc_delete_licence';
+
+                break;
+
+            default:
+                $hook = null;
+
+                break;
+        }
+
+        $response = apply_filters($hook, false, $this->apiUrl, $finalData['license_key'], $this->defaultHeader);
+        if (!$response) {
+            return (object) ['message' => wp_sprintf(__('%s plugin is not installed or activate', 'bit-integrations'), 'Bit Integration Pro')];
+        }
+
+        return $response;
+    }
+
     public function generateReqDataFromFieldMap($data, $fieldMap)
     {
         $dataFinal = [];
@@ -123,8 +164,15 @@ class RecordApiHelper
         } elseif ($module === 'update_license') {
             $apiResponse = $this->updateLicense($finalData);
         } elseif ($module === 'activate_license') {
-            $apiResponse = $this->activateLicense($finalData);
+            $apiResponse = $this->licenseRelatedAction($finalData, 'activate');
+        } elseif ($module === 'deactivate_license') {
+            $apiResponse = $this->licenseRelatedAction($finalData, 'deactivate');
+        } elseif ($module === 'reactivate_license') {
+            $apiResponse = $this->licenseRelatedAction($finalData, 'reactivate');
+        } elseif ($module === 'delete_license') {
+            $apiResponse = $this->licenseRelatedAction($finalData, 'delete');
         }
+
         error_log(print_r($apiResponse, true));
         if (isset($apiResponse->success) && $apiResponse->success) {
             $res = [$this->typeName . '  successfully'];
