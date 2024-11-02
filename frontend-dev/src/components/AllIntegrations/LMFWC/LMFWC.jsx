@@ -33,12 +33,12 @@ function LMFWC({ formFields, setFlow, flow, allIntegURL }) {
     { label: __('Name', 'bit-integrations'), key: 'name', required: true },
     { label: __('Character map', 'bit-integrations'), key: 'charset', required: true },
     { label: __('Number of chunks', 'bit-integrations'), key: 'chunks', required: true },
-    { label: __('Chunk length', 'bit-integrations'), key: 'chunkLength', required: true },
-    { label: __('Maximum activation count', 'bit-integrations'), key: 'timesActivatedMax', required: false },
+    { label: __('Chunk length', 'bit-integrations'), key: 'chunk_length', required: true },
+    { label: __('Maximum activation count', 'bit-integrations'), key: 'times_activated_max', required: false },
     { label: __('Separator', 'bit-integrations'), key: 'separator', required: false },
     { label: __('Prefix', 'bit-integrations'), key: 'prefix', required: false },
     { label: __('Suffix', 'bit-integrations'), key: 'suffix', required: false },
-    { label: __('Expires in	(days)', 'bit-integrations'), key: 'expiresIn', required: false },
+    { label: __('Expires in	(days)', 'bit-integrations'), key: 'expires_in', required: false },
   ]
 
   const modules = [

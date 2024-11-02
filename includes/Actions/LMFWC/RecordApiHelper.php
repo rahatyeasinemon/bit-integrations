@@ -98,22 +98,65 @@ class RecordApiHelper
         return $response;
     }
 
-    public function activateLicense($finalData)
+    public function createGenerator($finalData)
     {
-        $this->type = 'Activate license';
-        $this->typeName = 'Activate license';
+        $this->type = 'Create generator';
+        $this->typeName = 'Create generator';
 
-        if (empty($finalData['license_key'])) {
-            return ['success' => false, 'message' => __('Required field license key is empty', 'bit-integrations'), 'code' => 400];
+        if (empty($this->integrationDetails->selectedGenerator)) {
+            return ['success' => false, 'message' => __('Required field Generator is empty', 'bit-integrations'), 'code' => 400];
         }
 
-        $response = apply_filters('btcbi_lmfwc_activate_licence', false, $this->apiUrl, $finalData['license_key'], $this->defaultHeader);
+        $response = apply_filters('btcbi_lmfwc_update_generator', false, $this->apiUrl, $finalData, $this->defaultHeader, $this->integrationDetails->selectedGenerator);
         if (!$response) {
             return (object) ['message' => wp_sprintf(__('%s plugin is not installed or activate', 'bit-integrations'), 'Bit Integration Pro')];
         }
 
         return $response;
     }
+
+    public function updateGenerator($finalData)
+    {
+        $this->type = 'Create generator';
+        $this->typeName = 'Create generator';
+
+        if (empty($finalData['name'])) {
+            return ['success' => false, 'message' => __('Required field name is empty', 'bit-integrations'), 'code' => 400];
+        }
+        if (empty($finalData['charset'])) {
+            return ['success' => false, 'message' => __('Required field Character map is empty', 'bit-integrations'), 'code' => 400];
+        }
+        if (empty($finalData['chunks'])) {
+            return ['success' => false, 'message' => __('Required field Number of chunks is empty', 'bit-integrations'), 'code' => 400];
+        }
+        if (empty($finalData['chunkLength'])) {
+            return ['success' => false, 'message' => __('Required field Chunk length is empty', 'bit-integrations'), 'code' => 400];
+        }
+
+        $response = apply_filters('btcbi_lmfwc_create_generator', false, $this->apiUrl, $finalData, $this->defaultHeader);
+        if (!$response) {
+            return (object) ['message' => wp_sprintf(__('%s plugin is not installed or activate', 'bit-integrations'), 'Bit Integration Pro')];
+        }
+
+        return $response;
+    }
+
+    // public function activateLicense($finalData)
+    // {
+    //     $this->type = 'Activate license';
+    //     $this->typeName = 'Activate license';
+
+    //     if (empty($finalData['license_key'])) {
+    //         return ['success' => false, 'message' => __('Required field license key is empty', 'bit-integrations'), 'code' => 400];
+    //     }
+
+    //     $response = apply_filters('btcbi_lmfwc_activate_licence', false, $this->apiUrl, $finalData['license_key'], $this->defaultHeader);
+    //     if (!$response) {
+    //         return (object) ['message' => wp_sprintf(__('%s plugin is not installed or activate', 'bit-integrations'), 'Bit Integration Pro')];
+    //     }
+
+    //     return $response;
+    // }
 
     public function licenseRelatedAction($finalData, $action)
     {
@@ -183,6 +226,10 @@ class RecordApiHelper
             $apiResponse = $this->licenseRelatedAction($finalData, 'reactivate');
         } elseif ($module === 'delete_license') {
             $apiResponse = $this->licenseRelatedAction($finalData, 'delete');
+        } elseif ($module === 'create_generator') {
+            $apiResponse = $this->createGenerator($finalData);
+        } elseif ($module === 'update_generator') {
+            $apiResponse = $this->updateGenerator($finalData);
         }
 
         error_log(print_r($apiResponse, true));
