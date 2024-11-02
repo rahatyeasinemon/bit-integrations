@@ -18,7 +18,7 @@ export default function LMFWCAuthorization({
   setLoading,
   isInfo
 }) {
-  const [isAuthorized, setIsAuthorized] = useState(false)
+  const [isAuthorized, setIsAuthorized] = useState(true)
   const { demio } = tutorialLinks
   const [error, setError] = useState({ api_key: '', api_secret: '' })
 
@@ -27,9 +27,9 @@ export default function LMFWCAuthorization({
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
 
-    !licenseManagerConf?.default
-    setStep(2)
-    getAllEvents(licenseManagerConf, setLicenseManagerConf, setLoading)
+    if (isAuthorized) {
+      setStep(2)
+    }
   }
 
   const handleInput = (e) => {

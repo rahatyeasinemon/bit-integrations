@@ -3,12 +3,14 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
-import { getAllEvents, getAllSessions } from './LMFWCCommonFunc'
+import { generateMappedField, getAllEvents, getAllSessions } from './LMFWCCommonFunc'
 import LMFWCFieldMap from './LMFWCFieldMap'
 import { addFieldMap } from './IntegrationHelpers'
 import { useRecoilValue } from 'recoil'
 import { $btcbi } from '../../../GlobalStates'
 import { checkIsPro, getProLabel } from '../../Utilities/ProUtilHelpers'
+import { create } from 'mutative'
+import Note from '../../Utilities/Note'
 
 export default function LMFWCIntegLayout({
   formFields,
@@ -24,21 +26,18 @@ export default function LMFWCIntegLayout({
   const { isPro } = btcbi
 
   const setChanges = (val, name) => {
-    if (name === 'selectedEvent' && val !== '') {
-      getAllSessions(licenseManagerConf, setLicenseManagerConf, val, setLoading)
-    }
+    setLicenseManagerConf(prevConf => create(prevConf, draftConf => {
+      draftConf[name] = val
 
-    setLicenseManagerConf((prevConf) => {
-      const newConf = { ...prevConf }
-      newConf[name] = val
+      if (name === 'module' && val === 'create_license') {
+        draftConf.lmfwcFields = draftConf.licenseFields
+        draftConf.field_map = generateMappedField(draftConf.licenseFields)
 
-      if (name === 'selectedEvent') {
-        delete newConf.selectedSession
-        delete newConf.sessions
+        draftConf.module_note = `<p><b>${__('Note', 'bit-integrations')}</b>: ${__('You can also use Valid for (the number of days) instead of Expires at', 'bit-integrations')}, <b>${__('please do not use both at a time', 'bit-integrations')}</b></p>`
       }
-      return newConf
-    })
+    }))
   }
+
 
   return (
     <>
@@ -46,10 +45,11 @@ export default function LMFWCIntegLayout({
       <div className="flx">
         <b className="wdt-200 d-in-b">{__('Select Action:', 'bit-integrations')}</b>
         <MultiSelect
-          defaultValue={licenseManagerConf?.action}
+          title={"Action"}
+          defaultValue={licenseManagerConf?.module}
           className="mt-2 w-5"
-          onChange={(val) => setChanges(val, 'action')}
-          options={licenseManagerConf?.actions?.map((action) => ({
+          onChange={(val) => setChanges(val, 'module')}
+          options={licenseManagerConf?.modules?.map((action) => ({
             label: checkIsPro(isPro, action.is_pro)
               ? action.label
               : getProLabel(action.label),
@@ -73,7 +73,7 @@ export default function LMFWCIntegLayout({
         />
       )}
 
-      {licenseManagerConf.actionName && !loading.event && (
+      {licenseManagerConf.module && !loading.event && (
         <>
           <br />
           <br />
@@ -102,7 +102,7 @@ export default function LMFWCIntegLayout({
         </>
       )}
 
-      {licenseManagerConf.actionName && licenseManagerConf.selectedEvent && !loading.session && (
+      {licenseManagerConf.module && licenseManagerConf.selectedEvent && !loading.session && (
         <>
           <br />
           <br />
@@ -133,7 +133,7 @@ export default function LMFWCIntegLayout({
           </div>
         </>
       )}
-      {licenseManagerConf.actionName && !isLoading && (
+      {licenseManagerConf.module && !isLoading && (
         <div>
           <br />
           <div className="mt-5">
@@ -157,7 +157,7 @@ export default function LMFWCIntegLayout({
             </div>
           </div>
 
-          {licenseManagerConf?.field_map.map((itm, i) => (
+          {licenseManagerConf.field_map.map((itm, i) => (
             <LMFWCFieldMap
               key={`rp-m-${i + 9}`}
               i={i}
@@ -180,6 +180,7 @@ export default function LMFWCIntegLayout({
           </div>
           <br />
           <br />
+          {licenseManagerConf?.module_note && <Note note={licenseManagerConf?.module_note} />}
         </div>
       )}
     </>

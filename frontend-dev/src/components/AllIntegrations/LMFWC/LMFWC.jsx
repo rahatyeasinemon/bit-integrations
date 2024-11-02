@@ -21,22 +21,14 @@ function LMFWC({ formFields, setFlow, flow, allIntegURL }) {
   const [step, setStep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
 
-  const lmfwcFields = [
-    { label: __('First Name', 'bit-integrations'), key: 'name', required: true },
-    { label: __('Email Address', 'bit-integrations'), key: 'email', required: true },
-    { label: __('Last Name', 'bit-integrations'), key: 'last_name', required: false },
-    { label: __('Phone Number', 'bit-integrations'), key: 'phone_number', required: false },
-    { label: __('Company', 'bit-integrations'), key: 'company', required: false },
-    { label: __('Website', 'bit-integrations'), key: 'website', required: false },
-    { label: __('GDPR', 'bit-integrations'), key: 'gdpr', required: false },
-    {
-      label: __('Event Registration page URL', 'bit-integrations'),
-      key: 'ref_url',
-      required: false
-    }
+  const licenseFields = [
+    { label: __('License key', 'bit-integrations'), key: 'license_key', required: true },
+    { label: __('Valid for (days)', 'bit-integrations'), key: 'valid_for', required: false },
+    { label: __('Expires at', 'bit-integrations'), key: 'expires_at', required: false },
+    { label: __('Maximum activation count', 'bit-integrations'), key: 'times_activated_max', required: false },
   ]
 
-  const actions = [
+  const modules = [
     { name: 'create_license', label: __('Create a license', 'bit-integrations'), is_pro: false },
     { name: 'update_license', label: __('Update a license', 'bit-integrations'), is_pro: true },
     { name: 'activate_license', label: __('Activate a license', 'bit-integrations'), is_pro: true },
@@ -52,11 +44,11 @@ function LMFWC({ formFields, setFlow, flow, allIntegURL }) {
     base_url: window.location.origin,
     api_key: process.env.NODE_ENV === 'development' ? 'ck_5782ba9801de81aa84d9e38745fae2f30b3a2eed' : '',
     api_secret: process.env.NODE_ENV === 'development' ? 'cs_2f075d046a3cc5b698481aeed618841bf3e9ccb3' : '',
-    field_map: generateMappedField(lmfwcFields),
-    actionName: 'registerPeopletoWabinar',
-    action: '',
-    lmfwcFields,
-    actions
+    field_map: [{ formField: '', lmfwcFormField: '' }],
+    lmfwcFields: [],
+    module: '',
+    licenseFields,
+    modules
   })
 
   const saveConfig = () => {
@@ -120,7 +112,7 @@ function LMFWC({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 2 */}
       <div
         className="btcd-stp-page"
-        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
+        style={{ ...(step === 2 && { width: 900, minHeight: '400px', height: 'auto', overflow: 'visible' }) }}>
         <LMFWCIntegLayout
           formFields={formFields}
           licenseManagerConf={licenseManagerConf}
