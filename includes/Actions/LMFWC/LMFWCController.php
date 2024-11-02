@@ -20,6 +20,7 @@ class LMFWCController
     {
         $this->checkValidation($fieldsRequestParams);
         $this->setHeaders($fieldsRequestParams->api_key, $fieldsRequestParams->api_secret);
+
         $apiEndpoint = $fieldsRequestParams->base_url . '/wp-json/lmfwc/v2/licenses';
         $response = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader, ['sslverify' => false]);
 
@@ -85,15 +86,16 @@ class LMFWCController
         $integId = $integrationData->id;
         $apiKey = $integrationDetails->api_key;
         $apiSecret = $integrationDetails->api_secret;
+        $baseUrl = $integrationDetails->base_url;
         $fieldMap = $integrationDetails->field_map;
-        $actionName = $integrationDetails->actionName;
+        $module = $integrationDetails->module;
 
-        if (empty($fieldMap) || empty($apiSecret) || empty($actionName) || empty($apiKey)) {
-            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'LMFWC'));
+        if (empty($fieldMap) || empty($apiSecret) || empty($module) || empty($apiKey) || empty($baseUrl)) {
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'License Manager For WooCommerce'));
         }
 
-        $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $apiSecret, $apiKey);
-        $lmfwcApiResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $actionName);
+        $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $apiSecret, $apiKey, $baseUrl);
+        $lmfwcApiResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $module);
 
         if (is_wp_error($lmfwcApiResponse)) {
             return $lmfwcApiResponse;

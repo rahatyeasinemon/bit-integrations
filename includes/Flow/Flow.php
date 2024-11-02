@@ -479,6 +479,11 @@ final class Flow
 
                         break;
 
+                    case 'LicenseManagerForWooCommerce':
+                        $integrationName = 'LMFWC';
+
+                        break;
+
                     default:
                         $integrationName = $integrationName;
 

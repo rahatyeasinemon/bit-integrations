@@ -7,6 +7,7 @@
 namespace BitCode\FI\Actions\LMFWC;
 
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
 
 /**
@@ -26,42 +27,39 @@ class RecordApiHelper
 
     private $typeName;
 
-    public function __construct($integrationDetails, $integId, $apiSecret, $apiKey)
+    public function __construct($integrationDetails, $integId, $apiSecret, $apiKey, $baseUrl)
     {
         $this->integrationDetails = $integrationDetails;
         $this->integrationId = $integId;
-        $this->apiUrl = 'https://my.lmfwc.com/api/v1';
+        $this->apiUrl = "{$baseUrl}/wp-json/lmfwc/v2";
         $this->defaultHeader = [
-            'Api-Key'      => $apiKey,
-            'Api-Secret'   => $apiSecret,
-            'Content-Type' => 'application/json'
+            'Authorization' => 'Basic ' . base64_encode("{$apiKey}:{$apiSecret}"),
+            'Content-Type'  => 'application/json',
         ];
     }
 
-    public function registration($finalData)
+    public function createLicense($finalData)
     {
-        $this->type = 'Register People to Wabinar';
-        $this->typeName = 'Register People to Wabinar';
+        $this->type = 'Create license';
+        $this->typeName = 'Create license';
 
-        if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => __('Required field First Name is empty', 'bit-integrations'), 'code' => 400];
-        }
-        if (empty($finalData['email'])) {
-            return ['success' => false, 'message' => __('Required field Email is empty', 'bit-integrations'), 'code' => 400];
-        }
-        if (!isset($this->integrationDetails->selectedEvent) || empty($this->integrationDetails->selectedEvent)) {
-            return ['success' => false, 'message' => __('Required field Event is empty', 'bit-integrations'), 'code' => 400];
-        }
-        if (isset($this->integrationDetails->selectedEvent) || !empty($this->integrationDetails->selectedEvent)) {
-            $finalData['id'] = $this->integrationDetails->selectedEvent;
-        }
-        if (isset($this->integrationDetails->selectedSession) && !empty($this->integrationDetails->selectedSession)) {
-            $finalData['date_id'] = $this->integrationDetails->selectedSession;
+        if (empty($finalData['license_key'])) {
+            return ['success' => false, 'message' => __('Required field license key is empty', 'bit-integrations'), 'code' => 400];
         }
 
-        $apiEndpoint = $this->apiUrl . '/event/register';
+        // if (isset($this->integrationDetails->selectedEvent) || !empty($this->integrationDetails->selectedEvent)) {
+        //     $finalData['id'] = $this->integrationDetails->selectedEvent;
+        // }
+        // if (isset($this->integrationDetails->selectedSession) && !empty($this->integrationDetails->selectedSession)) {
+        //     $finalData['date_id'] = $this->integrationDetails->selectedSession;
+        // }
 
-        return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->defaultHeader);
+        $finalData['status'] = 'inactive';
+
+        $apiEndpoint = $this->apiUrl . '/licenses';
+        error_log(print_r([$apiEndpoint, $finalData, $this->defaultHeader], true));
+
+        return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->defaultHeader, ['sslverify' => false]);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -70,22 +68,31 @@ class RecordApiHelper
         foreach ($fieldMap as $value) {
             $triggerValue = $value->formField;
             $actionValue = $value->lmfwcFormField;
-            $dataFinal[$actionValue] = ($triggerValue === 'custom') ? $value->customValue : $data[$triggerValue];
+            $dataFinal[$actionValue] = ($triggerValue === 'custom') ? Common::replaceFieldWithValue($value->customValue, $data) : $data[$triggerValue];
         }
 
         return $dataFinal;
     }
 
-    public function execute($fieldValues, $fieldMap, $actionName)
+    public function execute($fieldValues, $fieldMap, $module)
     {
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        $apiResponse = $this->registration($finalData);
 
-        if (!isset($apiResponse->errors)) {
+        if ($module === 'create_license') {
+            $apiResponse = $this->createLicense($finalData);
+        }
+
+        if (isset($apiResponse->success) && $apiResponse->success) {
             $res = [$this->typeName . '  successfully'];
             LogHandler::save($this->integrationId, wp_json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', wp_json_encode($res));
         } else {
-            LogHandler::save($this->integrationId, wp_json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', wp_json_encode($apiResponse));
+            if (is_wp_error($apiResponse)) {
+                $res = $apiResponse->get_error_message();
+            } else {
+                $res = !empty($apiResponse->message) ? $apiResponse->message : wp_json_encode($apiResponse);
+            }
+
+            LogHandler::save($this->integrationId, wp_json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', $res);
         }
 
         return $apiResponse;
