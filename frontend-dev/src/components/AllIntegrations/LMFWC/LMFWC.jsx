@@ -39,7 +39,7 @@ function LMFWC({ formFields, setFlow, flow, allIntegURL }) {
   const [licenseManagerConf, setLicenseManagerConf] = useState({
     name: 'License Manager For WooCommerce',
     type: 'License Manager For WooCommerce',
-    baseUrl: window.location.origin,
+    base_url: window.location.origin,
     api_key: process.env.NODE_ENV === 'development' ? 'ck_5782ba9801de81aa84d9e38745fae2f30b3a2eed' : '',
     api_secret: process.env.NODE_ENV === 'development' ? 'cs_2f075d046a3cc5b698481aeed618841bf3e9ccb3' : '',
     field_map: generateMappedField(lmfwcFields),

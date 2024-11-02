@@ -51,8 +51,9 @@ export const lmfwcAuthentication = (
 ) => {
   if (!confTmp.api_key || !confTmp.api_secret) {
     setError({
-      api_key: !confTmp.api_key ? __("API Key can't be empty", 'bit-integrations') : '',
-      api_secret: !confTmp.api_secret ? __("API Secret can't be empty", 'bit-integrations') : ''
+      base_url: !confTmp.base_url ? __("Consumer key can't be empty", 'bit-integrations') : '',
+      api_key: !confTmp.api_key ? __("Consumer key can't be empty", 'bit-integrations') : '',
+      api_secret: !confTmp.api_secret ? __("Consumer secret can't be empty", 'bit-integrations') : ''
     })
     return
   }
@@ -61,6 +62,7 @@ export const lmfwcAuthentication = (
   setLoading({ ...loading, auth: true })
 
   const requestParams = {
+    base_url: confTmp.base_url,
     api_key: confTmp.api_key,
     api_secret: confTmp.api_secret
   }
@@ -74,7 +76,9 @@ export const lmfwcAuthentication = (
     }
     setLoading({ ...loading, auth: false })
     toast.error(
-      __('Authorized failed, Please enter valid Sub Domain & API Key', 'bit-integrations')
+      result?.data && typeof result.data === 'string'
+        ? result.data
+        : __('Authorized failed, Please enter valid Consumer key & Consumer secret', 'bit-integrations')
     )
   })
 }

@@ -81,11 +81,12 @@ export default function LMFWCAuthorization({
         className="btcd-paper-inp w-6 mt-1"
         onChange={handleInput}
         name="baseUrl"
-        value={licenseManagerConf.baseUrl}
+        value={licenseManagerConf.base_url}
         type="text"
         placeholder={__('Homepage URL...', 'bit-integrations')}
         disabled={isInfo}
       />
+      <div style={{ color: 'red', fontSize: '15px' }}>{error.base_url}</div>
 
       <div className="mt-3">
         <b>{__('Consumer key:', 'bit-integrations')}</b>
