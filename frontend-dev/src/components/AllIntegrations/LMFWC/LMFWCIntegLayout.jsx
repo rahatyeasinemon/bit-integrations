@@ -65,6 +65,16 @@ export default function LMFWCIntegLayout({
         ) {
           draftConf.lmfwcFields = [...draftConf.licenseFields, { label: __('Activation Token', 'bit-integrations'), key: 'token', required: false }]
           draftConf.field_map = generateMappedField(draftConf.lmfwcFields)
+        } else if (name === 'module' && (val === 'create_generator' || val === 'update_generator')) {
+          if (val === 'update_generator') {
+            draftConf.lmfwcFields = draftConf.generatorFields.filter(fields => {
+              return { ...fields, required: false }
+            })
+          } else {
+            draftConf.lmfwcFields = draftConf.generatorFields
+          }
+
+          draftConf.field_map = generateMappedField(draftConf.lmfwcFields)
         }
       })
     )

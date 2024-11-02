@@ -29,6 +29,17 @@ function LMFWC({ formFields, setFlow, flow, allIntegURL }) {
     { label: __('Expires at', 'bit-integrations'), key: 'expires_at', required: false },
     { label: __('Maximum activation count', 'bit-integrations'), key: 'times_activated_max', required: false },
   ]
+  const generatorFields = [
+    { label: __('Name', 'bit-integrations'), key: 'name', required: true },
+    { label: __('Character map', 'bit-integrations'), key: 'charset', required: true },
+    { label: __('Number of chunks', 'bit-integrations'), key: 'chunks', required: true },
+    { label: __('Chunk length', 'bit-integrations'), key: 'chunkLength', required: true },
+    { label: __('Maximum activation count', 'bit-integrations'), key: 'timesActivatedMax', required: false },
+    { label: __('Separator', 'bit-integrations'), key: 'separator', required: false },
+    { label: __('Prefix', 'bit-integrations'), key: 'prefix', required: false },
+    { label: __('Suffix', 'bit-integrations'), key: 'suffix', required: false },
+    { label: __('Expires in	(days)', 'bit-integrations'), key: 'expiresIn', required: false },
+  ]
 
   const modules = [
     { name: 'create_license', label: __('Create a license', 'bit-integrations'), is_pro: false },
@@ -38,7 +49,8 @@ function LMFWC({ formFields, setFlow, flow, allIntegURL }) {
     { name: 'delete_license', label: __('Delete a License', 'bit-integrations'), is_pro: true },
     { name: 'reactivate_license', label: __('Reactivate a License', 'bit-integrations'), is_pro: true },
     { name: 'create_generator', label: __('Create a generator', 'bit-integrations'), is_pro: true },
-    { name: 'update_generator', label: __('Delete a Generator', 'bit-integrations'), is_pro: true }
+    { name: 'update_generator', label: __('Update a Generator', 'bit-integrations'), is_pro: true },
+    { name: 'delete_generator', label: __('Delete a Generator', 'bit-integrations'), is_pro: true }
   ]
 
   const [licenseManagerConf, setLicenseManagerConf] = useState({
@@ -52,6 +64,7 @@ function LMFWC({ formFields, setFlow, flow, allIntegURL }) {
     module: '',
     licenseFields,
     generalFields,
+    generatorFields,
     modules
   })
 
