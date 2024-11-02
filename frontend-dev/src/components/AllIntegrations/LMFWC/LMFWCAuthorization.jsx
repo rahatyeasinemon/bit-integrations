@@ -2,12 +2,11 @@
 /* eslint-disable no-unused-expressions */
 import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
-import { lmfwcAuthentication, getAllEvents } from './LMFWCCommonFunc'
-import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
-import CopyText from '../../Utilities/CopyText'
+import { lmfwcAuthentication } from './LMFWCCommonFunc'
 
 export default function LMFWCAuthorization({
   licenseManagerConf,
@@ -18,8 +17,8 @@ export default function LMFWCAuthorization({
   setLoading,
   isInfo
 }) {
-  const [isAuthorized, setIsAuthorized] = useState(true)
-  const { demio } = tutorialLinks
+  const [isAuthorized, setIsAuthorized] = useState(false)
+  const { lmfwc } = tutorialLinks
   const [error, setError] = useState({ api_key: '', api_secret: '' })
 
   const nextPage = () => {
@@ -58,8 +57,8 @@ export default function LMFWCAuthorization({
     <div
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {demio?.youTubeLink && <TutorialLink title="LMFWC" youTubeLink={demio?.youTubeLink} />}
-      {demio?.docLink && <TutorialLink title="LMFWC" docLink={demio?.docLink} />}
+      {lmfwc?.youTubeLink && <TutorialLink title="License Manager For WooCommerce" youTubeLink={lmfwc?.youTubeLink} />}
+      {lmfwc?.docLink && <TutorialLink title="License Manager For WooCommerce" docLink={lmfwc?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
