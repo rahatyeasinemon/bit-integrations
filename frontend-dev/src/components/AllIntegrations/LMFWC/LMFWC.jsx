@@ -83,10 +83,10 @@ function LMFWC({ formFields, setFlow, flow, allIntegURL }) {
       return
     }
 
-    if (!licenseManagerConf.selectedEvent) {
-      toast.error(__('Please select a Event', 'bit-integrations'))
-      return
-    }
+    // if (!licenseManagerConf.selectedEvent) {
+    //   toast.error(__('Please select a Event', 'bit-integrations'))
+    //   return
+    // }
 
     licenseManagerConf.field_map.length > 0 && setStep(pageNo)
   }
@@ -124,7 +124,7 @@ function LMFWC({ formFields, setFlow, flow, allIntegURL }) {
           setSnackbar={setSnackbar}
         />
 
-        {licenseManagerConf?.actionName && (
+        {licenseManagerConf?.module && (
           <button
             onClick={() => nextPage(3)}
             disabled={!checkMappedFields(licenseManagerConf)}
@@ -137,7 +137,7 @@ function LMFWC({ formFields, setFlow, flow, allIntegURL }) {
       </div>
 
       {/* STEP 3 */}
-      {licenseManagerConf?.actionName && (
+      {licenseManagerConf?.module && (
         <IntegrationStepThree
           step={step}
           saveConfig={() => saveConfig()}

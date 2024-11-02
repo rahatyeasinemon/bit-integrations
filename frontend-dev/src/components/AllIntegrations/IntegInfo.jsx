@@ -583,7 +583,7 @@ export default function IntegInfo() {
         )
       case 'License Manager For WooCommerce':
         return (
-          <LMFWCAuthorization theEventsCalendarConf={integrationConf} step={1} isInfo />
+          <LMFWCAuthorization licenseManagerConf={integrationConf} step={1} isInfo />
         )
       default:
         return <></>

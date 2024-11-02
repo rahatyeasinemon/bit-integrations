@@ -73,7 +73,7 @@ export default function LMFWCIntegLayout({
         />
       )}
 
-      {licenseManagerConf.module && !loading.event && (
+      {/* {licenseManagerConf.module && !loading.event && (
         <>
           <br />
           <br />
@@ -100,9 +100,9 @@ export default function LMFWCIntegLayout({
             </button>
           </div>
         </>
-      )}
+      )} */}
 
-      {licenseManagerConf.module && licenseManagerConf.selectedEvent && !loading.session && (
+      {/* {licenseManagerConf.module && licenseManagerConf.selectedEvent && !loading.session && (
         <>
           <br />
           <br />
@@ -132,18 +132,12 @@ export default function LMFWCIntegLayout({
             </button>
           </div>
         </>
-      )}
+      )} */}
       {licenseManagerConf.module && !isLoading && (
         <div>
           <br />
           <div className="mt-5">
             <b className="wdt-100">{__('Field Map', 'bit-integrations')}</b>
-            <button
-              className="icn-btn sh-sm ml-2 mr-2 tooltip"
-              style={{ '--tooltip-txt': `'${__('Refresh fields', 'bit-integrations')}'` }}
-              type="button">
-              &#x21BB;
-            </button>
           </div>
 
           <br />
