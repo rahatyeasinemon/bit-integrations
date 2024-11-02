@@ -73,34 +73,30 @@ export default function LMFWCIntegLayout({
         />
       )}
 
-      {/* {licenseManagerConf.module && !loading.event && (
+      {licenseManagerConf?.module && licenseManagerConf.module === "create_license" && !loading.event && (
         <>
           <br />
           <br />
           <div className="flx">
-            <b className="wdt-200 d-in-b">{__('Select Event:', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select Status:', 'bit-integrations')}</b>
             <MultiSelect
               options={
-                licenseManagerConf?.events &&
-                licenseManagerConf.events.map((event) => ({ label: event.name, value: `${event.id}` }))
+                [
+                  { id: 'sold', name: 'Sold' },
+                  { id: 'delivered', name: 'Delivered' },
+                  { id: 'active', name: 'Active' },
+                  { id: 'inactive', name: 'Inactive' }
+                ].map((event) => ({ label: event.name, value: `${event.id}` }))
               }
               className="msl-wrp-options dropdown-custom-width"
-              defaultValue={licenseManagerConf?.selectedEvent}
-              onChange={(val) => setChanges(val, 'selectedEvent')}
+              defaultValue={licenseManagerConf?.selectedStatus}
+              onChange={(val) => setChanges(val, 'selectedStatus')}
               singleSelect
               closeOnSelect
             />
-            <button
-              onClick={() => getAllEvents(licenseManagerConf, setLicenseManagerConf, setLoading)}
-              className="icn-btn sh-sm ml-2 mr-2 tooltip"
-              style={{ '--tooltip-txt': `'${__('Refresh Events', 'bit-integrations')}'` }}
-              type="button"
-              disabled={loading.event}>
-              &#x21BB;
-            </button>
           </div>
         </>
-      )} */}
+      )}
 
       {/* {licenseManagerConf.module && licenseManagerConf.selectedEvent && !loading.session && (
         <>

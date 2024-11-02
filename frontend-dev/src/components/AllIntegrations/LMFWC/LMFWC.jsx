@@ -83,10 +83,10 @@ function LMFWC({ formFields, setFlow, flow, allIntegURL }) {
       return
     }
 
-    // if (!licenseManagerConf.selectedEvent) {
-    //   toast.error(__('Please select a Event', 'bit-integrations'))
-    //   return
-    // }
+    if (licenseManagerConf.module === 'create_license' && !licenseManagerConf?.selectedStatus) {
+      toast.error(__('Please select Status', 'bit-integrations'))
+      return
+    }
 
     licenseManagerConf.field_map.length > 0 && setStep(pageNo)
   }

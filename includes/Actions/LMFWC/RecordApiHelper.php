@@ -46,18 +46,15 @@ class RecordApiHelper
         if (empty($finalData['license_key'])) {
             return ['success' => false, 'message' => __('Required field license key is empty', 'bit-integrations'), 'code' => 400];
         }
+        if (empty($this->integrationDetails->selectedStatus)) {
+            return ['success' => false, 'message' => __('Required field status is empty', 'bit-integrations'), 'code' => 400];
+        }
 
-        // if (isset($this->integrationDetails->selectedEvent) || !empty($this->integrationDetails->selectedEvent)) {
-        //     $finalData['id'] = $this->integrationDetails->selectedEvent;
-        // }
-        // if (isset($this->integrationDetails->selectedSession) && !empty($this->integrationDetails->selectedSession)) {
-        //     $finalData['date_id'] = $this->integrationDetails->selectedSession;
-        // }
-
-        $finalData['status'] = 'inactive';
+        if (isset($this->integrationDetails->selectedStatus) || !empty($this->integrationDetails->selectedStatus)) {
+            $finalData['status'] = $this->integrationDetails->selectedStatus;
+        }
 
         $apiEndpoint = $this->apiUrl . '/licenses';
-        error_log(print_r([$apiEndpoint, $finalData, $this->defaultHeader], true));
 
         return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->defaultHeader, ['sslverify' => false]);
     }
@@ -84,6 +81,7 @@ class RecordApiHelper
 
         if (isset($apiResponse->success) && $apiResponse->success) {
             $res = [$this->typeName . '  successfully'];
+
             LogHandler::save($this->integrationId, wp_json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', wp_json_encode($res));
         } else {
             if (is_wp_error($apiResponse)) {

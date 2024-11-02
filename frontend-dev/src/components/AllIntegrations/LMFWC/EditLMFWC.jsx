@@ -30,10 +30,11 @@ function EditLMFWC({ allIntegURL }) {
       setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bit-integrations') })
       return
     }
-    if (!licenseManagerConf.selectedEvent) {
-      toast.error(__('Please select a Event', 'bit-integrations'))
+    if (licenseManagerConf.module === 'create_license' && !licenseManagerConf?.selectedStatus) {
+      toast.error(__('Please select Status', 'bit-integrations'))
       return
     }
+
     saveActionConf({
       flow,
       allIntegURL,
