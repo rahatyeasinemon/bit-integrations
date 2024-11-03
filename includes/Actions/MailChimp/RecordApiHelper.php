@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\MailChimp;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -21,12 +21,15 @@ class RecordApiHelper
 
     private $_integrationID;
 
-    public function __construct($tokenDetails, $integId)
+    private $_integrationDetails;
+
+    public function __construct($tokenDetails, $integId, $integrationDetails)
     {
         $this->_defaultHeader['Authorization'] = "Bearer {$tokenDetails->access_token}";
         $this->_defaultHeader['Content-Type'] = 'application/json';
         $this->_tokenDetails = $tokenDetails;
         $this->_integrationID = $integId;
+        $this->_integrationDetails = $integrationDetails;
     }
 
     public function insertRecord($listId, $data)
@@ -74,6 +77,8 @@ class RecordApiHelper
     {
         $fieldData = static::generateFieldMap($fieldMap, $fieldValues, $actions, $addressFields, $tags);
         if (empty($module) || $module == 'add_a_member_to_an_audience') {
+            $fieldData = apply_filters('btcbi_mailchimp_map_language', $fieldData, $this->_integrationDetails);
+
             $recordApiResponse = $this->insertRecord($listId, wp_json_encode($fieldData));
             $type = 'insert';
 
