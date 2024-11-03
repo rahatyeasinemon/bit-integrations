@@ -18,7 +18,7 @@ export default function MailChimpActions({ mailChimpConf, setMailChimpConf, form
   const actionHandler = (e, type) => {
     const newConf = { ...mailChimpConf }
 
-    if (type === 'language') {
+    if (type === 'language' || type === 'gdpr') {
       setActionMdl({ show: type })
     }
     if (type === 'update') {
@@ -114,29 +114,78 @@ export default function MailChimpActions({ mailChimpConf, setMailChimpConf, form
             isInfo={!isPro}
           />
 
-          {isPro &&
-            <ConfirmModal
-              className="custom-conf-mdl"
-              mainMdlCls="o-v"
-              btnClass="purple"
-              btnTxt={__('Ok', 'bit-integrations')}
-              show={actionMdl.show === 'language'}
-              close={clsActionMdl}
-              action={clsActionMdl}
-              title={__('Add Language', 'bit-integrations')}>
-              <div className="btcd-hr mt-2 mb-2" />
+          <TableCheckBox
+            checked={mailChimpConf?.selectedGDPR || false}
+            onChange={(e) => actionHandler(e, 'gdpr')}
+            className="wdt-200 mt-4 mr-2"
+            value="gdpr"
+            title={`${__('Add GDPR', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}
+            subTitle={
+              isPro
+                ? __(
+                  'Add GDPR Marketing Preferences',
+                  'bit-integrations'
+                )
+                : sprintf(
+                  __(
+                    'The Bit Integration Pro v(%s) plugin needs to be installed and activated to enable the %s feature',
+                    'bit-integrations'
+                  ),
+                  '2.3.0',
+                  __('GDPR', 'bit-integrations')
+                )
+            }
+            isInfo={!isPro}
+          />
 
-              <div className="flx flx-between mt-2">
-                <MultiSelect
-                  className="msl-wrp-options"
-                  defaultValue={mailChimpConf?.selectedLanguage}
-                  options={languages}
-                  onChange={(val) => setChanges(val, 'selectedLanguage')}
-                  customValue
-                  singleSelect
-                />
-              </div>
-            </ConfirmModal>
+          {isPro &&
+            <>
+              <ConfirmModal
+                className="custom-conf-mdl"
+                mainMdlCls="o-v"
+                btnClass="purple"
+                btnTxt={__('Ok', 'bit-integrations')}
+                show={actionMdl.show === 'language'}
+                close={clsActionMdl}
+                action={clsActionMdl}
+                title={__('Add Language', 'bit-integrations')}>
+                <div className="btcd-hr mt-2 mb-2" />
+
+                <div className="flx flx-between mt-2">
+                  <MultiSelect
+                    className="msl-wrp-options"
+                    defaultValue={mailChimpConf?.selectedLanguage}
+                    options={languages}
+                    onChange={(val) => setChanges(val, 'selectedLanguage')}
+                    closeOnSelect
+                    singleSelect
+                  />
+                </div>
+              </ConfirmModal>
+              <ConfirmModal
+                className="custom-conf-mdl"
+                mainMdlCls="o-v"
+                btnClass="purple"
+                btnTxt={__('Ok', 'bit-integrations')}
+                show={actionMdl.show === 'gdpr'}
+                close={clsActionMdl}
+                action={clsActionMdl}
+                title={__('Write down GDPR marketing options', 'bit-integrations')}>
+                <div className="btcd-hr mt-2 mb-2" />
+                <p><b>{__('Note', 'bit-integrations')}</b>: {sprintf(__('Write down your preferred GDPR marketing options, separated by commas %s. For example: Email Address, Phone Number.', 'bit-integrations'), '(",")')}</p>
+
+                <div className="flx flx-between mt-2">
+                  <input
+                    className="btcd-paper-inp mt-1"
+                    onChange={(e) => setChanges(e.target.value, 'selectedGDPR')}
+                    name="selectedGDPR"
+                    value={mailChimpConf?.selectedGDPR}
+                    type="text"
+                    placeholder={__('GDPR Marketing Preferences...', 'bit-integrations')}
+                  />
+                </div>
+              </ConfirmModal>
+            </>
           }
         </>
       )}

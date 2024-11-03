@@ -91,6 +91,9 @@ class RecordApiHelper
                     $type = 'update';
                 }
             }
+            if (isset($recordApiResponse->id, $this->_integrationDetails->selectedGDPR)) {
+                do_action('btcbi_mailchimp_store_gdpr_permission', $recordApiResponse, $this->_integrationDetails->selectedGDPR, $listId, $this->_apiEndPoint(), $this->_defaultHeader, $this->_integrationID);
+            }
         } elseif ($module == 'add_tag_to_a_member' || $module == 'remove_tag_from_a_member') {
             $type = $module;
             $recordApiResponse = $this->addRemoveTag($module, $listId, $fieldData);
