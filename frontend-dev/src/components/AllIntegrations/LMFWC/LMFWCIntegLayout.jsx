@@ -6,6 +6,7 @@ import Loader from '../../Loaders/Loader'
 import {
   generateMappedField,
   getAllCustomer,
+  getAllGenerator,
   getAllLicense,
   getAllOrder,
   getAllProduct
@@ -67,6 +68,7 @@ export default function LMFWCIntegLayout({
           draftConf.field_map = generateMappedField(draftConf.lmfwcFields)
         } else if (name === 'module' && (val === 'create_generator' || val === 'update_generator')) {
           if (val === 'update_generator') {
+            getAllGenerator(licenseManagerConf, setLicenseManagerConf, setLoading)
             draftConf.lmfwcFields = draftConf.generatorFields.map(fields => {
               return { ...fields, required: false }
             })
@@ -100,7 +102,7 @@ export default function LMFWCIntegLayout({
         />
       </div>
 
-      {(isLoading || loading.customer || loading.product || loading.license) && (
+      {(isLoading || loading.customer || loading.product || loading.license || loading.generator) && (
         <Loader
           style={{
             display: 'flex',
@@ -134,6 +136,34 @@ export default function LMFWCIntegLayout({
               style={{ '--tooltip-txt': `'${__('Refresh License', 'bit-integrations')}'` }}
               type="button"
               disabled={loading.license}>
+              &#x21BB;
+            </button>
+          </div>
+        </>
+      )}
+
+      {licenseManagerConf?.module && licenseManagerConf.module === 'update_generator' && !isLoading && (
+        <>
+          <br />
+          <div className="flx">
+            <b className="wdt-200 d-in-b">{__('Select Generator:', 'bit-integrations')}</b>
+            <MultiSelect
+              options={
+                licenseManagerConf?.generators &&
+                licenseManagerConf.generators.map((event) => ({ label: event.name, value: `${event.id}` }))
+              }
+              className="msl-wrp-options dropdown-custom-width"
+              defaultValue={licenseManagerConf?.selectedGenerator}
+              onChange={(val) => setChanges(val, 'selectedGenerator')}
+              singleSelect
+              closeOnSelect
+            />
+            <button
+              onClick={() => getAllGenerator(licenseManagerConf, setLicenseManagerConf, setLoading)}
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': `'${__('Refresh Generator', 'bit-integrations')}'` }}
+              type="button"
+              disabled={loading.generator}>
               &#x21BB;
             </button>
           </div>

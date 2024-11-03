@@ -191,14 +191,44 @@ export const getAllLicense = (confTmp, setConf, setLoading) => {
         })
 
         setLoading({ ...setLoading, license: false })
-        toast.success(__('Order fetched successfully', 'bit-integrations'))
+        toast.success(__('License fetched successfully', 'bit-integrations'))
         return
       }
       setLoading({ ...setLoading, license: false })
-      toast.error(__('Order Not Found!', 'bit-integrations'))
+      toast.error(__('License Not Found!', 'bit-integrations'))
       return
     }
     setLoading({ ...setLoading, license: false })
-    toast.error(__('Order fetching failed', 'bit-integrations'))
+    toast.error(__('License fetching failed', 'bit-integrations'))
+  })
+}
+
+export const getAllGenerator = (confTmp, setConf, setLoading) => {
+  setLoading({ ...setLoading, generator: true })
+
+  const requestParams = {
+    base_url: confTmp.base_url,
+    api_key: confTmp.api_key,
+    api_secret: confTmp.api_secret
+  }
+
+  bitsFetch(requestParams, 'lmfwc_fetch_all_generator').then((result) => {
+    if (result && result.success) {
+      if (result.data) {
+        setConf((prevConf) => {
+          prevConf.generators = result.data
+          return prevConf
+        })
+
+        setLoading({ ...setLoading, generator: false })
+        toast.success(__('Generator fetched successfully', 'bit-integrations'))
+        return
+      }
+      setLoading({ ...setLoading, generator: false })
+      toast.error(__('Generator Not Found!', 'bit-integrations'))
+      return
+    }
+    setLoading({ ...setLoading, generator: false })
+    toast.error(__('Generator fetching failed', 'bit-integrations'))
   })
 }

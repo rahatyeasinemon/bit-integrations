@@ -141,23 +141,6 @@ class RecordApiHelper
         return $response;
     }
 
-    // public function activateLicense($finalData)
-    // {
-    //     $this->type = 'Activate license';
-    //     $this->typeName = 'Activate license';
-
-    //     if (empty($finalData['license_key'])) {
-    //         return ['success' => false, 'message' => __('Required field license key is empty', 'bit-integrations'), 'code' => 400];
-    //     }
-
-    //     $response = apply_filters('btcbi_lmfwc_activate_licence', false, $this->apiUrl, $finalData['license_key'], $this->defaultHeader);
-    //     if (!$response) {
-    //         return (object) ['message' => wp_sprintf(__('%s plugin is not installed or activate', 'bit-integrations'), 'Bit Integration Pro')];
-    //     }
-
-    //     return $response;
-    // }
-
     public function licenseRelatedAction($finalData, $action)
     {
         $this->type = "{$action} license";
@@ -214,32 +197,50 @@ class RecordApiHelper
     {
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
 
-        if ($module === 'create_license') {
-            $apiResponse = $this->createLicense($finalData);
-        } elseif ($module === 'update_license') {
-            $apiResponse = $this->updateLicense($finalData);
-        } elseif ($module === 'activate_license') {
-            $apiResponse = $this->licenseRelatedAction($finalData, 'activate');
-        } elseif ($module === 'deactivate_license') {
-            $apiResponse = $this->licenseRelatedAction($finalData, 'deactivate');
-        } elseif ($module === 'reactivate_license') {
-            $apiResponse = $this->licenseRelatedAction($finalData, 'reactivate');
-        } elseif ($module === 'delete_license') {
-            $apiResponse = $this->licenseRelatedAction($finalData, 'delete');
-        } elseif ($module === 'create_generator') {
-            $apiResponse = $this->createGenerator($finalData);
-        } elseif ($module === 'update_generator') {
-            $apiResponse = $this->updateGenerator($finalData);
-        }
+        switch ($module) {
+            case 'create_license':
+                $apiResponse = $this->createLicense($finalData);
 
-        error_log(print_r($apiResponse, true));
-        if (isset($apiResponse->success) && $apiResponse->success) {
+                break;
+            case 'update_license':
+                $apiResponse = $this->updateLicense($finalData);
+
+                break;
+            case 'activate_license':
+                $apiResponse = $this->licenseRelatedAction($finalData, 'activate');
+
+                break;
+            case 'deactivate_license':
+                $apiResponse = $this->licenseRelatedAction($finalData, 'deactivate');
+
+                break;
+            case 'reactivate_license':
+                $apiResponse = $this->licenseRelatedAction($finalData, 'reactivate');
+
+                break;
+            case 'delete_license':
+                $apiResponse = $this->licenseRelatedAction($finalData, 'delete');
+
+                break;
+            case 'create_generator':
+                $apiResponse = $this->createGenerator($finalData);
+
+                break;
+            case 'update_generator':
+                $apiResponse = $this->updateGenerator($finalData);
+
+                break;
+        }
+        
+        if (isset($apiResponse->success) && $apiResponse->success && !isset($apiResponse->data->errors)) {
             $res = [$this->typeName . '  successfully'];
 
             LogHandler::save($this->integrationId, wp_json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', wp_json_encode($res));
         } else {
             if (is_wp_error($apiResponse)) {
                 $res = $apiResponse->get_error_message();
+            }elseif(isset($apiResponse->data->errors)){
+                $res = $apiResponse->data->errors->lmfwc_rest_data_error[0] ?? wp_json_encode($apiResponse);
             } else {
                 $res = !empty($apiResponse->message) ? $apiResponse->message : wp_json_encode($apiResponse);
             }
