@@ -14,7 +14,7 @@ const VoxelHelper = ({ flow, setFlowData, edit = false }) => {
   const handleChange = (val, type) => {
     setFlowData(val, type)
     if (val) {
-      getVoxelFields(setFlowData, val, edit, setFormFields)
+      getVoxelFields(flow, setFlowData, val, edit, setFormFields)
     } else {
       if (edit) {
         setFormFields([])
@@ -26,7 +26,11 @@ const VoxelHelper = ({ flow, setFlowData, edit = false }) => {
 
   return (
     <div>
-      {(id === 'voxel-7' || id === 'voxel-8' || id === 'voxel-9' || id === 'voxel-10') && (
+      {(id === 'voxel-7' ||
+        id === 'voxel-8' ||
+        id === 'voxel-9' ||
+        id === 'voxel-10' ||
+        id === 'voxel-11') && (
         <>
           <div className={edit ? 'flx mt-3' : ''}>
             <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>

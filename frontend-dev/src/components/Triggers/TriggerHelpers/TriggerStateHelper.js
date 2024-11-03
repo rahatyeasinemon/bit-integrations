@@ -222,7 +222,7 @@ export const eventsCalendarStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
 }
 
 export const voxelStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
-  if (val === 'voxel-7' || val === 'voxel-8' || val === 'voxel-9' || val === 'voxel-10') {
+  if (val === 'voxel-7' || val === 'voxel-8' || val === 'voxel-9' || val === 'voxel-10' || val === 'voxel-11') {
     tmpNewFlow.triggerData = {
       ...tmpNewFlow.triggerData,
       postTypes: resp.data.postTypes,
@@ -608,7 +608,7 @@ export const eventsCalendarIH = (tmpConf, flowData, triggered_entity_id) => {
 export const voxelIH = (tmpConf, flowData, triggered_entity_id) => {
   const formId = flowData.formID ? flowData.formID : triggered_entity_id
 
-  if (formId === 'voxel-7' || formId === 'voxel-8' || formId === 'voxel-9' || formId === 'voxel-10') {
+  if (formId === 'voxel-7' || formId === 'voxel-8' || formId === 'voxel-9' || formId === 'voxel-10' || formId === 'voxel-11') {
     tmpConf.selectedPostType = flowData.selectedPostType
     tmpConf.postTypes = flowData.postTypes
   }

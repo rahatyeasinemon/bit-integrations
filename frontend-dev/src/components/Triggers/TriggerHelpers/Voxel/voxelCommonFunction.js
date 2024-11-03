@@ -2,8 +2,10 @@ import toast from 'react-hot-toast'
 import bitsFetch from '../../../../Utils/bitsFetch'
 import { __ } from '../../../../Utils/i18nwrap'
 
-export const getVoxelFields = (setFlowData, value, edit, setFormFields) => {
-  const loadFields = bitsFetch({ id: value, type: 'postType' }, 'voxel/get/fields', null, 'POST').then(
+export const getVoxelFields = (flow, setFlowData, value, edit, setFormFields) => {
+  const TaskId = !edit ? flow?.triggerData?.formID : flow.triggered_entity_id
+
+  const loadFields = bitsFetch({ id: value, type: 'postType', TaskId }, 'voxel/get/fields', null, 'POST').then(
     (result) => {
       if (result && result.success) {
         if (edit) {
