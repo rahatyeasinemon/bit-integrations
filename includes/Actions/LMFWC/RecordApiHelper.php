@@ -129,7 +129,7 @@ class RecordApiHelper
         if (empty($finalData['chunks'])) {
             return ['success' => false, 'message' => __('Required field Number of chunks is empty', 'bit-integrations'), 'code' => 400];
         }
-        if (empty($finalData['chunkLength'])) {
+        if (empty($finalData['chunk_length'])) {
             return ['success' => false, 'message' => __('Required field Chunk length is empty', 'bit-integrations'), 'code' => 400];
         }
 
