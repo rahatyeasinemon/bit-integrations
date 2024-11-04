@@ -139,9 +139,10 @@ class RecordApiHelper
     private function existSubscriber($email, $page = 1)
     {
         $queries = http_build_query([
-            'api_secret' => $this->_defaultHeader,
-            'page'       => $page,
-            'status'     => 'all',
+            'api_secret'    => $this->_defaultHeader,
+            'email_address' => $email,
+            'page'          => 1,
+            'status'        => 'all',
         ]);
 
         $response = HttpHelper::get("{$this->_apiEndpoint}/subscribers?{$queries}", null);
@@ -150,14 +151,6 @@ class RecordApiHelper
             return false;
         }
 
-        foreach ($response->subscribers as $subscriber) {
-            if ($subscriber->email_address === $email) {
-                return $subscriber;
-            }
-        }
-
-        if ($response->total_pages > $response->page) {
-            return $this->existSubscriber($email, $page + 1);
-        }
+        return $response->subscribers;
     }
 }
