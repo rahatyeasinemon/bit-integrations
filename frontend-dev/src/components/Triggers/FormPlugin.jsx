@@ -36,6 +36,8 @@ const FormPlugin = () => {
 
   const setTriggerData = (val) => {
     const tmpNewFlow = { ...newFlow }
+    tmpNewFlow.triggerData['trigger_type'] = newFlow?.triggerDetail?.type || 'form'
+
     if (!val) {
       delete tmpNewFlow.triggerData
       setNewFlow(tmpNewFlow)

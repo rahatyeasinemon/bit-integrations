@@ -63,6 +63,8 @@ export const saveIntegConfig = async (
   let action = 'flow/save'
   setIsLoading(true)
   let tmpConf = confTmp
+  tmpConf['trigger_type'] = flow?.triggerData?.trigger_type || flow?.flow_details?.trigger_type || ''
+
   if (confTmp?.condition?.action_behavior !== 'cond') {
     tmpConf.condition = {
       action_behavior: '',
@@ -249,6 +251,7 @@ export const saveActionConf = async ({
   let action = 'flow/save'
   setIsLoading && setIsLoading instanceof Function && setIsLoading(true)
   let tmpConf = conf
+  tmpConf['trigger_type'] = flow?.triggerData?.trigger_type || flow?.flow_details?.trigger_type || ''
 
   /**
    * TODO
