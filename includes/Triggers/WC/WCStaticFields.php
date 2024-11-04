@@ -10,7 +10,7 @@ class WCStaticFields
     {
         $fields = array_merge(static::checkoutBasicFields(), static::getOrderACFFields(), static::getCheckoutCustomFields(), static::getFlexibleCheckoutFields());
 
-        if (version_compare(WC_VERSION, '8.5.1', '>=')) {
+        if (\defined('WC_VERSION') && version_compare(WC_VERSION, '8.5.1', '>=')) {
             $fields = array_merge($fields, static::checkoutUpgradeFields());
         }
 
@@ -30,6 +30,10 @@ class WCStaticFields
 
     private static function getOrderACFFields()
     {
+        if (!class_exists('ACF')) {
+            return [];
+        }
+
         $fields = [];
         $acfFieldGroups = Helper::acfGetFieldGroups(['shop_order']);
 

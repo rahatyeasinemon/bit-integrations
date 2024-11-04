@@ -65,7 +65,7 @@
     "i18n": "pnpm i18n:gettext-parser && pnpm i18n:php && pnpm i18n:pot",
     "i18n:gettext-parser": "npx react-gettext-parser --output ./locale.pot --config ./gettext-parser.config.js  './src/**/{*.js,*.jsx}'",
     "i18n:json": "npx po2json locale.pot ../languages/btcbi-admin-script.json -f jed1.x",
-    "i18n:mkdir": "[ ! -d \"../languages/\" ] && mkdir '../languages/'",
+    "i18n:mkdir": "node ./bin/mkdir-language.js",
     "i18n:php": "node ./pot-to-php.js locale.pot ../languages/generatedString.php bit-integrations",
     "i18n:pot": "wp i18n make-pot ../ --include=*.php --skip-js --slug=bit-integrations --headers='{\"Last-Translator\":\"developer@bitcode.pro\",\"Language-Team\":\"support@bitcode.pro\",\"PO-Revision-Date\":\"\"}'",
     "clean": "rimraf node_modules yarn.lock package-lock.json pnpm-lock.yaml",

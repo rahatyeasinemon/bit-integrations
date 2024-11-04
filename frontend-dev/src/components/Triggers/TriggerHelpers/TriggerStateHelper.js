@@ -210,7 +210,12 @@ export const wpJobManagerStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
 }
 
 export const eventsCalendarStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
-  if (val === 'events_calendar-1' || val === 'events_calendar-2' || val === 'events_calendar-3' || val === 'events_calendar-4') {
+  if (
+    val === 'events_calendar-1' ||
+    val === 'events_calendar-2' ||
+    val === 'events_calendar-3' ||
+    val === 'events_calendar-4'
+  ) {
     tmpNewFlow.triggerData = {
       ...tmpNewFlow.triggerData,
       events: resp.data.events,
@@ -597,7 +602,12 @@ export const wpJobManagerStateIH = (tmpConf, flowData, triggered_entity_id) => {
 export const eventsCalendarIH = (tmpConf, flowData, triggered_entity_id) => {
   const formId = flowData.formID ? flowData.formID : triggered_entity_id
 
-  if (formId === 'events_calendar-1' || formId === 'events_calendar-2' || formId === 'events_calendar-3' || formId === 'events_calendar-4') {
+  if (
+    formId === 'events_calendar-1' ||
+    formId === 'events_calendar-2' ||
+    formId === 'events_calendar-3' ||
+    formId === 'events_calendar-4'
+  ) {
     tmpConf.selectedEvent = flowData.selectedEvent
     tmpConf.events = flowData.events
   }
@@ -621,6 +631,7 @@ export const WCSubscriptionsStateIH = (tmpConf, flowData, triggered_entity_id) =
 
   tmpConf.selectedProduct = flowData.selectedProduct
   tmpConf.allSubscriptionProducts = flowData.allSubscriptionProducts
+  tmpConf.fields = flowData?.fields
 
   if (!['user_subscribes_to_product', 'user_purchases_variable_subscription'].includes(formId)) {
     tmpConf.selectedSubscription = flowData.selectedSubscription
@@ -635,6 +646,27 @@ export const WCSubscriptionsStateIH = (tmpConf, flowData, triggered_entity_id) =
       { label: 'Pending', value: 'pending' },
       { label: 'Cancelled', value: 'cancelled' },
       { label: 'Pending Cancel', value: 'pending-cancel' }
+    ]
+  }
+
+  return tmpConf
+}
+
+export const WCBookingsStateIH = (tmpConf, flowData, triggered_entity_id) => {
+  const formId = flowData.formID ? flowData.formID : triggered_entity_id
+  tmpConf.fields = flowData?.fields
+
+  if (formId === 'booking_status_changed') {
+    tmpConf.selectedStatus = flowData.selectedStatus
+    tmpConf.allStatus = [
+      { label: 'Any Status', value: 'any' },
+      { label: 'Unpaid', value: 'unpaid' },
+      { label: 'Pending Confirmation', value: 'pending-confirmation' },
+      { label: 'Confirmed', value: 'confirmed' },
+      { label: 'Paid', value: 'paid' },
+      { label: 'Complete', value: 'complete' },
+      { label: 'In Cart', value: 'in-cart' },
+      { label: 'Cancelled', value: 'cancelled' }
     ]
   }
 

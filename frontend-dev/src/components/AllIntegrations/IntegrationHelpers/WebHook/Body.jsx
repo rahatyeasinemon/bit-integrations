@@ -1,19 +1,20 @@
-import React, { useEffect } from 'react'
-import MultiSelect from 'react-multiple-select-dropdown-lite'
+import { create } from 'mutative'
+import React, { useEffect, useMemo } from 'react'
+import { useRecoilValue } from 'recoil'
+import { $formFields } from '../../../../GlobalStates'
 import CloseIcn from '../../../../Icons/CloseIcn'
-import TrashIcn from '../../../../Icons/TrashIcn'
 import { __ } from '../../../../Utils/i18nwrap'
 import Button from '../../../Utilities/Button'
 import TableCheckBox from '../../../Utilities/TableCheckBox'
 import JsonEditor from '../../../Utilities/jsonEditor/JsonEditor'
-import { create } from 'mutative'
-import { useRecoilValue } from 'recoil'
-import { $btcbi } from '../../../../GlobalStates'
-import { SmartTagField } from '../../../../Utils/StaticData/SmartTagField'
+import PayLoadFieldMap from './PayLoadFieldMap'
 
-function Body({ formFields, webHooks, setWebHooks, isInfo, setTab }) {
-  const btcbi = useRecoilValue($btcbi)
-  const { isPro } = btcbi
+function Body({ webHooks, setWebHooks, isInfo, setTab }) {
+  const formFields = useRecoilValue($formFields)
+  const formattedFormFields = useMemo(
+    () => formFields.map((field) => ({ key: field.name, value: `\${${field.name}}` })),
+    [formFields]
+  )
 
   useEffect(() => {
     const tmpConf = { ...webHooks }
@@ -27,17 +28,6 @@ function Body({ formFields, webHooks, setWebHooks, isInfo, setTab }) {
     setTab(3)
   }, [])
 
-  const handlePayload = (e, index) => {
-    const tmpConf = { ...webHooks }
-    tmpConf.body.data[index] = { ...tmpConf.body.data[index], [e.target.name]: e.target.value }
-    setWebHooks(tmpConf)
-  }
-
-  const setFromField = (val, index) => {
-    const tmpConf = { ...webHooks }
-    tmpConf.body.data[index] = { ...tmpConf.body.data[index], value: val }
-    setWebHooks(tmpConf)
-  }
   const addParam = () => {
     const tmpConf = { ...webHooks }
     if (!tmpConf.body.data || !Array.isArray(tmpConf.body.data)) {
@@ -46,35 +36,22 @@ function Body({ formFields, webHooks, setWebHooks, isInfo, setTab }) {
     tmpConf.body.data.push({})
     setWebHooks(tmpConf)
   }
-  const delParam = (id) => {
-    const tmpConf = { ...webHooks }
-    tmpConf.body.data.splice(id, 1)
-    setWebHooks(tmpConf)
-  }
+
   const handleContentType = (e) => {
     const tmpConf = { ...webHooks }
     tmpConf.body.type = e.target.value
 
     if (e.target.value !== 'raw') {
-      tmpConf.body.data = tmpConf?.body?.send_all_data ? getFormatedData() : []
+      tmpConf.body.data = tmpConf?.body?.send_all_data ? formattedFormFields : []
     }
     setWebHooks(tmpConf)
   }
-  const getFormatedData = () => {
-    const data = []
-    formFields.map(({ name }) => {
-      // tmpConf.body.data[index] = { ...tmpConf.body.data[index], value: val }
-      data.push({ key: name, value: `\${${name}}` })
-    })
-    return data
-  }
+
   const actionHandler = (e) => {
     const newConf = { ...webHooks }
-    // {key: 'vxcv', value: '${display_name}'}
-    const formatedData = getFormatedData()
     if (e.target.checked) {
       newConf.body.send_all_data = true
-      newConf.body.data = formatedData
+      newConf.body.data = formattedFormFields
     } else {
       delete newConf?.body?.data
       delete newConf?.body?.send_all_data
@@ -127,61 +104,14 @@ function Body({ formFields, webHooks, setWebHooks, isInfo, setTab }) {
             </div>
             {Array.isArray(webHooks.body?.data) &&
               webHooks.body?.data?.map((itm, childindx) => (
-                <div className="tr" key={`fu-1${childindx * 3}`}>
-                  <div className="td">
-                    <input
-                      className="btcd-paper-inp p-i-sm"
-                      onChange={(e) => handlePayload(e, childindx)}
-                      name="key"
-                      type="text"
-                      value={itm.key}
-                      disabled={isInfo}
-                    />
-                  </div>
-                  <div className="td">
-                    <input
-                      className="btcd-paper-inp p-i-sm"
-                      onChange={(e) => handlePayload(e, childindx)}
-                      name="value"
-                      type="text"
-                      value={itm.value}
-                      disabled={isInfo}
-                    />
-                  </div>
-                  {!isInfo && (
-                    <div className="flx p-atn">
-                      <Button onClick={() => delParam(childindx)} icn>
-                        <TrashIcn size={16} />
-                      </Button>
-                      <select
-                        className="btcd-paper-inp mr-2"
-                        name="formField"
-                        value={itm.value || ''}
-                        onChange={(ev) => setFromField(ev.target.value, childindx)}>
-                        <option value="">{__('Select Field', 'bit-integrations')}</option>
-                        <optgroup label={__('Form Fields', 'bit-integrations')}>
-                          {formFields?.map((f) => (
-                            <option key={`ff-rm-${f.name}`} value={`\${${f.name}}`}>
-                              {f.label}
-                            </option>
-                          ))}
-                        </optgroup>
-                        <optgroup
-                          label={sprintf(
-                            __('General Smart Codes %s', 'bit-integrations'),
-                            isPro ? '' : `(${__('Pro', 'bit-integrations')})`
-                          )}>
-                          {isPro &&
-                            SmartTagField?.map((f) => (
-                              <option key={`ff-rm-${f.name}`} value={`\${${f.name}}`}>
-                                {f.label}
-                              </option>
-                            ))}
-                        </optgroup>
-                      </select>
-                    </div>
-                  )}
-                </div>
+                <PayLoadFieldMap
+                  key={`fu-1${childindx * 3}`}
+                  childindx={childindx}
+                  itm={itm}
+                  isInfo={isInfo}
+                  webHooks={webHooks}
+                  setWebHooks={setWebHooks}
+                />
               ))}
             {!isInfo && (
               <Button onClick={() => addParam(webHooks, setWebHooks)} className="add-pram" icn>

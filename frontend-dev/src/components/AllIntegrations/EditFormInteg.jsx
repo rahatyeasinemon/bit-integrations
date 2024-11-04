@@ -122,6 +122,11 @@ function EditFormInteg({ setSnackbar, className = '' }) {
       ).then((res) => {
         if (res.success) {
           setFormFields(res.data.fields)
+          setFlow((prevFlow) =>
+            create(prevFlow, (draftFlow) => {
+              draftFlow.flow_details.fields = res.data.fields
+            })
+          )
         }
         return res.data
       })
