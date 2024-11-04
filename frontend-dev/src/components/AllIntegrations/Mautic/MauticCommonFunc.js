@@ -112,6 +112,47 @@ export const getAllTags = (mauticConf, setMauticConf, setIsLoading, setSnackbar)
     .catch(() => setIsLoading(false))
 }
 
+export const getAllUsers = (mauticConf, setMauticConf, setIsLoading, setSnackbar) => {
+  setIsLoading(true)
+  const requestParams = {
+    clientId: mauticConf.clientId,
+    clientSecret: mauticConf.clientSecret,
+    baseUrl: mauticConf.baseUrl,
+    tokenDetails: mauticConf.tokenDetails
+  }
+  bitsFetch(requestParams, 'mautic_get_users')
+    .then((result) => {
+      if (result && result.success) {
+        const newConf = { ...mauticConf }
+        if (result.data) {
+          if (!newConf.default) {
+            newConf.default = {}
+          }
+          if (!newConf.default?.users) {
+            newConf.default.users = {}
+          }
+          newConf.default.users = result.data.allUsers
+        }
+
+        if (result.data?.tokenDetails) {
+          newConf.tokenDetails = result.data.tokenDetails
+        }
+        setSnackbar({
+          show: true,
+          msg: __('Contact Owner refreshed', 'bit-integrations')
+        })
+        setMauticConf({ ...newConf })
+      } else {
+        setSnackbar({
+          show: true,
+          msg: __('Contact Owner refresh failed. please try again', 'bit-integrations')
+        })
+      }
+      setIsLoading(false)
+    })
+    .catch(() => setIsLoading(false))
+}
+
 export const setGrantTokenResponse = (integ) => {
   const grantTokenResponse = {}
   const authWindowLocation = window.location.href

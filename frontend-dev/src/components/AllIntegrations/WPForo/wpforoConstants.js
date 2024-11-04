@@ -1,3 +1,5 @@
+import { __ } from '../../../Utils/i18nwrap'
+
 export const TASK_LIST_VALUES = {
   USER_REPUTATION: 'userReputation',
   ADD_TO_GROUP: 'addToGroup',

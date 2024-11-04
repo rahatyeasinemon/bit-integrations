@@ -54,7 +54,7 @@ export default function CapsuleCRMIntegLayout({
         value={capsulecrmConf.actionName}
         className="btcd-paper-inp w-5">
         <option value="">{__('Select an action', 'bit-integrations')}</option>
-        <option value="organisation">{__('Create Organisation', 'bit-integrations')}</option>
+        <option value="organisation">{__('Create Organization', 'bit-integrations')}</option>
         <option value="person">{__('Create Person', 'bit-integrations')}</option>
         <option value="opportunity">{__('Create Opportunity', 'bit-integrations')}</option>
         <option value="project">{__('Create Project', 'bit-integrations')}</option>

@@ -85,6 +85,7 @@ final class SmartTags
             '_bi_post_modified_date' => (\is_object($data['post']) ? $data['post']->post_modified : ''),
             '_bi_post_url'           => (\is_object($data['post']) ? get_permalink($data['post']->ID) : ''),
         ];
+
         if (isset($smartTags[$key])) {
             return $smartTags[$key];
         }

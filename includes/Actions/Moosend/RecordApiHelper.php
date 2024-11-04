@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\Moosend;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record Subscribe , Unsubscribe, Unsubscribe from list
@@ -27,19 +27,20 @@ class RecordApiHelper
 
     public function generateReqDataFromFieldMap($data, $field_map)
     {
-        $dataFinal = [];
-
         foreach ($field_map as $key => $value) {
             $triggerValue = $value->formFields;
             $actionValue = $value->moosendFormFields;
-            if ($triggerValue === 'custom') {
-                $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } elseif (!\is_null($data[$triggerValue])) {
-                $dataFinal[$actionValue] = self::formatPhoneNumber($data[$triggerValue]);
+
+            $formattedValue = isset($data[$triggerValue]) ? MoosendHelper::formatPhoneNumber($data[$triggerValue]) : null;
+
+            if (strpos($actionValue, 'custom_field_') !== 0) {
+                $dataFinal[$actionValue] = ($triggerValue === 'custom')
+                    ? Common::replaceFieldWithValue($value->customValue, $data)
+                    : $formattedValue;
             }
         }
 
-        return $dataFinal;
+        return apply_filters('btcbi_moosend_map_custom_fields', $dataFinal, $data, $field_map);
     }
 
     public function response($status, $code, $type, $typeName, $apiResponse)
@@ -53,10 +54,7 @@ class RecordApiHelper
     public function subscribe($authKey, $listId, $formData)
     {
         $apiEndpoints = "{$this->baseUrl}subscribers/{$listId}/subscribe.json?apikey={$authKey}";
-
-        $headers = [
-            'Content-Type' => 'application/json'
-        ];
+        $headers = ['Content-Type' => 'application/json'];
 
         return HttpHelper::post($apiEndpoints, wp_json_encode($formData), $headers);
     }
