@@ -30,7 +30,17 @@ function EditLMFWC({ allIntegURL }) {
       setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bit-integrations') })
       return
     }
+    if (licenseManagerConf.module != 'update_license' && !checkMappedFields(licenseManagerConf)) {
+      toast.error(__('Please map mandatory fields', 'bit-integrations'))
+      return
+    }
+
     if (licenseManagerConf.module === 'create_license' && !licenseManagerConf?.selectedStatus) {
+      toast.error(__('Please select Status', 'bit-integrations'))
+      return
+    }
+
+    if (licenseManagerConf.module === 'update_license' && !licenseManagerConf?.selectedLicense) {
       toast.error(__('Please select Status', 'bit-integrations'))
       return
     }
