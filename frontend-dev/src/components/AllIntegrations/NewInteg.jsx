@@ -161,6 +161,7 @@ const Dokan = lazy(() => import('./Dokan/Dokan'))
 const JetEngine = lazy(() => import('./JetEngine/JetEngine'))
 const HighLevel = lazy(() => import('./HighLevel/HighLevel'))
 const TheEventsCalendar = lazy(() => import('./TheEventsCalendar/TheEventsCalendar'))
+const LMFWC = lazy(() => import('./LMFWC/LMFWC'))
 
 export default function NewInteg({ allIntegURL }) {
   const { integUrlName } = useParams()
@@ -1516,6 +1517,15 @@ export default function NewInteg({ allIntegURL }) {
       case 'The Events Calendar':
         return (
           <TheEventsCalendar
+            allIntegURL={allIntegURL}
+            formFields={flow?.triggerData?.fields}
+            flow={flow}
+            setFlow={setFlow}
+          />
+        )
+      case 'License Manager For WooCommerce':
+        return (
+          <LMFWC
             allIntegURL={allIntegURL}
             formFields={flow?.triggerData?.fields}
             flow={flow}
