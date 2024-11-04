@@ -5,7 +5,7 @@ import Modal from '../components/Utilities/Modal'
 import { $btcbi } from '../GlobalStates'
 import ChangelogIcn from '../Icons/ChangeLogIcn'
 import ExternalLinkIcn from '../Icons/ExternalLinkIcn'
-import promo from '../resource/img/bit-social-promo.webp'
+import promo from '../resource/img/new_commer.webp'
 import bitsFetch from '../Utils/bitsFetch'
 import { __, sprintf } from '../Utils/i18nwrap'
 
