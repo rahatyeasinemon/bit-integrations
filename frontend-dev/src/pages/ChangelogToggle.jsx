@@ -12,7 +12,7 @@ import { __, sprintf } from '../Utils/i18nwrap'
 export default function ChangelogToggle() {
   const [btcbi, setBtcbi] = useRecoilState($btcbi)
   const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
-  const [showAnalyticsOptin, setShowAnalyticsOptin] = useState([])
+  const [showAnalyticsOptin, setShowAnalyticsOptin] = useState(false)
   const [loading, setLoading] = useState('')
   const [step, setStep] = useState(1)
 
@@ -24,26 +24,26 @@ export default function ChangelogToggle() {
       label: __('Note', 'bit-integrations'),
       headClass: 'new-note',
       itemClass: '',
-      items: ['Deprecated Old WooCommerce Booking Triggers']
+      items: []
     },
     {
       label: __('New Actions', 'bit-integrations'),
       headClass: 'new-integration',
       itemClass: 'integration-list',
-      items: []
+      items: ['License Manager for WooCommerce']
     },
     {
       label: __('New Triggers', 'bit-integrations'),
       headClass: 'new-trigger',
       itemClass: 'integration-list',
-      items: ['WooCommerce Bookings (Pro)']
+      items: ['Voxel (Pro)']
     },
     {
       label: __('New Features', 'bit-integrations'),
       headClass: 'new-feature',
       itemClass: 'feature-list',
       items: [
-        'OneClick Authorization feature added in GoogleSheet Action.'
+        'MailChimp: Added utilities to manage Language and GDPR Marketing Preferences for users. (Pro)'
       ]
     },
     {
@@ -51,7 +51,7 @@ export default function ChangelogToggle() {
       headClass: 'new-improvement',
       itemClass: 'feature-list',
       items: [
-        'WP Post Creation: Enhanced the feature image upload process, now supporting improved handling of third-party public URLs.'
+        'Kit (ConvertKit): Optimized API for handling existing subscribers more efficiently.'
       ]
     }
   ]
@@ -107,7 +107,7 @@ export default function ChangelogToggle() {
         sm={step !== 1}
         show={show}
         setModal={closeModal}
-        closeIcon={showAnalyticsOptin}
+        closeIcon={showAnalyticsOptin && step === 2}
         style={{
           height: 'auto',
           width: '550px'
@@ -134,7 +134,7 @@ export default function ChangelogToggle() {
               <div className="flx flx-col flx-center whats-new">
                 <h3>{sprintf(__("What's New in %s", 'bit-integrations'), btcbi.version)}?</h3>
                 <small className="date">
-                  {__('Updated at:', 'bit-integrations')} <b>30th October 2024</b>
+                  {__('Updated at:', 'bit-integrations')} <b>4th November 2024</b>
                 </small>
               </div>
               <div className="changelog-content">
