@@ -564,23 +564,23 @@ const tutorialLinks = {
   },
   newsletter: {
     youTubeLink: '#',
-    docLink: '#'
+    docLink: 'https://bit-integrations.com/wp-docs/actions/newsletter-integrations/'
   },
   sureMembers: {
     youTubeLink: '#',
-    docLink: '#'
+    docLink: 'https://bit-integrations.com/wp-docs/actions/suremembers-integrations-as-an-action/'
   },
   mailster: {
     youTubeLink: '#',
-    docLink: '#'
+    docLink: 'https://bit-integrations.com/wp-docs/actions/mailster-integrations-as-an-action/'
   },
   wpforo: {
     youTubeLink: '#',
-    docLink: 'https://bitapps.pro/docs/bit-integrations/actions/wpforo-integration/'
+    docLink: 'https://bit-integrations.com/wp-docs/actions/wpforo-integrations-as-an-action/'
   },
   dokan: {
     youTubeLink: '#',
-    docLink: '#'
+    docLink: 'https://bit-integrations.com/wp-docs/actions/dokan-integrations-as-an-action/'
   },
   drip: {
     youTubeLink: '#',
@@ -588,15 +588,16 @@ const tutorialLinks = {
   },
   jetEngine: {
     youTubeLink: '#',
-    docLink: '#'
+    docLink: 'https://bit-integrations.com/wp-docs/actions/jetengine-integrations-as-an-action/'
   },
   highLevel: {
     youTubeLink: '#',
-    docLink: '#'
+    docLink: 'https://bit-integrations.com/wp-docs/actions/gohighlevel-integrations/'
   },
   theEventsCalendar: {
     youTubeLink: '#',
-    docLink: '#'
+    docLink:
+      'https://bit-integrations.com/wp-docs/actions/the-events-calendar-integrations-as-an-action/'
   },
   lmfwc: {
     youTubeLink: '#',

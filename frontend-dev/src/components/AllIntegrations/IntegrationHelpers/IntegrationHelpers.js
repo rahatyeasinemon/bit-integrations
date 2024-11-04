@@ -35,6 +35,7 @@ import {
   memberpressStateIH,
   postStateIH,
   tutorlmsStateIH,
+  voxelIH,
   wooCommerceStateIH,
   wpCoursewareStateIH,
   wpForoStateIH,
@@ -170,6 +171,9 @@ export const saveIntegConfig = async (
   } else if (flow.triggered_entity === 'EventsCalendar') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = eventsCalendarIH(tmpConf, dataFlow, flow.triggered_entity_id)
+  } else if (flow.triggered_entity === 'Voxel') {
+    const dataFlow = edit ? flow?.flow_details : flow?.triggerData
+    tmpConf = voxelIH(tmpConf, dataFlow, flow.triggered_entity_id)
   } else if (flow.triggered_entity === 'WCSubscriptions') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = WCSubscriptionsStateIH(tmpConf, dataFlow, flow.triggered_entity_id)
@@ -349,6 +353,9 @@ export const saveActionConf = async ({
   } else if (flow.triggered_entity === 'EventsCalendar') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = eventsCalendarIH(tmpConf, dataFlow, flow.triggered_entity_id)
+  } else if (flow.triggered_entity === 'Voxel') {
+    const dataFlow = edit ? flow?.flow_details : flow?.triggerData
+    tmpConf = voxelIH(tmpConf, dataFlow, flow.triggered_entity_id)
   } else if (flow.triggered_entity === 'WCSubscriptions') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = WCSubscriptionsStateIH(tmpConf, dataFlow, flow.triggered_entity_id)

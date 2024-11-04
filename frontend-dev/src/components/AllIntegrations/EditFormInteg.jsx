@@ -88,6 +88,7 @@ import {
   getWCSubscriptionsAllSubscriptions
 } from '../Triggers/TriggerHelpers/WCSubscriptions/WCSubscriptionsCommonFunction.js'
 import { getEventsCalendarEvents } from '../Triggers/TriggerHelpers/EventsCalendar/EventsCalendarCommonFunction.js'
+import { getVoxelPostTypes } from '../Triggers/TriggerHelpers/Voxel/voxelCommonFunction.js'
 
 function EditFormInteg({ setSnackbar, className = '' }) {
   const [forms, setForms] = useState([])
@@ -386,6 +387,18 @@ function EditFormInteg({ setSnackbar, className = '' }) {
         data.triggered_entity_id === 'events_calendar-4'
       ) {
         getEventsCalendarEvents(data, setFlow)
+      }
+    }
+
+    if (trigger === 'Voxel') {
+      if (
+        data.triggered_entity_id === 'voxel-7' ||
+        data.triggered_entity_id === 'voxel-8' ||
+        data.triggered_entity_id === 'voxel-9' ||
+        data.triggered_entity_id === 'voxel-10' ||
+        data.triggered_entity_id === 'voxel-11'
+      ) {
+        getVoxelPostTypes(data, setFlow)
       }
     }
   }
