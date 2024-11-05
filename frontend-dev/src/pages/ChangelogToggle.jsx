@@ -134,7 +134,7 @@ export default function ChangelogToggle() {
               <div className="flx flx-col flx-center whats-new">
                 <h3>{sprintf(__("What's New in %s", 'bit-integrations'), btcbi.version)}?</h3>
                 <small className="date">
-                  {__('Updated at:', 'bit-integrations')} <b>4th November 2024</b>
+                  {__('Updated at:', 'bit-integrations')} <b>5th November 2024</b>
                 </small>
               </div>
               <div className="changelog-content">
