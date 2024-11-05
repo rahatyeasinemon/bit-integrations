@@ -43,6 +43,7 @@ function EditCustomFormSubmissionInteg({ setSnackbar }) {
               create(prevFlow, (draftFlow) => {
                 draftFlow.flow_details.fields = resp.data?.formData
                 draftFlow.flow_details.primaryKey = resp.data?.primaryKey
+                draftFlow.flow_details['trigger_type'] = draftFlow.flow_details?.trigger_type || 'custom_form_submission'
               })
             )
             setFormFields(resp.data?.formData)

@@ -35,6 +35,7 @@ import {
   memberpressStateIH,
   postStateIH,
   tutorlmsStateIH,
+  voxelIH,
   wooCommerceStateIH,
   wpCoursewareStateIH,
   wpForoStateIH,
@@ -63,6 +64,8 @@ export const saveIntegConfig = async (
   let action = 'flow/save'
   setIsLoading(true)
   let tmpConf = confTmp
+  tmpConf['trigger_type'] = flow?.triggerData?.trigger_type || flow?.flow_details?.trigger_type || ''
+
   if (confTmp?.condition?.action_behavior !== 'cond') {
     tmpConf.condition = {
       action_behavior: '',
@@ -168,6 +171,9 @@ export const saveIntegConfig = async (
   } else if (flow.triggered_entity === 'EventsCalendar') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = eventsCalendarIH(tmpConf, dataFlow, flow.triggered_entity_id)
+  } else if (flow.triggered_entity === 'Voxel') {
+    const dataFlow = edit ? flow?.flow_details : flow?.triggerData
+    tmpConf = voxelIH(tmpConf, dataFlow, flow.triggered_entity_id)
   } else if (flow.triggered_entity === 'WCSubscriptions') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = WCSubscriptionsStateIH(tmpConf, dataFlow, flow.triggered_entity_id)
@@ -249,6 +255,7 @@ export const saveActionConf = async ({
   let action = 'flow/save'
   setIsLoading && setIsLoading instanceof Function && setIsLoading(true)
   let tmpConf = conf
+  tmpConf['trigger_type'] = flow?.triggerData?.trigger_type || flow?.flow_details?.trigger_type || ''
 
   /**
    * TODO
@@ -346,6 +353,9 @@ export const saveActionConf = async ({
   } else if (flow.triggered_entity === 'EventsCalendar') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = eventsCalendarIH(tmpConf, dataFlow, flow.triggered_entity_id)
+  } else if (flow.triggered_entity === 'Voxel') {
+    const dataFlow = edit ? flow?.flow_details : flow?.triggerData
+    tmpConf = voxelIH(tmpConf, dataFlow, flow.triggered_entity_id)
   } else if (flow.triggered_entity === 'WCSubscriptions') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = WCSubscriptionsStateIH(tmpConf, dataFlow, flow.triggered_entity_id)
