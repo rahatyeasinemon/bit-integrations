@@ -59,6 +59,7 @@ function EditConvertKit({ allIntegURL }) {
             flow,
             setFlow,
             allIntegURL,
+            convertKitConf,
             navigate,
             conf: convertKitConf,
             edit: 1,
