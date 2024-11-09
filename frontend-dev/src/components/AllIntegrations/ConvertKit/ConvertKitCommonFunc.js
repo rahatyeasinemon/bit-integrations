@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
+import { create } from 'mutative'
 
 export const handleInput = (e, convertKitConf, setConvertKitConf) => {
   const newConf = { ...convertKitConf }
@@ -20,12 +21,16 @@ export const refreshConvertKitForm = (
   bitsFetch(refreshFormsRequestParams, 'convertKit_forms')
     .then((result) => {
       if (result && result.success) {
-        const newConf = { ...convertKitConf }
         if (result.data.convertKitForms) {
-          if (!newConf.default) {
-            newConf.default = {}
-          }
-          newConf.default.convertKitForms = result.data.convertKitForms
+          setConvertKitConf(prevConf => create(prevConf, draftConf => {
+            if (!draftConf.default) {
+              draftConf.default = {}
+            }
+
+            draftConf.default.convertKitForms = result.data.convertKitForms
+            console.log(draftConf.default.convertKitForms)
+          }))
+
           setSnackbar({
             show: true,
             msg: __('Convert Kit forms refreshed', 'bit-integrations')
@@ -39,8 +44,6 @@ export const refreshConvertKitForm = (
             )
           })
         }
-
-        setConvertKitConf({ ...newConf })
       } else {
         setSnackbar({
           show: true,
@@ -67,12 +70,15 @@ export const refreshConvertKitTags = (
   bitsFetch(refreshFormsRequestParams, 'convertKit_tags')
     .then((result) => {
       if (result && result.success) {
-        const newConf = { ...convertKitConf }
         if (result.data.convertKitTags) {
-          if (!newConf.default) {
-            newConf.default = {}
-          }
-          newConf.default.convertKitTags = result.data.convertKitTags
+          setConvertKitConf(prevConf => create(prevConf, draftConf => {
+            if (!draftConf.default) {
+              draftConf.default = {}
+            }
+
+            draftConf.default.convertKitTags = result.data.convertKitTags
+          }))
+
           setSnackbar({
             show: true,
             msg: sprintf(__('%s tags refreshed', 'bit-integrations'), 'Kit(ConvertKit)')
@@ -90,7 +96,6 @@ export const refreshConvertKitTags = (
           })
         }
 
-        setConvertKitConf({ ...newConf })
       } else {
         setSnackbar({
           show: true,
@@ -117,20 +122,23 @@ export const refreshConvertKitHeader = (
   bitsFetch(refreshFormsRequestParams, 'convertKit_headers')
     .then((result) => {
       if (result && result.success) {
-        const newConf = { ...convertKitConf }
         if (result.data.convertKitField) {
-          if (!newConf.default) {
-            newConf.default = {}
-          }
-          newConf.default.fields = result.data.convertKitField
-          const { fields } = newConf.default
-          newConf.field_map = Object.values(fields)
-            .filter((f) => f.required)
-            .map((f) => ({
-              formField: '',
-              convertKitField: f.fieldId,
-              required: true
-            }))
+          setConvertKitConf(prevConf => create(prevConf, draftConf => {
+            if (!draftConf.default) {
+              draftConf.default = {}
+            }
+            draftConf.default.fields = result.data.convertKitField
+            const { fields } = draftConf.default
+            draftConf.field_map = Object.values(fields)
+              .filter((f) => f.required)
+              .map((f) => ({
+                formField: '',
+                convertKitField: f.fieldId,
+                required: true
+              }))
+
+          }))
+
           setSnackbar({
             show: true,
             msg: sprintf(__('%s fields refreshed', 'bit-integrations'), 'Kit(ConvertKit)')
@@ -147,8 +155,6 @@ export const refreshConvertKitHeader = (
             )
           })
         }
-
-        setConvertKitConf({ ...newConf })
       } else {
         setSnackbar({
           show: true,
@@ -166,9 +172,9 @@ export const refreshConvertKitHeader = (
 export const checkMappedFields = (convertKitConf) => {
   const mappedFields = convertKitConf?.field_map
     ? convertKitConf.field_map.filter(
-        (mappedField) =>
-          !mappedField.formField && mappedField.convertKitField && mappedField.required
-      )
+      (mappedField) =>
+        !mappedField.formField && mappedField.convertKitField && mappedField.required
+    )
     : []
   if (mappedFields.length > 0) {
     return false
