@@ -50,6 +50,7 @@ export default function ConvertKitIntegLayout({
 
     if (name === 'module') {
       refreshConvertKitHeader(newConf, setConvertKitConf, setIsLoading, setSnackbar)
+      refreshConvertKitTags(convertKitConf, setConvertKitConf, setIsLoading, setSnackbar)
     }
     if (name === 'module' && val === 'add_subscriber_to_a_form') {
       refreshConvertKitForm(convertKitConf, setConvertKitConf, setIsLoading, setSnackbar)
@@ -78,7 +79,7 @@ export default function ConvertKitIntegLayout({
         />
       </div>
 
-      {!convertKitConf?.module || convertKitConf?.module === 'add_subscriber_to_a_form' &&
+      {(!convertKitConf?.module || convertKitConf?.module === 'add_subscriber_to_a_form') &&
         <>
           <br />
           <b className="wdt-200 d-in-b">{__('Form:', 'bit-integrations')}</b>

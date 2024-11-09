@@ -7,7 +7,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import SnackMsg from '../../Utilities/SnackMsg'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import { saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
-import { handleInput } from './ConvertKitCommonFunc'
+import { checkMappedFields, handleInput } from './ConvertKitCommonFunc'
 import ConvertKitIntegLayout from './ConvertKitIntegLayout'
 import EditFormInteg from '../EditFormInteg'
 import SetEditIntegComponents from '../IntegrationHelpers/SetEditIntegComponents'
@@ -32,6 +32,37 @@ function EditConvertKit({ allIntegURL }) {
       }))
     }
   }, [])
+
+  const saveConfig = () => {
+    if (!checkMappedFields(convertKitConf)) {
+      setSnackbar({
+        show: true,
+        msg: __('Please map all required fields to continue.', 'bit-integrations')
+      })
+      return
+    }
+    if (!convertKitConf?.module) {
+      setSnackbar({ show: true, msg: __('Please select module to continue.', 'bit-integrations') })
+      return
+    }
+    if (convertKitConf?.module === 'add_subscriber_to_a_form' && !convertKitConf?.formId) {
+      setSnackbar({ show: true, msg: __('Please select form to continue.', 'bit-integrations') })
+      return
+    }
+    if (convertKitConf.name !== '' && convertKitConf.field_map.length > 0) {
+      saveActionConf({
+        flow,
+        setFlow,
+        allIntegURL,
+        convertKitConf,
+        navigate,
+        conf: convertKitConf,
+        edit: 1,
+        setIsLoading,
+        setSnackbar
+      })
+    }
+  }
 
 
   return (
@@ -64,19 +95,7 @@ function EditConvertKit({ allIntegURL }) {
 
       <IntegrationStepThree
         edit
-        saveConfig={() =>
-          saveActionConf({
-            flow,
-            setFlow,
-            allIntegURL,
-            convertKitConf,
-            navigate,
-            conf: convertKitConf,
-            edit: 1,
-            setIsLoading,
-            setSnackbar
-          })
-        }
+        saveConfig={saveConfig}
         disabled={convertKitConf.field_map.length < 1}
         isLoading={isLoading}
         dataConf={convertKitConf}

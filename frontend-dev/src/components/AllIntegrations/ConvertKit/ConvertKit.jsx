@@ -41,7 +41,11 @@ function ConvertKit({ formFields, setFlow, flow, allIntegURL }) {
         })
         return
       }
-      if (!convertKitConf?.formId) {
+      if (!convertKitConf?.module) {
+        setSnackbar({ show: true, msg: __('Please select module to continue.', 'bit-integrations') })
+        return
+      }
+      if (convertKitConf?.module === 'add_subscriber_to_a_form' && !convertKitConf?.formId) {
         setSnackbar({ show: true, msg: __('Please select form to continue.', 'bit-integrations') })
         return
       }
@@ -50,6 +54,7 @@ function ConvertKit({ formFields, setFlow, flow, allIntegURL }) {
       }
     }
   }
+
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />

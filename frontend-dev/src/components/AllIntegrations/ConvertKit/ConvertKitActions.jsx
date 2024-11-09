@@ -18,7 +18,7 @@ export default function ConvertKitActions({ convertKitConf, setConvertKitConf })
 
   return (
     <div className="pos-rel d-flx w-8">
-      {!convertKitConf?.module || convertKitConf?.module === 'add_subscriber_to_a_form' &&
+      {(!convertKitConf?.module || convertKitConf?.module === 'add_subscriber_to_a_form') &&
         <TableCheckBox
           checked={convertKitConf.actions?.update || false}
           onChange={(e) => actionHandler(e, 'update')}
