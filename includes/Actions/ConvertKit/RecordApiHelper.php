@@ -82,48 +82,56 @@ class RecordApiHelper
     public function execute($fieldValues, $fieldMap, $actions, $formId, $tags)
     {
         $convertKit = (object) $this->setFieldMapping($fieldMap, $fieldValues);
+        $module = empty($this->_integrationDetails->module) ? 'add_subscriber_to_a_form' : $this->_integrationDetails->module;
+        $existSubscriber = !empty($actions->update) ? $this->existSubscriber($convertKit->email) : false;
+        $type = $typeName = null;
+        $recordApiResponse = null;
 
-        if (empty($this->_integrationDetails->module) || $this->_integrationDetails->module === 'add_subscriber_to_a_form') {
-            $existSubscriber = $this->existSubscriber($convertKit->email);
-            if (empty($existSubscriber)) {
-                $recordApiResponse = $this->storeOrModifyRecord('subscribe', $formId, $convertKit);
-
-                $typeName = 'insert';
-            } else {
-                if ($actions->update == 'true') {
+        switch ($module) {
+            case 'add_subscriber_to_a_form':
+                if (!empty($actions->update) && !empty($existSubscriber)) {
                     $recordApiResponse = $this->updateRecord($existSubscriber->id, $convertKit);
                     $typeName = 'update';
+                } elseif (empty($existSubscriber)) {
+                    $recordApiResponse = $this->storeOrModifyRecord('subscribe', $formId, $convertKit);
+                    $typeName = 'insert';
                 } else {
-                    LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => 'insert'], 'error', __('Email address already exists in the system', 'bit-integrations'));
-
-                    return;
+                    $recordApiResponse = (object) ['error' => __('Email address already exists in the system', 'bit-integrations')];
+                    $typeName = 'insert';
                 }
-            }
-            if (isset($tags) && (\count($tags)) > 0 && isset($recordApiResponse) && !isset($recordApiResponse->error)) {
-                $this->addTagToSubscriber($convertKit->email, $tags);
-            }
-            $type = 'Add subscriber to a form';
-        } elseif ($this->_integrationDetails->module === 'update_a_subscriber') {
-            $existSubscriber = $this->existSubscriber($convertKit->email);
+                if (isset($tags) && (\count($tags)) > 0 && isset($recordApiResponse) && !isset($recordApiResponse->error)) {
+                    $this->addTagToSubscriber($convertKit->email, $tags);
+                }
 
-            $recordApiResponse = !empty($existSubscriber) ? $this->updateRecord($existSubscriber->id, $convertKit) : (object) ['error' => 'Subscriber not found!'];
+                $type = 'Add subscriber to a form';
 
-            if (isset($tags) && (\count($tags)) > 0 && isset($recordApiResponse) && !isset($recordApiResponse->error)) {
-                $this->addTagToSubscriber($convertKit->email, $tags);
-            }
+                break;
 
-            $type = 'Update subscriber';
-            $typeName = 'update';
-        } elseif ($this->_integrationDetails->module === 'add_tags_to_a_subscriber') {
-            $recordApiResponse = $this->addTagToSubscriber($convertKit->email, $tags);
+            case 'update_a_subscriber':
+                $recordApiResponse = $existSubscriber ? $this->updateRecord($existSubscriber->id, $convertKit) : (object) ['error' => 'Subscriber not found!'];
 
-            $type = 'Add tags to subscriber';
-            $typeName = 'insert';
-        } elseif ($this->_integrationDetails->module === 'remove_tags_to_a_subscriber') {
-            $recordApiResponse = $this->removeTagToSubscriber($convertKit->email, $tags);
+                if (isset($tags) && (\count($tags)) > 0 && isset($recordApiResponse) && !isset($recordApiResponse->error)) {
+                    $this->addTagToSubscriber($convertKit->email, $tags);
+                }
 
-            $type = 'remove tags to subscriber';
-            $typeName = 'insert';
+                $type = 'Update subscriber';
+                $typeName = 'update';
+
+                break;
+
+            case 'add_tags_to_a_subscriber':
+                $recordApiResponse = $this->addTagToSubscriber($convertKit->email, $tags);
+                $type = 'Add tags to subscriber';
+                $typeName = 'insert';
+
+                break;
+
+            case 'remove_tags_to_a_subscriber':
+                $recordApiResponse = $this->removeTagToSubscriber($convertKit->email, $tags);
+                $type = 'Remove tags from subscriber';
+                $typeName = 'insert';
+
+                break;
         }
 
         if (isset($existSubscriber->error)) {
