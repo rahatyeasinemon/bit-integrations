@@ -39,17 +39,21 @@ export default function ConvertKitIntegLayout({
   }
 
   const handleInput = (val, name) => {
-    setConvertKitConf(prevConf => create(prevConf, draftConf => {
-      if (val) {
-        draftConf[name] = val
-      } else {
-        delete draftConf[name]
-      }
+    const newConf = { ...convertKitConf }
+    if (val) {
+      newConf[name] = val
+    } else {
+      delete newConf[name]
+    }
 
-      if (name === 'module') {
-        refreshConvertKitHeader(convertKitConf, setConvertKitConf, setIsLoading, setSnackbar)
-      }
-    }))
+    setConvertKitConf({ ...newConf })
+
+    if (name === 'module') {
+      refreshConvertKitHeader(newConf, setConvertKitConf, setIsLoading, setSnackbar)
+    }
+    if (name === 'module' && val === 'add_subscriber_to_a_form') {
+      refreshConvertKitForm(convertKitConf, setConvertKitConf, setIsLoading, setSnackbar)
+    }
   }
 
   return (
@@ -187,16 +191,18 @@ export default function ConvertKitIntegLayout({
               setConvertKitConf={setConvertKitConf}
             />
           ))}
-          <div className="txt-center btcbi-field-map-button mt-2">
-            <button
-              onClick={() =>
-                addFieldMap(convertKitConf.field_map.length, convertKitConf, setConvertKitConf)
-              }
-              className="icn-btn sh-sm"
-              type="button">
-              +
-            </button>
-          </div>
+          {convertKitConf?.default?.fields && Object.keys(convertKitConf.default.fields)?.length > 1 &&
+            <div className="txt-center btcbi-field-map-button mt-2">
+              <button
+                onClick={() =>
+                  addFieldMap(convertKitConf.field_map.length, convertKitConf, setConvertKitConf)
+                }
+                className="icn-btn sh-sm"
+                type="button">
+                +
+              </button>
+            </div>
+          }
           <br />
           <br />
           <div className="mt-4">

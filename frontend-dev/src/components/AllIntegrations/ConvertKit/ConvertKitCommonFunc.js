@@ -116,57 +116,78 @@ export const refreshConvertKitHeader = (
   setIsLoading,
   setSnackbar
 ) => {
-  const refreshFormsRequestParams = {
-    api_secret: convertKitConf.api_secret
-  }
-  bitsFetch(refreshFormsRequestParams, 'convertKit_headers')
-    .then((result) => {
-      if (result && result.success) {
-        if (result.data.convertKitField) {
-          setConvertKitConf(prevConf => create(prevConf, draftConf => {
-            if (!draftConf.default) {
-              draftConf.default = {}
-            }
-            draftConf.default.fields = result.data.convertKitField
-            const { fields } = draftConf.default
-            draftConf.field_map = Object.values(fields)
-              .filter((f) => f.required)
-              .map((f) => ({
-                formField: '',
-                convertKitField: f.fieldId,
-                required: true
-              }))
+  if (convertKitConf?.module === 'add_tags_to_a_subscriber' || convertKitConf?.module === 'remove_tags_to_a_subscriber') {
+    setConvertKitConf(prevConf => create(prevConf, draftConf => {
+      if (!draftConf.default) {
+        draftConf.default = {}
+      }
 
-          }))
+      draftConf.default.fields = { 'Email': { 'fieldId': 'email', 'fieldName': 'Email', 'required': true } }
+      draftConf.field_map = [{
+        formField: '',
+        convertKitField: 'email',
+        required: true
+      }]
+    }))
 
-          setSnackbar({
-            show: true,
-            msg: sprintf(__('%s fields refreshed', 'bit-integrations'), 'Kit(ConvertKit)')
-          })
+    setSnackbar({
+      show: true,
+      msg: sprintf(__('%s fields refreshed', 'bit-integrations'), 'Kit(ConvertKit)')
+    })
+  } else {
+    const refreshFormsRequestParams = {
+      api_secret: convertKitConf.api_secret
+    }
+
+    bitsFetch(refreshFormsRequestParams, 'convertKit_headers')
+      .then((result) => {
+        if (result && result.success) {
+          if (result.data.convertKitField) {
+            setConvertKitConf(prevConf => create(prevConf, draftConf => {
+              if (!draftConf.default) {
+                draftConf.default = {}
+              }
+              draftConf.default.fields = result.data.convertKitField
+              const { fields } = draftConf.default
+              draftConf.field_map = Object.values(fields)
+                .filter((f) => f.required)
+                .map((f) => ({
+                  formField: '',
+                  convertKitField: f.fieldId,
+                  required: true
+                }))
+
+            }))
+
+            setSnackbar({
+              show: true,
+              msg: sprintf(__('%s fields refreshed', 'bit-integrations'), 'Kit(ConvertKit)')
+            })
+          } else {
+            setSnackbar({
+              show: true,
+              msg: sprintf(
+                __(
+                  'No %s fields found. Try changing the header row number or try again',
+                  'bit-integrations'
+                ),
+                'Kit(ConvertKit)'
+              )
+            })
+          }
         } else {
           setSnackbar({
             show: true,
             msg: sprintf(
-              __(
-                'No %s fields found. Try changing the header row number or try again',
-                'bit-integrations'
-              ),
+              __('%s fields refresh failed. please try again', 'bit-integrations'),
               'Kit(ConvertKit)'
             )
           })
         }
-      } else {
-        setSnackbar({
-          show: true,
-          msg: sprintf(
-            __('%s fields refresh failed. please try again', 'bit-integrations'),
-            'Kit(ConvertKit)'
-          )
-        })
-      }
-      setIsLoading(false)
-    })
-    .catch(() => setIsLoading(false))
+        setIsLoading(false)
+      })
+      .catch(() => setIsLoading(false))
+  }
 }
 
 export const checkMappedFields = (convertKitConf) => {
