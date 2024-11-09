@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '../../../Utils/i18nwrap'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import SnackMsg from '../../Utilities/SnackMsg'
@@ -13,6 +13,7 @@ import EditFormInteg from '../EditFormInteg'
 import SetEditIntegComponents from '../IntegrationHelpers/SetEditIntegComponents'
 import { $actionConf, $formFields, $newFlow } from '../../../GlobalStates'
 import EditWebhookInteg from '../EditWebhookInteg'
+import { create } from 'mutative'
 
 function EditConvertKit({ allIntegURL }) {
   const navigate = useNavigate()
@@ -23,6 +24,15 @@ function EditConvertKit({ allIntegURL }) {
   const formFields = useRecoilValue($formFields)
   const [isLoading, setIsLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
+
+  useEffect(() => {
+    if (!convertKitConf?.module) {
+      setConvertKitConf(prevConf => create(prevConf, draftConf => {
+        draftConf['module'] = 'add_subscriber_to_a_form'
+      }))
+    }
+  }, [])
+
 
   return (
     <div style={{ width: 900 }}>

@@ -24,7 +24,8 @@ function ConvertKit({ formFields, setFlow, flow, allIntegURL }) {
     api_secret:
       process.env.NODE_ENV === 'development' ? 'm4iHyMa_gu65b16dJMnYJJzOlSFpj3wl1pB3k_IvOhc' : '',
     field_map: [{ formField: '', convertKitField: '' }],
-    actions: {}
+    actions: {},
+    module: '',
   })
 
   const nextPage = (val) => {
