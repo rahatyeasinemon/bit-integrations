@@ -28,8 +28,8 @@ export const refreshConvertKitForm = (
             }
 
             draftConf.default.convertKitForms = result.data.convertKitForms
-            console.log(draftConf.default.convertKitForms)
           }))
+          refreshConvertKitTags(convertKitConf, setConvertKitConf, setIsLoading, setSnackbar)
 
           setSnackbar({
             show: true,
