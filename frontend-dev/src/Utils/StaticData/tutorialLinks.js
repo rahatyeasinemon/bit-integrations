@@ -602,6 +602,10 @@ const tutorialLinks = {
   lmfwc: {
     youTubeLink: '#',
     docLink: '#'
+  },
+  voxel: {
+    youTubeLink: '#',
+    docLink: '#'
   }
 }
 export default tutorialLinks
