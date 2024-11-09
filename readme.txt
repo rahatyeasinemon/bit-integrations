@@ -4,7 +4,7 @@ Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
 Tested up to: 6.6.2
 Requires PHP: 7.0
-Stable tag: 2.3.2
+Stable tag: 2.3.3
 License: GPLv2 or later
 
 Automation Plugin for WordPress like Zapier. Integration of 80+ Triggers & 150+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -20,7 +20,7 @@ You can see below what WPTuts say about Bit Integrations
 https://youtu.be/hgMkLvV-r6k
 
 **Useful Links**
-🚀[Try Full Version Demo](https://towp.io/) | 🚀[Docs](https://docs.bit-integrations.bitapps.pro/) | 🚀[Video Tutorials](https://youtube.com/playlist?list=PL7c6CDwwm-ALMEsKLYKebKb5XLGPWMNue) | 🚀[Support](https://tawk.to/chat/60eac4b6d6e7610a49aab375/1faah0r3e) | 🚀[Facebook Group](https://www.facebook.com/groups/3308027439209387) | 🚀[Upgrade to Pro](https://www.bitapps.pro/bit-integrations) | 🚀[Bit Integrations Repository](https://github.com/Bit-Apps-Pro/bit-integrations)
+🚀[Try Full Version Demo](https://towp.io/) | 🚀[Docs](https://bit-integrations.com/wp-docs/) | 🚀[Video Tutorials](https://youtube.com/playlist?list=PL7c6CDwwm-ALMEsKLYKebKb5XLGPWMNue) | 🚀[Support](https://tawk.to/chat/60eac4b6d6e7610a49aab375/1faah0r3e) | 🚀[Facebook Group](https://www.facebook.com/groups/3308027439209387) | 🚀[Upgrade to Pro](https://www.bitapps.pro/bit-integrations) | 🚀[Bit Integrations Repository](https://github.com/Bit-Apps-Pro/bit-integrations)
 
 📢 **Join our community [Bit Integrations](https://www.facebook.com/groups/bitapps) & get updates on our plugins.**
 
@@ -115,6 +115,7 @@ https://youtu.be/eFuficjF_F4
 * [**Tripetto**](https://wordpress.org/plugins/tripetto/)
 * [**Tutor LMS**](https://wordpress.org/plugins/tutor/)
 * [**Thrive Apprentice**](https://thrivethemes.com/apprentice/)
+* [**Voxel**](https://getvoxel.io/)
 * [**weForms**](https://wordpress.org/plugins/search/WeForms/)
 * [**WP Post**]()
 * [**WP Job Manager**](https://wordpress.org/plugins/wp-job-manager/)
@@ -196,6 +197,7 @@ https://youtu.be/eFuficjF_F4
 * [**LifterLMS**](https://wordpress.org/plugins/lifterlms/)
 * [**LionDesk**](https://liondesk.com/)
 * [**Livestorm**](https://livestorm.co/)
+* [**License Manager for WooCommerce**](https://wordpress.org/plugins/license-manager-for-woocommerce/)
 * [**Mail**]()
 * [**MasterStudy LMS**](https://wordpress.org/plugins/masterstudy-lms-learning-management-system/)
 * [**MailBluster**](https://mailbluster.com/)
@@ -730,6 +732,8 @@ Please check [**Bit Integrations Pro**](https://www.bitapps.pro/bit-integrations
 
 * [**User Registration**](https://bitapps.pro/docs/bit-integrations/trigger/user-registration/)
 
+* [**Voxel**](https://bit-integrations.com/wp-docs/trigger/voxel-integrations/)
+
 * [**weforms**](https://bitapps.pro/docs/bit-integrations/trigger/WeForms/)
 
 * [**Webhook**](https://bitapps.pro/docs/bit-integrations/trigger/webhook/)
@@ -834,6 +838,8 @@ Please check [**Bit Integrations Pro**](https://www.bitapps.pro/bit-integrations
 * [**Konnectzit**](https://bitapps.pro/docs/bit-integrations/trigger/konnectzit/)
 
 * [**LearnDash LMS**](https://bitapps.pro/docs/bit-integrations/trigger/learndash-lms/)
+
+* [**License Manager for WooCommerce**](https://bitapps.pro/docs/bit-integrations/trigger/learndash-lms/)
 
 * [**Mail Mint**](https://bitapps.pro/docs/bit-integrations/trigger/mail-mint/)
 
@@ -1007,6 +1013,37 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 2.3.3  =
+_Release Date -05th November 2024_
+
+- **New Action**
+ - License Manager for WooCommerce - An Ideal Add-on that Delivers Robust Solutions for Effortless Software License Sales and Management.
+
+- **New Trigger**
+ - Voxel - Build Advanced WordPress Dynamic Sites and Directories with Voxel and Elementor (Pro).
+
+- **New Features**
+ - MailChimp: Added utilities to manage Language and GDPR Marketing Preferences for users (Pro).
+
+- **New Improvement**
+ - Kit (ConvertKit): Optimized API for handling existing subscribers more efficiently.
+
+- **Bug Fixes**
+ - Telegram Messenger: Resolved an issue with link messages not displaying correctly.
+ - GoHighLevel: Fixed a bug where checkbox data was not submitting as expected.
+ - Chore: Addressed trigger uniqueKey update issues for various builders and forms, including:
+      - Breakdance
+      - Elementor
+      - Bricks
+      - BrickForge
+      - Brizy
+      - Divi
+      - Divi Form Builder by Divi Engine
+      - Gutena Forms
+      - Kadence Blocks Form
+      - Popup Maker
+      - SiteOrigin Widgets
 
 = 2.3.2  =
 _Release Date -30th October 2024_
