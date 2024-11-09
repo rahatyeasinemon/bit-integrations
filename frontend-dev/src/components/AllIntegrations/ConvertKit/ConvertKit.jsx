@@ -49,6 +49,10 @@ function ConvertKit({ formFields, setFlow, flow, allIntegURL }) {
         setSnackbar({ show: true, msg: __('Please select form to continue.', 'bit-integrations') })
         return
       }
+      if ((convertKitConf?.module === 'add_tags_to_a_subscriber' || convertKitConf?.module === 'remove_tags_to_a_subscriber') && !convertKitConf?.tagIds) {
+        setSnackbar({ show: true, msg: __('Please select tag continue.', 'bit-integrations') })
+        return
+      }
       if (convertKitConf.name !== '' && convertKitConf.field_map.length > 0) {
         setstep(3)
       }

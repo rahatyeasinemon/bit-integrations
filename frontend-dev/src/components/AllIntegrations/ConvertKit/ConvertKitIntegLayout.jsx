@@ -25,9 +25,6 @@ export default function ConvertKitIntegLayout({
   setIsLoading,
   setSnackbar
 }) {
-  const btcbi = useRecoilValue($btcbi)
-  const { isPro } = btcbi
-
   const setTags = (val) => {
     const newConf = { ...convertKitConf }
     if (val) {
@@ -68,10 +65,10 @@ export default function ConvertKitIntegLayout({
           defaultValue={convertKitConf?.module}
           className="btcd-paper-drpdwn w-5"
           options={[
-            { label: "Add subscriber to a form", value: "add_subscriber_to_a_form", disabled: false },
-            { label: checkIsPro(isPro, true) ? "Update a subscriber" : getProLabel("Update a subscriber"), value: "update_a_subscriber", disabled: !checkIsPro(isPro, true) },
-            { label: checkIsPro(isPro, true) ? "Add tags to a subscriber" : getProLabel("Add tags to a subscriber"), value: "add_tags_to_a_subscriber", disabled: !checkIsPro(isPro, true) },
-            { label: checkIsPro(isPro, true) ? "Remove tags to a subscriber" : getProLabel("Remove tags to a subscriber"), value: "remove_tags_to_a_subscriber", disabled: !checkIsPro(isPro, true) },
+            { label: "Add subscriber to a form", value: "add_subscriber_to_a_form", },
+            { label: "Update a subscriber", value: "update_a_subscriber", },
+            { label: "Add tags to a subscriber", value: "add_tags_to_a_subscriber", },
+            { label: "Remove tags to a subscriber", value: "remove_tags_to_a_subscriber", },
           ]}
           onChange={(val) => handleInput(val, 'module')}
           singleSelect
