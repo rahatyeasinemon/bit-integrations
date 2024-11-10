@@ -92,7 +92,7 @@ function ConvertKit({ formFields, setFlow, flow, allIntegURL }) {
         />
         <button
           onClick={() => nextPage(3)}
-          disabled={!convertKitConf?.formId || convertKitConf.field_map.length < 1}
+          disabled={!checkMappedFields(convertKitConf)}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
           type="button">
           {__('Next', 'bit-integrations')} &nbsp;

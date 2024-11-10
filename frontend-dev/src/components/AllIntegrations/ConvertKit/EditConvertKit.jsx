@@ -100,7 +100,7 @@ function EditConvertKit({ allIntegURL }) {
       <IntegrationStepThree
         edit
         saveConfig={saveConfig}
-        disabled={convertKitConf.field_map.length < 1}
+        disabled={!checkMappedFields(convertKitConf)}
         isLoading={isLoading}
         dataConf={convertKitConf}
         setDataConf={setConvertKitConf}
