@@ -4,9 +4,9 @@ import { __ } from '../../../Utils/i18nwrap'
 import VoxelActions from './VoxelActions'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 
-import VoxelFieldMap from './VoxelCalendarFieldMap'
+import VoxelFieldMap from './VoxelFieldMap'
 import { addFieldMap } from './IntegrationHelpers'
-import { getAllEvents, voxelStaticFields } from './VoxelCommonFunctions'
+import { getPostFields, getPostTypes } from './VoxelCommonFunctions'
 import { TASK_LIST, TASK_LIST_VALUES } from './voxelConstants'
 import Loader from '../../Loaders/Loader'
 
@@ -24,14 +24,11 @@ export default function VoxelIntegLayout({
     newConf.selectedEvent = ''
 
     if (val) {
-      const fieldsAndFieldMap = voxelStaticFields(val)
-      newConf.staticFields = fieldsAndFieldMap.staticFields
-      newConf.field_map = fieldsAndFieldMap.fieldMap
-      if (val === TASK_LIST_VALUES.NEW_ATTENDEE) {
-        getAllEvents(newConf, setVoxelConf, loading, setLoading)
+      if (val === TASK_LIST_VALUES.NEW_POST) {
+        getPostTypes(newConf, setVoxelConf, loading, setLoading)
       }
     } else {
-      newConf.staticFields = []
+      newConf.selectedPostType = ''
       newConf.field_map = []
     }
 
@@ -41,6 +38,16 @@ export default function VoxelIntegLayout({
   const handleMultiSelectChange = (val, type) => {
     const newConf = { ...voxelConf }
     newConf[type] = val
+
+    if (!val) {
+      newConf.voxelFields = []
+      newConf.field_map = []
+    }
+
+    if (val && type === 'selectedPostType') {
+      getPostFields(newConf, setVoxelConf, val, loading, setLoading)
+    }
+
     setVoxelConf({ ...newConf })
   }
 
@@ -59,32 +66,49 @@ export default function VoxelIntegLayout({
           />
         </div>
 
-        {voxelConf.selectedTask === TASK_LIST_VALUES.NEW_ATTENDEE && (
-          <div className="flx mt-3 mb-4">
-            <b className="wdt-200 d-in-b">{__('Select Event:', 'bit-integrations')}</b>
-            <MultiSelect
-              style={{ width: '450px' }}
-              options={voxelConf?.events}
-              className="msl-wrp-options"
-              defaultValue={voxelConf?.selectedEvent}
-              onChange={(val) => handleMultiSelectChange(val, 'selectedEvent')}
-              disabled={loading.events}
-              singleSelect
-            />
-            <button
-              onClick={() =>
-                getAllEvents(voxelConf, setVoxelConf, loading, setLoading)
-              }
-              className="icn-btn sh-sm ml-2 mr-2 tooltip"
-              style={{ '--tooltip-txt': `'${__('Refresh events', 'bit-integrations')}'` }}
-              disabled={loading.events}
-              type="button">
-              &#x21BB;
-            </button>
-          </div>
+        {voxelConf.selectedTask === TASK_LIST_VALUES.NEW_POST && (
+          <>
+            <div className="flx mt-3 mb-4">
+              <b className="wdt-200 d-in-b">{__('Select Post Type:', 'bit-integrations')}</b>
+              <MultiSelect
+                style={{ width: '450px' }}
+                options={voxelConf?.postTypes}
+                className="msl-wrp-options"
+                defaultValue={voxelConf?.selectedPostType}
+                onChange={(val) => handleMultiSelectChange(val, 'selectedPostType')}
+                disabled={loading.postTypes}
+                singleSelect
+              />
+              <button
+                onClick={() =>
+                  getPostTypes(voxelConf, setVoxelConf, loading, setLoading)
+                }
+                className="icn-btn sh-sm ml-2 mr-2 tooltip"
+                style={{ '--tooltip-txt': `'${__('Refresh Post Types', 'bit-integrations')}'` }}
+                disabled={loading.events}
+                type="button">
+                &#x21BB;
+              </button>
+            </div>
+            <div className="flx mt-3 mb-4">
+              <b className="wdt-200 d-in-b">{__('Select Post Status:', 'bit-integrations')}</b>
+              <MultiSelect
+                style={{ width: '450px' }}
+                options={[
+                  { value: 'publish', label: 'Publish' },
+                  { value: 'draft', label: 'Draft' },
+                  { value: 'pending', label: 'Pending' },
+                ]}
+                className="msl-wrp-options"
+                defaultValue={voxelConf?.selectedPostStatus}
+                onChange={(val) => handleMultiSelectChange(val, 'selectedPostStatus')}
+                singleSelect
+              />
+            </div>
+          </>
         )}
 
-        {loading.events && (
+        {(loading.postTypes || loading.postFields) && (
           <Loader
             style={{
               display: 'flex',
@@ -123,7 +147,7 @@ export default function VoxelIntegLayout({
             />
           ))}
 
-        {voxelConf?.selectedTask && (
+        {(voxelConf?.selectedTask && voxelConf.field_map.length !== 0) && (
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
               onClick={() =>

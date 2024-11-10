@@ -6,8 +6,8 @@ import TagifyInput from '../../Utilities/TagifyInput'
 import { handleCustomValue } from '../IntegrationHelpers/IntegrationHelpers'
 
 export default function VoxelFieldMap({ i, formFields, field, voxelConf, setVoxelConf }) {
-  const requiredFields = voxelConf?.staticFields.filter((fld) => fld.required === true) || []
-  const customFields = voxelConf?.staticFields?.filter((fld) => fld.required === false) || []
+  const requiredFields = voxelConf?.voxelFields.filter((fld) => fld.required === true) || []
+  const customFields = voxelConf?.voxelFields?.filter((fld) => fld.required === false) || []
 
   return (
     <div className="flx mt-2 mb-2 btcbi-field-map">

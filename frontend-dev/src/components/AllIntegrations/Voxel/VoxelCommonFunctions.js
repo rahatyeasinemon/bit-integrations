@@ -53,40 +53,58 @@ export const voxelAuthentication = (confTmp, setError, setIsAuthorized, loading,
   })
 }
 
-export const getAllEvents = (confTmp, setConf, loading, setLoading) => {
-  setLoading({ ...loading, events: true })
+export const getPostTypes = (confTmp, setConf, loading, setLoading) => {
+  setLoading({ ...loading, postTypes: true })
 
-  bitsFetch({}, 'get_voxel_events').then((result) => {
+  bitsFetch({}, 'get_voxel_post_types').then((result) => {
     if (result.success && result.data) {
       const newConf = { ...confTmp }
-      newConf.events = result.data
+      newConf.postTypes = result.data
       setConf(newConf)
-      setLoading({ ...loading, events: false })
-      toast.success(__('Events fetched successfully', 'bit-integrations'))
+      setLoading({ ...loading, postTypes: false })
+      toast.success(__('Post Types fetched successfully', 'bit-integrations'))
       return
     }
-    setLoading({ ...loading, events: false })
+    setLoading({ ...loading, postTypes: false })
     toast.error(result?.data ? result.data : __('Something went wrong!', 'bit-integrations'))
   })
 }
 
-export const voxelStaticFields = (selectedTask) => {
-  if (selectedTask === TASK_LIST_VALUES.NEW_ATTENDEE) {
-    return {
-      staticFields:
-        [
-          { key: 'name', label: __('Full Name', 'bit-integrations'), required: true },
-          { key: 'email', label: __('Email', 'bit-integrations'), required: true },
-          { key: 'number_of_guests', label: __('Number of Guests', 'bit-integrations'), required: true },
-        ],
-      fieldMap:
-        [
-          { formField: '', voxelField: 'name' },
-          { formField: '', voxelField: 'email' },
-          { formField: '', voxelField: 'number_of_guests' }
-        ]
-    }
-  }
+export const getPostFields = (confTmp, setConf, postType, loading, setLoading) => {
+  setLoading({ ...loading, postFields: true })
 
-  return { staticFields: [], fieldMap: [] }
+  bitsFetch({ postType }, 'get_voxel_post_fields').then((result) => {
+    if (result.success && result.data) {
+      const newConf = { ...confTmp }
+      newConf.voxelFields = result.data.fields
+      newConf.field_map = result.data.fieldMap
+      setConf(newConf)
+      setLoading({ ...loading, postFields: false })
+      toast.success(__('Fields fetched successfully', 'bit-integrations'))
+      return
+    }
+    setLoading({ ...loading, postFields: false })
+    toast.error(result?.data ? result.data : __('Something went wrong!', 'bit-integrations'))
+  })
 }
+
+// export const voxelStaticFields = (selectedTask) => {
+//   if (selectedTask === TASK_LIST_VALUES.NEW_ATTENDEE) {
+//     return {
+//       staticFields:
+//         [
+//           { key: 'name', label: __('Full Name', 'bit-integrations'), required: true },
+//           { key: 'email', label: __('Email', 'bit-integrations'), required: true },
+//           { key: 'number_of_guests', label: __('Number of Guests', 'bit-integrations'), required: true },
+//         ],
+//       fieldMap:
+//         [
+//           { formField: '', voxelField: 'name' },
+//           { formField: '', voxelField: 'email' },
+//           { formField: '', voxelField: 'number_of_guests' }
+//         ]
+//     }
+//   }
+
+//   return { staticFields: [], fieldMap: [] }
+// }

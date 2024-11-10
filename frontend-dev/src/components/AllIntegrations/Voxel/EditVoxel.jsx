@@ -21,7 +21,8 @@ function EditVoxel({ allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [loading, setLoading] = useState({
     auth: false,
-    events: false
+    PostTypes: false,
+    postFields: false,
   })
   const [snack, setSnackbar] = useState({ show: false })
   const formField = useRecoilValue($formFields)
@@ -32,12 +33,16 @@ function EditVoxel({ allIntegURL }) {
       return
     }
 
-    if (
-      voxelConf.selectedTask === TASK_LIST_VALUES.NEW_ATTENDEE &&
-      !voxelConf.selectedEvent
-    ) {
-      toast.error(__('Please select a event!', 'bit-integrations'))
-      return
+    if (voxelConf.selectedTask === TASK_LIST_VALUES.NEW_POST) {
+      if (!voxelConf.selectedPostType) {
+        toast.error(__('Please select a post type!', 'bit-integrations'))
+        return
+      }
+
+      if (!voxelConf.selectedPostStatus) {
+        toast.error(__('Please select a post status!', 'bit-integrations'))
+        return
+      }
     }
 
     if (!checkMappedFields(voxelConf)) {

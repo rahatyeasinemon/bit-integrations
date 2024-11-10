@@ -27,30 +27,157 @@ class VoxelController
         wp_send_json_error(wp_sprintf(__('%s is not active or installed!', 'bit-integrations'), 'Voxel'), 400);
     }
 
-    public function getAllEvents()
+    public function getPostTypes()
     {
         self::checkIfVoxelExists();
 
-        $events = get_posts(
-            [
-                'post_type' => 'tribe_events',
-                'orderby'   => 'title',
-                'order'     => 'ASC',
+        $postTypeList = $voxelPostTypes = [];
 
-                'post_status'    => 'publish',
-                'posts_per_page' => -1,
-            ]
-        );
+        if (class_exists('\Voxel\Post_Type')) {
+            $voxelPostTypes = \Voxel\Post_Type::get_voxel_types();
+        }
 
-        $eventList = [];
+        if (!empty($voxelPostTypes)) {
+            foreach ($voxelPostTypes as $key => $voxelPostType) {
+                $postType = get_post_type_object($key);
 
-        if (!empty($events)) {
-            foreach ($events as $event) {
-                $eventList[] = (object) ['value' => (string) $event->ID, 'label' => $event->post_title];
+                if ($postType) {
+                    if (\in_array($postType->name, ['collection', 'profile'], true)) {
+                        continue;
+                    }
+
+                    $postTypeList[] = (object) [
+                        'value' => $postType->name,
+                        'label' => $postType->labels->singular_name,
+                    ];
+                }
             }
         }
 
-        wp_send_json_success($eventList, 200);
+        wp_send_json_success($postTypeList, 200);
+    }
+
+    public function getPostFields($request)
+    {
+        self::checkIfVoxelExists();
+
+        if (empty($request->postType)) {
+            wp_send_json_error(__('No post type found!', 'bit-integrations'), 400);
+        }
+
+        $fields = $fieldMap = [];
+
+        if (!class_exists('Voxel\Post_Type')) {
+            return ['fields' => $fields, 'fieldMap' => $fieldMap];
+        }
+
+        $postType = \Voxel\Post_Type::get($request->postType);
+        $postFields = $postType->get_fields();
+
+        if (\is_array($postFields) && !empty($postFields)) {
+            $fields[] = [
+                'key'      => 'post_author_email',
+                'label'    => 'Post Author Email',
+                'required' => true,
+            ];
+
+            $fieldMap[] = (object) ['formField' => '', 'voxelField' => 'post_author_email'];
+
+            foreach ($postFields as $postField) {
+                $fieldType = $postField->get_type();
+
+                if (\in_array($fieldType, ['ui-step', 'ui-html', 'ui-heading', 'ui-image', 'repeater'], true)) {
+                    continue;
+                }
+
+                $fieldKey = $postField->get_key();
+
+                if ($fieldType === 'event-date' || $fieldType === 'recurring-date') {
+                    $eventFields = [
+                        [
+                            'key'      => $fieldKey . '_event_start_date_field_type=' . $fieldType,
+                            'label'    => __('Event Start Date', 'bit-integrations') . ' (' . $postField->get_label() . ')',
+                            'required' => false,
+                        ],
+                        [
+                            'key'      => $fieldKey . '_event_end_date_field_type=' . $fieldType,
+                            'label'    => __('Event End Date', 'bit-integrations') . ' (' . $postField->get_label() . ')',
+                            'required' => false,
+                        ],
+                        [
+                            'key'      => $fieldKey . '_event_frequency_field_type=' . $fieldType,
+                            'label'    => __('Event Frequency', 'bit-integrations') . ' (' . $postField->get_label() . ')',
+                            'required' => false,
+                        ],
+                        [
+                            'key'      => $fieldKey . '_repeat_every_field_type=' . $fieldType,
+                            'label'    => __('Event Unit', 'bit-integrations') . ' (' . $postField->get_label() . ')',
+                            'required' => false,
+                        ],
+                        [
+                            'key'      => $fieldKey . '_event_until_field_type=' . $fieldType,
+                            'label'    => __('Event Until', 'bit-integrations') . ' (' . $postField->get_label() . ')',
+                            'required' => false,
+                        ],
+                    ];
+
+                    $fields = array_merge($fields, $eventFields);
+                } elseif ($fieldType === 'location') {
+                    $locationFields = [
+                        [
+                            'key'      => $fieldKey . '_event_address_field_type=' . $fieldType,
+                            'label'    => __('Address', 'bit-integrations') . ' (' . $postField->get_label() . ')',
+                            'required' => false,
+                        ],
+                        [
+                            'key'      => $fieldKey . '_event_latitude_field_type=' . $fieldType,
+                            'label'    => __('Latitude', 'bit-integrations') . ' (' . $postField->get_label() . ')',
+                            'required' => false,
+                        ],
+                        [
+                            'key'      => $fieldKey . '_event_longitude_field_type=' . $fieldType,
+                            'label'    => __('Longitude', 'bit-integrations') . ' (' . $postField->get_label() . ')',
+                            'required' => false,
+                        ],
+                    ];
+
+                    $fields = array_merge($fields, $locationFields);
+                } elseif ($fieldType === 'work-hours') {
+                    $workOursFields = [
+                        [
+                            'key'      => $fieldKey . '_work_days_field_type=' . $fieldType,
+                            'label'    => __('Work Days', 'bit-integrations') . ' (' . $postField->get_label() . ')',
+                            'required' => false,
+                        ],
+                        [
+                            'key'      => $fieldKey . '_work_hours_field_type=' . $fieldType,
+                            'label'    => __('Work Hours', 'bit-integrations') . ' (' . $postField->get_label() . ')',
+                            'required' => false,
+                        ],
+                        [
+                            'key'      => $fieldKey . '_work_status_field_type=' . $fieldType,
+                            'label'    => __('Work Status', 'bit-integrations') . ' (' . $postField->get_label() . ')',
+                            'required' => false,
+                        ],
+                    ];
+
+                    $fields = array_merge($fields, $workOursFields);
+                } else {
+                    $customFieldKey = $fieldKey . '_field_type=' . $fieldType;
+                    $fields[] = [
+                        'key'      => $customFieldKey,
+                        'label'    => $postField->get_label(),
+                        'required' => $postField->is_required(),
+                    ];
+
+                    if ($postField->is_required()) {
+                        $fieldMap[] = (object) ['formField' => '', 'voxelField' => $customFieldKey];
+                    }
+                }
+            }
+        }
+
+        wp_send_json_success(['fields' => $fields, 'fieldMap' => $fieldMap], 200);
     }
 
     public function execute($integrationData, $fieldValues)

@@ -19,7 +19,8 @@ function Voxel({ formFields, setFlow, flow, allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [loading, setLoading] = useState({
     auth: false,
-    events: false
+    postTypes: false,
+    postFields: false,
   })
 
   const [step, setStep] = useState(1)
@@ -29,11 +30,12 @@ function Voxel({ formFields, setFlow, flow, allIntegURL }) {
     name: 'Voxel',
     type: 'Voxel',
     field_map: [],
-    staticFields: [],
     selectedTask: '',
-    events: [],
-    selectedEvent: '',
-    actions: {}
+    postTypes: [],
+    selectedPostType: '',
+    selectedPostStatus: '',
+    voxelFields: [],
+    actions: {},
   })
 
   const saveConfig = () => {
@@ -68,12 +70,16 @@ function Voxel({ formFields, setFlow, flow, allIntegURL }) {
       return
     }
 
-    if (
-      voxelConf.selectedTask === TASK_LIST_VALUES.NEW_ATTENDEE &&
-      !voxelConf.selectedEvent
-    ) {
-      toast.error(__('Please select a event!', 'bit-integrations'))
-      return
+    if (voxelConf.selectedTask === TASK_LIST_VALUES.NEW_POST) {
+      if (!voxelConf.selectedPostType) {
+        toast.error(__('Please select a post type!', 'bit-integrations'))
+        return
+      }
+
+      if (!voxelConf.selectedPostStatus) {
+        toast.error(__('Please select a post status!', 'bit-integrations'))
+        return
+      }
     }
 
     if (!checkMappedFields(voxelConf)) {
