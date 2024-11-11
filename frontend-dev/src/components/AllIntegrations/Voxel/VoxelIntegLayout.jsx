@@ -9,6 +9,7 @@ import { addFieldMap } from './IntegrationHelpers'
 import { getPostFields, getPostTypes } from './VoxelCommonFunctions'
 import { TASK_LIST, TASK_LIST_VALUES } from './voxelConstants'
 import Loader from '../../Loaders/Loader'
+import Note from '../../Utilities/Note'
 
 export default function VoxelIntegLayout({
   formFields,
@@ -50,6 +51,18 @@ export default function VoxelIntegLayout({
 
     setVoxelConf({ ...newConf })
   }
+
+  const note =
+    `<h4>${__('If you have "recurring-date, event-date, work-hours" or any kind of image or attachment fields see the instructions below:', 'bit-integrations')}</h4>
+  <ul>
+    <li>${__('For any kind of <strong>image, file, or other attachment,</strong> provide an <strong>attachment ID; for multiple, provide comma-separated ids.</strong>', 'bit-integrations')}</li>
+    <li>${__('For <strong>Event Unit</strong> field, accepted values: <strong>day, week, month, year.</strong>', 'bit-integrations')}</li>
+    <li>${__('For <strong>Work Days</strong> field, accepted values: <strong>sat, sun, mon, tue, wed, thu, fri.</strong>', 'bit-integrations')}</li>
+    <li>${__('For <strong>Work Hours</strong> field, enter time ranges as start and end times, with a dash between them. For more than one range, separate them with commas. <strong>Example: 09:00-12:00 or 09:00-11:00, 12:00-14:00.</strong>', 'bit-integrations')}</li>
+    <li>${__('For <strong>Work Status</strong> field, accepted values: <strong> hours, open, close, appointments_only.</strong>', 'bit-integrations')}</li>
+    <li>${__('For <strong>Taxonomy</strong> field, provide taxonomy slug(s), separate with comma if multiple allowed.', 'bit-integrations')}</li>
+    <li>${__('For <strong>Product & Post Relation</strong> field, provide product id and post id respectively.', 'bit-integrations')}</li>
+  </ul>`
 
   return (
     <>
@@ -164,6 +177,9 @@ export default function VoxelIntegLayout({
             </button>
           </div>
         )}
+
+        {voxelConf.selectedTask === TASK_LIST_VALUES.NEW_POST &&
+          <Note note={note} isInstruction isHeadingNull={false} maxWidth='100%' />}
 
         {/* <div>
           <br />

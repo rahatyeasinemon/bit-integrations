@@ -50,7 +50,7 @@ class RecordApiHelper
 
         VoxelHelper::updateVoxelPost($finalData, $postType, $postId);
 
-        return ['success' => true, 'message' => __('New post created successfully.', 'bit-integrations')];
+        return ['success' => true, 'message' => __('New post created successfully. Post ID: ', 'bit-integrations') . $postId];
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
