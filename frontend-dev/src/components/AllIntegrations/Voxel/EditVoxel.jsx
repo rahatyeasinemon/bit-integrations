@@ -12,7 +12,7 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import VoxelIntegLayout from './VoxelIntegLayout'
 import toast from 'react-hot-toast'
 import { checkMappedFields, handleInput } from './VoxelCommonFunctions'
-import { TASK_LIST_VALUES } from './voxelConstants'
+import { POST_TYPE_TASK_ARRAY, TASK_LIST_VALUES } from './voxelConstants'
 
 function EditVoxel({ allIntegURL }) {
   const navigate = useNavigate()
@@ -38,7 +38,9 @@ function EditVoxel({ allIntegURL }) {
         toast.error(__('Please select a post type!', 'bit-integrations'))
         return
       }
+    }
 
+    if (POST_TYPE_TASK_ARRAY.includes(voxelConf.selectedTask)) {
       if (!voxelConf.selectedPostStatus) {
         toast.error(__('Please select a post status!', 'bit-integrations'))
         return

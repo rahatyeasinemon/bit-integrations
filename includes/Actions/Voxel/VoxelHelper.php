@@ -6,6 +6,12 @@ class VoxelHelper
 {
     public const NEW_POST = 'newPost';
 
+    public const NEW_COLLECTION_POST = 'newCollectionPost';
+
+    // constants for static post type
+
+    public const COLLECTION_POST_TYPE = 'collection';
+
     public static function updateVoxelPost($finalData, $postType, $postId)
     {
         if (!class_exists('Voxel\Post') || !class_exists('Voxel\Post_Type')) {
@@ -87,6 +93,7 @@ class VoxelHelper
 
                 if (!empty($finalData[$fieldKey . '_work_hours'])) {
                     $multiHours = preg_split('/, ?/', $finalData[$fieldKey . '_work_hours']);
+                    $formattedHours = [];
 
                     foreach ($multiHours as $hours) {
                         $splitHours = preg_split('/ ?- ?/', $hours);

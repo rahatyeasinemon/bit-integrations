@@ -53,6 +53,38 @@ class RecordApiHelper
         return ['success' => true, 'message' => __('New post created successfully. Post ID: ', 'bit-integrations') . $postId];
     }
 
+    public function newCollectionPost($finalData, $selectedOptions)
+    {
+        if (empty($finalData['post_author_email'])) {
+            return ['success' => false, 'message' => __('Request parameter(s) empty!', 'bit-integrations'), 'code' => 400];
+        }
+
+        $authorEmail = $finalData['post_author_email'];
+        $postType = VoxelHelper::COLLECTION_POST_TYPE;
+        $postStatus = !empty($selectedOptions['selectedPostStatus']) ? $selectedOptions['selectedPostStatus'] : 'draft';
+        $postTitle = !empty($finalData['title']) ? $finalData['title'] : '';
+
+        if (is_email($authorEmail)) {
+            $user = get_user_by('email', $authorEmail);
+            $userId = $user ? $user->ID : 1;
+        } else {
+            $userId = 1;
+        }
+
+        $postData = [
+            'post_type'   => $postType,
+            'post_title'  => $postTitle,
+            'post_status' => $postStatus,
+            'post_author' => $userId,
+        ];
+
+        $postId = wp_insert_post($postData);
+
+        VoxelHelper::updateVoxelPost($finalData, $postType, $postId);
+
+        return ['success' => true, 'message' => __('New collection post created successfully. Post ID: ', 'bit-integrations') . $postId];
+    }
+
     public function generateReqDataFromFieldMap($data, $fieldMap)
     {
         $dataFinal = [];
@@ -83,6 +115,10 @@ class RecordApiHelper
             $response = $this->newPost($finalData, $selectedOptions);
             $type = 'New Post';
             $typeName = 'Create New Post';
+        } elseif ($selectedTask === VoxelHelper::NEW_COLLECTION_POST) {
+            $response = $this->newCollectionPost($finalData, $selectedOptions);
+            $type = 'New Collection Post';
+            $typeName = 'Create New Collection Post';
         }
 
         if ($response['success']) {

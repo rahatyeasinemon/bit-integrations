@@ -12,7 +12,7 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import { checkMappedFields } from './VoxelCommonFunctions'
 import VoxelIntegLayout from './VoxelIntegLayout'
 import VoxelAuthorization from './VoxelAuthorization'
-import { TASK_LIST_VALUES } from './voxelConstants'
+import { POST_TYPE_TASK_ARRAY, TASK_LIST_VALUES } from './voxelConstants'
 
 function Voxel({ formFields, setFlow, flow, allIntegURL }) {
   const navigate = useNavigate()
@@ -75,7 +75,9 @@ function Voxel({ formFields, setFlow, flow, allIntegURL }) {
         toast.error(__('Please select a post type!', 'bit-integrations'))
         return
       }
+    }
 
+    if (POST_TYPE_TASK_ARRAY.includes(voxelConf.selectedTask)) {
       if (!voxelConf.selectedPostStatus) {
         toast.error(__('Please select a post status!', 'bit-integrations'))
         return
