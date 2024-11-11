@@ -8,8 +8,6 @@ namespace BitCode\FI\Actions\Voxel;
 
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Log\LogHandler;
-use Tribe__Tickets__RSVP;
-use Tribe__Tickets__Tickets_Handler;
 
 /**
  * Provide functionality for Record insert, update
@@ -23,62 +21,36 @@ class RecordApiHelper
         $this->_integrationID = $integId;
     }
 
-    public function newAttendee($finalData, $selectedEvent)
+    public function newPost($finalData, $selectedOptions)
     {
-        if (empty($selectedEvent) || empty($finalData['name']) || empty($finalData['email']) || empty($finalData['number_of_guests'])) {
+        if (empty($finalData['post_author_email'])) {
             return ['success' => false, 'message' => __('Request parameter(s) empty!', 'bit-integrations'), 'code' => 400];
         }
 
-        if (!class_exists('Tribe__Tickets__Main') || !class_exists('Tribe__Events__Main')) {
-            return ['success' => false, 'message' => __('The Events Calendar or Event Tickets plugin not installed!', 'bit-integrations'), 'code' => 400];
+        $authorEmail = $finalData['post_author_email'];
+        $postType = !empty($selectedOptions['selectedPostType']) ? $selectedOptions['selectedPostType'] : 'post';
+        $postStatus = !empty($selectedOptions['selectedPostStatus']) ? $selectedOptions['selectedPostStatus'] : 'draft';
+        $postTitle = !empty($finalData['title']) ? $finalData['title'] : '';
+
+        if (is_email($authorEmail)) {
+            $user = get_user_by('email', $authorEmail);
+            $userId = $user ? $user->ID : 1;
+        } else {
+            $userId = 1;
         }
 
-        if (!is_numeric($finalData['number_of_guests'])) {
-            return ['success' => false, 'message' => __('Number of Guests should be a numeric value.', 'bit-integrations'), 'code' => 400];
-        }
-
-        $ticketHandler = new Tribe__Tickets__Tickets_Handler();
-        $getRSVPTickets = $ticketHandler->get_event_rsvp_tickets(get_post($selectedEvent));
-
-        if (empty($getRSVPTickets)) {
-            return ['success' => false, 'message' => __('No RSVP tickets found.', 'bit-integrations'), 'code' => 400];
-        }
-
-        $ticketId = 0;
-
-        foreach ($getRSVPTickets as $rsvpTicket) {
-            if ($rsvpTicket->capacity < 0) {
-                $ticketId = $rsvpTicket->ID;
-            } elseif ($rsvpTicket->capacity > 0 && $rsvpTicket->capacity > $rsvpTicket->qty_sold && $rsvpTicket->stock >= $finalData['number_of_guests']) {
-                $ticketId = $rsvpTicket->ID;
-            }
-
-            if ($ticketId > 0) {
-                break;
-            }
-        }
-
-        if ($ticketId === 0) {
-            return ['success' => false, 'message' => __('No capacity available for new attendee!', 'bit-integrations'), 'code' => 400];
-        }
-
-        $attendeeDetails = [
-            'full_name'    => $finalData['name'],
-            'email'        => $finalData['email'],
-            'order_status' => 'yes',
-            'optout'       => false,
-            'order_id'     => '-1',
+        $postData = [
+            'post_type'   => $postType,
+            'post_title'  => $postTitle,
+            'post_status' => $postStatus,
+            'post_author' => $userId,
         ];
 
-        $order = new Tribe__Tickets__RSVP();
+        $postId = wp_insert_post($postData);
 
-        $generateTicket = $order->generate_tickets_for($ticketId, $finalData['number_of_guests'], $attendeeDetails);
+        VoxelHelper::updateVoxelPost($finalData, $postType, $postId);
 
-        if ($generateTicket) {
-            return ['success' => true, 'message' => __('New attendee registered successfully.', 'bit-integrations')];
-        }
-
-        return ['success' => false, 'message' => __('Failed to register new attendee!', 'bit-integrations'), 'code' => 400];
+        return ['success' => true, 'message' => __('New post created successfully.', 'bit-integrations')];
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -97,7 +69,7 @@ class RecordApiHelper
         return $dataFinal;
     }
 
-    public function execute($fieldValues, $fieldMap, $selectedTask, $selectedEvent, $actions)
+    public function execute($fieldValues, $fieldMap, $selectedTask, $selectedOptions)
     {
         if (isset($fieldMap[0]) && empty($fieldMap[0]->formField)) {
             $finalData = [];
@@ -107,10 +79,10 @@ class RecordApiHelper
 
         $type = $typeName = '';
 
-        if ($selectedTask === 'newAttendee') {
-            $response = $this->newAttendee($finalData, $selectedEvent);
-            $type = 'Attendee';
-            $typeName = 'Register New Attendee';
+        if ($selectedTask === VoxelHelper::NEW_POST) {
+            $response = $this->newPost($finalData, $selectedOptions);
+            $type = 'New Post';
+            $typeName = 'Create New Post';
         }
 
         if ($response['success']) {

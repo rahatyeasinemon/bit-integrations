@@ -95,27 +95,27 @@ class VoxelController
                 if ($fieldType === 'event-date' || $fieldType === 'recurring-date') {
                     $eventFields = [
                         [
-                            'key'      => $fieldKey . '_event_start_date_field_type=' . $fieldType,
+                            'key'      => $fieldKey . '_event_start_date',
                             'label'    => __('Event Start Date', 'bit-integrations') . ' (' . $postField->get_label() . ')',
                             'required' => false,
                         ],
                         [
-                            'key'      => $fieldKey . '_event_end_date_field_type=' . $fieldType,
+                            'key'      => $fieldKey . '_event_end_date',
                             'label'    => __('Event End Date', 'bit-integrations') . ' (' . $postField->get_label() . ')',
                             'required' => false,
                         ],
                         [
-                            'key'      => $fieldKey . '_event_frequency_field_type=' . $fieldType,
+                            'key'      => $fieldKey . '_event_frequency',
                             'label'    => __('Event Frequency', 'bit-integrations') . ' (' . $postField->get_label() . ')',
                             'required' => false,
                         ],
                         [
-                            'key'      => $fieldKey . '_repeat_every_field_type=' . $fieldType,
+                            'key'      => $fieldKey . '_repeat_every',
                             'label'    => __('Event Unit', 'bit-integrations') . ' (' . $postField->get_label() . ')',
                             'required' => false,
                         ],
                         [
-                            'key'      => $fieldKey . '_event_until_field_type=' . $fieldType,
+                            'key'      => $fieldKey . '_event_until',
                             'label'    => __('Event Until', 'bit-integrations') . ' (' . $postField->get_label() . ')',
                             'required' => false,
                         ],
@@ -125,17 +125,17 @@ class VoxelController
                 } elseif ($fieldType === 'location') {
                     $locationFields = [
                         [
-                            'key'      => $fieldKey . '_event_address_field_type=' . $fieldType,
+                            'key'      => $fieldKey . '_address',
                             'label'    => __('Address', 'bit-integrations') . ' (' . $postField->get_label() . ')',
                             'required' => false,
                         ],
                         [
-                            'key'      => $fieldKey . '_event_latitude_field_type=' . $fieldType,
+                            'key'      => $fieldKey . '_latitude',
                             'label'    => __('Latitude', 'bit-integrations') . ' (' . $postField->get_label() . ')',
                             'required' => false,
                         ],
                         [
-                            'key'      => $fieldKey . '_event_longitude_field_type=' . $fieldType,
+                            'key'      => $fieldKey . '_longitude',
                             'label'    => __('Longitude', 'bit-integrations') . ' (' . $postField->get_label() . ')',
                             'required' => false,
                         ],
@@ -145,17 +145,17 @@ class VoxelController
                 } elseif ($fieldType === 'work-hours') {
                     $workOursFields = [
                         [
-                            'key'      => $fieldKey . '_work_days_field_type=' . $fieldType,
+                            'key'      => $fieldKey . '_work_days',
                             'label'    => __('Work Days', 'bit-integrations') . ' (' . $postField->get_label() . ')',
                             'required' => false,
                         ],
                         [
-                            'key'      => $fieldKey . '_work_hours_field_type=' . $fieldType,
+                            'key'      => $fieldKey . '_work_hours',
                             'label'    => __('Work Hours', 'bit-integrations') . ' (' . $postField->get_label() . ')',
                             'required' => false,
                         ],
                         [
-                            'key'      => $fieldKey . '_work_status_field_type=' . $fieldType,
+                            'key'      => $fieldKey . '_work_status',
                             'label'    => __('Work Status', 'bit-integrations') . ' (' . $postField->get_label() . ')',
                             'required' => false,
                         ],
@@ -163,15 +163,14 @@ class VoxelController
 
                     $fields = array_merge($fields, $workOursFields);
                 } else {
-                    $customFieldKey = $fieldKey . '_field_type=' . $fieldType;
                     $fields[] = [
-                        'key'      => $customFieldKey,
+                        'key'      => $fieldKey,
                         'label'    => $postField->get_label(),
                         'required' => $postField->is_required(),
                     ];
 
                     if ($postField->is_required()) {
-                        $fieldMap[] = (object) ['formField' => '', 'voxelField' => $customFieldKey];
+                        $fieldMap[] = (object) ['formField' => '', 'voxelField' => $fieldKey];
                     }
                 }
             }
@@ -188,15 +187,19 @@ class VoxelController
         $integId = $integrationData->id;
         $fieldMap = $integrationDetails->field_map;
         $selectedTask = $integrationDetails->selectedTask;
-        $actions = (array) $integrationDetails->actions;
-        $selectedEvent = $integrationDetails->selectedEvent;
 
         if (empty($fieldMap) || empty($selectedTask)) {
             return new WP_Error('REQ_FIELD_EMPTY', __('Fields map, task are required for Voxel', 'bit-integrations'));
         }
 
+        $selectedOptions = [
+            'actions'            => (array) $integrationDetails->actions,
+            'selectedPostType'   => $integrationDetails->selectedPostType,
+            'selectedPostStatus' => $integrationDetails->selectedPostStatus,
+        ];
+
         $recordApiHelper = new RecordApiHelper($integId);
-        $voxelResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $selectedTask, $selectedEvent, $actions);
+        $voxelResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $selectedTask, $selectedOptions);
 
         if (is_wp_error($voxelResponse)) {
             return $voxelResponse;
