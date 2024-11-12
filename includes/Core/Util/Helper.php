@@ -248,6 +248,7 @@ final class Helper
         }
 
         $currentPart = array_shift($parts);
+
         if (\is_array($data)) {
             if (!isset($data[$currentPart])) {
                 // wp_send_json_error(new WP_Error($triggerEntity, __('Index out of bounds or invalid', 'bit-integrations')));
@@ -296,5 +297,55 @@ final class Helper
         return array_filter(acf_get_field_groups(), function ($group) use ($type) {
             return $group['active'] && isset($group['location'][0][0]['value']) && \is_array($type) && \in_array($group['location'][0][0]['value'], $type);
         });
+    }
+
+    public static function isPrimaryKeysMatch($recordData, $PrimaryKeys)
+    {
+        foreach ($PrimaryKeys as $primaryKey) {
+            if ($primaryKey->value != Helper::extractValueFromPath($recordData, $primaryKey->key, 'PieForms')) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static function setTestData($optionKey, $formData, $primaryKey, $primaryKeyId)
+    {
+        if (get_option($optionKey) !== false) {
+            update_option($optionKey, [
+                'formData'   => $formData,
+                'primaryKey' => [(object) ['key' => $primaryKey, 'value' => $primaryKeyId]]
+            ]);
+        }
+    }
+
+    public static function getUserDataById($id)
+    {
+        $user = get_userdata($id);
+        $context = [];
+        if (! $user) {
+            return $context;
+        }
+        $context['wp_user_id'] = $user->ID;
+        $context['user_login'] = $user->user_login;
+        $context['display_name'] = $user->display_name;
+        $context['user_firstname'] = $user->user_firstname;
+        $context['user_lastname'] = $user->user_lastname;
+        $context['user_email'] = $user->user_email;
+        $context['user_registered'] = $user->user_registered;
+        $context['user_role'] = $user->roles;
+
+        return $context;
+    }
+
+    public static function getPostById($id)
+    {
+        return (array) get_post($id);
+    }
+
+    public static function getPostMetaByPostId($id)
+    {
+        return get_post_meta($id);
     }
 }
