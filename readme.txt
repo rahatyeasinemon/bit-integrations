@@ -98,6 +98,7 @@ https://youtu.be/eFuficjF_F4
 * [**Popup Maker**](https://wordpress.org/plugins/popup-maker/)
 * [**Piotnet Forms**](https://wordpress.org/plugins/piotnetforms/)
 * [**Paid Memberships Pro**](https://wordpress.org/plugins/paid-memberships-pro/)
+* [**Pie Forms**](https://wordpress.org/plugins/pie-forms-for-wp/)
 * [**Piotnet Addons For Elementor**](https://wordpress.org/plugins/piotnet-addons-for-elementor/)
 * [**Restrict Content**](https://wordpress.org/plugins/restrict-content/)
 * [**RafflePress**](https://wordpress.org/plugins/rafflepress/)
