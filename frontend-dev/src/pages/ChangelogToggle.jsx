@@ -30,28 +30,26 @@ export default function ChangelogToggle() {
       label: __('New Actions', 'bit-integrations'),
       headClass: 'new-integration',
       itemClass: 'integration-list',
-      items: ['License Manager for WooCommerce']
+      items: []
     },
     {
       label: __('New Triggers', 'bit-integrations'),
       headClass: 'new-trigger',
       itemClass: 'integration-list',
-      items: ['Voxel (Pro)']
+      items: ['Pie Forms (Pro)']
     },
     {
       label: __('New Features', 'bit-integrations'),
       headClass: 'new-feature',
       itemClass: 'feature-list',
-      items: [
-        'MailChimp: Added utilities to manage Language and GDPR Marketing Preferences for users. (Pro)'
-      ]
+      items: ['Kit (ex ConvertKit): New Module added']
     },
     {
       label: __('New Improvements', 'bit-integrations'),
       headClass: 'new-improvement',
       itemClass: 'feature-list',
       items: [
-        'Kit (ConvertKit): Optimized API for handling existing subscribers more efficiently.'
+        'Brevo (ex Sendinblue): Enhanced optimization for smoother integration execution.', 'Kit (ex ConvertKit): Improved functionality for adding and updating subscribers.', 'Voxel: Added new tasks to enhance the integrations'
       ]
     }
   ]
@@ -134,7 +132,7 @@ export default function ChangelogToggle() {
               <div className="flx flx-col flx-center whats-new">
                 <h3>{sprintf(__("What's New in %s", 'bit-integrations'), btcbi.version)}?</h3>
                 <small className="date">
-                  {__('Updated at:', 'bit-integrations')} <b>5th November 2024</b>
+                  {__('Updated at:', 'bit-integrations')} <b>12th November 2024</b>
                 </small>
               </div>
               <div className="changelog-content">
