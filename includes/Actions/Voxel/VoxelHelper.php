@@ -10,6 +10,8 @@ class VoxelHelper
 
     public const NEW_PROFILE = 'newProfile';
 
+    public const UPDATE_POST = 'updatePost';
+
     // constants for static post type
 
     public const COLLECTION_POST_TYPE = 'collection';

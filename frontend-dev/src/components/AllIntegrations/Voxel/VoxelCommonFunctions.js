@@ -4,6 +4,7 @@ import toast from 'react-hot-toast'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import { create } from 'mutative'
+import { TASK_LIST_VALUES } from './VoxelConstants'
 
 export const handleInput = (e, voxelConf, setVoxelConf) => {
   const newConf = create(voxelConf, (draftConf) => {
@@ -72,7 +73,7 @@ export const getPostTypes = (confTmp, setConf, loading, setLoading) => {
 export const getPostFields = (confTmp, setConf, postType, loading, setLoading) => {
   setLoading({ ...loading, postFields: true })
 
-  bitsFetch({ postType }, 'get_voxel_post_fields').then((result) => {
+  bitsFetch({ postType, selectedTask: confTmp.selectedTask }, 'get_voxel_post_fields').then((result) => {
     if (result.success && result.data) {
       const newConf = { ...confTmp }
       newConf.voxelFields = result.data.fields
@@ -80,6 +81,9 @@ export const getPostFields = (confTmp, setConf, postType, loading, setLoading) =
       setConf(newConf)
       setLoading({ ...loading, postFields: false })
       toast.success(__('Fields fetched successfully', 'bit-integrations'))
+      if (newConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST) {
+        getPosts(newConf, setConf, postType, loading, setLoading)
+      }
       return
     }
     setLoading({ ...loading, postFields: false })
@@ -87,23 +91,19 @@ export const getPostFields = (confTmp, setConf, postType, loading, setLoading) =
   })
 }
 
-// export const voxelStaticFields = (selectedTask) => {
-//   if (selectedTask === TASK_LIST_VALUES.NEW_ATTENDEE) {
-//     return {
-//       staticFields:
-//         [
-//           { key: 'name', label: __('Full Name', 'bit-integrations'), required: true },
-//           { key: 'email', label: __('Email', 'bit-integrations'), required: true },
-//           { key: 'number_of_guests', label: __('Number of Guests', 'bit-integrations'), required: true },
-//         ],
-//       fieldMap:
-//         [
-//           { formField: '', voxelField: 'name' },
-//           { formField: '', voxelField: 'email' },
-//           { formField: '', voxelField: 'number_of_guests' }
-//         ]
-//     }
-//   }
+export const getPosts = (confTmp, setConf, postType, loading, setLoading) => {
+  setLoading({ ...loading, posts: true })
 
-//   return { staticFields: [], fieldMap: [] }
-// }
+  bitsFetch({ postType }, 'get_voxel_posts').then((result) => {
+    if (result.success && result.data) {
+      const newConf = { ...confTmp }
+      newConf.posts = result.data
+      setConf(newConf)
+      setLoading({ ...loading, posts: false })
+      toast.success(__('Posts fetched successfully', 'bit-integrations'))
+      return
+    }
+    setLoading({ ...loading, posts: false })
+    toast.error(result?.data ? result.data : __('Something went wrong!', 'bit-integrations'))
+  })
+}

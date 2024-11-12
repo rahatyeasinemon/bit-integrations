@@ -6,7 +6,7 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 
 import VoxelFieldMap from './VoxelFieldMap'
 import { addFieldMap } from './IntegrationHelpers'
-import { getPostFields, getPostTypes } from './VoxelCommonFunctions'
+import { getPostFields, getPosts, getPostTypes } from './VoxelCommonFunctions'
 import { COLLECTION_POST_TYPE, POST_TYPE_TASK_ARRAY, PROFILE_POST_TYPE, TASK_LIST, TASK_LIST_VALUES } from './voxelConstants'
 import Loader from '../../Loaders/Loader'
 import Note from '../../Utilities/Note'
@@ -25,7 +25,7 @@ export default function VoxelIntegLayout({
     newConf.selectedEvent = ''
 
     if (val) {
-      if (val === TASK_LIST_VALUES.NEW_POST) {
+      if (val === TASK_LIST_VALUES.NEW_POST || val === TASK_LIST_VALUES.UPDATE_POST) {
         getPostTypes(newConf, setVoxelConf, loading, setLoading)
       } else if (val === TASK_LIST_VALUES.NEW_COLLECTION_POST) {
         getPostFields(newConf, setVoxelConf, COLLECTION_POST_TYPE, loading, setLoading)
@@ -47,6 +47,8 @@ export default function VoxelIntegLayout({
     if (!val && type === 'selectedPostType') {
       newConf.voxelFields = []
       newConf.field_map = []
+      newConf.posts = []
+      newConf.selectedPost = ''
     }
 
     if (val && type === 'selectedPostType') {
@@ -83,7 +85,7 @@ export default function VoxelIntegLayout({
           />
         </div>
 
-        {voxelConf.selectedTask === TASK_LIST_VALUES.NEW_POST && (
+        {(voxelConf.selectedTask === TASK_LIST_VALUES.NEW_POST || voxelConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST) && (
           <div className="flx mt-3 mb-4">
             <b className="wdt-200 d-in-b">{__('Select Post Type:', 'bit-integrations')}</b>
             <MultiSelect
@@ -101,7 +103,32 @@ export default function VoxelIntegLayout({
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh Post Types', 'bit-integrations')}'` }}
-              disabled={loading.events}
+              disabled={loading.postTypes}
+              type="button">
+              &#x21BB;
+            </button>
+          </div>
+        )}
+
+        {voxelConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST && (
+          <div className="flx mt-3 mb-4">
+            <b className="wdt-200 d-in-b">{__('Select Post:', 'bit-integrations')}</b>
+            <MultiSelect
+              style={{ width: '450px' }}
+              options={voxelConf.posts}
+              className="msl-wrp-options"
+              defaultValue={voxelConf?.selectedPost}
+              onChange={(val) => handleMultiSelectChange(val, 'selectedPost')}
+              disabled={loading.posts || loading.postTypes || loading.postFields}
+              singleSelect
+            />
+            <button
+              onClick={() =>
+                getPosts(voxelConf, setVoxelConf, voxelConf.selectedPostType, loading, setLoading)
+              }
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': `'${__('Refresh Posts', 'bit-integrations')}'` }}
+              disabled={loading.posts || loading.postTypes || loading.postFields || !voxelConf.selectedPostType}
               type="button">
               &#x21BB;
             </button>
@@ -125,7 +152,7 @@ export default function VoxelIntegLayout({
             />
           </div>}
 
-        {(loading.postTypes || loading.postFields) && (
+        {(loading.postTypes || loading.postFields || loading.posts) && (
           <Loader
             style={{
               display: 'flex',

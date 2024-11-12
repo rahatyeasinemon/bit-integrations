@@ -23,6 +23,7 @@ function EditVoxel({ allIntegURL }) {
     auth: false,
     PostTypes: false,
     postFields: false,
+    posts: false,
   })
   const [snack, setSnackbar] = useState({ show: false })
   const formField = useRecoilValue($formFields)
@@ -33,7 +34,7 @@ function EditVoxel({ allIntegURL }) {
       return
     }
 
-    if (voxelConf.selectedTask === TASK_LIST_VALUES.NEW_POST) {
+    if (voxelConf.selectedTask === TASK_LIST_VALUES.NEW_POST || voxelConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST) {
       if (!voxelConf.selectedPostType) {
         toast.error(__('Please select a post type!', 'bit-integrations'))
         return
@@ -43,6 +44,13 @@ function EditVoxel({ allIntegURL }) {
     if (POST_TYPE_TASK_ARRAY.includes(voxelConf.selectedTask)) {
       if (!voxelConf.selectedPostStatus) {
         toast.error(__('Please select a post status!', 'bit-integrations'))
+        return
+      }
+    }
+
+    if (voxelConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST) {
+      if (!voxelConf.selectedPost) {
+        toast.error(__('Please select a post!', 'bit-integrations'))
         return
       }
     }

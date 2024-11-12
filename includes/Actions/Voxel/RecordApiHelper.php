@@ -85,7 +85,7 @@ class RecordApiHelper
         return ['success' => true, 'message' => __('New collection post created successfully. Post ID: ', 'bit-integrations') . $postId];
     }
 
-    public function newProfile($finalData, $selectedOptions)
+    public function newProfile($finalData)
     {
         if (empty($finalData['user_email'])) {
             return ['success' => false, 'message' => __('User email is empty or not found!', 'bit-integrations'), 'code' => 400];
@@ -115,6 +115,33 @@ class RecordApiHelper
         VoxelHelper::updateVoxelPost($finalData, VoxelHelper::PROFILE_POST_TYPE, $profileId);
 
         return ['success' => true, 'message' => __('New profile created successfully. Profile ID: ', 'bit-integrations') . $profileId];
+    }
+
+    public function updatePost($finalData, $selectedOptions)
+    {
+        if (empty($selectedOptions['selectedPostStatus']) || empty($selectedOptions['selectedPost']) || empty($selectedOptions['selectedPostType'])) {
+            return ['success' => false, 'message' => __('Request parameter(s) empty!', 'bit-integrations'), 'code' => 400];
+        }
+
+        $postId = $selectedOptions['selectedPost'];
+        $postType = $selectedOptions['selectedPostType'];
+        $postStatus = $selectedOptions['selectedPostStatus'];
+        $postTitle = !empty($finalData['title']) ? $finalData['title'] : '';
+
+        $args = [
+            'ID'          => $postId,
+            'post_status' => $postStatus
+        ];
+
+        if (!empty($postTitle)) {
+            $args['post_title'] = $postTitle;
+        }
+
+        wp_update_post($args);
+
+        VoxelHelper::updateVoxelPost($finalData, $postType, $postId);
+
+        return ['success' => true, 'message' => __('Post Updated successfully. Post ID: ', 'bit-integrations') . $postId];
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -152,9 +179,13 @@ class RecordApiHelper
             $type = 'New Collection Post';
             $typeName = 'Create New Collection Post';
         } elseif ($selectedTask === VoxelHelper::NEW_PROFILE) {
-            $response = $this->newProfile($finalData, $selectedOptions);
+            $response = $this->newProfile($finalData);
             $type = 'New Profile';
             $typeName = 'Create New Profile';
+        } elseif ($selectedTask === VoxelHelper::UPDATE_POST) {
+            $response = $this->updatePost($finalData, $selectedOptions);
+            $type = 'Update Post';
+            $typeName = 'Update Post of a specific type';
         }
 
         if ($response['success']) {

@@ -57,6 +57,35 @@ class VoxelController
         wp_send_json_success($postTypeList, 200);
     }
 
+    public function getPosts($request)
+    {
+        self::checkIfVoxelExists();
+
+        if (empty($request->postType)) {
+            wp_send_json_error(__('No post type found!', 'bit-integrations'), 400);
+        }
+
+        $posts = get_posts(
+            [
+                'post_type'      => $request->postType,
+                'orderby'        => 'title',
+                'order'          => 'ASC',
+                'post_status'    => 'any',
+                'posts_per_page' => -1,
+            ]
+        );
+
+        if (empty($posts) || !$posts) {
+            wp_send_json_error(__('No post found!', 'bit-integrations'), 400);
+        }
+
+        foreach ($posts as $post) {
+            $postList[] = (object) ['value' => (string) $post->ID, 'label' => $post->post_title];
+        }
+
+        wp_send_json_success($postList, 200);
+    }
+
     public function getPostFields($request)
     {
         self::checkIfVoxelExists();
@@ -71,6 +100,12 @@ class VoxelController
             return ['fields' => $fields, 'fieldMap' => $fieldMap];
         }
 
+        if ($request->selectedTask === VoxelHelper::UPDATE_POST) {
+            $isUpdateTask = true;
+        } else {
+            $isUpdateTask = false;
+        }
+
         $postType = \Voxel\Post_Type::get($request->postType);
         $postFields = $postType->get_fields();
 
@@ -79,7 +114,7 @@ class VoxelController
                 $fields[] = [
                     'key'      => 'user_email',
                     'label'    => 'User Email',
-                    'required' => true,
+                    'required' => $isUpdateTask ? false : true,
                 ];
 
                 $fieldMap[] = (object) ['formField' => '', 'voxelField' => 'user_email'];
@@ -87,7 +122,7 @@ class VoxelController
                 $fields[] = [
                     'key'      => 'post_author_email',
                     'label'    => 'Post Author Email',
-                    'required' => true,
+                    'required' => $isUpdateTask ? false : true,
                 ];
 
                 $fieldMap[] = (object) ['formField' => '', 'voxelField' => 'post_author_email'];
@@ -176,14 +211,18 @@ class VoxelController
                     $fields[] = [
                         'key'      => $fieldKey,
                         'label'    => $postField->get_label(),
-                        'required' => $postField->is_required(),
+                        'required' => $isUpdateTask ? false : $postField->is_required(),
                     ];
 
                     if ($postField->is_required()) {
-                        $fieldMap[] = (object) ['formField' => '', 'voxelField' => $fieldKey];
+                        $fieldMap[] = (object) ['formField' => '', 'voxelField' => ''];
                     }
                 }
             }
+        }
+
+        if ($isUpdateTask) {
+            $fieldMap = [(object) ['formField' => '', 'voxelField' => '']];
         }
 
         wp_send_json_success(['fields' => $fields, 'fieldMap' => $fieldMap], 200);
@@ -206,6 +245,7 @@ class VoxelController
             'actions'            => (array) $integrationDetails->actions,
             'selectedPostType'   => $integrationDetails->selectedPostType,
             'selectedPostStatus' => $integrationDetails->selectedPostStatus,
+            'selectedPost'       => $integrationDetails->selectedPost,
         ];
 
         $recordApiHelper = new RecordApiHelper($integId);

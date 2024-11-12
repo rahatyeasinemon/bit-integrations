@@ -21,6 +21,7 @@ function Voxel({ formFields, setFlow, flow, allIntegURL }) {
     auth: false,
     postTypes: false,
     postFields: false,
+    posts: false,
   })
 
   const [step, setStep] = useState(1)
@@ -36,6 +37,8 @@ function Voxel({ formFields, setFlow, flow, allIntegURL }) {
     selectedPostStatus: '',
     voxelFields: [],
     actions: {},
+    posts: [],
+    selectedPost: ''
   })
 
   const saveConfig = () => {
@@ -70,7 +73,7 @@ function Voxel({ formFields, setFlow, flow, allIntegURL }) {
       return
     }
 
-    if (voxelConf.selectedTask === TASK_LIST_VALUES.NEW_POST) {
+    if (voxelConf.selectedTask === TASK_LIST_VALUES.NEW_POST || voxelConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST) {
       if (!voxelConf.selectedPostType) {
         toast.error(__('Please select a post type!', 'bit-integrations'))
         return
@@ -80,6 +83,13 @@ function Voxel({ formFields, setFlow, flow, allIntegURL }) {
     if (POST_TYPE_TASK_ARRAY.includes(voxelConf.selectedTask)) {
       if (!voxelConf.selectedPostStatus) {
         toast.error(__('Please select a post status!', 'bit-integrations'))
+        return
+      }
+    }
+
+    if (voxelConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST) {
+      if (!voxelConf.selectedPost) {
+        toast.error(__('Please select a post!', 'bit-integrations'))
         return
       }
     }
