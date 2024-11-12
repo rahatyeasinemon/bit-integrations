@@ -4,7 +4,6 @@ import toast from 'react-hot-toast'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import { create } from 'mutative'
-import { COLLECTION_POST_TYPE, TASK_LIST_VALUES } from './VoxelConstants'
 
 export const handleInput = (e, voxelConf, setVoxelConf) => {
   const newConf = create(voxelConf, (draftConf) => {
@@ -63,11 +62,6 @@ export const getPostTypes = (confTmp, setConf, loading, setLoading) => {
       setConf(newConf)
       setLoading({ ...loading, postTypes: false })
       toast.success(__('Post Types fetched successfully', 'bit-integrations'))
-
-      if (newConf.selectedTask === TASK_LIST_VALUES.NEW_COLLECTION_POST) {
-        getPostFields(newConf, setConf, COLLECTION_POST_TYPE, loading, setLoading)
-      }
-
       return
     }
     setLoading({ ...loading, postTypes: false })

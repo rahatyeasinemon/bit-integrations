@@ -7,7 +7,7 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 import VoxelFieldMap from './VoxelFieldMap'
 import { addFieldMap } from './IntegrationHelpers'
 import { getPostFields, getPostTypes } from './VoxelCommonFunctions'
-import { POST_TYPE_TASK_ARRAY, TASK_LIST, TASK_LIST_VALUES } from './voxelConstants'
+import { COLLECTION_POST_TYPE, POST_TYPE_TASK_ARRAY, PROFILE_POST_TYPE, TASK_LIST, TASK_LIST_VALUES } from './voxelConstants'
 import Loader from '../../Loaders/Loader'
 import Note from '../../Utilities/Note'
 
@@ -25,8 +25,12 @@ export default function VoxelIntegLayout({
     newConf.selectedEvent = ''
 
     if (val) {
-      if (val === TASK_LIST_VALUES.NEW_POST || val === TASK_LIST_VALUES.NEW_COLLECTION_POST) {
+      if (val === TASK_LIST_VALUES.NEW_POST) {
         getPostTypes(newConf, setVoxelConf, loading, setLoading)
+      } else if (val === TASK_LIST_VALUES.NEW_COLLECTION_POST) {
+        getPostFields(newConf, setVoxelConf, COLLECTION_POST_TYPE, loading, setLoading)
+      } else if (val === TASK_LIST_VALUES.NEW_PROFILE) {
+        getPostFields(newConf, setVoxelConf, PROFILE_POST_TYPE, loading, setLoading)
       }
     } else {
       newConf.selectedPostType = ''
@@ -178,7 +182,7 @@ export default function VoxelIntegLayout({
           </div>
         )}
 
-        {POST_TYPE_TASK_ARRAY.includes(voxelConf.selectedTask) &&
+        {(POST_TYPE_TASK_ARRAY.includes(voxelConf.selectedTask) || voxelConf.selectedTask === TASK_LIST_VALUES.NEW_PROFILE) &&
           <Note note={note} isInstruction isHeadingNull={false} maxWidth='100%' />}
 
         {/* <div>

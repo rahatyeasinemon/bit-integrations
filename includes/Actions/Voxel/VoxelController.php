@@ -75,13 +75,23 @@ class VoxelController
         $postFields = $postType->get_fields();
 
         if (\is_array($postFields) && !empty($postFields)) {
-            $fields[] = [
-                'key'      => 'post_author_email',
-                'label'    => 'Post Author Email',
-                'required' => true,
-            ];
+            if ($request->postType === VoxelHelper::PROFILE_POST_TYPE) {
+                $fields[] = [
+                    'key'      => 'user_email',
+                    'label'    => 'User Email',
+                    'required' => true,
+                ];
 
-            $fieldMap[] = (object) ['formField' => '', 'voxelField' => 'post_author_email'];
+                $fieldMap[] = (object) ['formField' => '', 'voxelField' => 'user_email'];
+            } else {
+                $fields[] = [
+                    'key'      => 'post_author_email',
+                    'label'    => 'Post Author Email',
+                    'required' => true,
+                ];
+
+                $fieldMap[] = (object) ['formField' => '', 'voxelField' => 'post_author_email'];
+            }
 
             foreach ($postFields as $postField) {
                 $fieldType = $postField->get_type();

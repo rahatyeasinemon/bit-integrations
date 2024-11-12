@@ -85,6 +85,38 @@ class RecordApiHelper
         return ['success' => true, 'message' => __('New collection post created successfully. Post ID: ', 'bit-integrations') . $postId];
     }
 
+    public function newProfile($finalData, $selectedOptions)
+    {
+        if (empty($finalData['user_email'])) {
+            return ['success' => false, 'message' => __('User email is empty or not found!', 'bit-integrations'), 'code' => 400];
+        }
+
+        $userEmail = $finalData['user_email'];
+
+        if (!is_email($userEmail)) {
+            return ['success' => false, 'message' => __('User email is not valid!', 'bit-integrations'), 'code' => 400];
+        }
+
+        $user = get_user_by('email', $userEmail);
+
+        if (!$user) {
+            return ['success' => false, 'message' => __('User not found!', 'bit-integrations'), 'code' => 400];
+        }
+
+        $userId = $user->ID;
+        $voxelUser = \Voxel\User::get($userId);
+        $profileId = $user->get_profile_id();
+
+        if (!$profileId) {
+            $profile = $voxelUser->get_or_create_profile();
+            $profileId = $profile->get_id();
+        }
+
+        VoxelHelper::updateVoxelPost($finalData, VoxelHelper::PROFILE_POST_TYPE, $profileId);
+
+        return ['success' => true, 'message' => __('New profile created successfully. Profile ID: ', 'bit-integrations') . $profileId];
+    }
+
     public function generateReqDataFromFieldMap($data, $fieldMap)
     {
         $dataFinal = [];
@@ -119,6 +151,10 @@ class RecordApiHelper
             $response = $this->newCollectionPost($finalData, $selectedOptions);
             $type = 'New Collection Post';
             $typeName = 'Create New Collection Post';
+        } elseif ($selectedTask === VoxelHelper::NEW_PROFILE) {
+            $response = $this->newProfile($finalData, $selectedOptions);
+            $type = 'New Profile';
+            $typeName = 'Create New Profile';
         }
 
         if ($response['success']) {
