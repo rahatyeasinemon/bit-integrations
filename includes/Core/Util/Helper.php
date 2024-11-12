@@ -319,33 +319,4 @@ final class Helper
             ]);
         }
     }
-
-    public static function getUserDataById($id)
-    {
-        $user = get_userdata($id);
-        $context = [];
-        if (! $user) {
-            return $context;
-        }
-        $context['wp_user_id'] = $user->ID;
-        $context['user_login'] = $user->user_login;
-        $context['display_name'] = $user->display_name;
-        $context['user_firstname'] = $user->user_firstname;
-        $context['user_lastname'] = $user->user_lastname;
-        $context['user_email'] = $user->user_email;
-        $context['user_registered'] = $user->user_registered;
-        $context['user_role'] = $user->roles;
-
-        return $context;
-    }
-
-    public static function getPostById($id)
-    {
-        return (array) get_post($id);
-    }
-
-    public static function getPostMetaByPostId($id)
-    {
-        return get_post_meta($id);
-    }
 }
