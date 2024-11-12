@@ -90,7 +90,7 @@ const CustomFormSubmission = () => {
             controller.abort()
             setNewFlow((prevFlow) =>
               create(prevFlow, (draftFlow) => {
-                draftFlow.triggerDetail.data = resp.data?.formData
+                draftFlow.triggerDetail.data = Array.isArray(resp.data?.formData) ? resp.data?.formData : Object.values(resp.data?.formData)
               })
             )
             setPrimaryKey(resp.data?.primaryKey || undefined)
@@ -181,7 +181,7 @@ const CustomFormSubmission = () => {
     </span>
   ) : (
     <div className="trigger-custom-width">
-      {newFlow?.triggerDetail?.multi_form && (
+      {newFlow?.triggerDetail?.multi_form && newFlow?.triggerDetail?.multi_form.length > 0 && (
         <div className="w-8 m-a">
           <h4>{__('Select a Form/Task Name', 'bit-integrations')}</h4>
           <MultiSelect
