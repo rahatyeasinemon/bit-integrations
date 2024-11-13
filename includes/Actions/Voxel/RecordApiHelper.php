@@ -141,7 +141,33 @@ class RecordApiHelper
 
         VoxelHelper::updateVoxelPost($finalData, $postType, $postId);
 
-        return ['success' => true, 'message' => __('Post Updated successfully. Post ID: ', 'bit-integrations') . $postId];
+        return ['success' => true, 'message' => __('Post updated successfully. Post ID: ', 'bit-integrations') . $postId];
+    }
+
+    public function updateCollectionPost($finalData, $selectedOptions)
+    {
+        if (empty($selectedOptions['selectedPostStatus']) || empty($selectedOptions['selectedPost'])) {
+            return ['success' => false, 'message' => __('Request parameter(s) empty!', 'bit-integrations'), 'code' => 400];
+        }
+
+        $postId = $selectedOptions['selectedPost'];
+        $postStatus = $selectedOptions['selectedPostStatus'];
+        $postTitle = !empty($finalData['title']) ? $finalData['title'] : '';
+
+        $args = [
+            'ID'          => $postId,
+            'post_status' => $postStatus
+        ];
+
+        if (!empty($postTitle)) {
+            $args['post_title'] = $postTitle;
+        }
+
+        wp_update_post($args);
+
+        VoxelHelper::updateVoxelPost($finalData, VoxelHelper::COLLECTION_POST_TYPE, $postId);
+
+        return ['success' => true, 'message' => __('Collection post updated successfully. Post ID: ', 'bit-integrations') . $postId];
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -186,6 +212,10 @@ class RecordApiHelper
             $response = $this->updatePost($finalData, $selectedOptions);
             $type = 'Update Post';
             $typeName = 'Update Post of a specific type';
+        } elseif ($selectedTask === VoxelHelper::UPDATE_COLLECTION_POST) {
+            $response = $this->updateCollectionPost($finalData, $selectedOptions);
+            $type = 'Update Collection Post';
+            $typeName = 'Update Collection Post';
         }
 
         if ($response['success']) {

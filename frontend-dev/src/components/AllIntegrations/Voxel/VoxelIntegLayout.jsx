@@ -27,7 +27,7 @@ export default function VoxelIntegLayout({
     if (val) {
       if (val === TASK_LIST_VALUES.NEW_POST || val === TASK_LIST_VALUES.UPDATE_POST) {
         getPostTypes(newConf, setVoxelConf, loading, setLoading)
-      } else if (val === TASK_LIST_VALUES.NEW_COLLECTION_POST) {
+      } else if (val === TASK_LIST_VALUES.NEW_COLLECTION_POST || val === TASK_LIST_VALUES.UPDATE_COLLECTION_POST) {
         getPostFields(newConf, setVoxelConf, COLLECTION_POST_TYPE, loading, setLoading)
       } else if (val === TASK_LIST_VALUES.NEW_PROFILE) {
         getPostFields(newConf, setVoxelConf, PROFILE_POST_TYPE, loading, setLoading)
@@ -110,7 +110,7 @@ export default function VoxelIntegLayout({
           </div>
         )}
 
-        {voxelConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST && (
+        {(voxelConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST || voxelConf.selectedTask === TASK_LIST_VALUES.UPDATE_COLLECTION_POST) && (
           <div className="flx mt-3 mb-4">
             <b className="wdt-200 d-in-b">{__('Select Post:', 'bit-integrations')}</b>
             <MultiSelect

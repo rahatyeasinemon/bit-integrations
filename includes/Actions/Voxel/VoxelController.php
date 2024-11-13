@@ -100,7 +100,7 @@ class VoxelController
             return ['fields' => $fields, 'fieldMap' => $fieldMap];
         }
 
-        if ($request->selectedTask === VoxelHelper::UPDATE_POST) {
+        if ($request->selectedTask === VoxelHelper::UPDATE_POST || $request->selectedTask === VoxelHelper::UPDATE_COLLECTION_POST) {
             $isUpdateTask = true;
         } else {
             $isUpdateTask = false;

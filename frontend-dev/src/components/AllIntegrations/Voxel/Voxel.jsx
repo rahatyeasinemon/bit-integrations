@@ -87,7 +87,7 @@ function Voxel({ formFields, setFlow, flow, allIntegURL }) {
       }
     }
 
-    if (voxelConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST) {
+    if (voxelConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST || voxelConf.selectedTask === TASK_LIST_VALUES.UPDATE_COLLECTION_POST) {
       if (!voxelConf.selectedPost) {
         toast.error(__('Please select a post!', 'bit-integrations'))
         return

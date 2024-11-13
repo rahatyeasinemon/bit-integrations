@@ -81,7 +81,7 @@ export const getPostFields = (confTmp, setConf, postType, loading, setLoading) =
       setConf(newConf)
       setLoading({ ...loading, postFields: false })
       toast.success(__('Fields fetched successfully', 'bit-integrations'))
-      if (newConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST) {
+      if (newConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST || newConf.selectedTask === TASK_LIST_VALUES.UPDATE_COLLECTION_POST) {
         getPosts(newConf, setConf, postType, loading, setLoading)
       }
       return

@@ -12,6 +12,8 @@ class VoxelHelper
 
     public const UPDATE_POST = 'updatePost';
 
+    public const UPDATE_COLLECTION_POST = 'updateCollectionPost';
+
     // constants for static post type
 
     public const COLLECTION_POST_TYPE = 'collection';
