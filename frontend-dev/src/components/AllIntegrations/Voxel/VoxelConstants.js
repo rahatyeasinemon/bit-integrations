@@ -5,7 +5,8 @@ export const TASK_LIST_VALUES = {
   NEW_COLLECTION_POST: 'newCollectionPost',
   NEW_PROFILE: 'newProfile',
   UPDATE_POST: 'updatePost',
-  UPDATE_COLLECTION_POST: 'updateCollectionPost'
+  UPDATE_COLLECTION_POST: 'updateCollectionPost',
+  UPDATE_PROFILE: 'updateProfile'
 }
 
 export const TASK_LIST = [
@@ -14,6 +15,7 @@ export const TASK_LIST = [
   { label: __('Create New Profile', 'bit-integrations'), value: TASK_LIST_VALUES.NEW_PROFILE },
   { label: __('Update Post', 'bit-integrations'), value: TASK_LIST_VALUES.UPDATE_POST },
   { label: __('Update Collection Post', 'bit-integrations'), value: TASK_LIST_VALUES.UPDATE_COLLECTION_POST },
+  { label: __('Update Profile', 'bit-integrations'), value: TASK_LIST_VALUES.UPDATE_PROFILE },
 ]
 
 export const POST_TYPE_TASK_ARRAY = [

@@ -4,22 +4,6 @@ namespace BitCode\FI\Actions\Voxel;
 
 class VoxelHelper
 {
-    public const NEW_POST = 'newPost';
-
-    public const NEW_COLLECTION_POST = 'newCollectionPost';
-
-    public const NEW_PROFILE = 'newProfile';
-
-    public const UPDATE_POST = 'updatePost';
-
-    public const UPDATE_COLLECTION_POST = 'updateCollectionPost';
-
-    // constants for static post type
-
-    public const COLLECTION_POST_TYPE = 'collection';
-
-    public const PROFILE_POST_TYPE = 'profile';
-
     public static function updateVoxelPost($finalData, $postType, $postId)
     {
         if (!class_exists('Voxel\Post') || !class_exists('Voxel\Post_Type')) {

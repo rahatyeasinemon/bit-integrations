@@ -29,7 +29,7 @@ export default function VoxelIntegLayout({
         getPostTypes(newConf, setVoxelConf, loading, setLoading)
       } else if (val === TASK_LIST_VALUES.NEW_COLLECTION_POST || val === TASK_LIST_VALUES.UPDATE_COLLECTION_POST) {
         getPostFields(newConf, setVoxelConf, COLLECTION_POST_TYPE, loading, setLoading)
-      } else if (val === TASK_LIST_VALUES.NEW_PROFILE) {
+      } else if (val === TASK_LIST_VALUES.NEW_PROFILE || val === TASK_LIST_VALUES.UPDATE_PROFILE) {
         getPostFields(newConf, setVoxelConf, PROFILE_POST_TYPE, loading, setLoading)
       }
     } else {

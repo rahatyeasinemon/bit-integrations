@@ -100,17 +100,14 @@ class VoxelController
             return ['fields' => $fields, 'fieldMap' => $fieldMap];
         }
 
-        if ($request->selectedTask === VoxelHelper::UPDATE_POST || $request->selectedTask === VoxelHelper::UPDATE_COLLECTION_POST) {
-            $isUpdateTask = true;
-        } else {
-            $isUpdateTask = false;
-        }
+        $selectedTask = $request->selectedTask;
+        $isUpdateTask = \in_array($selectedTask, [VoxelTasks::UPDATE_POST, VoxelTasks::UPDATE_COLLECTION_POST, VoxelTasks::UPDATE_PROFILE]);
 
         $postType = \Voxel\Post_Type::get($request->postType);
         $postFields = $postType->get_fields();
 
         if (\is_array($postFields) && !empty($postFields)) {
-            if ($request->postType === VoxelHelper::PROFILE_POST_TYPE) {
+            if ($selectedTask === VoxelTasks::NEW_PROFILE) {
                 $fields[] = [
                     'key'      => 'user_email',
                     'label'    => 'User Email',
@@ -118,6 +115,14 @@ class VoxelController
                 ];
 
                 $fieldMap[] = (object) ['formField' => '', 'voxelField' => 'user_email'];
+            } elseif ($selectedTask === VoxelTasks::UPDATE_PROFILE) {
+                $fields[] = [
+                    'key'      => 'profile_id',
+                    'label'    => 'Profile ID',
+                    'required' => true,
+                ];
+
+                $fieldMap[] = (object) ['formField' => '', 'voxelField' => 'profile_id'];
             } else {
                 $fields[] = [
                     'key'      => 'post_author_email',
@@ -214,14 +219,14 @@ class VoxelController
                         'required' => $isUpdateTask ? false : $postField->is_required(),
                     ];
 
-                    if ($postField->is_required()) {
-                        $fieldMap[] = (object) ['formField' => '', 'voxelField' => ''];
+                    if (!$isUpdateTask && $postField->is_required()) {
+                        $fieldMap[] = (object) ['formField' => '', 'voxelField' => $fieldKey];
                     }
                 }
             }
         }
 
-        if ($isUpdateTask) {
+        if ($isUpdateTask && $selectedTask !== VoxelTasks::UPDATE_PROFILE) {
             $fieldMap = [(object) ['formField' => '', 'voxelField' => '']];
         }
 
