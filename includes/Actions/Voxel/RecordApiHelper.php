@@ -207,6 +207,30 @@ class RecordApiHelper
         return ['success' => true, 'message' => __('Post set as verified. Post ID: ', 'bit-integrations') . $postId];
     }
 
+    public function setCollectionPostVerified($finalData)
+    {
+        if (empty($finalData['post_id'])) {
+            return ['success' => false, 'message' => __('Post id not found!', 'bit-integrations'), 'code' => 400];
+        }
+
+        $postId = $finalData['post_id'];
+        $postType = get_post_type($postId);
+
+        if ($postType !== VoxelTasks::COLLECTION_POST_TYPE) {
+            return ['success' => false, 'message' => __('Post type not matched!', 'bit-integrations'), 'code' => 400];
+        }
+
+        $post = \Voxel\Post::force_get($postId);
+
+        if (!$post) {
+            return ['success' => false, 'message' => __('Post not found!', 'bit-integrations'), 'code' => 400];
+        }
+
+        $post->set_verified(true);
+
+        return ['success' => true, 'message' => __('Post collection set as verified. Post ID: ', 'bit-integrations') . $postId];
+    }
+
     public function generateReqDataFromFieldMap($data, $fieldMap)
     {
         $dataFinal = [];
@@ -233,34 +257,59 @@ class RecordApiHelper
 
         $type = $typeName = '';
 
-        if ($selectedTask === VoxelTasks::NEW_POST) {
-            $response = $this->newPost($finalData, $selectedOptions);
-            $type = 'New Post';
-            $typeName = 'Create New Post';
-        } elseif ($selectedTask === VoxelTasks::NEW_COLLECTION_POST) {
-            $response = $this->newCollectionPost($finalData, $selectedOptions);
-            $type = 'New Collection Post';
-            $typeName = 'Create New Collection Post';
-        } elseif ($selectedTask === VoxelTasks::NEW_PROFILE) {
-            $response = $this->newProfile($finalData);
-            $type = 'New Profile';
-            $typeName = 'Create New Profile';
-        } elseif ($selectedTask === VoxelTasks::UPDATE_POST) {
-            $response = $this->updatePost($finalData, $selectedOptions);
-            $type = 'Update Post';
-            $typeName = 'Update Post of a specific type';
-        } elseif ($selectedTask === VoxelTasks::UPDATE_COLLECTION_POST) {
-            $response = $this->updateCollectionPost($finalData, $selectedOptions);
-            $type = 'Update Collection Post';
-            $typeName = 'Update Collection Post';
-        } elseif ($selectedTask === VoxelTasks::UPDATE_PROFILE) {
-            $response = $this->updateProfile($finalData);
-            $type = 'Update Profile';
-            $typeName = 'Update Profile';
-        } elseif ($selectedTask === VoxelTasks::SET_POST_VERIFIED) {
-            $response = $this->setPostVerified($finalData);
-            $type = 'Set Verified';
-            $typeName = 'Set Post as Verified';
+        switch ($selectedTask) {
+            case VoxelTasks::NEW_POST:
+                $response = $this->newPost($finalData, $selectedOptions);
+                $type = 'New Post';
+                $typeName = 'Create New Post';
+
+                break;
+            case VoxelTasks::NEW_COLLECTION_POST:
+                $response = $this->newCollectionPost($finalData, $selectedOptions);
+                $type = 'New Collection Post';
+                $typeName = 'Create New Collection Post';
+
+                break;
+            case VoxelTasks::NEW_PROFILE:
+                $response = $this->newProfile($finalData);
+                $type = 'New Profile';
+                $typeName = 'Create New Profile';
+
+                break;
+            case VoxelTasks::UPDATE_POST:
+                $response = $this->updatePost($finalData, $selectedOptions);
+                $type = 'Update Post';
+                $typeName = 'Update Post of a specific type';
+
+                break;
+            case VoxelTasks::UPDATE_COLLECTION_POST:
+                $response = $this->updateCollectionPost($finalData, $selectedOptions);
+                $type = 'Update Collection Post';
+                $typeName = 'Update Collection Post';
+
+                break;
+            case VoxelTasks::UPDATE_PROFILE:
+                $response = $this->updateProfile($finalData);
+                $type = 'Update Profile';
+                $typeName = 'Update Profile';
+
+                break;
+            case VoxelTasks::SET_POST_VERIFIED:
+                $response = $this->setPostVerified($finalData);
+                $type = 'Set Verified';
+                $typeName = 'Set Post as Verified';
+
+                break;
+            case VoxelTasks::SET_COLLECTION_POST_VERIFIED:
+                $response = $this->setCollectionPostVerified($finalData);
+                $type = 'Set Verified';
+                $typeName = 'Set Collection Post as Verified';
+
+                break;
+
+            default:
+                //
+                break;
         }
 
         if ($response['success']) {

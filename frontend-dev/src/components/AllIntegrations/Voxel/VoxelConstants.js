@@ -7,7 +7,8 @@ export const TASK_LIST_VALUES = {
   UPDATE_POST: 'updatePost',
   UPDATE_COLLECTION_POST: 'updateCollectionPost',
   UPDATE_PROFILE: 'updateProfile',
-  SET_POST_VERIFIED: 'setPostVerified'
+  SET_POST_VERIFIED: 'setPostVerified',
+  SET_COLLECTION_POST_VERIFIED: 'setCollectionPostVerified',
 }
 
 export const TASK_LIST = [
@@ -18,6 +19,7 @@ export const TASK_LIST = [
   { label: __('Update Collection Post', 'bit-integrations'), value: TASK_LIST_VALUES.UPDATE_COLLECTION_POST },
   { label: __('Update Profile', 'bit-integrations'), value: TASK_LIST_VALUES.UPDATE_PROFILE },
   { label: __('Set Post as Verified', 'bit-integrations'), value: TASK_LIST_VALUES.SET_POST_VERIFIED },
+  { label: __('Set Collection Post as Verified', 'bit-integrations'), value: TASK_LIST_VALUES.SET_COLLECTION_POST_VERIFIED },
 ]
 
 export const POST_TYPE_TASK_ARRAY = [

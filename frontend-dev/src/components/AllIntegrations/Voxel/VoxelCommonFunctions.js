@@ -109,7 +109,7 @@ export const getPosts = (confTmp, setConf, postType, loading, setLoading) => {
 }
 
 export const voxelStaticFields = (selectedTask) => {
-  if (selectedTask === TASK_LIST_VALUES.SET_POST_VERIFIED) {
+  if (selectedTask === TASK_LIST_VALUES.SET_POST_VERIFIED || selectedTask === TASK_LIST_VALUES.SET_COLLECTION_POST_VERIFIED) {
     return {
       staticFields:
         [{ key: 'post_id', label: __('Post ID', 'bit-integrations'), required: true }],

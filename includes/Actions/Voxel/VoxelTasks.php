@@ -18,6 +18,7 @@ final class VoxelTasks
 
     public const SET_POST_VERIFIED = 'setPostVerified';
 
+    public const SET_COLLECTION_POST_VERIFIED = 'setCollectionPostVerified';
     // constants for static post type
 
     public const COLLECTION_POST_TYPE = 'collection';
