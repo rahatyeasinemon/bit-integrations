@@ -31,7 +31,10 @@ export default function VoxelIntegLayout({
         getPostFields(newConf, setVoxelConf, COLLECTION_POST_TYPE, loading, setLoading)
       } else if (val === TASK_LIST_VALUES.NEW_PROFILE || val === TASK_LIST_VALUES.UPDATE_PROFILE) {
         getPostFields(newConf, setVoxelConf, PROFILE_POST_TYPE, loading, setLoading)
-      } else if (val === TASK_LIST_VALUES.SET_POST_VERIFIED || val === TASK_LIST_VALUES.SET_COLLECTION_POST_VERIFIED) {
+      } else if (
+        val === TASK_LIST_VALUES.SET_POST_VERIFIED ||
+        val === TASK_LIST_VALUES.SET_COLLECTION_POST_VERIFIED ||
+        val === TASK_LIST_VALUES.SET_PROFILE_VERIFIED) {
         const fieldsAndFieldMap = voxelStaticFields(val)
         newConf.voxelFields = fieldsAndFieldMap.staticFields
         newConf.field_map = fieldsAndFieldMap.fieldMap

@@ -116,6 +116,13 @@ export const voxelStaticFields = (selectedTask) => {
       fieldMap:
         [{ formField: '', voxelField: 'post_id' }]
     }
+  } else if (selectedTask === TASK_LIST_VALUES.SET_PROFILE_VERIFIED) {
+    return {
+      staticFields:
+        [{ key: 'profile_id', label: __('Profile ID', 'bit-integrations'), required: true }],
+      fieldMap:
+        [{ formField: '', voxelField: 'profile_id' }]
+    }
   }
 
   return { staticFields: [], fieldMap: [] }

@@ -231,6 +231,26 @@ class RecordApiHelper
         return ['success' => true, 'message' => __('Post collection set as verified. Post ID: ', 'bit-integrations') . $postId];
     }
 
+    public function setProfileVerified($finalData)
+    {
+        if (empty($finalData['profile_id'])) {
+            return ['success' => false, 'message' => __('Profile id not found!', 'bit-integrations'), 'code' => 400];
+        }
+
+        $profileId = $finalData['profile_id'];
+        $postType = get_post_type($profileId);
+
+        if ($postType !== VoxelTasks::PROFILE_POST_TYPE) {
+            return ['success' => false, 'message' => __('Post type not matched!', 'bit-integrations'), 'code' => 400];
+        }
+
+        $profile = \Voxel\Post::force_get($profileId);
+
+        $profile->set_verified(true);
+
+        return ['success' => true, 'message' => __('Profile set as verified. Profile ID: ', 'bit-integrations') . $profileId];
+    }
+
     public function generateReqDataFromFieldMap($data, $fieldMap)
     {
         $dataFinal = [];
@@ -304,6 +324,12 @@ class RecordApiHelper
                 $response = $this->setCollectionPostVerified($finalData);
                 $type = 'Set Verified';
                 $typeName = 'Set Collection Post as Verified';
+
+                break;
+            case VoxelTasks::SET_PROFILE_VERIFIED:
+                $response = $this->setProfileVerified($finalData);
+                $type = 'Set Verified';
+                $typeName = 'Set Profile as Verified';
 
                 break;
 
