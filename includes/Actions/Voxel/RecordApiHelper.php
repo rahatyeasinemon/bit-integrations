@@ -188,6 +188,25 @@ class RecordApiHelper
         return ['success' => true, 'message' => __('Profile updated successfully. Profile ID: ', 'bit-integrations') . $profileId];
     }
 
+    public function setPostVerified($finalData)
+    {
+        if (empty($finalData['post_id'])) {
+            return ['success' => false, 'message' => __('Post id not found!', 'bit-integrations'), 'code' => 400];
+        }
+
+        $postId = $finalData['post_id'];
+
+        $post = \Voxel\Post::force_get($postId);
+
+        if (!$post) {
+            return ['success' => false, 'message' => __('Post not found!', 'bit-integrations'), 'code' => 400];
+        }
+
+        $post->set_verified(true);
+
+        return ['success' => true, 'message' => __('Post set as verified. Post ID: ', 'bit-integrations') . $postId];
+    }
+
     public function generateReqDataFromFieldMap($data, $fieldMap)
     {
         $dataFinal = [];
@@ -238,6 +257,10 @@ class RecordApiHelper
             $response = $this->updateProfile($finalData);
             $type = 'Update Profile';
             $typeName = 'Update Profile';
+        } elseif ($selectedTask === VoxelTasks::SET_POST_VERIFIED) {
+            $response = $this->setPostVerified($finalData);
+            $type = 'Set Verified';
+            $typeName = 'Set Post as Verified';
         }
 
         if ($response['success']) {

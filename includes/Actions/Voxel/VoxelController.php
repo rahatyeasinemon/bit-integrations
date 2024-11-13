@@ -110,7 +110,7 @@ class VoxelController
             if ($selectedTask === VoxelTasks::NEW_PROFILE) {
                 $fields[] = [
                     'key'      => 'user_email',
-                    'label'    => 'User Email',
+                    'label'    => __('User Email', 'bit-integrations'),
                     'required' => $isUpdateTask ? false : true,
                 ];
 
@@ -118,7 +118,7 @@ class VoxelController
             } elseif ($selectedTask === VoxelTasks::UPDATE_PROFILE) {
                 $fields[] = [
                     'key'      => 'profile_id',
-                    'label'    => 'Profile ID',
+                    'label'    => __('Profile ID', 'bit-integrations'),
                     'required' => true,
                 ];
 
@@ -126,7 +126,7 @@ class VoxelController
             } else {
                 $fields[] = [
                     'key'      => 'post_author_email',
-                    'label'    => 'Post Author Email',
+                    'label'    => __('Post Author Email', 'bit-integrations'),
                     'required' => $isUpdateTask ? false : true,
                 ];
 

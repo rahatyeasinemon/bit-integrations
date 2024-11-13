@@ -107,3 +107,16 @@ export const getPosts = (confTmp, setConf, postType, loading, setLoading) => {
     toast.error(result?.data ? result.data : __('Something went wrong!', 'bit-integrations'))
   })
 }
+
+export const voxelStaticFields = (selectedTask) => {
+  if (selectedTask === TASK_LIST_VALUES.SET_POST_VERIFIED) {
+    return {
+      staticFields:
+        [{ key: 'post_id', label: __('Post ID', 'bit-integrations'), required: true }],
+      fieldMap:
+        [{ formField: '', voxelField: 'post_id' }]
+    }
+  }
+
+  return { staticFields: [], fieldMap: [] }
+}

@@ -6,7 +6,7 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 
 import VoxelFieldMap from './VoxelFieldMap'
 import { addFieldMap } from './IntegrationHelpers'
-import { getPostFields, getPosts, getPostTypes } from './VoxelCommonFunctions'
+import { getPostFields, getPosts, getPostTypes, voxelStaticFields } from './VoxelCommonFunctions'
 import { COLLECTION_POST_TYPE, POST_TYPE_TASK_ARRAY, PROFILE_POST_TYPE, TASK_LIST, TASK_LIST_VALUES } from './voxelConstants'
 import Loader from '../../Loaders/Loader'
 import Note from '../../Utilities/Note'
@@ -31,6 +31,10 @@ export default function VoxelIntegLayout({
         getPostFields(newConf, setVoxelConf, COLLECTION_POST_TYPE, loading, setLoading)
       } else if (val === TASK_LIST_VALUES.NEW_PROFILE || val === TASK_LIST_VALUES.UPDATE_PROFILE) {
         getPostFields(newConf, setVoxelConf, PROFILE_POST_TYPE, loading, setLoading)
+      } else if (val === TASK_LIST_VALUES.SET_POST_VERIFIED) {
+        const fieldsAndFieldMap = voxelStaticFields(val)
+        newConf.voxelFields = fieldsAndFieldMap.staticFields
+        newConf.field_map = fieldsAndFieldMap.fieldMap
       }
     } else {
       newConf.selectedPostType = ''
