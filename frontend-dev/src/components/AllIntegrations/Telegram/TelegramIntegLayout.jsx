@@ -102,16 +102,15 @@ export default function TelegramIntegLayout({
           </div>
           <div className="flx mt-4">
             <b className="wdt-200 d-in-b">{__('Messages:', 'bit-integrations')}</b>
-            {telegramConf?.parse_mode === 'HTML' && (
-              <TinyMCE
-                formFields={formFields}
-                id={`telegram-message-${id}`}
-                value={telegramConf.body}
-                onChangeHandler={setMessageBody}
-                width="100%"
-                toolbarMnu="bold italic underline strikethrough | link | code | addFormField | toggleCode"
-              />
-            )}
+            <TinyMCE
+              formFields={formFields}
+              id={`telegram-message-${id}`}
+              value={telegramConf.body}
+              onChangeHandler={setMessageBody}
+              width="100%"
+              toolbarMnu="bold italic underline strikethrough | link | code | addFormField | toggleCode"
+              show={telegramConf?.parse_mode === 'HTML'}
+            />
             {telegramConf?.parse_mode === 'MarkdownV2' && (
               <>
                 <textarea
