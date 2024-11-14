@@ -9,7 +9,7 @@ use WP_User;
  *
  * @since 1.0.0
  */
-final class UserHelper
+class UserHelper
 {
     public static function getUserData($id)
     {
@@ -18,7 +18,8 @@ final class UserHelper
         }
 
         $user = new WP_User($id);
-        if (empty($user->email)) {
+
+        if (empty($user->user_email)) {
             return [];
         }
 
