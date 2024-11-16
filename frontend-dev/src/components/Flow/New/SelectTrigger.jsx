@@ -44,18 +44,23 @@ export default function SelectTrigger() {
     if (dataObj) {
       const newData = deepCopy(dataObj)
       const ifAnyFeaturedProdFound = featuredProducts.some((pr) => pr in newData)
+
       if (!ifAnyFeaturedProdFound) return sortObj(newData)
-      const featuredProductData = featuredProducts.reduce((accr, curr) => {
+
+      const featuredFreeProductData = featuredProducts.reduce((accr, curr) => {
         const tempAccr = { ...accr }
-        if (newData[curr]) {
+
+        if (newData[curr] && (isPro || !newData[curr].isPro)) {
           tempAccr[curr] = newData[curr]
           delete newData[curr]
         }
+
         return tempAccr
       }, {})
+
       const sortedTriggers = sortObj(newData)
       const finalSortedTriggers = isPro ? sortedTriggers : sortFreeProd(sortedTriggers)
-      const finalData = { ...featuredProductData, ...finalSortedTriggers }
+      const finalData = { ...featuredFreeProductData, ...finalSortedTriggers }
       return finalData
     }
 
@@ -68,7 +73,7 @@ export default function SelectTrigger() {
     }
   }, [data])
 
-  const featuredProducts = ['BitForm']
+  const featuredProducts = ['BitForm', 'BitAssist']
 
   const searchInteg = (e) => {
     const { value } = e.target
