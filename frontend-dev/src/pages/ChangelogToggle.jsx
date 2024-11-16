@@ -1,23 +1,58 @@
-import { Suspense, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
+import Loader from '../components/Loaders/Loader'
+import Modal from '../components/Utilities/Modal'
 import { $btcbi } from '../GlobalStates'
 import ChangelogIcn from '../Icons/ChangeLogIcn'
-import promo from '../resource/img/bit-social-promo.webp'
-import { __, sprintf } from '../Utils/i18nwrap'
-import Modal from '../components/Utilities/Modal'
-import bitsFetch from '../Utils/bitsFetch'
-import Loader from '../components/Loaders/Loader'
 import ExternalLinkIcn from '../Icons/ExternalLinkIcn'
+import promo from '../resource/img/new_commer.webp'
+import bitsFetch from '../Utils/bitsFetch'
+import { __, sprintf } from '../Utils/i18nwrap'
 
 export default function ChangelogToggle() {
   const [btcbi, setBtcbi] = useRecoilState($btcbi)
   const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
-  const [showAnalyticsOptin, setShowAnalyticsOptin] = useState([])
+  const [showAnalyticsOptin, setShowAnalyticsOptin] = useState(false)
   const [loading, setLoading] = useState('')
   const [step, setStep] = useState(1)
 
-  const Early_Bird_URL =
-    'https://bit-social.com/?utm_source=bit-integrations&utm_medium=inside-plugin&utm_campaign=early-bird-offer'
+  const source = !btcbi.isPro ? 'bit-integrations' : 'bit-integrations-pro'
+  const Early_Bird_URL = `https://bit-social.com/?utm_source=${source}&utm_medium=inside-plugin&utm_campaign=early-bird-offer`
+
+  const changeLog = [
+    {
+      label: __('Note', 'bit-integrations'),
+      headClass: 'new-note',
+      itemClass: '',
+      items: []
+    },
+    {
+      label: __('New Actions', 'bit-integrations'),
+      headClass: 'new-integration',
+      itemClass: 'integration-list',
+      items: []
+    },
+    {
+      label: __('New Triggers', 'bit-integrations'),
+      headClass: 'new-trigger',
+      itemClass: 'integration-list',
+      items: ['Pie Forms (Pro)']
+    },
+    {
+      label: __('New Features', 'bit-integrations'),
+      headClass: 'new-feature',
+      itemClass: 'feature-list',
+      items: ['Kit (ex ConvertKit): New Module added']
+    },
+    {
+      label: __('New Improvements', 'bit-integrations'),
+      headClass: 'new-improvement',
+      itemClass: 'feature-list',
+      items: [
+        'Brevo (ex Sendinblue): Enhanced optimization for smoother integration execution.', 'Kit (ex ConvertKit): Improved functionality for adding and updating subscribers.', 'Voxel: Added new tasks to enhance the integrations'
+      ]
+    }
+  ]
 
   const setChangeLogVersion = (val) => {
     setShow(val)
@@ -70,7 +105,7 @@ export default function ChangelogToggle() {
         sm={step !== 1}
         show={show}
         setModal={closeModal}
-        closeIcon={showAnalyticsOptin}
+        closeIcon={showAnalyticsOptin && step === 2}
         style={{
           height: 'auto',
           width: '550px'
@@ -96,63 +131,30 @@ export default function ChangelogToggle() {
             <div className="changelog content">
               <div className="flx flx-col flx-center whats-new">
                 <h3>{sprintf(__("What's New in %s", 'bit-integrations'), btcbi.version)}?</h3>
-                <small
-                  className="date"
-                  dangerouslySetInnerHTML={{
-                    __html: sprintf(
-                      __('Updated at:  <b>%s</b>', 'bit-integrations'),
-                      '16th October 2024'
-                    )
-                  }}></small>
+                <small className="date">
+                  {__('Updated at:', 'bit-integrations')} <b>12th November 2024</b>
+                </small>
               </div>
               <div className="changelog-content">
-                {/* <span className="new-integration">
-                <b>{__('New Action', 'bit-integrations')}</b>
-              </span>
+                {changeLog.map((log, index) => (
+                  <Fragment key={index}>
+                    {log.items.length > 0 && (
+                      <>
+                        <span className={log.headClass}>
+                          <b>{log.label}</b>
+                        </span>
 
-              <div className="integration-list">
-                <ul>
-                  <li> Go High Level </li>
-                </ul>
-              </div> */}
-                <span className="new-integration">
-                  <b>{__('New Trigger', 'bit-integrations')}</b>
-                </span>
-
-                <div className="integration-list">
-                  <ul>
-                    <li> The Events Calendar (Pro) </li>
-                  </ul>
-                </div>
-
-                {/* <span className="new-integration">
-                <b>{__('New Improvements', 'bit-integrations')}</b>
-              </span>
-
-              <div className="integration-list">
-                <ul>
-                  <li> Custom Trigger: Introduced new improvements for modifying selected fields. </li>
-                </ul>
-              </div> */}
-                {/* <span className="new-integration">
-                  <b>{__('Note', 'bit-integrations')}</b>
-                </span>
-
-                <div className="integration-list">
-                  <ul>
-                    <li>The name ConvertKit has been updated to Kit (ConvertKit).</li>
-                  </ul>
-                </div> */}
-
-                <span className="new-feature">
-                  <b>{__('New Feature', 'bit-integrations')}</b>
-                </span>
-
-                <div className="feature-list">
-                  <ul>
-                    <li>Trello: Added support for Custom Fields. (Pro)</li>
-                  </ul>
-                </div>
+                        <div className={log.itemClass}>
+                          <ul>
+                            {log.items.map((item, index) => (
+                              <li key={index}> {item} </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </>
+                    )}
+                  </Fragment>
+                ))}
                 <div>
                   <span className="footer">{__('For more details,')}</span>
                   <a

@@ -4,7 +4,7 @@ Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
 Tested up to: 6.6.2
 Requires PHP: 7.0
-Stable tag: 2.3.0
+Stable tag: 2.3.4
 License: GPLv2 or later
 
 Automation Plugin for WordPress like Zapier. Integration of 80+ Triggers & 150+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -20,7 +20,7 @@ You can see below what WPTuts say about Bit Integrations
 https://youtu.be/hgMkLvV-r6k
 
 **Useful Links**
-🚀[Try Full Version Demo](https://towp.io/) | 🚀[Docs](https://docs.bit-integrations.bitapps.pro/) | 🚀[Video Tutorials](https://youtube.com/playlist?list=PL7c6CDwwm-ALMEsKLYKebKb5XLGPWMNue) | 🚀[Support](https://tawk.to/chat/60eac4b6d6e7610a49aab375/1faah0r3e) | 🚀[Facebook Group](https://www.facebook.com/groups/3308027439209387) | 🚀[Upgrade to Pro](https://www.bitapps.pro/bit-integrations) | 🚀[Bit Integrations Repository](https://github.com/Bit-Apps-Pro/bit-integrations)
+🚀[Try Full Version Demo](https://towp.io/) | 🚀[Docs](https://bit-integrations.com/wp-docs/) | 🚀[Video Tutorials](https://youtube.com/playlist?list=PL7c6CDwwm-ALMEsKLYKebKb5XLGPWMNue) | 🚀[Support](https://tawk.to/chat/60eac4b6d6e7610a49aab375/1faah0r3e) | 🚀[Facebook Group](https://www.facebook.com/groups/3308027439209387) | 🚀[Upgrade to Pro](https://www.bitapps.pro/bit-integrations) | 🚀[Bit Integrations Repository](https://github.com/Bit-Apps-Pro/bit-integrations)
 
 📢 **Join our community [Bit Integrations](https://www.facebook.com/groups/bitapps) & get updates on our plugins.**
 
@@ -98,6 +98,7 @@ https://youtu.be/eFuficjF_F4
 * [**Popup Maker**](https://wordpress.org/plugins/popup-maker/)
 * [**Piotnet Forms**](https://wordpress.org/plugins/piotnetforms/)
 * [**Paid Memberships Pro**](https://wordpress.org/plugins/paid-memberships-pro/)
+* [**Pie Forms**](https://wordpress.org/plugins/pie-forms-for-wp/)
 * [**Piotnet Addons For Elementor**](https://wordpress.org/plugins/piotnet-addons-for-elementor/)
 * [**Restrict Content**](https://wordpress.org/plugins/restrict-content/)
 * [**RafflePress**](https://wordpress.org/plugins/rafflepress/)
@@ -111,9 +112,11 @@ https://youtu.be/eFuficjF_F4
 * [**SureCart**](https://wordpress.org/plugins/surecart/)
 * [**SureForms**](https://wordpress.org/plugins/sureforms/)
 * [**SureMembers**](https://suremembers.com/)
+* [**The Events Calendar**](https://wordpress.org/plugins/the-events-calendar/)
 * [**Tripetto**](https://wordpress.org/plugins/tripetto/)
 * [**Tutor LMS**](https://wordpress.org/plugins/tutor/)
 * [**Thrive Apprentice**](https://thrivethemes.com/apprentice/)
+* [**Voxel**](https://getvoxel.io/)
 * [**weForms**](https://wordpress.org/plugins/search/WeForms/)
 * [**WP Post**]()
 * [**WP Job Manager**](https://wordpress.org/plugins/wp-job-manager/)
@@ -121,6 +124,7 @@ https://youtu.be/eFuficjF_F4
 * [**WooCommerce Subscriptions**](https://woocommerce.com/products/woocommerce-subscriptions/)
 * [**WP Courseware**](https://flyplugins.com/wp-courseware-wordpress-lms/)
 * [**WPForms**](https://wordpress.org/plugins/wpforms-lite/)
+* [**WooCommerce Bookings**](https://woocommerce.com/products/woocommerce-bookings/)
 * [**wpForo**](https://wordpress.org/plugins/wpforo/)
 * [**WPFunnels**](https://wordpress.org/plugins/wpfunnels/)
 * [**WS Form**](https://wordpress.org/plugins/ws-form/)
@@ -194,6 +198,7 @@ https://youtu.be/eFuficjF_F4
 * [**LifterLMS**](https://wordpress.org/plugins/lifterlms/)
 * [**LionDesk**](https://liondesk.com/)
 * [**Livestorm**](https://livestorm.co/)
+* [**License Manager for WooCommerce**](https://wordpress.org/plugins/license-manager-for-woocommerce/)
 * [**Mail**]()
 * [**MasterStudy LMS**](https://wordpress.org/plugins/masterstudy-lms-learning-management-system/)
 * [**MailBluster**](https://mailbluster.com/)
@@ -249,6 +254,7 @@ https://youtu.be/eFuficjF_F4
 * [**SuiteDash**](https://suitedash.com/)
 * [**SureMembers**](https://suremembers.com/)
 * [**SystemeIO**](https://systeme.io/home)
+* [**The Events Calendar**](https://wordpress.org/plugins/the-events-calendar/)
 * [**Telegram**](https://telegram.org/)
 * [**Thrive Automator**](https://wordpress.org/plugins/thrive-automator/)
 * [**Tutor LMS**](https://wordpress.org/plugins/tutor/)
@@ -719,11 +725,15 @@ Please check [**Bit Integrations Pro**](https://www.bitapps.pro/bit-integrations
 
 * [**SureCart**](https://bitapps.pro/docs/bit-integrations/trigger/surecart/)
 
+* [**The Events Calendar**](https://bit-integrations.com/wp-docs/trigger/the-events-calendar-integrations-as-a-trigger/)
+
 * [**Tripetto**](https://bitapps.pro/docs/bit-integrations/trigger/tripetto/)
 
 * [**Tutor LMS**](https://bitapps.pro/docs/bit-integrations/trigger/tutor-lms/)
 
 * [**User Registration**](https://bitapps.pro/docs/bit-integrations/trigger/user-registration/)
+
+* [**Voxel**](https://bit-integrations.com/wp-docs/trigger/voxel-integrations/)
 
 * [**weforms**](https://bitapps.pro/docs/bit-integrations/trigger/WeForms/)
 
@@ -830,6 +840,8 @@ Please check [**Bit Integrations Pro**](https://www.bitapps.pro/bit-integrations
 
 * [**LearnDash LMS**](https://bitapps.pro/docs/bit-integrations/trigger/learndash-lms/)
 
+* [**License Manager for WooCommerce**](https://bitapps.pro/docs/bit-integrations/trigger/learndash-lms/)
+
 * [**Mail Mint**](https://bitapps.pro/docs/bit-integrations/trigger/mail-mint/)
 
 * [**MailBluster**](https://bitapps.pro/docs/bit-integrations/trigger/mailbluster/)
@@ -893,6 +905,8 @@ Please check [**Bit Integrations Pro**](https://www.bitapps.pro/bit-integrations
 * [**SliceWp**](https://bitapps.pro/docs/bit-integrations/trigger/slicewp/)
 
 * [**SureCart**](https://bitapps.pro/docs/bit-integrations/trigger/surecart/)
+
+* [**The Events Calendar**](https://bit-integrations.com/wp-docs/actions/the-events-calendar-integrations-as-an-action/)
 
 * [**Telegram**](https://bitapps.pro/docs/bit-integrations/trigger/telegram/)
 
@@ -1000,6 +1014,114 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 2.3.4  =
+_Release Date -12th November 2024_
+
+- **New Trigger**
+ - Pie Forms (Pro): Drag & Drop Builder, Human Face Detector, Pre-built Templates, Spam Protection, User Email Notifications, and more!
+
+- **New Features**
+ - Kit (ex ConvertKit): New Module added:
+    "Update Subscriber" - Easily update subscriber details.
+    "Add Tags to a Subscriber" - Assign specific tags to subscribers.
+    "Remove Tags from a Subscriber" - Remove tags from selected subscribers.
+
+- **New Improvement**
+ - Brevo (ex Sendinblue): Enhanced optimization for smoother integration execution.
+ - Kit (ex ConvertKit): Improved functionality for adding and updating subscribers.
+ - Voxel: Added new tasks to enhance the integrations:
+ 
+      Membership (Pro):
+        - Membership Plan Activated
+        - Membership Plan Switched
+        - Membership Plan Canceled
+
+      Comments (Pro):
+        - New Comment
+        - New Reply to Comment
+
+      Profile (Pro):
+        - New Wall Post on Profile
+        - Wall Post by User
+
+      Orders (Pro):
+        - New Order Placed
+        - Order Approved by Vendor
+        - Order Declined by Vendor
+        - Order Canceled by Customer
+        - Orders Claim Listing
+        
+      Promotions(pro):
+        - Promotion Activated
+        - Promotion Canceled
+
+= 2.3.3  =
+_Release Date -05th November 2024_
+
+- **New Action**
+ - License Manager for WooCommerce - An Ideal Add-on that Delivers Robust Solutions for Effortless Software License Sales and Management.
+
+- **New Trigger**
+ - Voxel - Build Advanced WordPress Dynamic Sites and Directories with Voxel and Elementor (Pro).
+
+- **New Features**
+ - MailChimp: Added utilities to manage Language and GDPR Marketing Preferences for users (Pro).
+
+- **New Improvement**
+ - Kit (ConvertKit): Optimized API for handling existing subscribers more efficiently.
+
+- **Bug Fixes**
+ - Telegram Messenger: Resolved an issue with link messages not displaying correctly.
+ - GoHighLevel: Fixed a bug where checkbox data was not submitting as expected.
+ - Chore: Addressed trigger uniqueKey update issues for various builders and forms, including:
+      - Breakdance
+      - Elementor
+      - Bricks
+      - BrickForge
+      - Brizy
+      - Divi
+      - Divi Form Builder by Divi Engine
+      - Gutena Forms
+      - Kadence Blocks Form
+      - Popup Maker
+      - SiteOrigin Widgets
+
+= 2.3.2  =
+_Release Date -30th October 2024_
+
+- **New Trigger :**
+  - WooCommerce Bookings: Added support for WooCommerce Bookings trigger, allowing you to automate workflows based on new bookings and other related events. (Pro)
+
+- **New Features :**
+  - OneClick Authorization feature added in GoogleSheet Action.
+
+- **New Improvements :**
+  - WP Post Creation: Enhanced the feature image upload process, now supporting improved handling of third-party public URLs, ensuring more consistent and reliable image integration for WP posts.
+
+- **Note :**
+  - Deprecated Old WooCommerce Booking Triggers: Previous WooCommerce booking-based triggers have been deprecated and replaced with a new, comprehensive trigger system, including specific triggers such as "Booking-Created" to provide more effective and detailed management of WooCommerce bookings.
+
+= 2.3.1  =
+_Release Date -23th October 2024_
+
+- **New Action :**
+  - The Events Calendar: Now supports actions for calendars and tickets for WordPress.
+
+- **New Features :**
+  - The Events Calendar: Added new task for attendee registration with WooCommerce (Pro).
+  - Moosend: Added support for custom fields (Pro).
+
+- **New Improvements :**
+  - Campaign Monitor: Added custom field value support.
+  - Mautic: Added functionality for contact owner.
+  - Telegram: Enhanced Markdown and HTML message support.
+
+- **New Fixes :**
+  - Contact Form 7: Fixed issue with empty checkbox values.
+  - Mailercloud: Resolved the blank page issue.
+  - WpForo: Resolved the blank page issue.
+  - Selzy: Resolved the blank page issue.
 
 = 2.3.0  =
 _Release Date -16th October 2024_

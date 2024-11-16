@@ -24,7 +24,8 @@ function Moosend({ formFields, setFlow, flow, allIntegURL }) {
     listId: '',
     method: '',
     actions: {},
-    moosendFields: [
+    moosendFields: [],
+    basicFields: [
       { key: 'Email', label: __('Email', 'bit-integrations'), required: true },
       { key: 'Name', label: __('Name', 'bit-integrations'), required: false },
       { key: 'Mobile', label: __('Mobile', 'bit-integrations'), required: false }

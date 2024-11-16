@@ -61,6 +61,8 @@ export const FormPluginStateHelper = (val, tmpNewFlow, resp, setNewFlow) => {
     wpJobManagerStateFP(val, tmpNewFlow, resp, setNewFlow)
   } else if (tmpNewFlow?.triggered_entity === 'EventsCalendar') {
     eventsCalendarStateFP(val, tmpNewFlow, resp, setNewFlow)
+  } else if (tmpNewFlow?.triggered_entity === 'Voxel') {
+    voxelStateFP(val, tmpNewFlow, resp, setNewFlow)
   } else if (tmpNewFlow?.triggered_entity === 'WCSubscriptions') {
     WCSubscriptionsStateFP(val, tmpNewFlow, resp, setNewFlow)
   } else {
@@ -208,11 +210,28 @@ export const wpJobManagerStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
 }
 
 export const eventsCalendarStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
-  if (val === 'events_calendar-1' || val === 'events_calendar-2' || val === 'events_calendar-3') {
+  if (
+    val === 'events_calendar-1' ||
+    val === 'events_calendar-2' ||
+    val === 'events_calendar-3' ||
+    val === 'events_calendar-4'
+  ) {
     tmpNewFlow.triggerData = {
       ...tmpNewFlow.triggerData,
       events: resp.data.events,
       selectedEvent: 'any'
+    }
+  }
+
+  setNewFlow(tmpNewFlow)
+}
+
+export const voxelStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
+  if (val === 'voxel-7' || val === 'voxel-8' || val === 'voxel-9' || val === 'voxel-10' || val === 'voxel-11' || val === 'voxel-20') {
+    tmpNewFlow.triggerData = {
+      ...tmpNewFlow.triggerData,
+      postTypes: resp.data.postTypes,
+      selectedPostType: ''
     }
   }
 
@@ -583,9 +602,25 @@ export const wpJobManagerStateIH = (tmpConf, flowData, triggered_entity_id) => {
 export const eventsCalendarIH = (tmpConf, flowData, triggered_entity_id) => {
   const formId = flowData.formID ? flowData.formID : triggered_entity_id
 
-  if (formId === 'events_calendar-1' || formId === 'events_calendar-2' || formId === 'events_calendar-3') {
+  if (
+    formId === 'events_calendar-1' ||
+    formId === 'events_calendar-2' ||
+    formId === 'events_calendar-3' ||
+    formId === 'events_calendar-4'
+  ) {
     tmpConf.selectedEvent = flowData.selectedEvent
     tmpConf.events = flowData.events
+  }
+
+  return tmpConf
+}
+
+export const voxelIH = (tmpConf, flowData, triggered_entity_id) => {
+  const formId = flowData.formID ? flowData.formID : triggered_entity_id
+
+  if (formId === 'voxel-7' || formId === 'voxel-8' || formId === 'voxel-9' || formId === 'voxel-10' || formId === 'voxel-11' || formId === 'voxel-20') {
+    tmpConf.selectedPostType = flowData.selectedPostType
+    tmpConf.postTypes = flowData.postTypes
   }
 
   return tmpConf
@@ -596,6 +631,7 @@ export const WCSubscriptionsStateIH = (tmpConf, flowData, triggered_entity_id) =
 
   tmpConf.selectedProduct = flowData.selectedProduct
   tmpConf.allSubscriptionProducts = flowData.allSubscriptionProducts
+  tmpConf.fields = flowData?.fields
 
   if (!['user_subscribes_to_product', 'user_purchases_variable_subscription'].includes(formId)) {
     tmpConf.selectedSubscription = flowData.selectedSubscription
@@ -610,6 +646,27 @@ export const WCSubscriptionsStateIH = (tmpConf, flowData, triggered_entity_id) =
       { label: 'Pending', value: 'pending' },
       { label: 'Cancelled', value: 'cancelled' },
       { label: 'Pending Cancel', value: 'pending-cancel' }
+    ]
+  }
+
+  return tmpConf
+}
+
+export const WCBookingsStateIH = (tmpConf, flowData, triggered_entity_id) => {
+  const formId = flowData.formID ? flowData.formID : triggered_entity_id
+  tmpConf.fields = flowData?.fields
+
+  if (formId === 'booking_status_changed') {
+    tmpConf.selectedStatus = flowData.selectedStatus
+    tmpConf.allStatus = [
+      { label: 'Any Status', value: 'any' },
+      { label: 'Unpaid', value: 'unpaid' },
+      { label: 'Pending Confirmation', value: 'pending-confirmation' },
+      { label: 'Confirmed', value: 'confirmed' },
+      { label: 'Paid', value: 'paid' },
+      { label: 'Complete', value: 'complete' },
+      { label: 'In Cart', value: 'in-cart' },
+      { label: 'Cancelled', value: 'cancelled' }
     ]
   }
 

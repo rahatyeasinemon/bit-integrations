@@ -49,7 +49,17 @@ export default defineConfig(({ mode }) => ({
 
           const fileExt = fileName.split('.').pop()
 
-          if (fileExt === 'webp') {
+          if (
+            fileExt === 'webp' ||
+            fileExt === 'svg' ||
+            fileExt === 'jpg' ||
+            fileExt === 'jpeg' ||
+            fileExt === 'png' ||
+            fileExt === 'ttf' ||
+            fileExt === 'woff' ||
+            fileExt === 'eot' ||
+            fileExt === 'gif'
+          ) {
             return fileName
           }
 

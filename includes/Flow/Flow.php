@@ -2,15 +2,15 @@
 
 namespace BitCode\FI\Flow;
 
-use BitCode\FI\Core\Util\Capabilities;
+use WP_Error;
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\CustomFuncValidator;
 use BitCode\FI\Core\Util\IpTool;
 use BitCode\FI\Core\Util\SmartTags;
+use BitCode\FI\Core\Util\Capabilities;
 use BitCode\FI\Core\Util\StoreInCache;
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Triggers\TriggerController;
-use WP_Error;
+use BitCode\FI\Core\Util\CustomFuncValidator;
 
 /**
  * Provides details of available integration and helps to
@@ -118,7 +118,7 @@ final class Flow
                     'postId' => $integration->flow_details->postId,
                 ];
                 $integration->fields = $trigger::fields($data);
-            } elseif (method_exists($trigger, 'formattedParam')) {
+            } elseif (method_exists($trigger, 'formattedParam') && $trigger::formattedParam($integration)->id !== -1) {
                 $data = $trigger::formattedParam($integration);
                 $integration->fields = $trigger::fields($data);
             } else {
@@ -398,11 +398,13 @@ final class Flow
     {
         $specialTagFieldValue = [];
         foreach ($fieldMap as $value) {
-            if (isset($value->formField)) {
-                $triggerValue = $value->formField;
+            $triggerValue = $value->formField ?? $value->formFields ?? null;
+
+            if (isset($triggerValue)) {
                 $smartTagValue = SmartTags::getSmartTagValue($triggerValue, true);
+
                 if (!empty($smartTagValue)) {
-                    $specialTagFieldValue[$value->formField] = $smartTagValue;
+                    $specialTagFieldValue[$triggerValue] = $smartTagValue;
                 }
             }
         }
@@ -447,6 +449,10 @@ final class Flow
                         $integrationName = 'SendinBlue';
 
                         break;
+                    case 'Kit(ConvertKit)':
+                        $integrationName = 'ConvertKit';
+
+                        break;
                     case 'Make(Integromat)':
                         $integrationName = 'Integromat';
 
@@ -470,6 +476,11 @@ final class Flow
 
                     case 'GoHighLevel':
                         $integrationName = 'HighLevel';
+
+                        break;
+
+                    case 'LicenseManagerForWooCommerce':
+                        $integrationName = 'LMFWC';
 
                         break;
 

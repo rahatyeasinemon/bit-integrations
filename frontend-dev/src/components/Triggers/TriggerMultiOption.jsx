@@ -26,7 +26,9 @@ import SureMembersHelper from './TriggerHelpers/SureMembersHelper'
 import WPForoHelper from './TriggerHelpers/WPForoHelper'
 import WPJobManagerHelper from './TriggerHelpers/WPJobManagerHelper'
 import WCSubscriptionsHelper from './TriggerHelpers/WCSubscriptionsHelper'
+import WCBookingsHelper from './TriggerHelpers/WCBookingsHelper'
 import EventsCalendarHelper from './TriggerHelpers/EventsCalendarHelper'
+import VoxelHelper from './TriggerHelpers/VoxelHelper'
 
 const TriggerMultiOption = ({ flow, setFlowData, edit = false }) => (
   <div>
@@ -116,6 +118,12 @@ const TriggerMultiOption = ({ flow, setFlowData, edit = false }) => (
     )}
     {flow?.triggered_entity === 'EventsCalendar' && (
       <EventsCalendarHelper flow={flow} setFlowData={setFlowData} edit={edit} />
+    )}
+    {flow?.triggered_entity === 'Voxel' && (
+      <VoxelHelper flow={flow} setFlowData={setFlowData} edit={edit} />
+    )}
+    {flow?.triggered_entity === 'WCBookings' && (
+      <WCBookingsHelper flow={flow} setFlowData={setFlowData} edit={edit} />
     )}
   </div>
 )

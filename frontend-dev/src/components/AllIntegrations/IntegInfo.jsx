@@ -27,7 +27,7 @@ const ZohoMarketingHubAuthorization = lazy(
   () => import('./ZohoMarketingHub/ZohoMarketingHubAuthorization')
 )
 const ZohoRecruitAuthorization = lazy(() => import('./ZohoRecruit/ZohoRecruitAuthorization'))
-const GoogleSheetAuthorization = lazy(() => import('./GoogleSheet/GoogleSheetAuthorization'))
+const GoogleSheetInfo = lazy(() => import('./GoogleSheet/GoogleSheetInfo'))
 const MailChimpAuthorization = lazy(() => import('./MailChimp/MailChimpAuthorization'))
 const MailPoetAuthorization = lazy(() => import('./MailPoet/MailPoetAuthorization'))
 const SendinblueAuthorization = lazy(() => import('./SendinBlue/SendinBlueAuthorization'))
@@ -186,6 +186,12 @@ const WPForoAuthorization = lazy(() => import('./WPForo/WPForoAuthorization'))
 const DokanAuthorization = lazy(() => import('./Dokan/DokanAuthorization'))
 const JetEngineAuthorization = lazy(() => import('./JetEngine/JetEngineAuthorization'))
 const HighLevelAuthorization = lazy(() => import('./HighLevel/HighLevelAuthorization'))
+const TheEventsCalendarAuthorization = lazy(
+  () => import('./TheEventsCalendar/TheEventsCalendarAuthorization')
+)
+const LMFWCAuthorization = lazy(
+  () => import('./LMFWC/LMFWCAuthorization')
+)
 
 export default function IntegInfo() {
   const { id, type } = useParams()
@@ -293,10 +299,7 @@ export default function IntegInfo() {
         )
       case 'Google Sheet':
         return (
-          <GoogleSheetAuthorization
-            sheetConf={integrationConf}
-            step={1}
-            redirectLocation={location}
+          <GoogleSheetInfo sheetConf={integrationConf}
             isInfo
           />
         )
@@ -574,6 +577,14 @@ export default function IntegInfo() {
         return <JetEngineAuthorization jetEngineConf={integrationConf} step={1} isInfo />
       case 'GoHighLevel':
         return <HighLevelAuthorization highLevelConf={integrationConf} step={1} isInfo />
+      case 'The Events Calendar':
+        return (
+          <TheEventsCalendarAuthorization theEventsCalendarConf={integrationConf} step={1} isInfo />
+        )
+      case 'License Manager For WooCommerce':
+        return (
+          <LMFWCAuthorization licenseManagerConf={integrationConf} step={1} isInfo />
+        )
       default:
         return <></>
     }

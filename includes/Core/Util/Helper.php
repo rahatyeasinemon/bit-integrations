@@ -67,12 +67,34 @@ final class Helper
     public static function uploadFeatureImg($filePath, $postID)
     {
         require_once ABSPATH . 'wp-load.php';
-        $file = \is_array($filePath) ? $filePath[0] : $filePath;
-        $imgFileName = basename($file);
+        require_once ABSPATH . 'wp-admin/includes/image.php';
 
-        if (file_exists($file)) {
+        $files = (array) $filePath;
+
+        foreach ($files as $file) {
+            if (\is_array($file)) {
+                static::uploadFeatureImg($file, $postID);
+
+                continue;
+            }
+
+            if (!file_exists($file) && !filter_var($file, FILTER_VALIDATE_URL)) {
+                continue;
+            }
+
+            $fileType = wp_check_filetype($file);
+            if (empty($fileType['ext']) || !\in_array($fileType['ext'], ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg'])) {
+                continue;
+            }
+
+            $imgFileName = basename($file);
             // prepare upload image to WordPress Media Library
-            $upload = wp_upload_bits($imgFileName, null, file_get_contents($file, FILE_USE_INCLUDE_PATH));
+            $upload = wp_upload_bits($imgFileName, null, file_get_contents($file));
+
+            if (!empty($upload['error']) || !isset($upload['file'])) {
+                continue;
+            }
+
             // check and return file type
             $imageFile = $upload['file'];
             $wpFileType = wp_check_filetype($imageFile, null);
@@ -83,15 +105,15 @@ final class Helper
                 'post_content'   => '',
                 'post_status'    => 'inherit',
             ];
+
             // insert and return attachment id
             $attachmentId = wp_insert_attachment($attachment, $imageFile, $postID);
-            require_once ABSPATH . 'wp-admin/includes/image.php';
-            // insert and return attachment metadata
-            $attachmentData = wp_generate_attachment_metadata($attachmentId, $imageFile);
-            // update and return attachment metadata
-            wp_update_attachment_metadata($attachmentId, $attachmentData);
-            // finally, associate attachment id to post id
-            set_post_thumbnail($postID, $attachmentId);
+
+            if (!is_wp_error($attachmentId)) {
+                $attachmentData = @wp_generate_attachment_metadata($attachmentId, $imageFile);
+                wp_update_attachment_metadata($attachmentId, $attachmentData);
+                set_post_thumbnail($postID, $attachmentId);
+            }
         }
     }
 
@@ -226,6 +248,7 @@ final class Helper
         }
 
         $currentPart = array_shift($parts);
+
         if (\is_array($data)) {
             if (!isset($data[$currentPart])) {
                 // wp_send_json_error(new WP_Error($triggerEntity, __('Index out of bounds or invalid', 'bit-integrations')));
@@ -267,12 +290,33 @@ final class Helper
 
     public static function acfGetFieldGroups($type = [])
     {
-        if (class_exists('ACF')) {
-            return array_filter(acf_get_field_groups(), function ($group) use ($type) {
-                return $group['active'] && isset($group['location'][0][0]['value']) && \is_array($type) && \in_array($group['location'][0][0]['value'], $type);
-            });
-        } else {
+        if (!class_exists('ACF')) {
             return [];
+        }
+
+        return array_filter(acf_get_field_groups(), function ($group) use ($type) {
+            return $group['active'] && isset($group['location'][0][0]['value']) && \is_array($type) && \in_array($group['location'][0][0]['value'], $type);
+        });
+    }
+
+    public static function isPrimaryKeysMatch($recordData, $PrimaryKeys)
+    {
+        foreach ($PrimaryKeys as $primaryKey) {
+            if ($primaryKey->value != Helper::extractValueFromPath($recordData, $primaryKey->key, 'PieForms')) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static function setTestData($optionKey, $formData, $primaryKey, $primaryKeyId)
+    {
+        if (get_option($optionKey) !== false) {
+            update_option($optionKey, [
+                'formData'   => $formData,
+                'primaryKey' => [(object) ['key' => $primaryKey, 'value' => $primaryKeyId]]
+            ]);
         }
     }
 }

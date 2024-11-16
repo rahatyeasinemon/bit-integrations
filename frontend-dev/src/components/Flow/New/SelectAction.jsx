@@ -162,7 +162,9 @@ export default function SelectAction() {
     { type: 'WPForo' },
     { type: 'Dokan' },
     { type: 'JetEngine' },
-    { type: 'GoHighLevel' }
+    { type: 'GoHighLevel' },
+    { type: 'The Events Calendar' },
+    { type: 'License Manager For WooCommerce' }
   ]
 
   const [availableIntegs, setAvailableIntegs] = useState(
