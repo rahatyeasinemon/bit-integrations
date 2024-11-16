@@ -6,10 +6,10 @@
 
 namespace BitCode\FI\Actions\WhatsApp;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -197,7 +197,7 @@ class RecordApiHelper
                 foreach ($component->buttons as $key => $button) {
                     $btnType = strtolower($button->type);
 
-                    if ($btnType === 'url') {
+                    if ($btnType === 'url' || $btnType === 'phone_number') {
                         continue;
                     }
 
