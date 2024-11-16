@@ -67,14 +67,16 @@ export const worksheetChange = (sheetConf, formID, setSheetConf, setIsLoading, s
 }
 
 export const refreshSpreadsheets = (formID, sheetConf, setSheetConf, setIsLoading, setSnackbar) => {
+  const isCustomAuth = !sheetConf.tokenDetails?.selectedAuthType || sheetConf.tokenDetails.selectedAuthType === 'Custom Authorization'
   const refreshModulesRequestParams = {
     formID,
     id: sheetConf.id,
-    clientId: sheetConf.tokenDetails.selectedAuthType === 'Custom Authorization' ? sheetConf.clientId : sheetConf.oneClickAuthCredentials.clientId,
-    clientSecret: sheetConf.tokenDetails.selectedAuthType === 'Custom Authorization' ? sheetConf.clientSecret : sheetConf.oneClickAuthCredentials.clientSecret,
+    clientId: isCustomAuth ? sheetConf.clientId : sheetConf.oneClickAuthCredentials.clientId,
+    clientSecret: isCustomAuth ? sheetConf.clientSecret : sheetConf.oneClickAuthCredentials.clientSecret,
     tokenDetails: sheetConf.tokenDetails,
     ownerEmail: sheetConf.ownerEmail
   }
+
   setIsLoading(true)
   bitsFetch(refreshModulesRequestParams, 'gsheet_refresh_spreadsheets')
     .then((result) => {
@@ -164,16 +166,18 @@ export const refreshWorksheetHeaders = (
   }
 
   setIsLoading(true)
+  const isCustomAuth = !sheetConf.tokenDetails?.selectedAuthType || sheetConf.tokenDetails.selectedAuthType === 'Custom Authorization'
   const refreshWorksheetHeadersRequestParams = {
     formID,
     spreadsheetId,
     worksheetName,
     header,
     headerRow,
-    clientId: sheetConf.tokenDetails.selectedAuthType === 'Custom Authorization' ? sheetConf.clientId : sheetConf.oneClickAuthCredentials.clientId,
-    clientSecret: sheetConf.tokenDetails.selectedAuthType === 'Custom Authorization' ? sheetConf.clientSecret : sheetConf.oneClickAuthCredentials.clientSecret,
+    clientId: isCustomAuth ? sheetConf.clientId : sheetConf.oneClickAuthCredentials.clientId,
+    clientSecret: isCustomAuth ? sheetConf.clientSecret : sheetConf.oneClickAuthCredentials.clientSecret,
     tokenDetails: sheetConf.tokenDetails
   }
+
   bitsFetch(refreshWorksheetHeadersRequestParams, 'gsheet_refresh_worksheet_headers')
     .then((result) => {
       if (result && result.success) {
