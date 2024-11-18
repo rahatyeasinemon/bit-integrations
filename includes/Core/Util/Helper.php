@@ -325,6 +325,10 @@ final class Helper
         $formattedData = $formattedData;
 
         foreach ($data as $key => $value) {
+            if (ctype_upper($key)) {
+                $key = strtolower($key);
+            }
+
             $currentKey = strtolower(preg_replace(['/[^A-Za-z0-9_]/', '/([A-Z])/'], ['', '_$1'], $key));
             $currentPath = $path ? "{$path}_{$currentKey}" : $currentKey;
 
