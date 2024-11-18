@@ -146,6 +146,14 @@ const CustomFormSubmission = () => {
   }, [])
 
   const setTriggerEntityId = (val) => {
+    if (isLoading) {
+      clearInterval(intervalRef.current)
+      controller.abort()
+      removeTestData()
+      setIsLoading(false)
+      return
+    }
+
     setNewFlow((prevFlow) =>
       create(prevFlow, (draftFlow) => {
         draftFlow.triggerDetail.triggered_entity_id = val
@@ -191,9 +199,10 @@ const CustomFormSubmission = () => {
               label: field?.form_name,
               value: field?.triggered_entity_id
             }))}
+            style={{ width: '100%', minWidth: 400, maxWidth: 450 }}
             onChange={(val) => setTriggerEntityId(val)}
             singleSelect
-            style={{ width: '100%', minWidth: 400, maxWidth: 450 }}
+            selectOnClose
           />
         </div>
       )}
