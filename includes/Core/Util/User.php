@@ -4,14 +4,9 @@ namespace BitCode\FI\Core\Util;
 
 use WP_User;
 
-/**
- * bit-integration User helper class
- *
- * @since 1.0.0
- */
-class UserHelper
+class User
 {
-    public static function getUserData($id)
+    public static function get($id)
     {
         if (empty($id)) {
             return [];
