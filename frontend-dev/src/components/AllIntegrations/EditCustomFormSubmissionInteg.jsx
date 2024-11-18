@@ -34,7 +34,7 @@ function EditCustomFormSubmissionInteg({ setSnackbar }) {
     }
     setIsLoading(true)
     intervalRef.current = setInterval(() => {
-      bitsFetch(null, fetchAction, null, fetchMethod, signal)
+      bitsFetch({ triggered_entity_id: flow.triggered_entity_id }, fetchAction, null, fetchMethod, signal)
         .then((resp) => {
           if (resp.success) {
             clearInterval(intervalRef.current)
@@ -50,7 +50,7 @@ function EditCustomFormSubmissionInteg({ setSnackbar }) {
             )
             setFormFields(formData)
             setIsLoading(false)
-            bitsFetch({ reset: true }, removeAction, null, removeMethod)
+            bitsFetch({ reset: true, triggered_entity_id: flow.triggered_entity_id }, removeAction, null, removeMethod)
           }
         })
         .catch((err) => {
@@ -84,7 +84,7 @@ function EditCustomFormSubmissionInteg({ setSnackbar }) {
   }
 
   const removeTestData = () => {
-    bitsFetch(null, removeAction, null, removeMethod).then((resp) => {
+    bitsFetch({ triggered_entity_id: flow.triggered_entity_id }, removeAction, null, removeMethod).then((resp) => {
       intervalRef.current && clearInterval(intervalRef.current)
     })
   }

@@ -319,4 +319,33 @@ final class Helper
             ]);
         }
     }
+
+    public static function prepareFetchFormatFields(array $data, $path = '', $formattedData = [])
+    {
+        $formattedData = $formattedData;
+
+        foreach ($data as $key => $value) {
+            if (ctype_upper($key)) {
+                $key = strtolower($key);
+            }
+
+            $currentKey = strtolower(preg_replace(['/[^A-Za-z0-9_]/', '/([A-Z])/'], ['', '_$1'], $key));
+            $currentPath = $path ? "{$path}_{$currentKey}" : $currentKey;
+
+            if (\is_array($value) || \is_object($value)) {
+                $formattedData = static::prepareFetchFormatFields((array) $value, $currentPath, $formattedData);
+            } else {
+                $label = ucwords(str_replace('_', ' ', $path ? $currentPath : $key)) . ' (' . $value . ')';
+
+                $formattedData[$currentPath] = [
+                    'name'  => $currentPath . '.value',
+                    'type'  => 'text',
+                    'label' => $label,
+                    'value' => $value,
+                ];
+            }
+        }
+
+        return $formattedData;
+    }
 }
