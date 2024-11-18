@@ -11,7 +11,7 @@ import { saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import VoxelIntegLayout from './VoxelIntegLayout'
 import toast from 'react-hot-toast'
-import { checkMappedFields, handleInput } from './VoxelCommonFunctions'
+import { checkMappedFields, handleInput } from './voxelCommonFunctions'
 import { POST_TYPE_TASK_ARRAY, TASK_LIST_VALUES } from './voxelConstants'
 
 function EditVoxel({ allIntegURL }) {
