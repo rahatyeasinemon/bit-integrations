@@ -1,6 +1,6 @@
 import { __ } from '../../../Utils/i18nwrap'
 
-export const TASK_LIST_VALUES = {
+export const TASKS = {
   NEW_POST: 'newPost',
   NEW_COLLECTION_POST: 'newCollectionPost',
   NEW_PROFILE: 'newProfile',
@@ -13,22 +13,22 @@ export const TASK_LIST_VALUES = {
 }
 
 export const TASK_LIST = [
-  { label: __('Create New Post', 'bit-integrations'), value: TASK_LIST_VALUES.NEW_POST },
-  { label: __('Create New Collection Post', 'bit-integrations'), value: TASK_LIST_VALUES.NEW_COLLECTION_POST },
-  { label: __('Create New Profile', 'bit-integrations'), value: TASK_LIST_VALUES.NEW_PROFILE },
-  { label: __('Update Post', 'bit-integrations'), value: TASK_LIST_VALUES.UPDATE_POST },
-  { label: __('Update Collection Post', 'bit-integrations'), value: TASK_LIST_VALUES.UPDATE_COLLECTION_POST },
-  { label: __('Update Profile', 'bit-integrations'), value: TASK_LIST_VALUES.UPDATE_PROFILE },
-  { label: __('Set Post as Verified', 'bit-integrations'), value: TASK_LIST_VALUES.SET_POST_VERIFIED },
-  { label: __('Set Collection Post as Verified', 'bit-integrations'), value: TASK_LIST_VALUES.SET_COLLECTION_POST_VERIFIED },
-  { label: __('Set Profile as Verified', 'bit-integrations'), value: TASK_LIST_VALUES.SET_PROFILE_VERIFIED },
+  { label: __('Create New Post', 'bit-integrations'), value: TASKS.NEW_POST },
+  { label: __('Create New Collection Post', 'bit-integrations'), value: TASKS.NEW_COLLECTION_POST },
+  { label: __('Create New Profile', 'bit-integrations'), value: TASKS.NEW_PROFILE },
+  { label: __('Update Post', 'bit-integrations'), value: TASKS.UPDATE_POST },
+  { label: __('Update Collection Post', 'bit-integrations'), value: TASKS.UPDATE_COLLECTION_POST },
+  { label: __('Update Profile', 'bit-integrations'), value: TASKS.UPDATE_PROFILE },
+  { label: __('Set Post as Verified', 'bit-integrations'), value: TASKS.SET_POST_VERIFIED },
+  { label: __('Set Collection Post as Verified', 'bit-integrations'), value: TASKS.SET_COLLECTION_POST_VERIFIED },
+  { label: __('Set Profile as Verified', 'bit-integrations'), value: TASKS.SET_PROFILE_VERIFIED },
 ]
 
 export const POST_TYPE_TASK_ARRAY = [
-  TASK_LIST_VALUES.NEW_POST,
-  TASK_LIST_VALUES.NEW_COLLECTION_POST,
-  TASK_LIST_VALUES.UPDATE_POST,
-  TASK_LIST_VALUES.UPDATE_COLLECTION_POST
+  TASKS.NEW_POST,
+  TASKS.NEW_COLLECTION_POST,
+  TASKS.UPDATE_POST,
+  TASKS.UPDATE_COLLECTION_POST
 ]
 
 // constants for static post type

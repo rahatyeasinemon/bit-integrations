@@ -12,7 +12,7 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import { checkMappedFields } from './voxelCommonFunctions'
 import VoxelIntegLayout from './VoxelIntegLayout'
 import VoxelAuthorization from './VoxelAuthorization'
-import { POST_TYPE_TASK_ARRAY, TASK_LIST_VALUES } from './voxelConstants'
+import { POST_TYPE_TASK_ARRAY, TASKS } from './voxelConstants'
 
 function Voxel({ formFields, setFlow, flow, allIntegURL }) {
   const navigate = useNavigate()
@@ -73,25 +73,19 @@ function Voxel({ formFields, setFlow, flow, allIntegURL }) {
       return
     }
 
-    if (voxelConf.selectedTask === TASK_LIST_VALUES.NEW_POST || voxelConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST) {
-      if (!voxelConf.selectedPostType) {
-        toast.error(__('Please select a post type!', 'bit-integrations'))
-        return
-      }
+    if ((voxelConf.selectedTask === TASKS.NEW_POST || voxelConf.selectedTask === TASKS.UPDATE_POST) && !voxelConf.selectedPostType) {
+      toast.error(__('Please select a post type!', 'bit-integrations'))
+      return
     }
 
-    if (POST_TYPE_TASK_ARRAY.includes(voxelConf.selectedTask)) {
-      if (!voxelConf.selectedPostStatus) {
-        toast.error(__('Please select a post status!', 'bit-integrations'))
-        return
-      }
+    if (POST_TYPE_TASK_ARRAY.includes(voxelConf.selectedTask) && !voxelConf.selectedPostStatus) {
+      toast.error(__('Please select a post status!', 'bit-integrations'))
+      return
     }
 
-    if (voxelConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST || voxelConf.selectedTask === TASK_LIST_VALUES.UPDATE_COLLECTION_POST) {
-      if (!voxelConf.selectedPost) {
-        toast.error(__('Please select a post!', 'bit-integrations'))
-        return
-      }
+    if ((voxelConf.selectedTask === TASKS.UPDATE_POST || voxelConf.selectedTask === TASKS.UPDATE_COLLECTION_POST) && !voxelConf.selectedPost) {
+      toast.error(__('Please select a post!', 'bit-integrations'))
+      return
     }
 
     if (!checkMappedFields(voxelConf)) {

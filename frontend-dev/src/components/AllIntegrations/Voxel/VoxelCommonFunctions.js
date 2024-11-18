@@ -4,7 +4,7 @@ import toast from 'react-hot-toast'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import { create } from 'mutative'
-import { TASK_LIST_VALUES } from './voxelConstants'
+import { TASKS } from './voxelConstants'
 
 export const handleInput = (e, voxelConf, setVoxelConf) => {
   const newConf = create(voxelConf, (draftConf) => {
@@ -81,7 +81,7 @@ export const getPostFields = (confTmp, setConf, postType, loading, setLoading) =
       setConf(newConf)
       setLoading({ ...loading, postFields: false })
       toast.success(__('Fields fetched successfully', 'bit-integrations'))
-      if (newConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST || newConf.selectedTask === TASK_LIST_VALUES.UPDATE_COLLECTION_POST) {
+      if (newConf.selectedTask === TASKS.UPDATE_POST || newConf.selectedTask === TASKS.UPDATE_COLLECTION_POST) {
         getPosts(newConf, setConf, postType, loading, setLoading)
       }
       return
@@ -109,14 +109,14 @@ export const getPosts = (confTmp, setConf, postType, loading, setLoading) => {
 }
 
 export const voxelStaticFields = (selectedTask) => {
-  if (selectedTask === TASK_LIST_VALUES.SET_POST_VERIFIED || selectedTask === TASK_LIST_VALUES.SET_COLLECTION_POST_VERIFIED) {
+  if (selectedTask === TASKS.SET_POST_VERIFIED || selectedTask === TASKS.SET_COLLECTION_POST_VERIFIED) {
     return {
       staticFields:
         [{ key: 'post_id', label: __('Post ID', 'bit-integrations'), required: true }],
       fieldMap:
         [{ formField: '', voxelField: 'post_id' }]
     }
-  } else if (selectedTask === TASK_LIST_VALUES.SET_PROFILE_VERIFIED) {
+  } else if (selectedTask === TASKS.SET_PROFILE_VERIFIED) {
     return {
       staticFields:
         [{ key: 'profile_id', label: __('Profile ID', 'bit-integrations'), required: true }],

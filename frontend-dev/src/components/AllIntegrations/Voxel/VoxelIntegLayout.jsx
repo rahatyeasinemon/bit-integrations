@@ -6,7 +6,7 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 import VoxelFieldMap from './VoxelFieldMap'
 import { addFieldMap } from './IntegrationHelpers'
 import { getPostFields, getPosts, getPostTypes, voxelStaticFields } from './voxelCommonFunctions'
-import { COLLECTION_POST_TYPE, POST_TYPE_TASK_ARRAY, PROFILE_POST_TYPE, TASK_LIST, TASK_LIST_VALUES } from './voxelConstants'
+import { COLLECTION_POST_TYPE, POST_TYPE_TASK_ARRAY, PROFILE_POST_TYPE, TASK_LIST, TASKS } from './voxelConstants'
 import Loader from '../../Loaders/Loader'
 import Note from '../../Utilities/Note'
 
@@ -24,19 +24,30 @@ export default function VoxelIntegLayout({
     newConf.selectedEvent = ''
 
     if (val) {
-      if (val === TASK_LIST_VALUES.NEW_POST || val === TASK_LIST_VALUES.UPDATE_POST) {
-        getPostTypes(newConf, setVoxelConf, loading, setLoading)
-      } else if (val === TASK_LIST_VALUES.NEW_COLLECTION_POST || val === TASK_LIST_VALUES.UPDATE_COLLECTION_POST) {
-        getPostFields(newConf, setVoxelConf, COLLECTION_POST_TYPE, loading, setLoading)
-      } else if (val === TASK_LIST_VALUES.NEW_PROFILE || val === TASK_LIST_VALUES.UPDATE_PROFILE) {
-        getPostFields(newConf, setVoxelConf, PROFILE_POST_TYPE, loading, setLoading)
-      } else if (
-        val === TASK_LIST_VALUES.SET_POST_VERIFIED ||
-        val === TASK_LIST_VALUES.SET_COLLECTION_POST_VERIFIED ||
-        val === TASK_LIST_VALUES.SET_PROFILE_VERIFIED) {
-        const fieldsAndFieldMap = voxelStaticFields(val)
-        newConf.voxelFields = fieldsAndFieldMap.staticFields
-        newConf.field_map = fieldsAndFieldMap.fieldMap
+      switch (val) {
+        case TASKS.NEW_POST:
+        case TASKS.UPDATE_POST:
+          getPostTypes(newConf, setVoxelConf, loading, setLoading)
+
+          break
+        case TASKS.NEW_COLLECTION_POST:
+        case TASKS.UPDATE_COLLECTION_POST:
+          getPostFields(newConf, setVoxelConf, COLLECTION_POST_TYPE, loading, setLoading)
+
+          break
+        case TASKS.NEW_PROFILE:
+        case TASKS.UPDATE_PROFILE:
+          getPostFields(newConf, setVoxelConf, PROFILE_POST_TYPE, loading, setLoading)
+
+          break
+        case TASKS.SET_POST_VERIFIED:
+        case TASKS.SET_COLLECTION_POST_VERIFIED:
+        case TASKS.SET_PROFILE_VERIFIED:
+          const fieldsAndFieldMap = voxelStaticFields(val)
+          newConf.voxelFields = fieldsAndFieldMap.staticFields
+          newConf.field_map = fieldsAndFieldMap.fieldMap
+
+          break
       }
     } else {
       newConf.selectedPostType = ''
@@ -91,7 +102,7 @@ export default function VoxelIntegLayout({
           />
         </div>
 
-        {(voxelConf.selectedTask === TASK_LIST_VALUES.NEW_POST || voxelConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST) && (
+        {(voxelConf.selectedTask === TASKS.NEW_POST || voxelConf.selectedTask === TASKS.UPDATE_POST) && (
           <div className="flx mt-3 mb-4">
             <b className="wdt-200 d-in-b">{__('Select Post Type:', 'bit-integrations')}</b>
             <MultiSelect
@@ -116,7 +127,7 @@ export default function VoxelIntegLayout({
           </div>
         )}
 
-        {(voxelConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST || voxelConf.selectedTask === TASK_LIST_VALUES.UPDATE_COLLECTION_POST) && (
+        {(voxelConf.selectedTask === TASKS.UPDATE_POST || voxelConf.selectedTask === TASKS.UPDATE_COLLECTION_POST) && (
           <div className="flx mt-3 mb-4">
             <b className="wdt-200 d-in-b">{__('Select Post:', 'bit-integrations')}</b>
             <MultiSelect
@@ -215,7 +226,7 @@ export default function VoxelIntegLayout({
           </div>
         )}
 
-        {(POST_TYPE_TASK_ARRAY.includes(voxelConf.selectedTask) || voxelConf.selectedTask === TASK_LIST_VALUES.NEW_PROFILE || voxelConf.selectedTask === TASK_LIST_VALUES.UPDATE_PROFILE) &&
+        {(POST_TYPE_TASK_ARRAY.includes(voxelConf.selectedTask) || voxelConf.selectedTask === TASKS.NEW_PROFILE || voxelConf.selectedTask === TASKS.UPDATE_PROFILE) &&
           <Note note={note} isInstruction isHeadingNull={false} maxWidth='100%' />}
       </div>
     </>
