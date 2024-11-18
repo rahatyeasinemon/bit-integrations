@@ -1,12 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { __ } from '../../../Utils/i18nwrap'
-import VoxelActions from './VoxelActions'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 
 import VoxelFieldMap from './VoxelFieldMap'
 import { addFieldMap } from './IntegrationHelpers'
-import { getPostFields, getPosts, getPostTypes, voxelStaticFields } from './VoxelCommonFunctions'
+import { getPostFields, getPosts, getPostTypes, voxelStaticFields } from './voxelCommonFunctions'
 import { COLLECTION_POST_TYPE, POST_TYPE_TASK_ARRAY, PROFILE_POST_TYPE, TASK_LIST, TASK_LIST_VALUES } from './voxelConstants'
 import Loader from '../../Loaders/Loader'
 import Note from '../../Utilities/Note'
@@ -216,23 +215,8 @@ export default function VoxelIntegLayout({
           </div>
         )}
 
-        {(POST_TYPE_TASK_ARRAY.includes(voxelConf.selectedTask) || voxelConf.selectedTask === TASK_LIST_VALUES.NEW_PROFILE) &&
+        {(POST_TYPE_TASK_ARRAY.includes(voxelConf.selectedTask) || voxelConf.selectedTask === TASK_LIST_VALUES.NEW_PROFILE || voxelConf.selectedTask === TASK_LIST_VALUES.UPDATE_PROFILE) &&
           <Note note={note} isInstruction isHeadingNull={false} maxWidth='100%' />}
-
-        {/* <div>
-          <br />
-          <br />
-          <div className="mt-4">
-            <b className="wdt-100">{__('Utilities', 'bit-integrations')}</b>
-          </div>
-          <div className="btcd-hr mt-1" />
-          <VoxelActions
-            voxelConf={voxelConf}
-            setVoxelConf={setVoxelConf}
-            loading={loading}
-            setLoading={setLoading}
-          />
-        </div> */}
       </div>
     </>
   )

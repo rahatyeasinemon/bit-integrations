@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
-import { voxelAuthentication } from './VoxelCommonFunctions'
+import { voxelAuthentication } from './voxelCommonFunctions'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
 

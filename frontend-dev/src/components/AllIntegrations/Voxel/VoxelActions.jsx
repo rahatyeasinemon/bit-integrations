@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { TASK_LIST_VALUES } from './VoxelConstants'
 import { $btcbi } from '../../../GlobalStates'
 import { useRecoilValue } from 'recoil'
 

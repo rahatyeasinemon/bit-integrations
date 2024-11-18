@@ -4,7 +4,7 @@ import toast from 'react-hot-toast'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import { create } from 'mutative'
-import { TASK_LIST_VALUES } from './VoxelConstants'
+import { TASK_LIST_VALUES } from './voxelConstants'
 
 export const handleInput = (e, voxelConf, setVoxelConf) => {
   const newConf = create(voxelConf, (draftConf) => {

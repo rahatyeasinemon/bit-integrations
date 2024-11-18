@@ -105,7 +105,7 @@ function EditVoxel({ allIntegURL }) {
       <IntegrationStepThree
         edit
         saveConfig={saveConfig}
-        // disabled={!voxelConf?.selectedLists}
+        disabled={false}
         isLoading={isLoading}
         dataConf={voxelConf}
         setDataConf={setVoxelConf}
