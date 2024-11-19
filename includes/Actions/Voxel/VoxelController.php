@@ -102,16 +102,9 @@ class VoxelController
         $postFields = $postType->get_fields();
 
         if (\is_array($postFields) && !empty($postFields)) {
-            if ($selectedTask === VoxelTasks::NEW_PROFILE) {
-                $fields = VoxelHelper::generateVoxelFields(['user_email' => !$isUpdateTask]);
-                $fieldMap[] = (object) ['formField' => '', 'voxelField' => 'user_email'];
-            } elseif ($selectedTask === VoxelTasks::UPDATE_PROFILE) {
-                $fields = VoxelHelper::generateVoxelFields(['profile_id' => true]);
-                $fieldMap[] = (object) ['formField' => '', 'voxelField' => 'profile_id'];
-            } else {
-                $fields = VoxelHelper::generateVoxelFields(['post_author_email' => !$isUpdateTask]);
-                $fieldMap[] = (object) ['formField' => '', 'voxelField' => 'post_author_email'];
-            }
+            $commonFieldsAndMap = VoxelHelper::getCommonFieldsAndMap($selectedTask, $isUpdateTask);
+            $fields = $commonFieldsAndMap['fields'];
+            $fieldMap = $commonFieldsAndMap['fieldMap'];
 
             foreach ($postFields as $postField) {
                 $fieldType = $postField->get_type();
@@ -125,33 +118,18 @@ class VoxelController
                 switch ($fieldType) {
                     case 'event-date':
                     case 'recurring-date':
-                        $eventFields = VoxelHelper::generateVoxelFields(
-                            ['event_start_date' => false, 'event_end_date' => false, 'event_frequency' => false, 'repeat_every' => false, 'event_until' => false],
-                            $fieldKey,
-                            $postField
-                        );
-
+                        $eventFields = VoxelHelper::getEventFields($fieldKey, $postField);
                         $fields = array_merge($fields, $eventFields);
 
                         break;
                     case 'location':
-                        $locationFields = VoxelHelper::generateVoxelFields(
-                            ['address' => false, 'latitude' => false, 'longitude' => false],
-                            $fieldKey,
-                            $postField
-                        );
-
+                        $locationFields = VoxelHelper::getLocationFields($fieldKey, $postField);
                         $fields = array_merge($fields, $locationFields);
 
                         break;
                     case 'work-hours':
-                        $workOursFields = VoxelHelper::generateVoxelFields(
-                            ['work_days' => false, 'work_hours' => false, 'work_status' => false],
-                            $fieldKey,
-                            $postField
-                        );
-
-                        $fields = array_merge($fields, $workOursFields);
+                        $workHoursFields = VoxelHelper::getWorkHoursFields($fieldKey, $postField);
+                        $fields = array_merge($fields, $workHoursFields);
 
                         break;
                     default:
