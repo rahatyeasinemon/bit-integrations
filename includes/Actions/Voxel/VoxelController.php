@@ -41,16 +41,18 @@ class VoxelController
             foreach ($voxelPostTypes as $key => $voxelPostType) {
                 $postType = get_post_type_object($key);
 
-                if ($postType) {
-                    if (\in_array($postType->name, ['collection', 'profile'], true)) {
-                        continue;
-                    }
-
-                    $postTypeList[] = (object) [
-                        'value' => $postType->name,
-                        'label' => $postType->labels->singular_name,
-                    ];
+                if (!$postType) {
+                    continue;
                 }
+
+                if (\in_array($postType->name, ['collection', 'profile'], true)) {
+                    continue;
+                }
+
+                $postTypeList[] = (object) [
+                    'value' => $postType->name,
+                    'label' => $postType->labels->singular_name,
+                ];
             }
         }
 
@@ -108,28 +110,13 @@ class VoxelController
 
         if (\is_array($postFields) && !empty($postFields)) {
             if ($selectedTask === VoxelTasks::NEW_PROFILE) {
-                $fields[] = [
-                    'key'      => 'user_email',
-                    'label'    => __('User Email', 'bit-integrations'),
-                    'required' => $isUpdateTask ? false : true,
-                ];
-
+                $fields = VoxelHelper::generateVoxelFields(['user_email' => !$isUpdateTask]);
                 $fieldMap[] = (object) ['formField' => '', 'voxelField' => 'user_email'];
             } elseif ($selectedTask === VoxelTasks::UPDATE_PROFILE) {
-                $fields[] = [
-                    'key'      => 'profile_id',
-                    'label'    => __('Profile ID', 'bit-integrations'),
-                    'required' => true,
-                ];
-
+                $fields = VoxelHelper::generateVoxelFields(['profile_id' => true]);
                 $fieldMap[] = (object) ['formField' => '', 'voxelField' => 'profile_id'];
             } else {
-                $fields[] = [
-                    'key'      => 'post_author_email',
-                    'label'    => __('Post Author Email', 'bit-integrations'),
-                    'required' => $isUpdateTask ? false : true,
-                ];
-
+                $fields = VoxelHelper::generateVoxelFields(['post_author_email' => !$isUpdateTask]);
                 $fieldMap[] = (object) ['formField' => '', 'voxelField' => 'post_author_email'];
             }
 
@@ -142,86 +129,50 @@ class VoxelController
 
                 $fieldKey = $postField->get_key();
 
-                if ($fieldType === 'event-date' || $fieldType === 'recurring-date') {
-                    $eventFields = [
-                        [
-                            'key'      => $fieldKey . '_event_start_date',
-                            'label'    => __('Event Start Date', 'bit-integrations') . ' (' . $postField->get_label() . ')',
-                            'required' => false,
-                        ],
-                        [
-                            'key'      => $fieldKey . '_event_end_date',
-                            'label'    => __('Event End Date', 'bit-integrations') . ' (' . $postField->get_label() . ')',
-                            'required' => false,
-                        ],
-                        [
-                            'key'      => $fieldKey . '_event_frequency',
-                            'label'    => __('Event Frequency', 'bit-integrations') . ' (' . $postField->get_label() . ')',
-                            'required' => false,
-                        ],
-                        [
-                            'key'      => $fieldKey . '_repeat_every',
-                            'label'    => __('Event Unit', 'bit-integrations') . ' (' . $postField->get_label() . ')',
-                            'required' => false,
-                        ],
-                        [
-                            'key'      => $fieldKey . '_event_until',
-                            'label'    => __('Event Until', 'bit-integrations') . ' (' . $postField->get_label() . ')',
-                            'required' => false,
-                        ],
-                    ];
+                switch ($fieldType) {
+                    case 'event-date':
+                    case 'recurring-date':
+                        $eventFields = VoxelHelper::generateVoxelFields(
+                            ['event_start_date' => false, 'event_end_date' => false, 'event_frequency' => false, 'repeat_every' => false, 'event_until' => false],
+                            $fieldKey,
+                            $postField
+                        );
 
-                    $fields = array_merge($fields, $eventFields);
-                } elseif ($fieldType === 'location') {
-                    $locationFields = [
-                        [
-                            'key'      => $fieldKey . '_address',
-                            'label'    => __('Address', 'bit-integrations') . ' (' . $postField->get_label() . ')',
-                            'required' => false,
-                        ],
-                        [
-                            'key'      => $fieldKey . '_latitude',
-                            'label'    => __('Latitude', 'bit-integrations') . ' (' . $postField->get_label() . ')',
-                            'required' => false,
-                        ],
-                        [
-                            'key'      => $fieldKey . '_longitude',
-                            'label'    => __('Longitude', 'bit-integrations') . ' (' . $postField->get_label() . ')',
-                            'required' => false,
-                        ],
-                    ];
+                        $fields = array_merge($fields, $eventFields);
 
-                    $fields = array_merge($fields, $locationFields);
-                } elseif ($fieldType === 'work-hours') {
-                    $workOursFields = [
-                        [
-                            'key'      => $fieldKey . '_work_days',
-                            'label'    => __('Work Days', 'bit-integrations') . ' (' . $postField->get_label() . ')',
-                            'required' => false,
-                        ],
-                        [
-                            'key'      => $fieldKey . '_work_hours',
-                            'label'    => __('Work Hours', 'bit-integrations') . ' (' . $postField->get_label() . ')',
-                            'required' => false,
-                        ],
-                        [
-                            'key'      => $fieldKey . '_work_status',
-                            'label'    => __('Work Status', 'bit-integrations') . ' (' . $postField->get_label() . ')',
-                            'required' => false,
-                        ],
-                    ];
+                        break;
+                    case 'location':
+                        $locationFields = VoxelHelper::generateVoxelFields(
+                            ['address' => false, 'latitude' => false, 'longitude' => false],
+                            $fieldKey,
+                            $postField
+                        );
 
-                    $fields = array_merge($fields, $workOursFields);
-                } else {
-                    $fields[] = [
-                        'key'      => $fieldKey,
-                        'label'    => $postField->get_label(),
-                        'required' => $isUpdateTask ? false : $postField->is_required(),
-                    ];
+                        $fields = array_merge($fields, $locationFields);
 
-                    if (!$isUpdateTask && $postField->is_required()) {
-                        $fieldMap[] = (object) ['formField' => '', 'voxelField' => $fieldKey];
-                    }
+                        break;
+                    case 'work-hours':
+                        $workOursFields = VoxelHelper::generateVoxelFields(
+                            ['work_days' => false, 'work_hours' => false, 'work_status' => false],
+                            $fieldKey,
+                            $postField
+                        );
+
+                        $fields = array_merge($fields, $workOursFields);
+
+                        break;
+                    default:
+                        $fields[] = [
+                            'key'      => $fieldKey,
+                            'label'    => $postField->get_label(),
+                            'required' => $isUpdateTask ? false : $postField->is_required(),
+                        ];
+
+                        if (!$isUpdateTask && $postField->is_required()) {
+                            $fieldMap[] = (object) ['formField' => '', 'voxelField' => $fieldKey];
+                        }
+
+                        break;
                 }
             }
         }

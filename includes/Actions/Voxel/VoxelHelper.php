@@ -179,4 +179,33 @@ class VoxelHelper
             }
         }
     }
+
+    /**
+     * @param array      $fields    an array with fields key and required property (key value pair)
+     * @param string     $fieldKey  voxel field key
+     * @param null|mixed $postField
+     *
+     * @return array generated fields
+     */
+    public static function generateVoxelFields(array $fields, string $fieldKey = null, $postField = null)
+    {
+        $generatedFields = [];
+
+        foreach ($fields as $key => $required) {
+            if ($key === 'repeat_every') {
+                $fieldLabel = 'Event Unit';
+            } else {
+                $fieldLabel = ucwords(str_replace('_', ' ', $key));
+            }
+
+            $generatedFields[] = [
+                'key'   => (isset($fieldKey) ? $fieldKey . '_' : '') . $key,
+                'label' => wp_sprintf(__('%s', 'bit-integrations'), $fieldLabel)
+                . (isset($postField) ? ' (' . $postField->get_label() . ')' : ''),
+                'required' => $required,
+            ];
+        }
+
+        return $generatedFields;
+    }
 }
