@@ -2,9 +2,9 @@
 Contributors: bitpressadmin, niloy121,rishadbitcode,fahimsakib,shuvomohajan,tanvirchy,shakhawathosen,khoaiz,mazharul78
 Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
-Tested up to: 6.6.2
+Tested up to: 6.7
 Requires PHP: 7.0
-Stable tag: 2.3.4
+Stable tag: 2.3.5
 License: GPLv2 or later
 
 Automation Plugin for WordPress like Zapier. Integration of 80+ Triggers & 150+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -1014,6 +1014,21 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 2.3.5  =
+_Release Date -19th November 2024_
+
+- **New Trigger**
+ - Asgaros (Pro): Added support for the best forum plugin for WordPress.
+
+- **New Action**
+ - Voxel: Introduced support for building advanced WordPress dynamic sites and directories.
+
+- **Bug Fixes**
+ - Telegram: Resolved the issue where markdown appended incorrectly to form fields.
+ - Telegram: Fixed the UI conflict related to parse mode settings.
+ - Google Sheets: Addressed the issue where custom authentication credentials were missing.
+ - SureCart (Pro): Fixed the blank page issue experienced by some users.
 
 = 2.3.4  =
 _Release Date -12th November 2024_
