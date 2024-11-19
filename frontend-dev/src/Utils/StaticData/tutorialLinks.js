@@ -602,6 +602,10 @@ const tutorialLinks = {
   lmfwc: {
     youTubeLink: '#',
     docLink: '#'
+  },
+  voxel: {
+    youTubeLink: '#',
+    docLink: 'https://bit-integrations.com/wp-docs/actions/voxel-integrations-as-an-action/'
   }
 }
 export default tutorialLinks
