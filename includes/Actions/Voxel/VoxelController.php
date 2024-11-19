@@ -6,6 +6,7 @@
 
 namespace BitCode\FI\Actions\Voxel;
 
+use BitCode\FI\Core\Util\Post;
 use WP_Error;
 
 /**
@@ -67,15 +68,7 @@ class VoxelController
             wp_send_json_error(__('No post type found!', 'bit-integrations'), 400);
         }
 
-        $posts = get_posts(
-            [
-                'post_type'      => $request->postType,
-                'orderby'        => 'title',
-                'order'          => 'ASC',
-                'post_status'    => 'any',
-                'posts_per_page' => -1,
-            ]
-        );
+        $posts = Post::all(['post_type' => $request->postType]);
 
         if (empty($posts) || !$posts) {
             wp_send_json_error(__('No post found!', 'bit-integrations'), 400);
