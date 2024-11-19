@@ -36,27 +36,7 @@ class VoxelHelper
             switch ($fieldType) {
                 case 'event-date':
                 case 'recurring-date':
-                    $eventDateValue = [];
-
-                    if (!empty($finalData[$fieldKey . '_event_start_date'])) {
-                        $eventDateValue['start'] = $finalData[$fieldKey . '_event_start_date'];
-                    }
-
-                    if (!empty($finalData[$fieldKey . '_event_end_date'])) {
-                        $eventDateValue['end'] = $finalData[$fieldKey . '_event_end_date'];
-                    }
-
-                    if (!empty($finalData[$fieldKey . '_event_frequency'])) {
-                        $eventDateValue['frequency'] = $finalData[$fieldKey . '_event_frequency'];
-                    }
-
-                    if (!empty($finalData[$fieldKey . '_repeat_every'])) {
-                        $eventDateValue['unit'] = $finalData[$fieldKey . '_repeat_every'];
-                    }
-
-                    if (!empty($finalData[$fieldKey . '_event_until'])) {
-                        $eventDateValue['until'] = $finalData[$fieldKey . '_event_until'];
-                    }
+                    $eventDateValue = VoxelHelper::getEventFieldData($fieldKey, $finalData);
 
                     if (!empty($eventDateValue)) {
                         $field->update([$eventDateValue]);
@@ -64,17 +44,7 @@ class VoxelHelper
 
                     break;
                 case 'location':
-                    $locationValue = [];
-
-                    if (!empty($finalData[$fieldKey . '_address'])) {
-                        $locationValue['address'] = $finalData[$fieldKey . '_address'];
-                    }
-                    if (!empty($finalData[$fieldKey . '_latitude'])) {
-                        $locationValue['latitude'] = $finalData[$fieldKey . '_latitude'];
-                    }
-                    if (!empty($finalData[$fieldKey . '_longitude'])) {
-                        $locationValue['longitude'] = $finalData[$fieldKey . '_longitude'];
-                    }
+                    $locationValue = VoxelHelper::getLocationFieldData($fieldKey, $finalData);
 
                     if (!empty($locationValue)) {
                         $field->update($locationValue);
@@ -82,31 +52,7 @@ class VoxelHelper
 
                     break;
                 case 'work-hours':
-                    $finalWorkHours = [];
-
-                    if (!empty($finalData[$fieldKey . '_work_days'])) {
-                        $days = preg_split('/, ?/', $finalData[$fieldKey . '_work_days']);
-                        $finalWorkHours['days'] = $days;
-                    }
-
-                    if (!empty($finalData[$fieldKey . '_work_hours'])) {
-                        $multiHours = preg_split('/, ?/', $finalData[$fieldKey . '_work_hours']);
-                        $formattedHours = [];
-
-                        foreach ($multiHours as $hours) {
-                            $splitHours = preg_split('/ ?- ?/', $hours);
-                            $formattedHours[] = [
-                                'from' => isset($splitHours[0]) ? $splitHours[0] : '',
-                                'to'   => isset($splitHours[1]) ? $splitHours[1] : '',
-                            ];
-                        }
-
-                        $finalWorkHours['hours'] = $formattedHours;
-                    }
-
-                    if (!empty($finalData[$fieldKey . '_work_status'])) {
-                        $finalWorkHours['status'] = $finalData[$fieldKey . '_work_status'];
-                    }
+                    $finalWorkHours = VoxelHelper::getWorkHoursFieldData($fieldKey, $finalData);
 
                     if (!empty($finalWorkHours)) {
                         $field->update([$finalWorkHours]);
@@ -294,5 +240,80 @@ class VoxelHelper
         }
 
         return ['fields' => $fields, 'fieldMap' => $fieldMap];
+    }
+
+    private static function getEventFieldData(string $fieldKey, array $finalData)
+    {
+        $fields = [
+            'event_start_date' => 'start',
+            'event_end_date'   => 'end',
+            'event_frequency'  => 'frequency',
+            'repeat_every'     => 'unit',
+            'event_until'      => 'until'
+        ];
+
+        return VoxelHelper::getFieldData($fields, $fieldKey, $finalData);
+    }
+
+    private static function getLocationFieldData(string $fieldKey, array $finalData)
+    {
+        $fields = [
+            'address'   => 'address',
+            'latitude'  => 'latitude',
+            'longitude' => 'longitude',
+        ];
+
+        return VoxelHelper::getFieldData($fields, $fieldKey, $finalData);
+    }
+
+    private static function getWorkHoursFieldData(string $fieldKey, array $finalData)
+    {
+        $finalWorkHours = [];
+
+        if (!empty($finalData[$fieldKey . '_work_days'])) {
+            $days = preg_split('/, ?/', $finalData[$fieldKey . '_work_days']);
+            $finalWorkHours['days'] = $days;
+        }
+
+        if (!empty($finalData[$fieldKey . '_work_hours'])) {
+            $multiHours = preg_split('/, ?/', $finalData[$fieldKey . '_work_hours']);
+            $formattedHours = [];
+
+            foreach ($multiHours as $hours) {
+                $splitHours = preg_split('/ ?- ?/', $hours);
+                $formattedHours[] = [
+                    'from' => isset($splitHours[0]) ? $splitHours[0] : '',
+                    'to'   => isset($splitHours[1]) ? $splitHours[1] : '',
+                ];
+            }
+
+            $finalWorkHours['hours'] = $formattedHours;
+        }
+
+        if (!empty($finalData[$fieldKey . '_work_status'])) {
+            $finalWorkHours['status'] = $finalData[$fieldKey . '_work_status'];
+        }
+
+        return $finalWorkHours;
+    }
+
+    /**
+     * @param array  $fileds    receives field key and field data key (key value pair)
+     * @param string $fieldKey
+     * @param array  $finalData
+     *
+     * @return array
+     */
+    private static function getFieldData(array $fields, string $fieldKey, array $finalData)
+    {
+        $data = [];
+
+        foreach ($fields as $key => $value) {
+            if (!empty($finalData[$fieldKey . '_' . $key])) {
+                $data[$value] = $finalData[$fieldKey . '_' . $key];
+            }
+        }
+
+        return $data;
     }
 }
