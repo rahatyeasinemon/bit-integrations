@@ -248,6 +248,7 @@ final class Helper
         }
 
         $currentPart = array_shift($parts);
+
         if (\is_array($data)) {
             if (!isset($data[$currentPart])) {
                 // wp_send_json_error(new WP_Error($triggerEntity, __('Index out of bounds or invalid', 'bit-integrations')));
@@ -296,5 +297,55 @@ final class Helper
         return array_filter(acf_get_field_groups(), function ($group) use ($type) {
             return $group['active'] && isset($group['location'][0][0]['value']) && \is_array($type) && \in_array($group['location'][0][0]['value'], $type);
         });
+    }
+
+    public static function isPrimaryKeysMatch($recordData, $PrimaryKeys)
+    {
+        foreach ($PrimaryKeys as $primaryKey) {
+            if ($primaryKey->value != Helper::extractValueFromPath($recordData, $primaryKey->key, 'PieForms')) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static function setTestData($optionKey, $formData, $primaryKey, $primaryKeyId)
+    {
+        if (get_option($optionKey) !== false) {
+            update_option($optionKey, [
+                'formData'   => $formData,
+                'primaryKey' => [(object) ['key' => $primaryKey, 'value' => $primaryKeyId]]
+            ]);
+        }
+    }
+
+    public static function prepareFetchFormatFields(array $data, $path = '', $formattedData = [])
+    {
+        $formattedData = $formattedData;
+
+        foreach ($data as $key => $value) {
+            if (ctype_upper($key)) {
+                $key = strtolower($key);
+            }
+
+            $currentKey = strtolower(preg_replace(['/[^A-Za-z0-9_]/', '/([A-Z])/'], ['', '_$1'], $key));
+            $currentPath = $path ? "{$path}_{$currentKey}" : $currentKey;
+
+            if (\is_array($value) || \is_object($value)) {
+                $formattedData = static::prepareFetchFormatFields((array) $value, $currentPath, $formattedData);
+            } else {
+                $label = ucwords(str_replace('_', ' ', $path ? $currentPath : $key)) . ' (' . $value . ')';
+
+                $formattedData[$currentPath] = [
+                    'name'  => $currentPath . '.value',
+                    'type'  => 'text',
+                    'label' => $label,
+                    'value' => $value,
+                ];
+            }
+        }
+
+        return $formattedData;
     }
 }

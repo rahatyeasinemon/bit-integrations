@@ -4,7 +4,7 @@ Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
 Tested up to: 6.6.2
 Requires PHP: 7.0
-Stable tag: 2.3.3
+Stable tag: 2.3.4
 License: GPLv2 or later
 
 Automation Plugin for WordPress like Zapier. Integration of 80+ Triggers & 150+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -98,6 +98,7 @@ https://youtu.be/eFuficjF_F4
 * [**Popup Maker**](https://wordpress.org/plugins/popup-maker/)
 * [**Piotnet Forms**](https://wordpress.org/plugins/piotnetforms/)
 * [**Paid Memberships Pro**](https://wordpress.org/plugins/paid-memberships-pro/)
+* [**Pie Forms**](https://wordpress.org/plugins/pie-forms-for-wp/)
 * [**Piotnet Addons For Elementor**](https://wordpress.org/plugins/piotnet-addons-for-elementor/)
 * [**Restrict Content**](https://wordpress.org/plugins/restrict-content/)
 * [**RafflePress**](https://wordpress.org/plugins/rafflepress/)
@@ -1013,6 +1014,47 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 2.3.4  =
+_Release Date -12th November 2024_
+
+- **New Trigger**
+ - Pie Forms (Pro): Drag & Drop Builder, Human Face Detector, Pre-built Templates, Spam Protection, User Email Notifications, and more!
+
+- **New Features**
+ - Kit (ex ConvertKit): New Module added:
+    "Update Subscriber" - Easily update subscriber details.
+    "Add Tags to a Subscriber" - Assign specific tags to subscribers.
+    "Remove Tags from a Subscriber" - Remove tags from selected subscribers.
+
+- **New Improvement**
+ - Brevo (ex Sendinblue): Enhanced optimization for smoother integration execution.
+ - Kit (ex ConvertKit): Improved functionality for adding and updating subscribers.
+ - Voxel: Added new tasks to enhance the integrations:
+ 
+      Membership (Pro):
+        - Membership Plan Activated
+        - Membership Plan Switched
+        - Membership Plan Canceled
+
+      Comments (Pro):
+        - New Comment
+        - New Reply to Comment
+
+      Profile (Pro):
+        - New Wall Post on Profile
+        - Wall Post by User
+
+      Orders (Pro):
+        - New Order Placed
+        - Order Approved by Vendor
+        - Order Declined by Vendor
+        - Order Canceled by Customer
+        - Orders Claim Listing
+        
+      Promotions(pro):
+        - Promotion Activated
+        - Promotion Canceled
 
 = 2.3.3  =
 _Release Date -05th November 2024_

@@ -83,20 +83,20 @@ const CustomFormSubmission = () => {
       })
     )
     intervalRef.current = setInterval(() => {
-      bitsFetch(null, fetchAction, null, fetchMethod, signal)
+      bitsFetch({ triggered_entity_id: newFlow.triggerDetail.triggered_entity_id }, fetchAction, null, fetchMethod, signal)
         .then((resp) => {
           if (resp.success) {
             clearInterval(intervalRef.current)
             controller.abort()
             setNewFlow((prevFlow) =>
               create(prevFlow, (draftFlow) => {
-                draftFlow.triggerDetail.data = resp.data?.formData
+                draftFlow.triggerDetail.data = Array.isArray(resp.data?.formData) ? resp.data?.formData : Object.values(resp.data?.formData)
               })
             )
             setPrimaryKey(resp.data?.primaryKey || undefined)
             setIsLoading(false)
             setShowResponse(true)
-            bitsFetch(null, removeAction, null, removeMethod)
+            bitsFetch({ triggered_entity_id: newFlow.triggerDetail.triggered_entity_id }, removeAction, null, removeMethod)
           }
         })
         .catch((err) => {
@@ -132,7 +132,7 @@ const CustomFormSubmission = () => {
   }
 
   const removeTestData = () => {
-    bitsFetch(null, removeAction, null, removeMethod).then((resp) => {
+    bitsFetch({ triggered_entity_id: newFlow.triggerDetail.triggered_entity_id }, removeAction, null, removeMethod).then((resp) => {
       intervalRef.current && clearInterval(intervalRef.current)
     })
   }
@@ -146,6 +146,14 @@ const CustomFormSubmission = () => {
   }, [])
 
   const setTriggerEntityId = (val) => {
+    if (isLoading) {
+      clearInterval(intervalRef.current)
+      controller.abort()
+      removeTestData()
+      setIsLoading(false)
+      return
+    }
+
     setNewFlow((prevFlow) =>
       create(prevFlow, (draftFlow) => {
         draftFlow.triggerDetail.triggered_entity_id = val
@@ -181,7 +189,7 @@ const CustomFormSubmission = () => {
     </span>
   ) : (
     <div className="trigger-custom-width">
-      {newFlow?.triggerDetail?.multi_form && (
+      {newFlow?.triggerDetail?.multi_form && newFlow?.triggerDetail?.multi_form.length > 0 && (
         <div className="w-8 m-a">
           <h4>{__('Select a Form/Task Name', 'bit-integrations')}</h4>
           <MultiSelect
@@ -191,9 +199,10 @@ const CustomFormSubmission = () => {
               label: field?.form_name,
               value: field?.triggered_entity_id
             }))}
+            style={{ width: '100%', minWidth: 400, maxWidth: 450 }}
             onChange={(val) => setTriggerEntityId(val)}
             singleSelect
-            style={{ width: '100%', minWidth: 400, maxWidth: 450 }}
+            selectOnClose
           />
         </div>
       )}
