@@ -85,9 +85,7 @@ class VoxelHelper
                 case 'post-relation':
                     if (!empty($finalData[$fieldKey])) {
                         $value = array_map(
-                            function ($postRelationId) {
-                                return (int) $postRelationId;
-                            },
+                            'intval',
                             explode(',', $finalData[$fieldKey])
                         );
 
@@ -129,74 +127,73 @@ class VoxelHelper
     public static function getEventFields($fieldKey, $postField)
     {
         return [
-            [
-                'key'      => $fieldKey . '_event_start_date',
-                'label'    => wp_sprintf(__('Event Start Date (%s)', 'bit-integrations'), $postField->get_label()),
-                'required' => false,
-            ],
-            [
-                'key'      => $fieldKey . '_event_end_date',
-                'label'    => wp_sprintf(__('Event End Date (%s)', 'bit-integrations'), $postField->get_label()),
-                'required' => false,
-            ],
-            [
-                'key'      => $fieldKey . '_event_frequency',
-                'label'    => wp_sprintf(__('Event Frequency (%s)', 'bit-integrations'), $postField->get_label()),
-                'required' => false,
-            ],
-            [
-                'key'      => $fieldKey . '_repeat_every',
-                'label'    => wp_sprintf(__('Event unit (%s)', 'bit-integrations'), $postField->get_label()),
-                'required' => false,
-            ],
-            [
-                'key'      => $fieldKey . '_event_until',
-                'label'    => wp_sprintf(__('Event Until (%s)', 'bit-integrations'), $postField->get_label()),
-                'required' => false,
-            ],
+            VoxelHelper::generateFields(
+                $fieldKey . '_event_start_date',
+                wp_sprintf(__('Event Start Date (%s)', 'bit-integrations'), $postField->get_label()),
+                false
+            ),
+            VoxelHelper::generateFields(
+                $fieldKey . '_event_end_date',
+                wp_sprintf(__('Event End Date (%s)', 'bit-integrations'), $postField->get_label()),
+                false
+            ),
+            VoxelHelper::generateFields(
+                $fieldKey . '_event_frequency',
+                wp_sprintf(__('Event Frequency (%s)', 'bit-integrations'), $postField->get_label()),
+                false
+            ),
+            VoxelHelper::generateFields(
+                $fieldKey . '_repeat_every',
+                wp_sprintf(__('Event unit (%s)', 'bit-integrations'), $postField->get_label()),
+                false
+            ),
+            VoxelHelper::generateFields(
+                $fieldKey . '_event_until',
+                wp_sprintf(__('Event Until (%s)', 'bit-integrations'), $postField->get_label()),
+                false
+            )
         ];
     }
 
     public static function getLocationFields($fieldKey, $postField)
     {
         return [
-            [
-                'key'      => $fieldKey . '_address',
-                'label'    => __('Address', 'bit-integrations') . ' (' . $postField->get_label() . ')',
-                'label'    => wp_sprintf(__('Address (%s)', 'bit-integrations'), $postField->get_label()),
-                'required' => false,
-            ],
-            [
-                'key'      => $fieldKey . '_latitude',
-                'label'    => wp_sprintf(__('Latitude (%s)', 'bit-integrations'), $postField->get_label()),
-                'required' => false,
-            ],
-            [
-                'key'      => $fieldKey . '_longitude',
-                'label'    => wp_sprintf(__('Longitude (%s)', 'bit-integrations'), $postField->get_label()),
-                'required' => false,
-            ],
+            VoxelHelper::generateFields(
+                $fieldKey . '_address',
+                wp_sprintf(__('Address (%s)', 'bit-integrations'), $postField->get_label()),
+                false
+            ),
+            VoxelHelper::generateFields(
+                $fieldKey . '_latitude',
+                wp_sprintf(__('Latitude (%s)', 'bit-integrations'), $postField->get_label()),
+                false
+            ),
+            VoxelHelper::generateFields(
+                $fieldKey . '_longitude',
+                wp_sprintf(__('Longitude (%s)', 'bit-integrations'), $postField->get_label()),
+                false
+            )
         ];
     }
 
     public static function getWorkHoursFields($fieldKey, $postField)
     {
         return [
-            [
-                'key'      => $fieldKey . '_work_days',
-                'label'    => wp_sprintf(__('Work Days (%s)', 'bit-integrations'), $postField->get_label()),
-                'required' => false,
-            ],
-            [
-                'key'      => $fieldKey . '_work_hours',
-                'label'    => wp_sprintf(__('Work Hours (%s)', 'bit-integrations'), $postField->get_label()),
-                'required' => false,
-            ],
-            [
-                'key'      => $fieldKey . '_work_status',
-                'label'    => wp_sprintf(__('Work Status (%s)', 'bit-integrations'), $postField->get_label()),
-                'required' => false,
-            ],
+            VoxelHelper::generateFields(
+                $fieldKey . '_work_days',
+                wp_sprintf(__('Work Days (%s)', 'bit-integrations'), $postField->get_label()),
+                false
+            ),
+            VoxelHelper::generateFields(
+                $fieldKey . '_work_hours',
+                wp_sprintf(__('Work Hours (%s)', 'bit-integrations'), $postField->get_label()),
+                false
+            ),
+            VoxelHelper::generateFields(
+                $fieldKey . '_work_status',
+                wp_sprintf(__('Work Status (%s)', 'bit-integrations'), $postField->get_label()),
+                false
+            )
         ];
     }
 
@@ -206,40 +203,49 @@ class VoxelHelper
 
         switch ($selectedTask) {
             case VoxelTasks::NEW_PROFILE:
-                $fields[] = [
-                    'key'      => 'user_email',
-                    'label'    => __('User Email', 'bit-integrations'),
-                    'required' => !$isUpdateTask,
-                ];
+                $fields[] = VoxelHelper::generateFields(
+                    'user_email',
+                    __('User Email', 'bit-integrations'),
+                    !$isUpdateTask
+                );
 
                 $fieldMap[] = (object) ['formField' => '', 'voxelField' => 'user_email'];
 
                 break;
 
             case VoxelTasks::UPDATE_PROFILE:
-                $fields[] = [
-                    'key'      => 'profile_id',
-                    'label'    => __('Profile ID', 'bit-integrations'),
-                    'required' => true,
-                ];
+                $fields[] = VoxelHelper::generateFields(
+                    'profile_id',
+                    __('Profile ID', 'bit-integrations'),
+                    true
+                );
 
                 $fieldMap[] = (object) ['formField' => '', 'voxelField' => 'profile_id'];
 
                 break;
 
             default:
-                $fields[] = [
-                    'key'      => 'post_author_email',
-                    'label'    => __('Post Author Email', 'bit-integrations'),
-                    'required' => !$isUpdateTask,
-                ];
+                $fields[] = VoxelHelper::generateFields(
+                    'post_author_email',
+                    __('Post Author Email', 'bit-integrations'),
+                    !$isUpdateTask
+                );
 
                 $fieldMap[] = (object) ['formField' => '', 'voxelField' => 'post_author_email'];
 
                 break;
         }
 
-        return ['fields' => $fields, 'fieldMap' => $fieldMap];
+        return [$fields, $fieldMap];
+    }
+
+    public static function generateFields($fieldKey, $fieldLabel, $required)
+    {
+        return [
+            'key'      => $fieldKey,
+            'label'    => $fieldLabel,
+            'required' => $required
+        ];
     }
 
     private static function getEventFieldData(string $fieldKey, array $finalData)
@@ -270,11 +276,13 @@ class VoxelHelper
     {
         $finalWorkHours = [];
 
+        // receive work days as string e.g. sat, sun, mon; and convert it to array
         if (!empty($finalData[$fieldKey . '_work_days'])) {
             $days = preg_split('/, ?/', $finalData[$fieldKey . '_work_days']);
             $finalWorkHours['days'] = $days;
         }
 
+        // receive work hours as string e.g. 09:00-12:00 or 09:00-11:00, 12:00-14:00; and convert it to array (with multi hours also)
         if (!empty($finalData[$fieldKey . '_work_hours'])) {
             $multiHours = preg_split('/, ?/', $finalData[$fieldKey . '_work_hours']);
             $formattedHours = [];

@@ -102,9 +102,7 @@ class VoxelController
         $postFields = $postType->get_fields();
 
         if (\is_array($postFields) && !empty($postFields)) {
-            $commonFieldsAndMap = VoxelHelper::getCommonFieldsAndMap($selectedTask, $isUpdateTask);
-            $fields = $commonFieldsAndMap['fields'];
-            $fieldMap = $commonFieldsAndMap['fieldMap'];
+            [$fields, $fieldMap] = VoxelHelper::getCommonFieldsAndMap($selectedTask, $isUpdateTask);
 
             foreach ($postFields as $postField) {
                 $fieldType = $postField->get_type();
@@ -133,11 +131,12 @@ class VoxelController
 
                         break;
                     default:
-                        $fields[] = [
-                            'key'      => $fieldKey,
-                            'label'    => $postField->get_label(),
-                            'required' => $isUpdateTask ? false : $postField->is_required(),
-                        ];
+                        $required = $isUpdateTask ? false : $postField->is_required();
+                        $fields[] = VoxelHelper::generateFields(
+                            $fieldKey,
+                            $postField->get_label(),
+                            $required
+                        );
 
                         if (!$isUpdateTask && $postField->is_required()) {
                             $fieldMap[] = (object) ['formField' => '', 'voxelField' => $fieldKey];
