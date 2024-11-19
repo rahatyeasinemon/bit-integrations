@@ -42,14 +42,14 @@ export default function ChangelogToggle() {
       label: __('New Features', 'bit-integrations'),
       headClass: 'new-feature',
       itemClass: 'feature-list',
-      items: ['Kit (ex ConvertKit): New Module added']
+      items: ['Kit (ex ConvertKit): New Module added', 'Voxel: Added new tasks to enhance the integrations']
     },
     {
       label: __('New Improvements', 'bit-integrations'),
       headClass: 'new-improvement',
       itemClass: 'feature-list',
       items: [
-        'Brevo (ex Sendinblue): Enhanced optimization for smoother integration execution.', 'Kit (ex ConvertKit): Improved functionality for adding and updating subscribers.', 'Voxel: Added new tasks to enhance the integrations'
+        'Brevo (ex Sendinblue): Enhanced optimization for smoother integration execution.', 'Kit (ex ConvertKit): Improved functionality for adding and updating subscribers.'
       ]
     }
   ]

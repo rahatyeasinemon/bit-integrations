@@ -1025,36 +1025,37 @@ _Release Date -12th November 2024_
  - Kit (ex ConvertKit): New Module added:
     "Update Subscriber" - Easily update subscriber details.
     "Add Tags to a Subscriber" - Assign specific tags to subscribers.
-    "Remove Tags from a Subscriber" - Remove tags from selected subscribers.
+    "Remove Tags from a Subscriber" - Remove tags from selected subscribers. 
+  - Voxel: Added new tasks to enhance the integrations:
+
+    Membership (Pro):
+      - Membership Plan Activated
+      - Membership Plan Switched
+      - Membership Plan Canceled
+
+    Comments (Pro):
+      - New Comment
+      - New Reply to Comment
+
+    Profile (Pro):
+      - New Wall Post on Profile
+      - Wall Post by User
+
+    Orders (Pro):
+      - New Order Placed
+      - Order Approved by Vendor
+      - Order Declined by Vendor
+      - Order Canceled by Customer
+      - Orders Claim Listing
+      
+    Promotions(pro):
+      - Promotion Activated
+      - Promotion Canceled
+
 
 - **New Improvement**
  - Brevo (ex Sendinblue): Enhanced optimization for smoother integration execution.
  - Kit (ex ConvertKit): Improved functionality for adding and updating subscribers.
- - Voxel: Added new tasks to enhance the integrations:
- 
-      Membership (Pro):
-        - Membership Plan Activated
-        - Membership Plan Switched
-        - Membership Plan Canceled
-
-      Comments (Pro):
-        - New Comment
-        - New Reply to Comment
-
-      Profile (Pro):
-        - New Wall Post on Profile
-        - Wall Post by User
-
-      Orders (Pro):
-        - New Order Placed
-        - Order Approved by Vendor
-        - Order Declined by Vendor
-        - Order Canceled by Customer
-        - Orders Claim Listing
-        
-      Promotions(pro):
-        - Promotion Activated
-        - Promotion Canceled
 
 = 2.3.3  =
 _Release Date -05th November 2024_
