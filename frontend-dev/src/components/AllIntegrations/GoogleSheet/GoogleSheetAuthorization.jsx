@@ -82,17 +82,14 @@ export default function GoogleSheetAuthorization({
 
   useEffect(() => {
 
-    if (step === 1) {
+    if (step === 1 && isEdit) {
 
-      if (isEdit) {
+      const authIdExists = authData.find(auth => auth.id === sheetConf.authId);
 
-        const authIdExists = authData.find(auth => auth.id === sheetConf.authId);
-
-        if (sheetConf.authId && authIdExists) {
-          setSelectedUserId(sheetConf.authId)
-        } else if (authIdExists === false) {
-          setSelectedUserId(null)
-        }
+      if (sheetConf.authId && authIdExists) {
+        setSelectedUserId(sheetConf.authId)
+      } else if (authIdExists === false) {
+        setSelectedUserId(null)
       }
     }
   }, [authData])
