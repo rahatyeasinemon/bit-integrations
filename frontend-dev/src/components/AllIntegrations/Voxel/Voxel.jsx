@@ -9,10 +9,10 @@ import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { checkMappedFields } from './voxelCommonFunctions'
+import { checkMappedFields } from './VoxelCommonFunctions'
 import VoxelIntegLayout from './VoxelIntegLayout'
 import VoxelAuthorization from './VoxelAuthorization'
-import { POST_TYPE_TASK_ARRAY, TASKS } from './voxelConstants'
+import { POST_TYPE_TASK_ARRAY, TASKS } from './VoxelConstants'
 
 function Voxel({ formFields, setFlow, flow, allIntegURL }) {
   const navigate = useNavigate()

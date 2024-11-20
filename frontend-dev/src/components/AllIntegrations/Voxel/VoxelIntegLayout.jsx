@@ -5,8 +5,8 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 
 import VoxelFieldMap from './VoxelFieldMap'
 import { addFieldMap } from './IntegrationHelpers'
-import { getPostFields, getPosts, getPostTypes, voxelStaticFields } from './voxelCommonFunctions'
-import { COLLECTION_POST_TYPE, POST_TYPE_TASK_ARRAY, PROFILE_POST_TYPE, TASK_LIST, TASKS } from './voxelConstants'
+import { getPostFields, getPosts, getPostTypes, voxelStaticFields } from './VoxelCommonFunctions'
+import { COLLECTION_POST_TYPE, POST_TYPE_TASK_ARRAY, PROFILE_POST_TYPE, TASK_LIST, TASKS } from './VoxelConstants'
 import Loader from '../../Loaders/Loader'
 import Note from '../../Utilities/Note'
 
