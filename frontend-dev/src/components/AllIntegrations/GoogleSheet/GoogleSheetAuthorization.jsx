@@ -85,17 +85,10 @@ export default function GoogleSheetAuthorization({
       if (isEdit) {
         const authIdExists = authData.find(auth => auth.id === sheetConf.authId);
 
-        if (sheetConf.tokenDetails.selectedAuthType === 'One Click Authorization') {
-
-          if (sheetConf.authId && authIdExists) {
-            setSelectedUserId(sheetConf.authId)
-          } else if (authIdExists === false) {
-            setSelectedUserId(null)
-          }
-        } else if (sheetConf.tokenDetails.selectedAuthType === 'Custom Authorization' && !authIdExists) {
-          setSelectedUserId(null)
-        } else if (authIdExists) {
+        if (sheetConf.authId && authIdExists) {
           setSelectedUserId(sheetConf.authId)
+        } else if (authIdExists === false) {
+          setSelectedUserId(null)
         }
       }
     }
@@ -125,11 +118,13 @@ export default function GoogleSheetAuthorization({
 
   const nextPage = () => {
     const selectedAuth = authData.find((item) => item.id === selectedUserId)
+    console.log('sheetConf1', sheetConf)
     setSheetConf((prevConf) => ({
       ...prevConf,
       tokenDetails: selectedAuth ? selectedAuth.tokenDetails : '',
       authId: selectedAuth ? selectedAuth.id : '',
     }))
+    console.log('sheetConf2', sheetConf)
     setTimeout(() => {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
