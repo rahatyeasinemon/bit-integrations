@@ -39,7 +39,8 @@ function EditGoogleSheet({ allIntegURL }) {
         isEdit={true}
       />
     )
-  } else {
+  }
+  if (step == 2) {
     return (
       <div style={{ width: 900 }}>
         <SnackMsg snack={snack} setSnackbar={setSnackbar} />
