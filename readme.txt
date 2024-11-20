@@ -7,11 +7,11 @@ Requires PHP: 7.0
 Stable tag: 2.3.5
 License: GPLv2 or later
 
-Automation Plugin for WordPress like Zapier. Integration of 80+ Triggers & 150+ Actions.The #1 highest no-code platform Automator plugin in WordPress
+Automation Plugin for WordPress. Integration of 80+ Triggers & 150+ Actions.The #1 highest no-code platform Automator plugin in WordPress
 
 == Description ==
 
-<strong> Best Zapier Alternative Automation Plugin for WordPress. Automate 240+ Individual Platforms.</strong>
+<strong> Best Automation Plugin for WordPress. Automate 240+ Individual Platforms.</strong>
 
 Automate your WordPress workflow with **Bit Integration**: the all-in-one plugin for sending data authomatically to WooCommerce, form builders, CRM, LMS, bookings, spreadsheets, [**webhooks**](https://webhook.is/difference-between-webhook-and-api), social media, email marketing and automation platforms like Zapier and others. No technical knowledge needed. Automate tasks across 240+ platforms effortlessly.
 
@@ -1018,7 +1018,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 == Changelog ==
 
 = 2.3.5  =
-_Release Date -19th November 2024_
+_Release Date -20th November 2024_
 
 - **New Trigger**
  - Asgaros (Pro): Added support for the best forum plugin for WordPress.
