@@ -39,14 +39,16 @@ function EditCustomFormSubmissionInteg({ setSnackbar }) {
           if (resp.success) {
             clearInterval(intervalRef.current)
             controller.abort()
+            const formData = Array.isArray(resp.data?.formData) ? resp.data?.formData : Object.values(resp.data?.formData)
+
             setFlow((prevFlow) =>
               create(prevFlow, (draftFlow) => {
-                draftFlow.flow_details.fields = resp.data?.formData
+                draftFlow.flow_details.fields = formData
                 draftFlow.flow_details.primaryKey = resp.data?.primaryKey
                 draftFlow.flow_details['trigger_type'] = draftFlow.flow_details?.trigger_type || 'custom_form_submission'
               })
             )
-            setFormFields(resp.data?.formData)
+            setFormFields(formData)
             setIsLoading(false)
             bitsFetch({ reset: true }, removeAction, null, removeMethod)
           }
@@ -116,7 +118,7 @@ function EditCustomFormSubmissionInteg({ setSnackbar }) {
 
   return (
     <div>
-      {flow?.flow_details?.multi_form && (
+      {flow?.flow_details?.multi_form && flow?.flow_details?.multi_form?.length > 0 && (
         <div className="flx">
           <b className="wdt-200 d-in-b">{__('Select a Form/Task Name:', 'bit-integrations')}</b>
           <div className="w-5 flx flx-between">

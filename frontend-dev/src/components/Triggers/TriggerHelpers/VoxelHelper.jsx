@@ -30,31 +30,33 @@ const VoxelHelper = ({ flow, setFlowData, edit = false }) => {
         id === 'voxel-8' ||
         id === 'voxel-9' ||
         id === 'voxel-10' ||
-        id === 'voxel-11') && (
-        <>
-          <div className={edit ? 'flx mt-3' : ''}>
-            <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>
-              {__('Select Post Type:', 'bit-integrations')}
-            </b>
-            <MultiSelect
-              className="msl-wrp-options"
-              defaultValue={triggerData?.selectedPostType}
-              options={triggerData?.postTypes}
-              onChange={(val) => handleChange(val, 'selectedPostType')}
-              singleSelect
-              style={{ width: '100%', minWidth: 300, maxWidth: 400 }}
-            />
-          </div>
-          {edit && !triggerData.selectedPostType && (
-            <>
-              <br />
-              <span className="actions-note">
-                {__('Please select a post type to fetch fields.', 'bit-integrations')}
-              </span>
-            </>
-          )}
-        </>
-      )}
+        id === 'voxel-11' ||
+        id === 'voxel-20'
+      ) && (
+          <>
+            <div className={edit ? 'flx mt-3' : ''}>
+              <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>
+                {__('Select Post Type:', 'bit-integrations')}
+              </b>
+              <MultiSelect
+                className="msl-wrp-options"
+                defaultValue={triggerData?.selectedPostType}
+                options={triggerData?.postTypes}
+                onChange={(val) => handleChange(val, 'selectedPostType')}
+                singleSelect
+                style={{ width: '100%', minWidth: 300, maxWidth: 400 }}
+              />
+            </div>
+            {edit && !triggerData.selectedPostType && (
+              <>
+                <br />
+                <span className="actions-note">
+                  {__('Please select a post type to fetch fields.', 'bit-integrations')}
+                </span>
+              </>
+            )}
+          </>
+        )}
     </div>
   )
 }

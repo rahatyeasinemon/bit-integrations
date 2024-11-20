@@ -21,7 +21,8 @@ export const customFormIntegrations = [
   'Bricks',
   'Bricksforge',
   'Brizy',
-  'GutenaForms'
+  'GutenaForms',
+  'PieForms',
 ]
 
 export const actionHookIntegrations = ['ActionHook']
