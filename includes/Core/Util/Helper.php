@@ -362,8 +362,6 @@ final class Helper
             'unknown type'      => 'unknown'
         ];
 
-        $type = \gettype($val);
-
-        return $types[$type] ?? 'text';
+        return $types[\gettype($val)] ?? 'text';
     }
 }
