@@ -18,6 +18,7 @@ export default function ChangelogToggle() {
 
   const source = !btcbi.isPro ? 'bit-integrations' : 'bit-integrations-pro'
   const Early_Bird_URL = `https://bit-social.com/?utm_source=${source}&utm_medium=inside-plugin&utm_campaign=early-bird-offer`
+  const releaseDate = '26th November 2024'
 
   const changeLog = [
     {
@@ -30,13 +31,13 @@ export default function ChangelogToggle() {
       label: __('New Actions', 'bit-integrations'),
       headClass: 'new-integration',
       itemClass: 'integration-list',
-      items: ['Voxel']
+      items: []
     },
     {
       label: __('New Triggers', 'bit-integrations'),
       headClass: 'new-trigger',
       itemClass: 'integration-list',
-      items: ['Asgaros (Pro)']
+      items: []
     },
     {
       label: __('New Features', 'bit-integrations'),
@@ -48,7 +49,7 @@ export default function ChangelogToggle() {
       label: __('New Improvements', 'bit-integrations'),
       headClass: 'new-improvement',
       itemClass: 'feature-list',
-      items: []
+      items: ['Asana: Added Tagify input for custom fields.']
     }
   ]
 
@@ -130,7 +131,7 @@ export default function ChangelogToggle() {
               <div className="flx flx-col flx-center whats-new">
                 <h3>{sprintf(__("What's New in %s", 'bit-integrations'), btcbi.version)}?</h3>
                 <small className="date">
-                  {__('Updated at:', 'bit-integrations')} <b>20th November 2024</b>
+                  {__('Updated at:', 'bit-integrations')} <b>{releaseDate}</b>
                 </small>
               </div>
               <div className="changelog-content">
