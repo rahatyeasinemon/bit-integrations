@@ -90,7 +90,7 @@ class RecordApiHelper
             $actionValue = $value->asanaFormField;
 
             $fieldKey = $actionValue === 'fields' ? $value->customFieldKey : $actionValue;
-            $dataFinal[$fieldKey] = $triggerValue === 'custom' ? Common::replaceFieldWithValue($value->customValue, $data) : $data[$triggerValue] ?? null;
+            $dataFinal[$fieldKey] = $triggerValue === 'custom' && isset($value->customValue) ? Common::replaceFieldWithValue($value->customValue, $data) : $data[$triggerValue] ?? null;
         }
 
         return $dataFinal;
