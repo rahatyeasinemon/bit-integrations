@@ -99,11 +99,11 @@ class RecordApiHelper
                 $keys = array_keys($fields);
                 $validData = array_intersect_key($finalData['custom_fields'], array_flip($keys));
 
-                foreach ($validData as $dataKey => $validDatum) {
-                    if ($fields[$dataKey]['type'] == 'checkbox' || \is_array($validDatum)) {
-                        $customFields[$dataKey] = \is_array($validDatum) ? $validDatum : explode(',', $validDatum);
+                foreach ($validData as $dataKey => $value) {
+                    if ($fields[$dataKey]['type'] == 'checkbox') {
+                        $customFields[$dataKey] = \is_array($value) ? $value : explode(',', $value);
                     } else {
-                        $customFields[$dataKey] = $validDatum;
+                        $customFields[$dataKey] = $value;
                     }
                 }
 
