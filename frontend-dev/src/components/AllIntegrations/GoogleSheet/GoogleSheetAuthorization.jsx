@@ -91,7 +91,9 @@ export default function GoogleSheetAuthorization({
 
       const authIdExists = authData.find(auth => auth.id === updatedConf.authId);
 
-      if (updatedConf.authId && authIdExists) {
+      if (updatedConf.authId !== null) {
+        setSelectedUserId(updatedConf.authId)
+      } else if (authIdExists) {
         setSelectedUserId(updatedConf.authId)
       } else if (authIdExists === false) {
         setSelectedUserId(null)
