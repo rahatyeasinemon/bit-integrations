@@ -12,14 +12,15 @@ final class AuthDataController
             wp_send_json_success(['error' => 'Requested Parameters are empty']);
         }
 
-        $emailExists = $this->checkAuthDataExist($requestParams->actionName, $requestParams->userInfo->user->emailAddress);
-
-        $actionName = sanitize_text_field($requestParams->actionName);
         $tokenDetails = wp_json_encode($requestParams->tokenDetails);
         $userInfo = wp_json_encode($requestParams->userInfo);
 
+        $sanitizedActionName = sanitize_text_field($requestParams->actionName);
+        $sanitizedUserEmailAddress = sanitize_text_field($requestParams->userInfo->user->emailAddress);
         $sanitizedTokenDetails = sanitize_text_field($tokenDetails);
         $sanitizedUserInfo = sanitize_text_field($userInfo);
+
+        $emailExists = $this->checkAuthDataExist($sanitizedActionName, $sanitizedUserEmailAddress);
 
         if (empty($actionName) || empty($sanitizedTokenDetails)) {
             return;
@@ -128,7 +129,6 @@ final class AuthDataController
             [
                 'id',
                 'action_name',
-                'tokenDetails',
                 'userInfo',
             ],
             ['action_name' => $actionName]
@@ -139,7 +139,6 @@ final class AuthDataController
         }
 
         foreach ($result as $item) {
-            $item->tokenDetails = json_decode($item->tokenDetails, true);
             $item->userInfo = json_decode($item->userInfo, true);
 
             if (!empty($item->userInfo['user']['emailAddress']) && $item->userInfo['user']['emailAddress'] === $emailAddress) {
