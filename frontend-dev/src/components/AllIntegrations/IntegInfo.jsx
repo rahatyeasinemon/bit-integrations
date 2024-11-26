@@ -192,6 +192,7 @@ const TheEventsCalendarAuthorization = lazy(
 const LMFWCAuthorization = lazy(
   () => import('./LMFWC/LMFWCAuthorization')
 )
+const VoxelAuthorization = lazy(() => import('./Voxel/VoxelAuthorization'))
 
 export default function IntegInfo() {
   const { id, type } = useParams()
@@ -584,6 +585,10 @@ export default function IntegInfo() {
       case 'License Manager For WooCommerce':
         return (
           <LMFWCAuthorization licenseManagerConf={integrationConf} step={1} isInfo />
+        )
+      case 'Voxel':
+        return (
+          <VoxelAuthorization voxelConf={integrationConf} step={1} isInfo />
         )
       default:
         return <></>

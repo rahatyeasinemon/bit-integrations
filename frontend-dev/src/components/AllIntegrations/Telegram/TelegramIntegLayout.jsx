@@ -3,9 +3,10 @@ import { useParams } from 'react-router-dom'
 import { __ } from '../../../Utils/i18nwrap'
 import CheckBox from '../../Utilities/CheckBox'
 import Loader from '../../Loaders/Loader'
-import TinyMCE from '../../Utilities/TinyMCE'
 import TelegramActions from './TelegramActions'
 import { refreshGetUpdates } from './TelegramCommonFunc'
+import { create } from 'mutative'
+import TinyMCE from '../../Utilities/TinyMCE'
 
 export default function TelegramIntegLayout({
   formID,
@@ -24,17 +25,14 @@ export default function TelegramIntegLayout({
   }
 
   const setMessageBody = (val) => {
-    const newConf = { ...telegramConf }
-    newConf.body = val
-    setTelegramConf(newConf)
+    setTelegramConf(prevConf => create(prevConf, draftConf => {
+      draftConf.body += val
+    }))
   }
   const changeActionRun = (e) => {
-    const newConf = { ...telegramConf }
-    /* if (newConf?.body) {
-      newConf.body = ''
-    } */
-    newConf.parse_mode = e.target.value
-    setTelegramConf(newConf)
+    setTelegramConf(prevConf => create(prevConf, draftConf => {
+      draftConf.parse_mode = e.target.value
+    }))
   }
 
   return (
@@ -104,16 +102,16 @@ export default function TelegramIntegLayout({
           </div>
           <div className="flx mt-4">
             <b className="wdt-200 d-in-b">{__('Messages:', 'bit-integrations')}</b>
-            {telegramConf?.parse_mode === 'HTML' ? (
-              <TinyMCE
-                formFields={formFields}
-                id={`telegram-message-${id}`}
-                value={telegramConf.body}
-                onChangeHandler={setMessageBody}
-                width="100%"
-                toolbarMnu="bold italic underline strikethrough | link | code | addFormField | toggleCode"
-              />
-            ) : (
+            <TinyMCE
+              formFields={formFields}
+              id={`telegram-message-${id}`}
+              value={telegramConf.body}
+              onChangeHandler={setMessageBody}
+              width="100%"
+              toolbarMnu="bold italic underline strikethrough | link | code | addFormField | toggleCode"
+              show={telegramConf?.parse_mode === 'HTML'}
+            />
+            {telegramConf?.parse_mode === 'MarkdownV2' && (
               <>
                 <textarea
                   className="w-7"
@@ -143,7 +141,8 @@ export default function TelegramIntegLayout({
             formFields={formFields}
           />
         </>
-      )}
+      )
+      }
     </>
   )
 }
