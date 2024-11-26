@@ -27,8 +27,6 @@ export default function AsanaFieldMap({ i, formFields, field, asanaConf, setAsan
     setAsanaConf(newConf)
   }
 
-  console.log(asanaConf)
-
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi
 
