@@ -32,29 +32,32 @@ export default function GoogleSheetAuthorization({
   const { googleSheet } = tutorialLinks
   const [authData, setAuthData] = useState([])
   const [authInfo, setAuthInfo] = useRecoilState(authInfoAtom);
-  const [selectedAuthType, setSelectedAuthType] = useState('')
+  const [selectedAuthType, setSelectedAuthType] = useState('Custom Authorization')
   const [selectedUserId, setSelectedUserId] = useState(null)
 
-  const handleChange = (option) => {
-    setSelectedAuthType(option)
-    setisAuthorized(false)
 
-    setSheetConf((prevConf) => ({
-      ...prevConf,
-      selectedAuthType: option,
-      ...(option === "One Click Authorization" && process.env.NODE_ENV !== 'development'
-        ? {
-          clientId: '',
-          clientSecret: '',
-        }
-        : {}),
-    }))
+  //Commented for one click authorization
 
-    if (option === "One Click Authorization") {
-      processAuth(option);
-    }
-    setIsLoading(false);
-  };
+  // const handleChange = (option) => {
+  //   setSelectedAuthType(option)
+  //   setisAuthorized(false)
+
+  //   setSheetConf((prevConf) => ({
+  //     ...prevConf,
+  //     selectedAuthType: option,
+  //     ...(option === "One Click Authorization" && process.env.NODE_ENV !== 'development'
+  //       ? {
+  //         clientId: '',
+  //         clientSecret: '',
+  //       }
+  //       : {}),
+  //   }))
+
+  //   if (option === "One Click Authorization") {
+  //     processAuth(option);
+  //   }
+  //   setIsLoading(false);
+  // };
 
   const processAuth = (option) => {
     handleAuthorize(sheetConf, option, setError, setIsLoading);
@@ -84,15 +87,18 @@ export default function GoogleSheetAuthorization({
 
     if (step === 1 && isEdit) {
 
-      const authIdExists = authData.find(auth => auth.id === sheetConf.authId);
+      const updatedConf = { ...sheetConf }
 
-      if (sheetConf.authId && authIdExists) {
-        setSelectedUserId(sheetConf.authId)
+      const authIdExists = authData.find(auth => auth.id === updatedConf.authId);
+
+      if (updatedConf.authId && authIdExists) {
+        setSelectedUserId(updatedConf.authId)
       } else if (authIdExists === false) {
         setSelectedUserId(null)
       }
     }
   }, [authData])
+
 
   const handleVerificationCode = async (authInfo) => {
     await tokenHelper(authInfo, sheetConf, setSheetConf, selectedAuthType, authData, setAuthData, setIsLoading, setSnackbar);
@@ -118,13 +124,11 @@ export default function GoogleSheetAuthorization({
 
   const nextPage = () => {
     const selectedAuth = authData.find((item) => item.id === selectedUserId)
-    console.log('sheetConf1', sheetConf)
     setSheetConf((prevConf) => ({
       ...prevConf,
       tokenDetails: selectedAuth ? selectedAuth.tokenDetails : '',
       authId: selectedAuth ? selectedAuth.id : '',
     }))
-    console.log('sheetConf2', sheetConf)
     setTimeout(() => {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
@@ -151,7 +155,7 @@ export default function GoogleSheetAuthorization({
       )}
 
 
-      <div>
+      {/* <div>
         <h2>Choose channel</h2>
         <SelectAuthorizationType
           name="auth"
@@ -159,7 +163,7 @@ export default function GoogleSheetAuthorization({
           selectedAuthType={selectedAuthType}
           handleChange={handleChange}
         />
-      </div>
+      </div> */}
 
       {selectedAuthType === "Custom Authorization" && (
         <div>

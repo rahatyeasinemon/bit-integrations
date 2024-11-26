@@ -3,38 +3,52 @@
 namespace BitCode\FI\controller;
 
 use BitCode\FI\Core\Database\AuthModel;
+use BitCode\FI\Core\Util\HttpHelper;
 
 final class AuthDataController
 {
     public function saveAuthData($requestParams)
     {
-        $actionName = sanitize_text_field($requestParams->actionName);
-        $tokenDetails = wp_json_encode($requestParams->tokenDetails);
-        $userInfo = wp_json_encode($requestParams->userInfo);
-
-        $sanitizedTokenDetails = sanitize_text_field($tokenDetails);
-        $sanitizedUserInfo = sanitize_text_field($userInfo);
-
-        if (empty($actionName) || empty($sanitizedTokenDetails) || empty($sanitizedUserInfo)) {
+        if (empty($requestParams->actionName) || empty($requestParams->tokenDetails)) {
             return;
         }
 
-        $authModel = new AuthModel();
-        $authModel->insert(
-            [
-                'action_name'  => $actionName,
-                'tokenDetails' => $sanitizedTokenDetails,
-                'userInfo'     => $sanitizedUserInfo,
-                'created_at'   => current_time('mysql')
-            ]
-        );
+        $actionName = sanitize_text_field($requestParams->actionName);
+        $tokenDetails = wp_json_encode($requestParams->tokenDetails);
 
-        return $this->getAuthData($actionName);
+        $apiEndpoint = 'https://www.googleapis.com/drive/v3/about?fields=user';
+        $authorizationHeader['Authorization'] = 'Bearer ' . $requestParams->tokenDetails->access_token;
+
+        $data = HttpHelper::get($apiEndpoint, '', $authorizationHeader);
+
+        $emailExists = $this->checkAuthDataExist($actionName, $data->user->emailAddress);
+
+        $sanitizedTokenDetails = sanitize_text_field($tokenDetails);
+
+        $userData = json_encode($data);
+        if (empty($actionName) || empty($sanitizedTokenDetails)) {
+            return;
+        }
+
+        if (!$emailExists) {
+            $authModel = new AuthModel();
+            $authModel->insert(
+                [
+                    'action_name'  => $actionName,
+                    'tokenDetails' => $sanitizedTokenDetails,
+                    'userInfo'     => $userData,
+                    'created_at'   => current_time('mysql')
+                ]
+            );
+
+            return $this->getAuthData($actionName);
+        }
+        wp_send_json_success(['error' => 'Email address exists.']);
     }
 
     public function getAuthData($request)
     {
-        $actionName = sanitize_text_field($request->actionName);
+        $actionName = sanitize_text_field($request->actionName ? $request->actionName : $request);
         if (empty($actionName)) {
             wp_send_json_error('Action name is not available');
             exit;
@@ -110,5 +124,34 @@ final class AuthDataController
         $authModel = new AuthModel();
 
         return $authModel->delete($condition);
+    }
+
+    public function checkAuthDataExist($actionName, $emailAddress)
+    {
+        $authModel = new AuthModel();
+        $result = $authModel->get(
+            [
+                'id',
+                'action_name',
+                'tokenDetails',
+                'userInfo',
+            ],
+            ['action_name' => $actionName]
+        );
+
+        if (is_wp_error($result)) {
+            return false;
+        }
+
+        foreach ($result as $item) {
+            $item->tokenDetails = json_decode($item->tokenDetails, true);
+            $item->userInfo = json_decode($item->userInfo, true);
+
+            if (!empty($item->userInfo['user']['emailAddress']) && $item->userInfo['user']['emailAddress'] === $emailAddress) {
+                return $emailExists = true;
+            }
+        }
+
+        return false;
     }
 }

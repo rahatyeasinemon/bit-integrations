@@ -12,7 +12,7 @@ const AuthorizationAccountList = ({ authData, setAuthData, selectedUserId, setSe
       if (res.success) {
         setAuthData((prevData) => prevData.filter((item) => item.id !== id));
         if (selectedUserId === id) {
-          setSelectedUserId(null); // Reset selected user if deleted
+          setSelectedUserId(null);
         }
 
         setIsLoading(false);
@@ -41,7 +41,7 @@ const AuthorizationAccountList = ({ authData, setAuthData, selectedUserId, setSe
   }, []);
 
   useEffect(() => {
-    setSelectedUserId(selectedUserId)
+    if (selectedUserId !== null) { setSelectedUserId(selectedUserId) }
     if (authData.length === 1 && !isInfo && !isEdit) {
       setSelectedUserId(authData[0].id);
     } else if (!selectedUserId && authData.length > 0 && !isInfo && !isEdit) {
