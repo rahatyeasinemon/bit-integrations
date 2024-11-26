@@ -322,8 +322,6 @@ final class Helper
 
     public static function prepareFetchFormatFields(array $data, $path = '', $formattedData = [])
     {
-        $formattedData = $formattedData;
-
         foreach ($data as $key => $value) {
             if (ctype_upper($key)) {
                 $key = strtolower($key);
@@ -335,11 +333,13 @@ final class Helper
             if (\is_array($value) || \is_object($value)) {
                 $formattedData = static::prepareFetchFormatFields((array) $value, $currentPath, $formattedData);
             } else {
-                $label = ucwords(str_replace('_', ' ', $path ? $currentPath : $key)) . ' (' . $value . ')';
+                $labelValue = \is_string($value) && \strlen($value) > 20 ? substr($value, 0, 20) . '...' : $value;
+                $label = ucwords(str_replace('_', ' ', $path ? $currentPath : $key));
+                $label = preg_replace("/\b(\w+)\s+\\1\b/i", '$1', $label) . ' (' . $labelValue . ')';
 
                 $formattedData[$currentPath] = [
                     'name'  => $currentPath . '.value',
-                    'type'  => 'text',
+                    'type'  => static::getVariableType($value),
                     'label' => $label,
                     'value' => $value,
                 ];
@@ -347,5 +347,21 @@ final class Helper
         }
 
         return $formattedData;
+    }
+
+    private static function getVariableType($val)
+    {
+        $types = [
+            'boolean'           => 'boolean',
+            'integer'           => 'number',
+            'double'            => 'number',
+            'string'            => 'text',
+            'array'             => 'array',
+            'resource (closed)' => 'file',
+            'NULL'              => 'textarea',
+            'unknown type'      => 'unknown'
+        ];
+
+        return $types[\gettype($val)] ?? 'text';
     }
 }
