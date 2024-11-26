@@ -320,32 +320,48 @@ final class Helper
         }
     }
 
-    public static function getUserDataById($id)
+    public static function prepareFetchFormatFields(array $data, $path = '', $formattedData = [])
     {
-        $user = get_userdata($id);
-        $context = [];
-        if (! $user) {
-            return $context;
+        foreach ($data as $key => $value) {
+            if (ctype_upper($key)) {
+                $key = strtolower($key);
+            }
+
+            $currentKey = strtolower(preg_replace(['/[^A-Za-z0-9_]/', '/([A-Z])/'], ['', '_$1'], $key));
+            $currentPath = $path ? "{$path}_{$currentKey}" : $currentKey;
+
+            if (\is_array($value) || \is_object($value)) {
+                $formattedData = static::prepareFetchFormatFields((array) $value, $currentPath, $formattedData);
+            } else {
+                $labelValue = \is_string($value) && \strlen($value) > 20 ? substr($value, 0, 20) . '...' : $value;
+                $label = ucwords(str_replace('_', ' ', $path ? $currentPath : $key));
+                $label = preg_replace("/\b(\w+)\s+\\1\b/i", '$1', $label) . ' (' . $labelValue . ')';
+
+                $formattedData[$currentPath] = [
+                    'name'  => $currentPath . '.value',
+                    'type'  => static::getVariableType($value),
+                    'label' => $label,
+                    'value' => $value,
+                ];
+            }
         }
-        $context['wp_user_id'] = $user->ID;
-        $context['user_login'] = $user->user_login;
-        $context['display_name'] = $user->display_name;
-        $context['user_firstname'] = $user->user_firstname;
-        $context['user_lastname'] = $user->user_lastname;
-        $context['user_email'] = $user->user_email;
-        $context['user_registered'] = $user->user_registered;
-        $context['user_role'] = $user->roles;
 
-        return $context;
+        return $formattedData;
     }
 
-    public static function getPostById($id)
+    private static function getVariableType($val)
     {
-        return (array) get_post($id);
-    }
+        $types = [
+            'boolean'           => 'boolean',
+            'integer'           => 'number',
+            'double'            => 'number',
+            'string'            => 'text',
+            'array'             => 'array',
+            'resource (closed)' => 'file',
+            'NULL'              => 'textarea',
+            'unknown type'      => 'unknown'
+        ];
 
-    public static function getPostMetaByPostId($id)
-    {
-        return get_post_meta($id);
+        return $types[\gettype($val)] ?? 'text';
     }
 }
