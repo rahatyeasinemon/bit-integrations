@@ -275,12 +275,16 @@ export const tokenHelper = async (authInfo, confTmp, setConf, selectedAuthType, 
     .then(result => result)
     .then(async result => {
       if (result && result.success) {
-        const newConf = { ...confTmp }
-        result.data.selectedAuthType = selectedAuthType
-        await handleAuthData(newConf.type, result.data, setAuthData);
-        newConf.setisAuthorized = true
-        setConf(newConf)
-        setSnackbar({ show: true, msg: __('Authorized Successfully', 'bigt-integrations') })
+        const userInfo = await fetchUserInfo(result.data)
+
+        if (userInfo) {
+          const newConf = { ...confTmp }
+          result.data.selectedAuthType = selectedAuthType
+          await handleAuthData(newConf.type, result.data, userInfo, setAuthData);
+          newConf.setisAuthorized = true
+          setConf(newConf)
+          setSnackbar({ show: true, msg: __('Authorized Successfully', 'bigt-integrations') })
+        }
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `${__('Authorization failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}` })
       } else {
@@ -303,19 +307,19 @@ export const checkMappedFields = (sheetconf) => {
   return true
 }
 
-// async function fetchUserInfo(tokenResponse) {
-//   const accessToken = tokenResponse.access_token;
+async function fetchUserInfo(tokenResponse) {
+  const accessToken = tokenResponse.access_token;
 
-//   try {
-//     const userInfoResponse = await fetch('https://www.googleapis.com/drive/v3/about?fields=user', {
-//       headers: {
-//         Authorization: `Bearer ${accessToken}`,
-//       },
-//     });
-//     const userInfo = await userInfoResponse.json();
-//     return userInfo;
-//   } catch (error) {
-//     console.error('Error fetching user info:', error);
-//   }
-// }
+  try {
+    const userInfoResponse = await fetch('https://www.googleapis.com/drive/v3/about?fields=user', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    const userInfo = await userInfoResponse.json();
+    return userInfo;
+  } catch (error) {
+    console.error('Error fetching user info:', error);
+  }
+}
 

@@ -41,10 +41,16 @@ const AuthorizationAccountList = ({ authData, setAuthData, selectedUserId, setSe
   }, []);
 
   useEffect(() => {
-    if (selectedUserId !== null) { setSelectedUserId(selectedUserId) }
-    if (authData.length === 1 && !isInfo && !isEdit) {
+    if (selectedUserId !== null) {
+      console.log('selectedUserId', selectedUserId)
+      setSelectedUserId(selectedUserId)
+    }
+    if (!isInfo && !isEdit) {
+      return
+    }
+    if (authData.length === 1) {
       setSelectedUserId(authData[0].id);
-    } else if (!selectedUserId && authData.length > 0 && !isInfo && !isEdit) {
+    } else if (!selectedUserId && authData.length > 0) {
       setSelectedUserId(authData[authData.length - 1].id);
     }
   }, [authData]);

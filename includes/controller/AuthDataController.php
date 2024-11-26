@@ -3,29 +3,24 @@
 namespace BitCode\FI\controller;
 
 use BitCode\FI\Core\Database\AuthModel;
-use BitCode\FI\Core\Util\HttpHelper;
 
 final class AuthDataController
 {
     public function saveAuthData($requestParams)
     {
-        if (empty($requestParams->actionName) || empty($requestParams->tokenDetails)) {
-            return;
+        if (empty($requestParams->actionName) || empty($requestParams->tokenDetails) || empty($requestParams->userInfo)) {
+            wp_send_json_success(['error' => 'Requested Parameters are empty']);
         }
+
+        $emailExists = $this->checkAuthDataExist($requestParams->actionName, $requestParams->userInfo->user->emailAddress);
 
         $actionName = sanitize_text_field($requestParams->actionName);
         $tokenDetails = wp_json_encode($requestParams->tokenDetails);
-
-        $apiEndpoint = 'https://www.googleapis.com/drive/v3/about?fields=user';
-        $authorizationHeader['Authorization'] = 'Bearer ' . $requestParams->tokenDetails->access_token;
-
-        $data = HttpHelper::get($apiEndpoint, '', $authorizationHeader);
-
-        $emailExists = $this->checkAuthDataExist($actionName, $data->user->emailAddress);
+        $userInfo = wp_json_encode($requestParams->userInfo);
 
         $sanitizedTokenDetails = sanitize_text_field($tokenDetails);
+        $sanitizedUserInfo = sanitize_text_field($userInfo);
 
-        $userData = json_encode($data);
         if (empty($actionName) || empty($sanitizedTokenDetails)) {
             return;
         }
@@ -36,7 +31,7 @@ final class AuthDataController
                 [
                     'action_name'  => $actionName,
                     'tokenDetails' => $sanitizedTokenDetails,
-                    'userInfo'     => $userData,
+                    'userInfo'     => $sanitizedUserInfo,
                     'created_at'   => current_time('mysql')
                 ]
             );
