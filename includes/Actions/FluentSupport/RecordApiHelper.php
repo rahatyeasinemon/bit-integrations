@@ -33,14 +33,12 @@ class RecordApiHelper
             $triggerValue = $value->formField;
             $actionValue = $value->fluentSupportFormField;
 
-            if ($triggerValue === 'custom' && str_starts_with($actionValue, 'cf_')) {
-                $dataFinal['custom_fields'][$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } elseif ($triggerValue === 'custom') {
-                $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } elseif (str_starts_with($actionValue, 'cf_')) {
-                $dataFinal['custom_fields'][$actionValue] = $data[$triggerValue];
+            $value = $triggerValue === 'custom' && isset($value->customValue) ? Common::replaceFieldWithValue($value->customValue, $data) : $data[$triggerValue] ?? null;
+
+            if (str_starts_with($actionValue, 'cf_')) {
+                $dataFinal['custom_fields'][$actionValue] = $value;
             } elseif (!\is_null($data[$triggerValue])) {
-                $dataFinal[$actionValue] = $data[$triggerValue];
+                $dataFinal[$actionValue] = $value;
             }
         }
 
