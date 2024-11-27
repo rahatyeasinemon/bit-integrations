@@ -126,26 +126,26 @@ class BenchMarkController
         $benchMarkResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
 
         $fields = [
-            'email' => (object) [
-                'fieldId'    => 'email',
+            'Email' => (object) [
+                'fieldId'    => 'Email',
                 'fieldName'  => 'Email',
                 'fieldValue' => 'Email',
                 'required'   => true
             ],
-            'firstname' => (object) [
-                'fieldId'    => 'firstname',
+            'FirstName' => (object) [
+                'fieldId'    => 'FirstName',
                 'fieldName'  => 'First Name',
                 'fieldValue' => 'FirstName',
                 'required'   => false
             ],
-            'lastname' => (object) [
-                'fieldId'    => 'lastname',
+            'LastName' => (object) [
+                'fieldId'    => 'LastName',
                 'fieldName'  => 'Last Name',
                 'fieldValue' => 'LastName',
                 'required'   => false
             ],
-            'middlename' => (object) [
-                'fieldId'    => 'middlename',
+            'MiddleName' => (object) [
+                'fieldId'    => 'MiddleName',
                 'fieldName'  => 'Middle Name',
                 'fieldValue' => 'MiddleName',
                 'required'   => false
