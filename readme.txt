@@ -4,7 +4,7 @@ Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
 Tested up to: 6.7
 Requires PHP: 7.0
-Stable tag: 2.3.5
+Stable tag: 2.3.6
 License: GPLv2 or later
 
 Automation Plugin for WordPress. Integration of 80+ Triggers & 150+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -53,7 +53,7 @@ https://youtu.be/eFuficjF_F4
 * [**Fluent Forms**](https://wordpress.org/plugins/fluentform/) (pro)
 * [**Bit Assist**](https://wordpress.org/plugins/bit-assist/) (pro)
 * [**Academy LMS**](https://wordpress.org/plugins/academy/) (pro)
-* [**Asgaros**](https://wordpress.org/plugins/asgaros-forum/) (pro)
+* [**Asgaros Forum**](https://wordpress.org/plugins/asgaros-forum/) (pro)
 * [**Amelia**](https://wordpress.org/plugins/ameliabooking/) (pro)
 * [**Action Hook**](https://bitapps.pro/docs/bit-integrations/trigger/action-hook-integrations/) (pro)
 * [**AffiliateWP**](https://wordpress.org/plugins/affiliatewp-affiliate-area-shortcodes/) (pro)
@@ -633,6 +633,8 @@ Please check [**Bit Integrations Pro**](https://www.bitapps.pro/bit-integrations
 
 * [**ARForm**](https://bitapps.pro/docs/bit-integrations/trigger/arform/)
 
+* [**Asgaros Forum**](https://bit-integrations.com/wp-docs/trigger/asgaros-forum-integrations/)
+
 * [**Beaver Builder**](https://bitapps.pro/docs/bit-integrations/trigger/beaver-builder/)
 
 * [**Bit Assist**](https://bitapps.pro/docs/bit-integrations/trigger/bit-assist/)
@@ -742,6 +744,8 @@ Please check [**Bit Integrations Pro**](https://www.bitapps.pro/bit-integrations
 * [**Webhook**](https://bitapps.pro/docs/bit-integrations/trigger/webhook/)
 
 * [**Woocommerce**](https://bitapps.pro/docs/bit-integrations/trigger/woocommerce/)
+
+* [**Woocommerce Bookings**](https://bit-integrations.com/wp-docs/trigger/woocommerce-bookings-integrations/)
 
 * [**WooCommerce Subscriptions**](https://bit-integrations.com/wp-docs/trigger/woocommerce-subscriptions-integrations/)
 
@@ -1016,6 +1020,18 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 2.3.6  =
+_Release Date -26th November 2024_
+
+- **New Improvement**
+ - Asana: Added Tagify input for custom fields.
+
+- **Bug Fixes**
+ - ARForm (Pro): Resolved the form fetching issue.
+ - Fluent Support: Fixed an issue with storing data in custom fields.
+ - WP Post (Pro): Prevented multiple hooks from being called when using the "change status" trigger.
+ - Chore: Fixed the loading issue in the WP Media Library.
 
 = 2.3.5  =
 _Release Date -20th November 2024_
