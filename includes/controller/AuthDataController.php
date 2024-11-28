@@ -9,7 +9,7 @@ final class AuthDataController
     public function saveAuthData($requestParams)
     {
         if (empty($requestParams->actionName) || empty($requestParams->tokenDetails) || empty($requestParams->userInfo)) {
-            wp_send_json_success(['error' => 'Requested Parameters are empty']);
+            wp_send_json_error(['error' => 'Requested Parameters are empty']);
         }
 
         $tokenDetails = wp_json_encode($requestParams->tokenDetails);
@@ -22,7 +22,7 @@ final class AuthDataController
 
         $emailExists = $this->checkAuthDataExist($sanitizedActionName, $sanitizedUserEmailAddress);
 
-        if (empty($actionName) || empty($sanitizedTokenDetails)) {
+        if (empty($sanitizedActionName) || empty($sanitizedTokenDetails)) {
             return;
         }
 
@@ -30,14 +30,14 @@ final class AuthDataController
             $authModel = new AuthModel();
             $authModel->insert(
                 [
-                    'action_name'  => $actionName,
+                    'action_name'  => $sanitizedActionName,
                     'tokenDetails' => $sanitizedTokenDetails,
                     'userInfo'     => $sanitizedUserInfo,
                     'created_at'   => current_time('mysql')
                 ]
             );
 
-            return $this->getAuthData($actionName);
+            return $this->getAuthData($sanitizedActionName);
         }
         wp_send_json_success(['error' => 'Email address exists.']);
     }
@@ -95,7 +95,7 @@ final class AuthDataController
         );
 
         if (is_wp_error($result)) {
-            wp_send_json_success(['data' => []]);
+            wp_send_json_error(['data' => []]);
             exit;
         }
 
