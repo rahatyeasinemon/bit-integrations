@@ -18,7 +18,7 @@ export default function ChangelogToggle() {
 
   const source = !btcbi.isPro ? 'bit-integrations' : 'bit-integrations-pro'
   const Early_Bird_URL = `https://bit-social.com/?utm_source=${source}&utm_medium=inside-plugin&utm_campaign=early-bird-offer`
-  const releaseDate = '26th November 2024'
+  const releaseDate = '28th November 2024'
 
   const changeLog = [
     {
