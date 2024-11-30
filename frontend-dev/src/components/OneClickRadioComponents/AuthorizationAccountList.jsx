@@ -41,9 +41,9 @@ const AuthorizationAccountList = ({ authData, setAuthData, selectedUserId, setSe
   }, []);
 
   useEffect(() => {
-    if (selectedUserId !== null) {
-      setSelectedUserId(selectedUserId)
-    }
+    // if (selectedUserId !== null) {
+    //   setSelectedUserId(selectedUserId)
+    // }
 
     if (isInfo || isEdit) {
       return
