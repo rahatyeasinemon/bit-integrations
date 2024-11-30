@@ -135,6 +135,44 @@ export const refreshfluentCrmHeader = (
     .catch(() => setIsLoading(false))
 }
 
+export const getAllCompanies = (
+  fluentCrmConf,
+  setFluentCrmConf,
+  loading,
+  setLoading,
+  setSnackbar
+) => {
+  setLoading({ ...loading, company: true })
+  bitsFetch({}, 'fluent_crm_get_all_company')
+    .then((result) => {
+      if (result && result.success) {
+        if (result.data) {
+          setFluentCrmConf((prevConf) =>
+            create(prevConf, (newConf) => {
+              newConf.companies = result.data
+            })
+          )
+          setSnackbar({
+            show: true,
+            msg: __('Fluent CRM Companies refreshed', 'bit-integrations')
+          })
+        } else {
+          setSnackbar({
+            show: true,
+            msg: __('No Fluent CRM Companies found', 'bit-integrations')
+          })
+        }
+      } else {
+        setSnackbar({
+          show: true,
+          msg: __('Fluent CRM Companies refresh failed. please try again', 'bit-integrations')
+        })
+      }
+      setLoading({ ...loading, company: false })
+    })
+    .catch(() => setLoading({ ...loading, company: false }))
+}
+
 export const mapNewRequiredFields = (fluentCrmConf) => {
   const { field_map } = fluentCrmConf
   const { fluentCrmFlelds } = fluentCrmConf
@@ -163,9 +201,9 @@ export const handleInput = (e, fluentCrmConf, setFluentCrmConf) => {
 export const checkMappedFields = (fluentCrmConf) => {
   const mappedFields = fluentCrmConf?.field_map
     ? fluentCrmConf.field_map.filter(
-        (mappedField) =>
-          !mappedField.formField && mappedField.fluentCRMField && mappedField.required
-      )
+      (mappedField) =>
+        !mappedField.formField && mappedField.fluentCRMField && mappedField.required
+    )
     : []
   if (mappedFields.length > 0) {
     return false
