@@ -163,6 +163,7 @@ const HighLevel = lazy(() => import('./HighLevel/HighLevel'))
 const TheEventsCalendar = lazy(() => import('./TheEventsCalendar/TheEventsCalendar'))
 const LMFWC = lazy(() => import('./LMFWC/LMFWC'))
 const Voxel = lazy(() => import('./Voxel/Voxel'))
+const SmartSuite = lazy(() => import('./SmartSuite/SmartSuite'))
 
 export default function NewInteg({ allIntegURL }) {
   const { integUrlName } = useParams()
@@ -1542,6 +1543,15 @@ export default function NewInteg({ allIntegURL }) {
             setFlow={setFlow}
           />
         )
+        case 'SmartSuite':
+          return (
+            <SmartSuite
+              allIntegURL={allIntegURL}
+              formFields={flow?.triggerData?.fields}
+              flow={flow}
+              setFlow={setFlow}
+            />
+          )
       default:
         return <></>
     }

@@ -193,6 +193,7 @@ const LMFWCAuthorization = lazy(
   () => import('./LMFWC/LMFWCAuthorization')
 )
 const VoxelAuthorization = lazy(() => import('./Voxel/VoxelAuthorization'))
+const SmartSuiteAuthorization = lazy(() => import('./SmartSuite/SmartSuiteAuthorization'))
 
 export default function IntegInfo() {
   const { id, type } = useParams()
@@ -590,6 +591,10 @@ export default function IntegInfo() {
         return (
           <VoxelAuthorization voxelConf={integrationConf} step={1} isInfo />
         )
+        case 'SmartSuite':
+          return (
+            <SmartSuiteAuthorization voxelConf={integrationConf} step={1} isInfo />
+          )
       default:
         return <></>
     }

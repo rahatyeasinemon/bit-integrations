@@ -165,7 +165,8 @@ export default function SelectAction() {
     { type: 'GoHighLevel' },
     { type: 'The Events Calendar' },
     { type: 'License Manager For WooCommerce' },
-    { type: 'Voxel' }
+    { type: 'Voxel' },
+    { type: 'SmartSuite' }
   ]
 
   const [availableIntegs, setAvailableIntegs] = useState(

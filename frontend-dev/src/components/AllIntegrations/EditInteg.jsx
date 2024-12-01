@@ -162,6 +162,7 @@ const EditHighLevel = lazy(() => import('./HighLevel/EditHighLevel'))
 const EditTheEventsCalendar = lazy(() => import('./TheEventsCalendar/EditTheEventsCalendar'))
 const EditLMFWC = lazy(() => import('./LMFWC/EditLMFWC'))
 const EditVoxel = lazy(() => import('./Voxel/EditVoxel'))
+const EditSmartSuite = lazy(() => import('./SmartSuite/EditSmartSuite'))
 
 const loaderStyle = {
   display: 'flex',
@@ -552,6 +553,8 @@ const IntegType = memo(({ allIntegURL, flow }) => {
       return <EditLMFWC allIntegURL={allIntegURL} />
     case 'Voxel':
       return <EditVoxel allIntegURL={allIntegURL} />
+    case 'SmartSuite':
+      return <EditSmartSuite allIntegURL={allIntegURL} />
     default:
       return <Loader style={loaderStyle} />
   }
