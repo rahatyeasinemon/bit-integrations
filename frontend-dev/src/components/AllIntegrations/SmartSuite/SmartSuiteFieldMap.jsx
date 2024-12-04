@@ -7,10 +7,17 @@ import CustomField from './CustomField'
 import { addFieldMap, delFieldMap, handleFieldMapping } from './IntegrationHelpers'
 
 export default function SmartSuiteFieldMap({ i, formFields, field, smartSuiteConf, setSmartSuiteConf }) {
+  console.error('opto')
+  console.error(smartSuiteConf)
+
   const requiredFields =
-    (smartSuiteConf?.smartSuiteFields && smartSuiteConf.smartSuiteFields.filter((fld) => fld.required === true)) || []
+    (smartSuiteConf?.smartSuiteFields &&
+      smartSuiteConf.smartSuiteFields.filter((fld) => fld.required === true)) ||
+    []
   const allNonRequiredFields =
-    (smartSuiteConf?.smartSuiteFields && smartSuiteConf.smartSuiteFields.filter((fld) => fld.required === false)) || []
+    (smartSuiteConf?.smartSuiteFields &&
+      smartSuiteConf.smartSuiteFields.filter((fld) => fld.required === false)) ||
+    []
 
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi

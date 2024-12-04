@@ -22,25 +22,25 @@ function SmartSuite({ formFields, setFlow, flow, allIntegURL }) {
   const [snack, setSnackbar] = useState({ show: false })
 
   const smartSuiteFields = [
-    { label: __('First Name', 'bit-integrations'), key: 'name', required: true },
-    { label: __('Email Address', 'bit-integrations'), key: 'email', required: true },
-    { label: __('Last Name', 'bit-integrations'), key: 'last_name', required: false },
-    { label: __('Phone Number', 'bit-integrations'), key: 'phone_number', required: false },
-    { label: __('Company', 'bit-integrations'), key: 'company', required: false },
-    { label: __('Website', 'bit-integrations'), key: 'website', required: false },
-    { label: __('GDPR', 'bit-integrations'), key: 'gdpr', required: false },
-    {
-      label: __('Event Registration page URL', 'bit-integrations'),
-      key: 'ref_url',
-      required: false
-    }
+    { label: __('Name', 'bit-integrations'), key: 'name', required: true }
+    // { label: __('Email Address', 'bit-integrations'), key: 'email', required: false },
+    // { label: __('Last Name', 'bit-integrations'), key: 'last_name', required: false },
+    // { label: __('Phone Number', 'bit-integrations'), key: 'phone_number', required: false },
+    // { label: __('Company', 'bit-integrations'), key: 'company', required: false },
+    // { label: __('Website', 'bit-integrations'), key: 'website', required: false },
+    // { label: __('GDPR', 'bit-integrations'), key: 'gdpr', required: false },
+    // {
+    //   label: __('Event Registration page URL', 'bit-integrations'),
+    //   key: 'ref_url',
+    //   required: false
+    // }
   ]
 
   const [smartSuiteConf, setSmartSuiteConf] = useState({
     name: 'SmartSuite',
     type: 'SmartSuite',
-    api_key: process.env.NODE_ENV === 'development' ? 'XZcHMyLh6zlobOkZU92ZQ83N9qs6bri3' : '',
-    api_secret: process.env.NODE_ENV === 'development' ? 'r4VzkWc4K7My7' : '',
+    api_key: process.env.NODE_ENV === 'development' ? 'sn5usd27' : '',
+    api_secret: process.env.NODE_ENV === 'development' ? '78c6dfdf3ea3d0d28bd1a23144ef16f1ac303237' : '',
     field_map: generateMappedField(smartSuiteFields),
     actionName: 'registerPeopletoWabinar',
     smartSuiteFields,
@@ -79,7 +79,7 @@ function SmartSuite({ formFields, setFlow, flow, allIntegURL }) {
       return
     }
 
-    if (!smartSuiteConf.selectedEvent) {
+    if (0 && !smartSuiteConf.selectedEvent) {
       toast.error(__('Please select a Event', 'bit-integrations'))
       return
     }

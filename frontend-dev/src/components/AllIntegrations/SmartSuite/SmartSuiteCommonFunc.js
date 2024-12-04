@@ -26,6 +26,7 @@ export const generateMappedField = (smartSuiteFields) => {
 }
 
 export const checkMappedFields = (smartSuiteConf) => {
+  return true;
   const mappedFields = smartSuiteConf?.field_map
     ? smartSuiteConf.field_map.filter(
       (mappedField) =>
@@ -51,8 +52,8 @@ export const smartSuiteAuthentication = (
 ) => {
   if (!confTmp.api_key || !confTmp.api_secret) {
     setError({
-      api_key: !confTmp.api_key ? __("API Key can't be empty", 'bit-integrations') : '',
-      api_secret: !confTmp.api_secret ? __("API Secret can't be empty", 'bit-integrations') : ''
+      api_key: !confTmp.api_key ? __("Workspace ID can't be empty", 'bit-integrations') : '',
+      api_secret: !confTmp.api_secret ? __("API Token can't be empty", 'bit-integrations') : ''
     })
     return
   }
@@ -74,7 +75,7 @@ export const smartSuiteAuthentication = (
     }
     setLoading({ ...loading, auth: false })
     toast.error(
-      __('Authorized failed, Please enter valid Sub Domain & API Key', 'bit-integrations')
+      __('Authorized failed, ' + result.data, 'bit-integrations')
     )
   })
 }

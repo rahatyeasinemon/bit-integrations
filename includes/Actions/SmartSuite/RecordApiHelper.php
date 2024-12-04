@@ -18,6 +18,8 @@ class RecordApiHelper
 
     private $integrationId;
 
+    private $tokenDetails;
+
     private $apiUrl;
 
     private $defaultHeader;
@@ -26,42 +28,50 @@ class RecordApiHelper
 
     private $typeName;
 
-    public function __construct($integrationDetails, $integId, $apiSecret, $apiKey)
+    public function __construct($integrationDetails, $integId, $tokenDetails, $apiKey, $apiSecret)
     {
         $this->integrationDetails = $integrationDetails;
         $this->integrationId = $integId;
-        $this->apiUrl = 'https://my.smartSuite.com/api/v1';
+        $this->tokenDetails = $tokenDetails;
+        $this->apiUrl = 'https://app.smartsuite.com/api/v1/';
         $this->defaultHeader = [
-            'Api-Key'      => $apiKey,
-            'Api-Secret'   => $apiSecret,
+            'ACCOUNT-ID'    => $apiKey,
+            'Authorization' => 'Token ' . $apiSecret,
+            //  'Authorization' => "Bearer {$tokenDetails->access_token}",
             'Content-Type' => 'application/json'
         ];
     }
 
-    public function registration($finalData)
+    public function addCampaign($finalData)
     {
-        $this->type = 'Register People to Wabinar';
-        $this->typeName = 'Register People to Wabinar';
-
+        error_log(print_r($finalData, true));
         if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => __('Required field First Name is empty', 'bit-integrations'), 'code' => 400];
-        }
-        if (empty($finalData['email'])) {
-            return ['success' => false, 'message' => __('Required field Email is empty', 'bit-integrations'), 'code' => 400];
-        }
-        if (!isset($this->integrationDetails->selectedEvent) || empty($this->integrationDetails->selectedEvent)) {
-            return ['success' => false, 'message' => __('Required field Event is empty', 'bit-integrations'), 'code' => 400];
-        }
-        if (isset($this->integrationDetails->selectedEvent) || !empty($this->integrationDetails->selectedEvent)) {
-            $finalData['id'] = $this->integrationDetails->selectedEvent;
-        }
-        if (isset($this->integrationDetails->selectedSession) && !empty($this->integrationDetails->selectedSession)) {
-            $finalData['date_id'] = $this->integrationDetails->selectedSession;
+            return ['success' => false, 'message' => __('Required field Name is empty', 'bit-integrations'), 'code' => 400];
         }
 
-        $apiEndpoint = $this->apiUrl . '/event/register';
+        $this->type = 'Campaign';
+        $this->typeName = 'Campaign created';
+        $apiEndpoint = $this->apiUrl . '/campaigns';
 
         return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->defaultHeader);
+    }
+
+    public function addContact($finalData)
+    {
+        $requestParams = [];
+        foreach ($finalData as $key => $value) {
+            $requestParams['name'] = $value;
+        }
+        $requestParams['logo_icon'] = 'overline';
+        $requestParams['logo_color'] = '#3A86FF';
+
+        $apiEndpoint = $this->apiUrl . 'solutions/';
+        $apiResponse = HttpHelper::post($apiEndpoint, wp_json_encode($requestParams), $this->defaultHeader);
+
+        error_log(print_r('emon test', true));
+        error_log(print_r($apiResponse, true));
+
+        return $apiResponse;
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -79,13 +89,17 @@ class RecordApiHelper
     public function execute($fieldValues, $fieldMap, $actionName)
     {
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        $apiResponse = $this->registration($finalData);
+        if (0 && $actionName === 'campaign') {
+            $apiResponse = $this->addCampaign($finalData);
+        } else {
+            $apiResponse = $this->addContact($finalData);
+        }
 
-        if (!isset($apiResponse->errors)) {
-            $res = [$this->typeName . '  successfully'];
+        if (1 || isset($apiResponse->id)) {
+            $res = [$this->typeName . ' successfully'];
             LogHandler::save($this->integrationId, wp_json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', wp_json_encode($res));
         } else {
-            LogHandler::save($this->integrationId, wp_json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', wp_json_encode($apiResponse));
+            LogHandler::save($this->integrationId, wp_json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', wp_json_encode($apiResponse->message));
         }
 
         return $apiResponse;

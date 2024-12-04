@@ -54,7 +54,9 @@ export default function SmartSuiteAuthorization({
     <div
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {smartSuite?.youTubeLink && <TutorialLink title="SmartSuite" youTubeLink={smartSuite?.youTubeLink} />}
+      {smartSuite?.youTubeLink && (
+        <TutorialLink title="SmartSuite" youTubeLink={smartSuite?.youTubeLink} />
+      )}
       {smartSuite?.docLink && <TutorialLink title="SmartSuite" docLink={smartSuite?.docLink} />}
 
       <div className="mt-3">
@@ -71,7 +73,7 @@ export default function SmartSuiteAuthorization({
       />
 
       <div className="mt-3">
-        <b>{__('API Key:', 'bit-integrations')}</b>
+        <b>{__('Workspace ID:', 'bit-integrations')}</b>
       </div>
       <input
         className="btcd-paper-inp w-6 mt-1"
@@ -79,13 +81,13 @@ export default function SmartSuiteAuthorization({
         name="api_key"
         value={smartSuiteConf.api_key}
         type="text"
-        placeholder={__('API Key...', 'bit-integrations')}
+        placeholder={__('Workspace ID...', 'bit-integrations')}
         disabled={isInfo}
       />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.api_key}</div>
 
       <div className="mt-3">
-        <b>{__('API Secret:', 'bit-integrations')}</b>
+        <b>{__('API Token:', 'bit-integrations')}</b>
       </div>
       <input
         className="btcd-paper-inp w-6 mt-1"
@@ -93,19 +95,19 @@ export default function SmartSuiteAuthorization({
         name="api_secret"
         value={smartSuiteConf.api_secret}
         type="text"
-        placeholder={__('API Secret...', 'bit-integrations')}
+        placeholder={__('API Token...', 'bit-integrations')}
         disabled={isInfo}
       />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.api_secret}</div>
 
       <small className="d-blk mt-3">
-        {__('To Get API Key & API Secret, Please Visit', 'bit-integrations')}
+        {__('To Get API Token & Workspace ID, Please Visit', 'bit-integrations')}
         &nbsp;
         <a
           className="btcd-link"
-          href="https://my.smartSuite.com/manage/settings/api-details"
+          href="https://help.smartsuite.com/en/articles/4855681-generating-an-api-key"
           target="_blank">
-          {__('SmartSuite API Key & Secret', 'bit-integrations')}
+          {__('SmartSuite API Token & Workspace ID', 'bit-integrations')}
         </a>
       </small>
       <br />
