@@ -11,3 +11,5 @@ Route::post('smartSuite_generate_token', [SmartSuiteController::class, 'generate
 Route::post('smartSuite_fetch_custom_fields', [SmartSuiteController::class, 'getCustomFields']);
 Route::post('smartSuite_fetch_all_tags', [SmartSuiteController::class, 'getAllTags']);
 Route::post('smartSuite_authentication', [SmartSuiteController::class, 'authentication']);
+Route::post('smartSuite_fetch_all_events', [SmartSuiteController::class, 'getAllEvents']);
+Route::post('smartSuite_fetch_all_sessions', [SmartSuiteController::class, 'getAllSessions']);

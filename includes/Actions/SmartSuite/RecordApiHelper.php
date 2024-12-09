@@ -37,26 +37,11 @@ class RecordApiHelper
         $this->defaultHeader = [
             'ACCOUNT-ID'    => $apiKey,
             'Authorization' => 'Token ' . $apiSecret,
-            //  'Authorization' => "Bearer {$tokenDetails->access_token}",
-            'Content-Type' => 'application/json'
+            'Content-Type'  => 'application/json'
         ];
     }
 
-    public function addCampaign($finalData)
-    {
-        error_log(print_r($finalData, true));
-        if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => __('Required field Name is empty', 'bit-integrations'), 'code' => 400];
-        }
-
-        $this->type = 'Campaign';
-        $this->typeName = 'Campaign created';
-        $apiEndpoint = $this->apiUrl . '/campaigns';
-
-        return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->defaultHeader);
-    }
-
-    public function addContact($finalData)
+    public function addSolutions($finalData)
     {
         $requestParams = [];
         foreach ($finalData as $key => $value) {
@@ -66,12 +51,44 @@ class RecordApiHelper
         $requestParams['logo_color'] = '#3A86FF';
 
         $apiEndpoint = $this->apiUrl . 'solutions/';
-        $apiResponse = HttpHelper::post($apiEndpoint, wp_json_encode($requestParams), $this->defaultHeader);
 
-        error_log(print_r('emon test', true));
-        error_log(print_r($apiResponse, true));
+        return HttpHelper::post($apiEndpoint, wp_json_encode($requestParams), $this->defaultHeader);
+    }
 
-        return $apiResponse;
+    public function addTable($finalData)
+    {
+        $requestParams = [];
+        foreach ($finalData as $key => $value) {
+            $requestParams['name'] = $value;
+        }
+        $requestParams['solution'] = $this->integrationDetails->selectedEvent;
+
+        $apiEndpoint = $this->apiUrl . 'applications/';
+        $extraData = [['slug' => 'name',
+            'label'           => 'Name',
+            'field_type'      => 'textfield']];
+        $requestParams['structure'] = $extraData;
+
+        return HttpHelper::post($apiEndpoint, wp_json_encode($requestParams), $this->defaultHeader);
+    }
+
+    public function addRecord($finalData)
+    {
+        $apiEndpoint = $this->apiUrl . 'applications/'
+        . $this->integrationDetails->selectedSession . '/records/';
+
+        $currentDate = date('Y-m-d');
+        $addTenDays = date('Y-m-d', strtotime($currentDate . ' + 10 days'));
+
+        if (isset($finalData['due_date']) && !checkIsAValidDate($finalData['due_date'])) {
+            $finalData['due_date'] = $currentDate;
+        }
+        if (isset($finalData['to_date']) && !checkIsAValidDate($finalData['to_date'])) {
+            $finalData['to_date'] = $addTenDays;
+        }
+        $finalData['status'] = 'in_progress';
+
+        return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -89,19 +106,26 @@ class RecordApiHelper
     public function execute($fieldValues, $fieldMap, $actionName)
     {
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        if (0 && $actionName === 'campaign') {
-            $apiResponse = $this->addCampaign($finalData);
+
+        if ($actionName === 'solution') {
+            $apiResponse = $this->addSolutions($finalData);
+        } elseif ($actionName === 'table') {
+            $apiResponse = $this->addTable($finalData);
         } else {
-            $apiResponse = $this->addContact($finalData);
+            $apiResponse = $this->addRecord($finalData);
         }
 
-        if (1 || isset($apiResponse->id)) {
+        if (isset($apiResponse->id)) {
             $res = [$this->typeName . ' successfully'];
             LogHandler::save($this->integrationId, wp_json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', wp_json_encode($res));
         } else {
-            LogHandler::save($this->integrationId, wp_json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', wp_json_encode($apiResponse->message));
+            LogHandler::save($this->integrationId, wp_json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', wp_json_encode($apiResponse));
         }
 
         return $apiResponse;
     }
+}
+function checkIsAValidDate($myDateString)
+{
+    return (bool) strtotime($myDateString);
 }

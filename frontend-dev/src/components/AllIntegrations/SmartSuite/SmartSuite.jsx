@@ -23,7 +23,7 @@ function SmartSuite({ formFields, setFlow, flow, allIntegURL }) {
 
   const smartSuiteFields = [
     { label: __('Name', 'bit-integrations'), key: 'name', required: true }
-    // { label: __('Email Address', 'bit-integrations'), key: 'email', required: false },
+    //  { label: __('Email Address', 'bit-integrations'), key: 'email', required: false }
     // { label: __('Last Name', 'bit-integrations'), key: 'last_name', required: false },
     // { label: __('Phone Number', 'bit-integrations'), key: 'phone_number', required: false },
     // { label: __('Company', 'bit-integrations'), key: 'company', required: false },
@@ -35,15 +35,22 @@ function SmartSuite({ formFields, setFlow, flow, allIntegURL }) {
     //   required: false
     // }
   ]
-
+  const smartSuiteFieldsForRecord = [
+    { label: __('Title', 'bit-integrations'), key: 'title', required: true },
+    { label: __('Description', 'bit-integrations'), key: 'description', required: false },
+    { label: __('From date', 'bit-integrations'), key: 'due_date', required: false },
+    { label: __('To date', 'bit-integrations'), key: 'to_date', required: false }
+  ]
   const [smartSuiteConf, setSmartSuiteConf] = useState({
     name: 'SmartSuite',
     type: 'SmartSuite',
     api_key: process.env.NODE_ENV === 'development' ? 'sn5usd27' : '',
     api_secret: process.env.NODE_ENV === 'development' ? '78c6dfdf3ea3d0d28bd1a23144ef16f1ac303237' : '',
     field_map: generateMappedField(smartSuiteFields),
-    actionName: 'registerPeopletoWabinar',
+    actionName: '',
+    isActionTable: 'no action',
     smartSuiteFields,
+    smartSuiteFieldsForRecord,
     actions: {}
   })
 
@@ -79,11 +86,14 @@ function SmartSuite({ formFields, setFlow, flow, allIntegURL }) {
       return
     }
 
-    if (0 && !smartSuiteConf.selectedEvent) {
-      toast.error(__('Please select a Event', 'bit-integrations'))
+    if (smartSuiteConf.actionName != 'solution' && !smartSuiteConf.selectedEvent) {
+      toast.error(__('Please select a solution', 'bit-integrations'))
       return
     }
-
+    if (smartSuiteConf.actionName === 'record' && !smartSuiteConf.selectedSession) {
+      toast.error(__('Please select a table', 'bit-integrations'))
+      return
+    }
     smartSuiteConf.field_map.length > 0 && setStep(pageNo)
   }
 

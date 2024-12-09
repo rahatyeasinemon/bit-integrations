@@ -17,6 +17,7 @@ export const handleInput = (e, salesmateConf, setSalesmateConf) => {
 
 export const generateMappedField = (smartSuiteFields) => {
   const requiredFlds = smartSuiteFields.filter((fld) => fld.required === true)
+
   return requiredFlds.length > 0
     ? requiredFlds.map((field) => ({
       formField: '',
@@ -26,7 +27,6 @@ export const generateMappedField = (smartSuiteFields) => {
 }
 
 export const checkMappedFields = (smartSuiteConf) => {
-  return true;
   const mappedFields = smartSuiteConf?.field_map
     ? smartSuiteConf.field_map.filter(
       (mappedField) =>
@@ -97,15 +97,15 @@ export const getAllEvents = (confTmp, setConf, setLoading) => {
         })
 
         setLoading({ ...setLoading, event: false })
-        toast.success(__('Events fetched successfully', 'bit-integrations'))
+        toast.success(__('Solution fetched successfully', 'bit-integrations'))
         return
       }
       setLoading({ ...setLoading, event: false })
-      toast.error(__('Events Not Found!', 'bit-integrations'))
+      toast.error(__('Solution Not Found!', 'bit-integrations'))
       return
     }
     setLoading({ ...setLoading, event: false })
-    toast.error(__('Events fetching failed', 'bit-integrations'))
+    toast.error(__('Solution fetching failed', 'bit-integrations'))
   })
 }
 
@@ -127,14 +127,14 @@ export const getAllSessions = (confTmp, setConf, event_id, setLoading) => {
         })
 
         setLoading({ ...setLoading, session: false })
-        toast.success(__('Sessions fetched successfully', 'bit-integrations'))
+        toast.success(__('Table fetched successfully', 'bit-integrations'))
         return
       }
       setLoading({ ...setLoading, session: false })
-      toast.error(__('Sessions Not Found!', 'bit-integrations'))
+      toast.error(__('Table Not Found!', 'bit-integrations'))
       return
     }
     setLoading({ ...setLoading, session: false })
-    toast.error(__('Sessions fetching failed', 'bit-integrations'))
+    toast.error(__('Table fetching failed', 'bit-integrations'))
   })
 }

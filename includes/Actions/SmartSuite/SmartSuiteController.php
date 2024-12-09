@@ -124,16 +124,61 @@ class SmartSuiteController
         }
     }
 
+    public function getAllEvents($fieldsRequestParams)
+    {
+        // $this->checkValidation($fieldsRequestParams);
+        $this->setHeaders($fieldsRequestParams->api_key, $fieldsRequestParams->api_secret);
+        $apiEndpoint = $this->apiEndpoint . 'solutions/';
+        $response = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+
+        if (!isset($response->errors)) {
+            $events = [];
+            foreach ($response as $event) {
+                $events[]
+                = (object) [
+                    'id'   => $event->id,
+                    'name' => $event->name
+                ]
+                ;
+            }
+            wp_send_json_success($events, 200);
+        } else {
+            wp_send_json_error(__('Events fetching failed', 'bit-integrations'), 400);
+        }
+    }
+
+    public function getAllSessions($fieldsRequestParams)
+    {
+        // $this->checkValidation($fieldsRequestParams);
+        $this->setHeaders($fieldsRequestParams->api_key, $fieldsRequestParams->api_secret);
+        $apiEndpoint = $this->apiEndpoint . "applications/?solution={$fieldsRequestParams->event_id}";
+        $response = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        if (!isset($response->errors)) {
+            $sessions = [];
+            foreach ($response as $session) {
+                $sessions[]
+                = (object) [
+                    'date_id'  => $session->id,
+                    'datetime' => $session->name
+                ]
+                ;
+            }
+            wp_send_json_success($sessions, 200);
+        } else {
+            wp_send_json_error(__('Events fetching failed', 'bit-integrations'), 400);
+        }
+    }
+
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
         $apiKey = $integrationDetails->api_key;
         $apiSecret = $integrationDetails->api_secret;
-
         $integId = $integrationData->id;
-        $tokenDetails = $integrationDetails->tokenDetails;
+        $tokenDetails = '';
         $fieldMap = $integrationDetails->field_map;
         $actionName = $integrationDetails->actionName;
+
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $tokenDetails, $apiKey, $apiSecret);
 
         $smartSuiteApiResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $actionName);
@@ -155,7 +200,7 @@ class SmartSuiteController
      */
     public function authentication($fieldsRequestParams)
     {
-        $this->setHeaders1($fieldsRequestParams->api_key, $fieldsRequestParams->api_secret);
+        $this->setHeaders($fieldsRequestParams->api_key, $fieldsRequestParams->api_secret);
         $apiEndpoint = $this->apiEndpoint . 'solutions/';
         $response = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
         if (\is_array($response)) {
@@ -205,7 +250,7 @@ class SmartSuiteController
         }
     }
 
-    private function setHeaders($access_token)
+    private function setHeaders1($access_token)
     {
         return [
             'ACCOUNT-ID'    => '',
@@ -214,7 +259,7 @@ class SmartSuiteController
         ];
     }
 
-    private function setHeaders1($apiKey, $apiSecret)
+    private function setHeaders($apiKey, $apiSecret)
     {
         $this->_defaultHeader = [
             'ACCOUNT-ID'    => $apiKey,
