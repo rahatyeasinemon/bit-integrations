@@ -579,11 +579,11 @@ const tutorialLinks = {
     docLink: 'https://bit-integrations.com/wp-docs/actions/wpforo-integrations-as-an-action/'
   },
   dokan: {
-    youTubeLink: '#',
+    youTubeLink: 'https://youtube.com/playlist?list=PL7c6CDwwm-AK_Lwk-n8sM2XzXl6D2Ixti&si=bKb1MWsKafVXCh01',
     docLink: 'https://bit-integrations.com/wp-docs/actions/dokan-integrations-as-an-action/'
   },
   drip: {
-    youTubeLink: '#',
+    youTubeLink: 'https://youtube.com/playlist?list=PL7c6CDwwm-AKIFJxDo8hkPRBgLcfMoiV1&si=ZjISDBaNURxS82pz',
     docLink: 'https://bit-integrations.com/wp-docs/actions/drip-integrations/'
   },
   jetEngine: {
